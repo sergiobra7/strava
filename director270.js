@@ -44,13 +44,20 @@ function setupBackToTop275(){
 setupBackToTop275();
 
 /* V2.7.6 bakery name editor: one persistent name, optional suffix, visible signage toggle. */
-function bakeryActive276(){
+function bakeryScene278(){
  if(state.world!=='sign')return false;
- const z=state.sign258||{},p=z.premium270||{};
- const terms=[z.location,z.customLocation,z.manualScene,z.crowdPlace268];
- if(z.activeSceneSource267==='premium'&&p.title)terms.push(p.title,p.location);
- return terms.some(v=>/bäckerei|bäcker|bakery|fırın|firin/i.test(String(v||'')));
+ const z=state.sign258||{};
+ const source=z.activeSceneSource267||'standard';
+ let scene='';
+ if(source==='premium'){scene=String((z.premium270||{}).title||'');}
+ else {
+   const prompt=oldPrompt();
+   const match=prompt.match(/^\[REG-01\] SCENE:\s*(.+)$/m);
+   scene=match?match[1]:'';
+ }
+ return /bäckerei|bäcker|bakery|fırın|firin/i.test(scene);
 }
+function bakeryActive276(){return bakeryScene278();}
 function bakeryName276(){
  const z=state.sign258||{},raw=String(z.bakeryName276||'').trim();
  if(!raw)return '';
@@ -78,8 +85,49 @@ function field(k,label,arr){let v=cfg()[k]||arr[0];return '<label>'+esc270(label
 function card(c,i){let active=state.sign258.activeSceneSource267==='premium'&&cfg().scene===i;return '<button class="scene270 '+(active?'selected270':'')+'" data-scene270="'+i+'" aria-pressed="'+active+'"><strong>'+esc270(c[0])+'</strong><small>Ort: '+esc270(c[1])+'<br>Plakat: '+esc270(c[2])+'<br>Requisite: '+esc270(c[3])+'<br>Plakathaltung: '+esc270(c[4])+'<br>Hauptfigur: '+esc270(c[5])+'<br>Mimik: '+esc270(c[6])+'<br>Publikum: '+esc270(c[7])+' · '+esc270(c[8])+'</small></button>';}
 function panel(){let p=cfg(),rotation=Number(p.rotation)||0,ordered=SC.map((c,i)=>({c,i}));ordered=ordered.slice(rotation%ordered.length).concat(ordered.slice(0,rotation%ordered.length));if(Number.isInteger(p.scene)&&!ordered.slice(0,10).some(o=>o.i===p.scene)){const active=ordered.find(o=>o.i===p.scene);if(active)ordered=[active,...ordered.filter(o=>o.i!==p.scene)];}return '<div id="premiumPanel270"><h3 style="color:#ff8b5b">PREMIUM-SZENEN · PLAKATE & REQUISITEN</h3><p>Eigenständige Fotomotive mit konkreter Situation. Alte Szenenvorschläge und Menschenmassen bleiben unverändert.</p><details><summary style="padding:10px;font-weight:800">PLAKAT / REQUISITE / HALTUNG MANUELL ANPASSEN</summary>'+field('poster','Plakatvariante',P)+field('prop','Gegenstand / Requisite',R)+field('holding','Plakathaltung',H)+field('position','Position Hauptfigur',L)+field('expression','Mimik und Blick',M)+field('audience','Publikum',A)+field('reaction','Reaktion',X)+'</details><h3>PREMIUM-EMPFEHLUNGEN</h3><div id="premiumCards270">'+ordered.slice(0,10).map(o=>card(o.c,o.i)).join('')+'</div><button id="refreshPremium270" class="action270">10 WEITERE EMPFEHLUNGEN</button><p style="font-size:12px;color:#bfc9d2">Auswahl mit orangefarbenem Rahmen. Kamera, Gesicht, Outfit, Schuhfoto und manuelle Prioritäten bleiben erhalten.</p></div>';}
 function bind(){document.querySelectorAll('[data-scene270]').forEach(el=>el.onclick=()=>{const i=Number(el.dataset.scene270),c=SC[i],p=cfg();p.scene=i;p.title=c[0];p.location=c[1];p.poster=c[2];p.prop=c[3];p.holding=c[4];p.position=c[5];p.expression=c[6];p.audience=c[7];p.reaction=c[8];p.description='SCENE '+c[0]+'. EXACT LOCATION: '+c[1]+'. POSTER: '+c[2]+'. PHYSICAL PROP: '+c[3]+'. POSTER HOLDING: '+c[4]+'. RUNNER POSITION: '+c[5]+'. EXPRESSION: '+c[6]+'. AUDIENCE: '+c[7]+'. REACTION: '+c[8]+'. Static realistic documentary photograph. Use a stable, safe construction. Keep poster lettering and runner face unobstructed.';state.sign258.activeSceneSource267='premium';state.sign258.activeSceneId267=i;cfg().open=true;save();render();jump270('premiumPanel270');});document.querySelectorAll('[data-premium270]').forEach(el=>{el.classList.add('selected270');el.onchange=()=>{const p=cfg();p[el.dataset.premium270]=el.value;p.description='';save();render();jump270('premiumPanel270');};});document.getElementById('refreshPremium270').onclick=()=>{cfg().rotation=(Number(cfg().rotation)||0)+1;save();render();jump270('premiumPanel270');};}
-render=function(){oldRender();if(state.world==='sign'&&bakeryActive276()&&(state.tab==='Smart Director'||state.tab==='Ort & Kamera')){const v=document.getElementById('view');if(v){v.insertAdjacentHTML('afterbegin',bakeryPanel276());bindBakery276();}}if(state.world!=='sign'||state.tab!=='Smart Director')return;const v=document.getElementById('view');if(!v)return;const oldButtons=v.querySelector('[data-smartsub267="crowd"]');if(!oldButtons)return;const row=oldButtons.parentElement;const button=document.createElement('button');button.id='premiumTab270';button.type='button';button.textContent='Premium-Szenen · Plakate & Requisiten';button.className=cfg().open?'active':'';if(cfg().open){row.querySelectorAll('[data-smartsub267]').forEach(b=>{b.style.background='#303845';b.style.border='2px solid #485261';b.setAttribute('aria-pressed','false');});button.setAttribute('aria-pressed','true');}else{button.setAttribute('aria-pressed','false');row.querySelectorAll('[data-smartsub267]').forEach(b=>{const active=b.dataset.smartsub267===(state.sign258.smartSubtab267||'standard');b.style.background=active?'#fc4c02':'#303845';b.style.border=active?'3px solid #fc4c02':'2px solid #485261';b.setAttribute('aria-pressed',String(active));});}row.append(button);button.onclick=()=>{cfg().open=true;save();render();jump270('premiumPanel270');};row.querySelectorAll('[data-smartsub267]').forEach(b=>b.addEventListener('click',()=>{cfg().open=false;save();jumpScene273(b.dataset.smartsub267);},true));if(!cfg().open){const last=state.sign258.lastCrowd273;document.querySelectorAll('[data-crowd267]').forEach(el=>{const selected=state.sign258.activeSceneSource267==='crowd'&&Number(el.dataset.crowd267)===Number(state.sign258.activeSceneId267);el.style.border=selected?'3px solid #fc4c02':'';el.setAttribute('aria-pressed',String(selected));});return;}const top=row.parentElement.parentElement;let node=top.nextElementSibling;while(node){node.style.display='none';node=node.nextElementSibling;}top.insertAdjacentHTML('afterend',panel());bind();};
-buildPrompt=function(){let base=oldPrompt();if(state.world!=='sign')return base;const customBakery276=bakeryActive276()?bakeryName276():'';if(customBakery276){const visible=state.sign258.bakeryVisible276!==false;const label='[REG-02] LOCATION / ORT: ';const locLine=base.split('\\n').find(line=>line.startsWith(label));if(locLine)base=base.replace(locLine,label+customBakery276);base+='\\n\\n=== CUSTOM BAKERY NAME — USER PRIORITY ===\\nEXACT VENUE NAME: '+customBakery276+'\\n'+(visible?'SIGNAGE ON: Show this exact bakery name on the physical shopfront sign above the entrance. Preserve spelling, case and word order. No invented substitute bakery names.':'SIGNAGE OFF: Do not display the bakery name on any shopfront signage. Use the exact name only as scene metadata.')+'\\nKeep the bakery setting across scene updates. Do not modify camera geometry, runner identity or outfit.\\n=== END CUSTOM BAKERY NAME ===';}const p=cfg();if(state.sign258.activeSceneSource267!=='premium'||(!p.title&&!p.poster))return base;return base+'\n\n=== PREMIUM SCENE V2.7.2 ===\n'+(p.description||('CUSTOM PREMIUM SCENE at '+(p.location||'selected venue')))+'\nPOSTER TYPE: '+(p.poster||'Automatic')+'\nPROP: '+(p.prop||'Automatic')+'\nPOSTER HOLDING: '+(p.holding||'Automatic')+'\nRUNNER POSITION: '+(p.position||'Automatic')+'\nEXPRESSION: '+(p.expression||'Automatic')+'\nAUDIENCE: '+(p.audience||'Automatic')+'\nREACTION: '+(p.reaction||'Automatic')+'\nOnly anatomically coherent, physically plausible static compositions. Preserve exact user camera geometry and all manual locks. Do not default to stand banners.\n=== END PREMIUM SCENE ===';};
-document.addEventListener('click',e=>{const b=e.target.closest('[data-crowd267]');if(b&&state.world==='sign'){state.sign258.lastCrowd273=Number(b.dataset.crowd267);save();}},true);
-render();
+render=function(){oldRender();if(state.world==='sign'&&(state.tab==='Smart Director'||state.tab==='Ort & Kamera')){const v=document.getElementById('view');if(v){v.insertAdjacentHTML('afterbegin',bakeryPanel276());bindBakery276();}}if(state.world!=='sign'||state.tab!=='Smart Director')return;const v=document.getElementById('view');if(!v)return;const oldButtons=v.querySelector('[data-smartsub267="crowd"]');if(!oldButtons)return;const row=oldButtons.parentElement;const button=document.createElement('button');button.id='premiumTab270';button.type='button';button.textContent='Premium-Szenen · Plakate & Requisiten';button.className=cfg().open?'active':'';if(cfg().open){row.querySelectorAll('[data-smartsub267]').forEach(b=>{b.style.background='#303845';b.style.border='2px solid #485261';b.setAttribute('aria-pressed','false');});button.setAttribute('aria-pressed','true');}else{button.setAttribute('aria-pressed','false');row.querySelectorAll('[data-smartsub267]').forEach(b=>{const active=b.dataset.smartsub267===(state.sign258.smartSubtab267||'standard');b.style.background=active?'#fc4c02':'#303845';b.style.border=active?'3px solid #fc4c02':'2px solid #485261';b.setAttribute('aria-pressed',String(active));});}row.append(button);button.onclick=()=>{cfg().open=true;save();render();jump270('premiumPanel270');};row.querySelectorAll('[data-smartsub267]').forEach(b=>b.addEventListener('click',()=>{cfg().open=false;save();jumpScene273(b.dataset.smartsub267);},true));if(!cfg().open){const last=state.sign258.lastCrowd273;document.querySelectorAll('[data-crowd267]').forEach(el=>{const selected=state.sign258.activeSceneSource267==='crowd'&&Number(el.dataset.crowd267)===Number(state.sign258.activeSceneId267);el.style.border=selected?'3px solid #fc4c02':'';el.setAttribute('aria-pressed',String(selected));});return;}const top=row.parentElement.parentElement;let node=top.nextElementSibling;while(node){node.style.display='none';node=node.nextElementSibling;}top.insertAdjacentHTML('afterend',panel());bind();};
+buildPrompt=function(){
+ let base=oldPrompt();
+ if(state.world!=='sign')return base;
+ const z=state.sign258||{},p=cfg(),source=z.activeSceneSource267||'standard';
+ const sceneMatch=base.match(/^\[REG-01\] SCENE:\s*(.+)$/m);
+ const sceneName=sceneMatch?sceneMatch[1]:'';
+ const premiumActive=source==='premium'&&Number.isInteger(p.scene)&&!!p.title;
+ /* A stale category/venue is a saved preference, never an active location instruction.
+    Only the current scene decides whether bakery signage applies. */
+ const isBakery=/bäckerei|bäcker|bakery|fırın|firin/i.test(premiumActive?p.title:sceneName);
+ const customName=isBakery?bakeryName276():'';
+ /* Old additive situation defaults can contradict the selected scene. Suppress
+    location instructions from the legacy block when they do not match the scene. */
+ base=base.replace(/\n\n=== V2\.6\.9 ADDITIVE SITUATION DIRECTOR ===[\s\S]*?=== END V2\.6\.9 ===/g,block=>{
+   const place=(block.match(/^EXACT SITUATION \/ LOCATION:\s*(.*)$/m)||[])[1]||'';
+   const category=(block.match(/^SCENE CATEGORY:\s*(.*)$/m)||[])[1]||'';
+   const relevant=place&&sceneName&&(
+     sceneName.toLocaleLowerCase('de').includes(place.toLocaleLowerCase('de'))||
+     place.toLocaleLowerCase('de').includes(sceneName.toLocaleLowerCase('de'))||
+     (isBakery&&/bäckerei|bäcker|bakery|fırın|firin/i.test(place))
+   );
+   if(relevant)return block;
+   const shoe=(block.match(/^MANDATORY ORIGINAL SHOE PHOTO LOCK:.*$/m)||[])[0]||'';
+   return shoe?'\n\n'+shoe:'';
+ });
+ if(customName){
+   const visible=z.bakeryVisible276!==false;
+   base=base.replace(/^(\[REG-02\] LOCATION \/ ORT: ).*$/m,(_,prefix)=>prefix+customName);
+   base+='\n\n=== BAKERY SCENE — STORED NAME APPLIES ONLY HERE ===\nEXACT VENUE NAME: '+customName+
+    '\n'+(visible?'SIGNAGE ON: Show the exact name on the bakery storefront, preserving all letters and spacing.':'SIGNAGE OFF: Do not show the bakery name on shopfront signage.')+
+    '\nDo not invent a different bakery name. Preserve exact camera geometry.\n=== END BAKERY SCENE ===';
+ }
+ if(!premiumActive)return base;
+ return base+'\n\n=== ACTIVE PREMIUM SCENE ===\n'+
+  (p.description||('SCENE '+p.title+'. EXACT LOCATION: '+(p.location||'selected venue')))+
+  '\nPOSTER TYPE: '+(p.poster||'Automatic')+
+  '\nPROP: '+(p.prop||'None')+
+  '\nPOSTER HOLDING: '+(p.holding||'Automatic')+
+  '\nRUNNER POSITION: '+(p.position||'Automatic')+
+  '\nEXPRESSION: '+(p.expression||'Automatic')+
+  '\nAUDIENCE: '+(p.audience||'Automatic')+
+  '\nREACTION: '+(p.reaction||'Automatic')+
+  '\nPreserve exact camera, face, shoes and manually chosen outfit.\n=== END ACTIVE PREMIUM SCENE ===';
+};
 })();
