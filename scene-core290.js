@@ -131,8 +131,17 @@ buildPrompt=function(){
  // not merely a later appended instruction block.
  base=base.replace(/^(\[REG-03\] MAIN RUNNER \/ POSE: ).*$/m,'$1'+c.position+'; '+c.holding);
  base=base.replace(/^(\[REG-09\][^:]*: ).*$/m,'$1'+c.poster);
+ // Premium's explicit expression/gaze selection overrides all auto directors.
+ const cameraGaze=/kamera|objektiv|camera/i.test(c.expression);
+ const audienceGaze=/publikum/i.test(c.expression);
+ if(cameraGaze){
+  base=base.replace(/^(\[REG-06\] MAIN RUNNER \/ GAZE: ).*$/m,'$1Direkt in die Mitte des Kameraobjektivs — MANUAL PRIORITY (Premium expression)');
+ }else if(audienceGaze){
+  base=base.replace(/^(\[REG-06\] MAIN RUNNER \/ GAZE: ).*$/m,'$1Zum Publikum — MANUAL PRIORITY (Premium expression)');
+ }
+
  base=base.replace(/\n\n=== ACTIVE SCENE MATRIX V2\.8\.0 — AUTHORITATIVE ===[\s\S]*?=== END ACTIVE SCENE MATRIX ===/g,'');
- return base+'\n\n=== AUTHORITATIVE V2.9.0 SCENE LOCK ===\nEXACT VENUE: '+c.venue+'\nCATEGORY: '+c.category+'\nPOSTER: '+c.poster+'\nHOLDING: '+c.holding+'\nPROP: '+c.prop+'\nRUNNER POSITION: '+c.position+'\nEXPRESSION: '+c.expression+'\nAUDIENCE: '+c.audience+'\nREACTION: '+c.reaction+'\n'+(c.p.description||'')+'\nNo alternative location, no contradictory pose, preserve camera distance and lens.\n=== END AUTHORITATIVE SCENE LOCK ===';
+ return base+'\n\n=== AUTHORITATIVE V2.9.0 SCENE LOCK ===\nEXACT VENUE: '+c.venue+'\nCATEGORY: '+c.category+'\nPOSTER: '+c.poster+'\nHOLDING: '+c.holding+'\nPROP: '+c.prop+'\nRUNNER POSITION: '+c.position+'\nEXPRESSION: '+c.expression+'\nAUDIENCE: '+c.audience+'\nREACTION: '+c.reaction+'\n'+(c.p.description||'')+'\n'+(cameraGaze?'ABSOLUTE CAMERA GAZE LOCK — USER SELECTED: '+c.expression+'. MAIN RUNNER MUST FACE THE CAMERA STRAIGHT ON: rotate head, neck and chin toward the exact optical center, both pupils looking directly into the camera lens. No sideways gaze, no looking at the sign, audience, or any other person. Keep expression '+c.expression+'. If the body is angled, the head and eyes MUST still be directed precisely into the lens. This manual gaze overrides ALL automatic scene, crowd and Smart Director instructions.':'')+'\nNo alternative location, no contradictory pose, preserve camera distance and lens.\n=== END AUTHORITATIVE SCENE LOCK ===';
 };
 document.addEventListener('change',e=>{if(e.target&&['place269','cat269','aud269','react269'].includes(e.target.id)){setTimeout(()=>{if(state.world==='sign'&&state.tab==='Smart Director')render();},0);}},true);
 window.stravaSceneCore290={config,validate,generate};
