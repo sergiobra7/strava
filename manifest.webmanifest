@@ -1,0 +1,10 @@
+{
+  "name": "STRAVA V2.8.4",
+  "short_name": "STRAVA V2.8.4",
+  "start_url": "./?source=homescreen",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#0b0d11",
+  "theme_color": "#111418",
+  "lang": "de"
+}
