@@ -89,11 +89,12 @@ function bind(){document.querySelectorAll('[data-scene270]').forEach(el=>el.oncl
 function bottomActions279(){
  if(state.world!=='sign')return;
  const v=document.getElementById('view');if(!v)return;
+ const previous=document.getElementById('bottomActions279');if(previous)previous.remove();
  const bar=document.createElement('section');
  bar.id='bottomActions279';
  bar.style.cssText='margin:28px 0 70px;padding:16px;border:2px solid #fc4c02;border-radius:12px;background:#171c24;display:flex;gap:12px;flex-wrap:wrap';
  bar.innerHTML='<button type="button" id="refreshBottom279" class="btn secondary" style="flex:1 1 240px;min-height:52px">↻ Werte aktualisieren</button><button type="button" id="copyBottom279" class="btn" style="flex:1 1 240px;min-height:52px">⧉ Master-Prompt direkt kopieren</button>';
- v.appendChild(bar);
+ v.insertAdjacentElement('afterend',bar);
  document.getElementById('refreshBottom279').onclick=()=>{
    const original=document.getElementById('directorRefresh267');
    if(original&&typeof original.onclick==='function'){original.click();return;}
