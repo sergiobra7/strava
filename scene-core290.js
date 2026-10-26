@@ -85,6 +85,10 @@ function premium(){
  const problems=validate(c);
  const offset=((Number(c.p.rotation)||0)%5)*10;
  const list=problems.length?[]:Array.from({length:10},(_,i)=>generate(c,offset+i));
+ const activeId=Number(c.p.scene)-20000;
+ if(!problems.length&&c.z.activeSceneSource267==='premium'&&Number.isInteger(activeId)&&activeId>=1&&activeId<=50&&!list.some(item=>item.id===activeId)){
+  list.pop();list.unshift(generate(c,activeId-1));
+ }
  cards.innerHTML=problems.length?'<div role="alert" style="border:2px solid #ff9b54;border-radius:10px;padding:14px">'+problems.map(esc).join('<br>')+' Bitte die markierten Einstellungen oben korrigieren. Keine widersprüchlichen Vorschläge.</div>':list.map((item,i)=>'<button type="button" class="scene270" data-core290="'+i+'" style="display:block;width:100%;text-align:left;margin:10px 0"><strong>'+esc(item.title)+'</strong><small>Ort: '+esc(c.venue)+'<br>Plakat: '+esc(c.poster)+'<br>Requisite: '+esc(c.prop)+'<br>Plakathaltung: '+esc(c.holding)+'<br>Position: '+esc(c.position)+'<br>Publikum: '+esc(c.audience)+'<br>Reaktion: '+esc(c.reaction)+'</small></button>').join('');
  cards.querySelectorAll('[data-core290]').forEach(b=>{
   const item=list[Number(b.dataset.core290)];
