@@ -29,16 +29,30 @@ render=function(){
  view.insertAdjacentElement('afterbegin',bar);
 };
 function scrollToPrompt(){
- let target=document.getElementById('bottomActions279');
- if(!target&&state.world==='sign'){
-   const view=document.getElementById('view');
-   if(view&&typeof bottomActions279==='function')bottomActions279();
-   target=document.getElementById('bottomActions279');
+ // Always target the UPPER camera control group, never the bottom shortcut bar.
+ const view=document.getElementById('view');
+ let refresh=view?.querySelector('#directorRefresh267');
+ let camera=refresh?.closest('div[style*="padding:10px"]');
+ if(!camera&&refresh){
+   camera=refresh.parentElement?.parentElement;
  }
- if(!target)target=document.getElementById('copyBottom279')||document.getElementById('directorCopy267');
+ let target=camera||refresh||view?.querySelector('#directorLens267');
+ if(!target&&state.world==='sign'){
+   // If another tab is open, return to Smart Director before locating controls.
+   state.tab='Smart Director';
+   save();render();
+   const v=document.getElementById('view');
+   refresh=v?.querySelector('#directorRefresh267');
+   target=refresh?.closest('div[style*="padding:10px"]')||refresh?.parentElement?.parentElement||refresh;
+ }
  if(!target)return;
- const move=()=>{const rect=target.getBoundingClientRect();const y=Math.max(0,window.scrollY+rect.top-Math.max(12,(window.innerHeight-rect.height)/2));window.scrollTo({top:y,behavior:'smooth'});};
- move();
+ const move=()=>{
+   if(!target.isConnected)return;
+   const rect=target.getBoundingClientRect();
+   const y=Math.max(0,window.scrollY+rect.top-16);
+   window.scrollTo({top:y,behavior:'smooth'});
+ };
+ requestAnimationFrame(move);
  setTimeout(move,180);
 }
 function bindArrow(){
