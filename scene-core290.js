@@ -16,8 +16,61 @@ function validate(c){
  return problems;
 }
 function generate(c,idx){
- const n=idx+1,variants=['Publikum frontal zur Kamera, Läufer mittig','Läufer leicht links, Zuschauer rechts','Läufer leicht rechts, Zuschauer links','Breiter Hintergrund mit erkennbarem Bahnhof','Frontaler Blick auf Läufer und Schild','Zuschauer im Vordergrund, Läufer dahinter','Mehrere Reaktionen im Publikum','Symmetrische Komposition','Großzügige freie Gehfläche','Statischer dokumentarischer Moment'];
- return {id:n,title:'PREMIUM '+String(n).padStart(3,'0')+' · '+c.venue+' · '+variants[idx%10],variant:variants[idx%10]};
+ const n=idx+1;
+ const variants=[
+ 'Reisende bleiben überrascht vor dem Plakat stehen',
+ 'Ein Pendler zeigt mit offener Hand auf den Plakattext',
+ 'Zwei Zuschauer diskutieren sichtbar miteinander',
+ 'Eine kleine Gruppe reagiert mit ungläubigen Blicken',
+ 'Ein Passant lacht, andere schauen fassungslos',
+ 'Zuschauer bilden einen Halbkreis auf der Kameraseite',
+ 'Menschen unterschiedlicher Altersgruppen reagieren unterschiedlich',
+ 'Eine Gruppe schaut gleichzeitig auf das erste Wort des Plakats',
+ 'Reisende im Vordergrund, Läufer statisch dahinter',
+ 'Ein Zuschauer hebt fragend beide Hände',
+ 'Eine Gruppe diskutiert gestikulierend, ohne den Läufer zu verdecken',
+ 'Publikum teilt sich links und rechts des Läufers',
+ 'Drei Zuschauer schauen einander überrascht an',
+ 'Mehrere Passanten bleiben auf Abstand und lesen das Plakat',
+ 'Ein Zuschauer deutet fassungslos auf seine eigene Brust',
+ 'Ein kleiner Zuschauerpulk reagiert mit lautem Lachen',
+ 'Ein Passant schüttelt ungläubig den Kopf',
+ 'Zuschauer zeigen offene Handflächen in Richtung Schild',
+ 'Mehrere Reisende reagieren mit sichtbarer Empörung',
+ 'Eine Gruppe diskutiert in zwei gegenüberstehenden Reihen',
+ 'Publikum schaut geschlossen zum Schild',
+ 'Ein Zuschauer spricht zu einer kleinen Gruppe',
+ 'Zuschauer stehen locker gestaffelt vor dem Läufer',
+ 'Zwei Pendler zeigen unterschiedliche Reaktionen',
+ 'Ein Zuschauer lacht, ein anderer reagiert empört',
+ 'Eine Gruppe bildet eine freie Sichtachse zum Plakat',
+ 'Publikum steht an einer sicheren breiten Gehfläche',
+ 'Ein älterer Passant schaut mit verschränkten Armen',
+ 'Jüngere Zuschauer diskutieren im Vordergrund',
+ 'Ein Zuschauer blickt erstaunt zu seinem Begleiter',
+ 'Eine Reihe von Zuschauern liest das Plakat gleichzeitig',
+ 'Zuschauer reagieren überrascht mit gehobenen Augenbrauen',
+ 'Eine Gruppe hält respektvollen Abstand zur Hauptfigur',
+ 'Passanten stehen seitlich versetzt vor der Kamera',
+ 'Zwei Zuschauer lachen über die provokante Botschaft',
+ 'Eine Gruppe zeigt sichtbare Uneinigkeit',
+ 'Ein Zuschauer öffnet fragend die Arme',
+ 'Mehrere Zuschauer sehen sich fassungslos an',
+ 'Ein Passant schaut konzentriert auf den Plakattext',
+ 'Publikum steht in einem weiten Bogen',
+ 'Ein Zuschauer deutet mit offener Hand zur Gruppe',
+ 'Eine Gruppe diskutiert lebhaft am Rand der freien Fläche',
+ 'Ein Passant reagiert kopfschüttelnd',
+ 'Zuschauer zeigen gemischte emotionale Reaktionen',
+ 'Zwei Gruppen reagieren gegensätzlich',
+ 'Publikum schaut von der Kameraseite frontal zum Plakat',
+ 'Ein Zuschauer reagiert mit offenem Mund',
+ 'Mehrere Zuschauer diskutieren miteinander',
+ 'Zuschauer stehen locker auf verschiedenen Tiefenebenen',
+ 'Eine Gruppe reagiert gleichzeitig auf den Plakattext'
+ ];
+ const variant=variants[idx%variants.length];
+ return {id:n,title:'PREMIUM '+String(n).padStart(3,'0')+' · '+c.venue+' · '+variant,variant};
 }
 function setActive(c,item){
  const {z,p}=c;
@@ -60,7 +113,7 @@ buildPrompt=function(){
  if(c.z.activeSceneSource267!=='premium'||!c.p.open)return base;
  const problems=validate(c);
  if(problems.length)return base+'\n\nSCENE VALIDATION ERROR: '+problems.join(' | ')+' DO NOT GENERATE UNTIL CORRECTED.';
- const selected=c.p.title||('Premium scene · '+c.venue);
+ const selected=(c.p.location&&normal(c.p.location)===normal(c.venue)?c.p.title:'')||('Premium scene · '+c.venue);
  base=base.replace(/^(\[REG-01\] SCENE: ).*$/m,'$1'+selected);
  base=base.replace(/^(\[REG-02\] LOCATION \/ ORT: ).*$/m,'$1'+c.venue);
  return base+'\n\n=== AUTHORITATIVE V2.9.0 SCENE LOCK ===\nEXACT VENUE: '+c.venue+'\nCATEGORY: '+c.category+'\nPOSTER: '+c.poster+'\nHOLDING: '+c.holding+'\nPROP: '+c.prop+'\nRUNNER POSITION: '+c.position+'\nEXPRESSION: '+c.expression+'\nAUDIENCE: '+c.audience+'\nREACTION: '+c.reaction+'\n'+(c.p.description||'')+'\nNo alternative location, no contradictory pose, preserve camera distance and lens.\n=== END AUTHORITATIVE SCENE LOCK ===';
