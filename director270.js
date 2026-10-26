@@ -9,13 +9,37 @@ function jumpScene273(type){const go=()=>{let el=type==='crowd'?document.querySe
 /* Global floating back-to-top button, independent of director tab rendering. */
 function setupBackToTop275(){
   if(document.getElementById('backToTop275'))return;
-  const b=document.createElement('button');
-  b.type='button';b.id='backToTop275';b.textContent='↑';b.setAttribute('aria-label','Zum Seitenanfang');b.title='Nach oben';
-  b.style.cssText='position:fixed;right:max(14px,env(safe-area-inset-right));bottom:max(24px,env(safe-area-inset-bottom));z-index:9999;width:52px;height:52px;border-radius:50%;border:3px solid #fc4c02;background:#222832;color:#fff;font-size:30px;font-weight:900;box-shadow:0 4px 18px #0009;display:none;align-items:center;justify-content:center;cursor:pointer';
-  b.onclick=()=>{try{window.scrollTo({top:0,behavior:'smooth'});}catch(e){window.scrollTo(0,0);}};
-  document.body.appendChild(b);
-  const update=()=>{b.style.display=(window.scrollY>220?'flex':'none');};
-  window.addEventListener('scroll',update,{passive:true});window.addEventListener('pageshow',update);update();
+  const key='stravaBackToTop277';
+  const defaults={right:14,bottom:24};
+  const b=document.createElement('button'),reset=document.createElement('button');
+  b.type='button';b.id='backToTop275';b.textContent='↑';b.setAttribute('aria-label','Zum Seitenanfang');b.title='Nach oben · zum Verschieben halten';
+  b.style.cssText='position:fixed;z-index:9999;width:56px;height:56px;border-radius:50%;border:3px solid #fc4c02;background:#222832;color:#fff;font-size:32px;font-weight:900;box-shadow:0 4px 18px #0009;display:none;align-items:center;justify-content:center;cursor:pointer;touch-action:none';
+  reset.type='button';reset.id='resetBackToTop277';reset.textContent='↺ Standard';
+  reset.setAttribute('aria-label','Pfeilposition auf Standard zurücksetzen');
+  reset.style.cssText='position:fixed;z-index:9998;border:1px solid #fc4c02;border-radius:22px;padding:8px 10px;background:#222832;color:#fff;font-size:12px;font-weight:700;display:none;box-shadow:0 4px 18px #0008;cursor:pointer';
+  let pos={...defaults};
+  try{const saved=JSON.parse(localStorage.getItem(key));if(saved&&Number.isFinite(saved.right)&&Number.isFinite(saved.bottom))pos={right:saved.right,bottom:saved.bottom};}catch(e){}
+  function position(){
+    const safeRight=Math.max(12,Math.min(pos.right,Math.max(12,window.innerWidth-70)));
+    const safeBottom=Math.max(20,Math.min(pos.bottom,Math.max(20,window.innerHeight-85)));
+    pos={right:safeRight,bottom:safeBottom};
+    b.style.right=safeRight+'px';b.style.bottom=safeBottom+'px';
+    reset.style.right=Math.max(8,safeRight+62)+'px';
+    if(safeRight+180>window.innerWidth)reset.style.right='auto',reset.style.left=Math.max(8,window.innerWidth-safeRight-174)+'px';
+    else reset.style.left='auto';
+    reset.style.bottom=(safeBottom+11)+'px';
+  }
+  let down=null,dragged=false;
+  b.addEventListener('pointerdown',e=>{down={x:e.clientX,y:e.clientY,right:pos.right,bottom:pos.bottom};dragged=false;try{b.setPointerCapture(e.pointerId);}catch(err){}});
+  b.addEventListener('pointermove',e=>{if(!down)return;const dx=e.clientX-down.x,dy=e.clientY-down.y;if(Math.abs(dx)+Math.abs(dy)>7)dragged=true;if(dragged){pos.right=down.right-dx;pos.bottom=down.bottom-dy;position();}});
+  b.addEventListener('pointerup',()=>{if(down&&dragged){try{localStorage.setItem(key,JSON.stringify(pos));}catch(e){}}down=null;});
+  b.addEventListener('pointercancel',()=>{down=null;});
+  b.onclick=()=>{if(dragged){dragged=false;return;}try{window.scrollTo({top:0,behavior:'smooth'});}catch(e){window.scrollTo(0,0);}};
+  reset.onclick=()=>{pos={...defaults};try{localStorage.removeItem(key);}catch(e){}position();};
+  document.body.appendChild(b);document.body.appendChild(reset);
+  const update=()=>{const visible=window.scrollY>220;b.style.display=visible?'flex':'none';reset.style.display=visible?'block':'none';};
+  window.addEventListener('scroll',update,{passive:true});window.addEventListener('pageshow',update);window.addEventListener('resize',position);
+  position();update();
 }
 setupBackToTop275();
 
