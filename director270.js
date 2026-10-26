@@ -12,7 +12,7 @@ function setupBackToTop275(){
   const key='stravaBackToTop277';
   const defaults={right:14,bottom:24};
   const b=document.createElement('button'),reset=document.createElement('button');
-  b.type='button';b.id='backToTop275';b.textContent='↑';b.setAttribute('aria-label','Zum Seitenanfang');b.title='Nach oben · zum Verschieben halten';
+  b.type='button';b.id='backToTop275';b.textContent='↑';b.setAttribute('aria-label','Zu Werte aktualisieren und Master-Prompt kopieren');b.title='Zu den Prompt-Schnellzugriffen · zum Verschieben halten';
   b.style.cssText='position:fixed;z-index:9999;width:56px;height:56px;border-radius:50%;border:3px solid #fc4c02;background:#222832;color:#fff;font-size:32px;font-weight:900;box-shadow:0 4px 18px #0009;display:none;align-items:center;justify-content:center;cursor:pointer;touch-action:none';
   reset.type='button';reset.id='resetBackToTop277';reset.textContent='↺ Standard';
   reset.setAttribute('aria-label','Pfeilposition auf Standard zurücksetzen');
@@ -35,10 +35,10 @@ function setupBackToTop275(){
   b.addEventListener('pointermove',e=>{if(!down)return;const dx=e.clientX-down.x,dy=e.clientY-down.y;if(Math.abs(dx)+Math.abs(dy)>7)dragged=true;if(dragged){pos.right=down.right-dx;pos.bottom=down.bottom-dy;position();}});
   b.addEventListener('pointerup',()=>{if(down&&dragged){try{localStorage.setItem(key,JSON.stringify(pos));}catch(e){}}down=null;});
   b.addEventListener('pointercancel',()=>{down=null;});
-  b.onclick=()=>{if(dragged){dragged=false;return;}try{window.scrollTo({top:0,behavior:'smooth'});}catch(e){window.scrollTo(0,0);}};
+  b.onclick=()=>{if(dragged){dragged=false;return;}const target=document.getElementById('bottomActions279')||document.getElementById('directorRefresh267');if(target){target.scrollIntoView({behavior:'smooth',block:'center'});}else{try{window.scrollTo({top:document.documentElement.scrollHeight,behavior:'smooth'});}catch(e){window.scrollTo(0,document.documentElement.scrollHeight);}}};
   reset.onclick=()=>{dragged=false;down=null;pos={...defaults};try{localStorage.removeItem(key);}catch(e){}position();};
   document.body.appendChild(b);document.body.appendChild(reset);
-  const update=()=>{const visible=window.scrollY>220;b.style.display=visible?'flex':'none';reset.style.display=visible?'block':'none';};
+  const update=()=>{const visible=state.world==='sign';b.style.display=visible?'flex':'none';reset.style.display=visible?'block':'none';};
   window.addEventListener('scroll',update,{passive:true});window.addEventListener('pageshow',update);window.addEventListener('resize',position);
   position();update();
 }
