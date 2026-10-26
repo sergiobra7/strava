@@ -65,6 +65,7 @@ buildPrompt=function(){
  base=base.replace(/^(\[REG-02\] LOCATION \/ ORT: ).*$/m,'$1'+c.venue);
  return base+'\n\n=== AUTHORITATIVE V2.9.0 SCENE LOCK ===\nEXACT VENUE: '+c.venue+'\nCATEGORY: '+c.category+'\nPOSTER: '+c.poster+'\nHOLDING: '+c.holding+'\nPROP: '+c.prop+'\nRUNNER POSITION: '+c.position+'\nEXPRESSION: '+c.expression+'\nAUDIENCE: '+c.audience+'\nREACTION: '+c.reaction+'\n'+(c.p.description||'')+'\nNo alternative location, no contradictory pose, preserve camera distance and lens.\n=== END AUTHORITATIVE SCENE LOCK ===';
 };
+document.addEventListener('change',e=>{if(e.target&&['place269','cat269','aud269','react269'].includes(e.target.id)){setTimeout(()=>{if(state.world==='sign'&&state.tab==='Smart Director')render();},0);}},true);
 window.stravaSceneCore290={config,validate,generate};
 render();
 })();
