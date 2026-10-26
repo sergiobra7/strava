@@ -86,7 +86,14 @@ function premium(){
  const offset=((Number(c.p.rotation)||0)%5)*10;
  const list=problems.length?[]:Array.from({length:10},(_,i)=>generate(c,offset+i));
  cards.innerHTML=problems.length?'<div role="alert" style="border:2px solid #ff9b54;border-radius:10px;padding:14px">'+problems.map(esc).join('<br>')+' Bitte die markierten Einstellungen oben korrigieren. Keine widersprüchlichen Vorschläge.</div>':list.map((item,i)=>'<button type="button" class="scene270" data-core290="'+i+'" style="display:block;width:100%;text-align:left;margin:10px 0"><strong>'+esc(item.title)+'</strong><small>Ort: '+esc(c.venue)+'<br>Plakat: '+esc(c.poster)+'<br>Requisite: '+esc(c.prop)+'<br>Plakathaltung: '+esc(c.holding)+'<br>Position: '+esc(c.position)+'<br>Publikum: '+esc(c.audience)+'<br>Reaktion: '+esc(c.reaction)+'</small></button>').join('');
- cards.querySelectorAll('[data-core290]').forEach(b=>b.onclick=()=>setActive(config(),list[Number(b.dataset.core290)]));
+ cards.querySelectorAll('[data-core290]').forEach(b=>{
+  const item=list[Number(b.dataset.core290)];
+  const active=c.z.activeSceneSource267==='premium'&&Number(c.p.scene)===20000+item.id;
+  b.classList.toggle('selected270',active);
+  b.setAttribute('aria-pressed',String(active));
+  if(active){b.style.border='3px solid #fc4c02';b.style.background='#493025';b.style.boxShadow='0 0 0 2px rgba(252,76,2,.28)';}
+  b.onclick=()=>setActive(config(),item);
+ });
  // Avoid showing independent matrix suggestions while Premium is the active mode.
  const matrix=document.getElementById('matrix280');if(matrix)matrix.style.display='none';
 }
