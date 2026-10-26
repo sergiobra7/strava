@@ -35,7 +35,7 @@ function setupBackToTop275(){
   b.addEventListener('pointerup',()=>{if(down&&dragged){try{localStorage.setItem(key,JSON.stringify(pos));}catch(e){}}down=null;});
   b.addEventListener('pointercancel',()=>{down=null;});
   b.onclick=()=>{if(dragged){dragged=false;return;}try{window.scrollTo({top:0,behavior:'smooth'});}catch(e){window.scrollTo(0,0);}};
-  reset.onclick=()=>{pos={...defaults};try{localStorage.removeItem(key);}catch(e){}position();};
+  reset.onclick=()=>{dragged=false;down=null;pos={...defaults};try{localStorage.removeItem(key);}catch(e){}position();};
   document.body.appendChild(b);document.body.appendChild(reset);
   const update=()=>{const visible=window.scrollY>220;b.style.display=visible?'flex':'none';reset.style.display=visible?'block':'none';};
   window.addEventListener('scroll',update,{passive:true});window.addEventListener('pageshow',update);window.addEventListener('resize',position);
