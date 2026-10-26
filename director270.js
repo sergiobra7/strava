@@ -16,7 +16,7 @@ function setupBackToTop275(){
   b.style.cssText='position:fixed;z-index:9999;width:56px;height:56px;border-radius:50%;border:3px solid #fc4c02;background:#222832;color:#fff;font-size:32px;font-weight:900;box-shadow:0 4px 18px #0009;display:none;align-items:center;justify-content:center;cursor:pointer;touch-action:none';
   reset.type='button';reset.id='resetBackToTop277';reset.textContent='↺ Standard';
   reset.setAttribute('aria-label','Pfeilposition auf Standard zurücksetzen');
-  reset.style.cssText='position:fixed;z-index:9998;border:1px solid #fc4c02;border-radius:22px;padding:8px 10px;background:#222832;color:#fff;font-size:12px;font-weight:700;display:none;box-shadow:0 4px 18px #0008;cursor:pointer';
+  reset.style.cssText='position:fixed;top:max(12px,env(safe-area-inset-top));right:max(12px,env(safe-area-inset-right));bottom:auto;left:auto;z-index:9998;border:1px solid #fc4c02;border-radius:22px;padding:8px 10px;background:#222832;color:#fff;font-size:12px;font-weight:700;display:none;box-shadow:0 4px 18px #0008;cursor:pointer';
   let pos={...defaults};
   try{const saved=JSON.parse(localStorage.getItem(key));if(saved&&Number.isFinite(saved.right)&&Number.isFinite(saved.bottom))pos={right:saved.right,bottom:saved.bottom};}catch(e){}
   function position(){
@@ -24,10 +24,11 @@ function setupBackToTop275(){
     const safeBottom=Math.max(20,Math.min(pos.bottom,Math.max(20,window.innerHeight-85)));
     pos={right:safeRight,bottom:safeBottom};
     b.style.right=safeRight+'px';b.style.bottom=safeBottom+'px';
-    reset.style.right=Math.max(8,safeRight+62)+'px';
-    if(safeRight+180>window.innerWidth)reset.style.right='auto',reset.style.left=Math.max(8,window.innerWidth-safeRight-174)+'px';
-    else reset.style.left='auto';
-    reset.style.bottom=(safeBottom+11)+'px';
+    /* Reset is deliberately anchored top-right, independent of the movable arrow. */
+    reset.style.right='max(12px,env(safe-area-inset-right))';
+    reset.style.left='auto';
+    reset.style.top='max(12px,env(safe-area-inset-top))';
+    reset.style.bottom='auto';
   }
   let down=null,dragged=false;
   b.addEventListener('pointerdown',e=>{down={x:e.clientX,y:e.clientY,right:pos.right,bottom:pos.bottom};dragged=false;try{b.setPointerCapture(e.pointerId);}catch(err){}});
@@ -85,7 +86,31 @@ function field(k,label,arr){let v=cfg()[k]||arr[0];return '<label>'+esc270(label
 function card(c,i){let active=state.sign258.activeSceneSource267==='premium'&&cfg().scene===i;return '<button class="scene270 '+(active?'selected270':'')+'" data-scene270="'+i+'" aria-pressed="'+active+'"><strong>'+esc270(c[0])+'</strong><small>Ort: '+esc270(c[1])+'<br>Plakat: '+esc270(c[2])+'<br>Requisite: '+esc270(c[3])+'<br>Plakathaltung: '+esc270(c[4])+'<br>Hauptfigur: '+esc270(c[5])+'<br>Mimik: '+esc270(c[6])+'<br>Publikum: '+esc270(c[7])+' · '+esc270(c[8])+'</small></button>';}
 function panel(){let p=cfg(),rotation=Number(p.rotation)||0,ordered=SC.map((c,i)=>({c,i}));ordered=ordered.slice(rotation%ordered.length).concat(ordered.slice(0,rotation%ordered.length));if(Number.isInteger(p.scene)&&!ordered.slice(0,10).some(o=>o.i===p.scene)){const active=ordered.find(o=>o.i===p.scene);if(active)ordered=[active,...ordered.filter(o=>o.i!==p.scene)];}return '<div id="premiumPanel270"><h3 style="color:#ff8b5b">PREMIUM-SZENEN · PLAKATE & REQUISITEN</h3><p>Eigenständige Fotomotive mit konkreter Situation. Alte Szenenvorschläge und Menschenmassen bleiben unverändert.</p><details><summary style="padding:10px;font-weight:800">PLAKAT / REQUISITE / HALTUNG MANUELL ANPASSEN</summary>'+field('poster','Plakatvariante',P)+field('prop','Gegenstand / Requisite',R)+field('holding','Plakathaltung',H)+field('position','Position Hauptfigur',L)+field('expression','Mimik und Blick',M)+field('audience','Publikum',A)+field('reaction','Reaktion',X)+'</details><h3>PREMIUM-EMPFEHLUNGEN</h3><div id="premiumCards270">'+ordered.slice(0,10).map(o=>card(o.c,o.i)).join('')+'</div><button id="refreshPremium270" class="action270">10 WEITERE EMPFEHLUNGEN</button><p style="font-size:12px;color:#bfc9d2">Auswahl mit orangefarbenem Rahmen. Kamera, Gesicht, Outfit, Schuhfoto und manuelle Prioritäten bleiben erhalten.</p></div>';}
 function bind(){document.querySelectorAll('[data-scene270]').forEach(el=>el.onclick=()=>{const i=Number(el.dataset.scene270),c=SC[i],p=cfg();p.scene=i;p.title=c[0];p.location=c[1];p.poster=c[2];p.prop=c[3];p.holding=c[4];p.position=c[5];p.expression=c[6];p.audience=c[7];p.reaction=c[8];p.description='SCENE '+c[0]+'. EXACT LOCATION: '+c[1]+'. POSTER: '+c[2]+'. PHYSICAL PROP: '+c[3]+'. POSTER HOLDING: '+c[4]+'. RUNNER POSITION: '+c[5]+'. EXPRESSION: '+c[6]+'. AUDIENCE: '+c[7]+'. REACTION: '+c[8]+'. Static realistic documentary photograph. Use a stable, safe construction. Keep poster lettering and runner face unobstructed.';state.sign258.activeSceneSource267='premium';state.sign258.activeSceneId267=i;cfg().open=true;save();render();jump270('premiumPanel270');});document.querySelectorAll('[data-premium270]').forEach(el=>{el.classList.add('selected270');el.onchange=()=>{const p=cfg();p[el.dataset.premium270]=el.value;p.description='';save();render();jump270('premiumPanel270');};});document.getElementById('refreshPremium270').onclick=()=>{cfg().rotation=(Number(cfg().rotation)||0)+1;save();render();jump270('premiumPanel270');};}
-render=function(){oldRender();if(state.world==='sign'&&(state.tab==='Smart Director'||state.tab==='Ort & Kamera')){const v=document.getElementById('view');if(v){v.insertAdjacentHTML('afterbegin',bakeryPanel276());bindBakery276();}}if(state.world!=='sign'||state.tab!=='Smart Director')return;const v=document.getElementById('view');if(!v)return;const oldButtons=v.querySelector('[data-smartsub267="crowd"]');if(!oldButtons)return;const row=oldButtons.parentElement;const button=document.createElement('button');button.id='premiumTab270';button.type='button';button.textContent='Premium-Szenen · Plakate & Requisiten';button.className=cfg().open?'active':'';if(cfg().open){row.querySelectorAll('[data-smartsub267]').forEach(b=>{b.style.background='#303845';b.style.border='2px solid #485261';b.setAttribute('aria-pressed','false');});button.setAttribute('aria-pressed','true');}else{button.setAttribute('aria-pressed','false');row.querySelectorAll('[data-smartsub267]').forEach(b=>{const active=b.dataset.smartsub267===(state.sign258.smartSubtab267||'standard');b.style.background=active?'#fc4c02':'#303845';b.style.border=active?'3px solid #fc4c02':'2px solid #485261';b.setAttribute('aria-pressed',String(active));});}row.append(button);button.onclick=()=>{cfg().open=true;save();render();jump270('premiumPanel270');};row.querySelectorAll('[data-smartsub267]').forEach(b=>b.addEventListener('click',()=>{cfg().open=false;save();jumpScene273(b.dataset.smartsub267);},true));if(!cfg().open){const last=state.sign258.lastCrowd273;document.querySelectorAll('[data-crowd267]').forEach(el=>{const selected=state.sign258.activeSceneSource267==='crowd'&&Number(el.dataset.crowd267)===Number(state.sign258.activeSceneId267);el.style.border=selected?'3px solid #fc4c02':'';el.setAttribute('aria-pressed',String(selected));});return;}const top=row.parentElement.parentElement;let node=top.nextElementSibling;while(node){node.style.display='none';node=node.nextElementSibling;}top.insertAdjacentHTML('afterend',panel());bind();};
+function bottomActions279(){
+ if(state.world!=='sign')return;
+ const v=document.getElementById('view');if(!v)return;
+ const bar=document.createElement('section');
+ bar.id='bottomActions279';
+ bar.style.cssText='margin:28px 0 70px;padding:16px;border:2px solid #fc4c02;border-radius:12px;background:#171c24;display:flex;gap:12px;flex-wrap:wrap';
+ bar.innerHTML='<button type="button" id="refreshBottom279" class="btn secondary" style="flex:1 1 240px;min-height:52px">↻ Werte aktualisieren</button><button type="button" id="copyBottom279" class="btn" style="flex:1 1 240px;min-height:52px">⧉ Master-Prompt direkt kopieren</button>';
+ v.appendChild(bar);
+ document.getElementById('refreshBottom279').onclick=()=>{
+   const original=document.getElementById('directorRefresh267');
+   if(original&&typeof original.onclick==='function'){original.click();return;}
+   save();render();
+ };
+ document.getElementById('copyBottom279').onclick=async e=>{
+   const original=document.getElementById('directorCopy267');
+   if(original&&typeof original.onclick==='function'){original.click();e.currentTarget.textContent='✓ Kopiervorgang gestartet';return;}
+   const txt=buildPrompt();
+   try{await navigator.clipboard.writeText(txt);}catch(err){
+     const box=document.createElement('textarea');box.value=txt;document.body.appendChild(box);box.select();
+     const ok=document.execCommand('copy');box.remove();if(!ok){alert('Kopieren nicht möglich. Bitte Master-Prompt im Reiter „Prompt & Projekt“ kopieren.');return;}
+   }
+   e.currentTarget.textContent='✓ Master-Prompt kopiert';
+ };
+}
+render=function(){oldRender();bottomActions279();if(state.world==='sign'&&(state.tab==='Smart Director'||state.tab==='Ort & Kamera')){const v=document.getElementById('view');if(v){v.insertAdjacentHTML('afterbegin',bakeryPanel276());bindBakery276();}}if(state.world!=='sign'||state.tab!=='Smart Director')return;const v=document.getElementById('view');if(!v)return;const oldButtons=v.querySelector('[data-smartsub267="crowd"]');if(!oldButtons)return;const row=oldButtons.parentElement;const button=document.createElement('button');button.id='premiumTab270';button.type='button';button.textContent='Premium-Szenen · Plakate & Requisiten';button.className=cfg().open?'active':'';if(cfg().open){row.querySelectorAll('[data-smartsub267]').forEach(b=>{b.style.background='#303845';b.style.border='2px solid #485261';b.setAttribute('aria-pressed','false');});button.setAttribute('aria-pressed','true');}else{button.setAttribute('aria-pressed','false');row.querySelectorAll('[data-smartsub267]').forEach(b=>{const active=b.dataset.smartsub267===(state.sign258.smartSubtab267||'standard');b.style.background=active?'#fc4c02':'#303845';b.style.border=active?'3px solid #fc4c02':'2px solid #485261';b.setAttribute('aria-pressed',String(active));});}row.append(button);button.onclick=()=>{cfg().open=true;save();render();jump270('premiumPanel270');};row.querySelectorAll('[data-smartsub267]').forEach(b=>b.addEventListener('click',()=>{cfg().open=false;save();jumpScene273(b.dataset.smartsub267);},true));if(!cfg().open){const last=state.sign258.lastCrowd273;document.querySelectorAll('[data-crowd267]').forEach(el=>{const selected=state.sign258.activeSceneSource267==='crowd'&&Number(el.dataset.crowd267)===Number(state.sign258.activeSceneId267);el.style.border=selected?'3px solid #fc4c02':'';el.setAttribute('aria-pressed',String(selected));});return;}const top=row.parentElement.parentElement;let node=top.nextElementSibling;while(node){node.style.display='none';node=node.nextElementSibling;}top.insertAdjacentHTML('afterend',panel());bind();};
 buildPrompt=function(){
  let base=oldPrompt();
  if(state.world!=='sign')return base;
