@@ -1,6 +1,6 @@
 {
-  "name": "STRAVA V2.9.6",
-  "short_name": "STRAVA V2.9.6",
+  "name": "STRAVA V2.9.7",
+  "short_name": "STRAVA V2.9.7",
   "start_url": "./?source=homescreen",
   "scope": "./",
   "display": "standalone",
