@@ -41,6 +41,21 @@ function panel(){const f=store(),items=candidates(),start=(Number(f.rotation)||0
 function apply(c){const f=store(),z=state.sign258,p=z.premium270||(z.premium270={});f.selected=c.id;z.activeSceneSource267='matrix';z.activeSceneId267=c.id;z.location=c.location;z.crowdSelected267=null;z.crowdDescription267='';p.open=false;p.title='';p.description='';if(!z.manualSignPose284){state.sign.runnerPose=c.pose;state.sign.signType=c.sign;z.signMount=c.sign;}save();render();}
 const priorRender=render;
 render=function(){priorRender();if(state.world!=='sign'||state.tab!=='Smart Director')return;const v=document.getElementById('view');if(!v)return;const nav=v.querySelector('[data-smartsub267="crowd"]');if(!nav)return;const row=nav.parentElement;row.style.cssText+=';display:flex;flex-wrap:wrap;gap:8px;width:100%';const premium=document.getElementById('premiumTab270');if(premium)row.appendChild(premium);
+ /* Place all three primary modes immediately below the Smart Director heading,
+    ahead of camera and filter sections, including on narrow mobile screens. */
+ const heading=[...v.querySelectorAll('h1,h2,h3,b,strong')].find(el=>/smart director/i.test(el.textContent||''));
+ const destination=heading?.closest('.notice,section,.card')||v.firstElementChild;
+ const navBar=document.createElement('div');
+ navBar.id='primaryModes281';
+ navBar.style.cssText='display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px;margin:12px 0;padding:10px;border:2px solid #fc4c02;border-radius:12px;background:#181d25;width:100%;box-sizing:border-box';
+ [...row.querySelectorAll('[data-smartsub267]'),...(premium?[premium]:[])].forEach(el=>{
+   el.style.cssText+=';min-width:0;width:100%;padding:11px 5px;font-size:clamp(10px,2.7vw,14px);white-space:normal;line-height:1.25;overflow-wrap:anywhere';
+   if(el.dataset.smartsub267==='standard')el.textContent='Normale Vorschläge';
+   if(el.dataset.smartsub267==='crowd')el.textContent='Menschenmasse';
+   if(el===premium)el.textContent='Premium';
+   navBar.appendChild(el);
+ });
+ if(destination)destination.insertAdjacentElement('afterend',navBar);else v.insertAdjacentElement('afterbegin',navBar);
  const outer=row.parentElement;outer.style.display='flex';outer.style.flexDirection='column';
  const matrix=document.createElement('div');matrix.innerHTML=panel();outer.insertAdjacentElement('afterend',matrix);
  const f=store();for(const [id,key] of [['matrixEvent280','event'],['matrixReaction280','reaction'],['matrixProp280','prop']]){const el=document.getElementById(id);if(el)el.onchange=()=>{f[key]=key==='event'?Number(el.value):el.value;f.rotation=0;save();render();};}
