@@ -116,6 +116,11 @@ buildPrompt=function(){
  const selected=(c.p.location&&normal(c.p.location)===normal(c.venue)?c.p.title:'')||('Premium scene · '+c.venue);
  base=base.replace(/^(\[REG-01\] SCENE: ).*$/m,'$1'+selected);
  base=base.replace(/^(\[REG-02\] LOCATION \/ ORT: ).*$/m,'$1'+c.venue);
+ // The top-level REG fields must agree with the active Premium selection,
+ // not merely a later appended instruction block.
+ base=base.replace(/^(\[REG-03\] MAIN RUNNER \/ POSE: ).*$/m,'$1'+c.position+'; '+c.holding);
+ base=base.replace(/^(\[REG-09\][^:]*: ).*$/m,'$1'+c.poster);
+ base=base.replace(/\n\n=== ACTIVE SCENE MATRIX V2\.8\.0 — AUTHORITATIVE ===[\s\S]*?=== END ACTIVE SCENE MATRIX ===/g,'');
  return base+'\n\n=== AUTHORITATIVE V2.9.0 SCENE LOCK ===\nEXACT VENUE: '+c.venue+'\nCATEGORY: '+c.category+'\nPOSTER: '+c.poster+'\nHOLDING: '+c.holding+'\nPROP: '+c.prop+'\nRUNNER POSITION: '+c.position+'\nEXPRESSION: '+c.expression+'\nAUDIENCE: '+c.audience+'\nREACTION: '+c.reaction+'\n'+(c.p.description||'')+'\nNo alternative location, no contradictory pose, preserve camera distance and lens.\n=== END AUTHORITATIVE SCENE LOCK ===';
 };
 document.addEventListener('change',e=>{if(e.target&&['place269','cat269','aud269','react269'].includes(e.target.id)){setTimeout(()=>{if(state.world==='sign'&&state.tab==='Smart Director')render();},0);}},true);
