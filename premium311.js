@@ -38,7 +38,7 @@ function drawPremiumFigures(){
  body.querySelector('#premiumCrowd311').onchange=e=>{settings.forceAudience277=e.target.checked;remember()};
  const slot=body.querySelector('#premiumSlot320');
  if(slot)slot.onchange=e=>{
-  if(e.target.value==='reference'){f.reference320=true;f.enabled=true;f.type='Eigene Figur aus beigefügtem Full-Body-Referenzfoto';f.outfit258={kind:'profession',preset:'Individuell',cap:'Wie Referenzfoto',coat:'Wie Referenzfoto',top:'Wie Referenzfoto',bottom:'Wie Referenzfoto',shoes:'Wie Referenzfoto',palette:'Wie Referenzfoto',accessory:'Keine',position:f.outfit258?.position||'Automatisch',custom:'IDENTITY AND COMPLETE OUTFIT FROM ATTACHED FULL-BODY PHOTO ONLY. Never use former character archetype.'}}
+  if(e.target.value==='reference'){figures.forEach((other,i)=>{if(i!==index){other.enabled=false;other.reference320=false}});f.reference320=true;f.enabled=true;f.type='Eigene Figur aus beigefügtem Full-Body-Referenzfoto';f.outfit258={kind:'profession',preset:'Individuell',cap:'Wie Referenzfoto',coat:'Wie Referenzfoto',top:'Wie Referenzfoto',bottom:'Wie Referenzfoto',shoes:'Wie Referenzfoto',palette:'Wie Referenzfoto',accessory:'Keine',position:f.outfit258?.position||'Automatisch',custom:'IDENTITY AND COMPLETE OUTFIT FROM ATTACHED FULL-BODY PHOTO ONLY. Never use former character archetype.'}}
   else{settings.premiumSlot320=Number(e.target.value)}
   remember();
  };
