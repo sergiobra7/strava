@@ -23,14 +23,13 @@ function bind(){
  if(!area||area.dataset.fixed319)return;
  area.dataset.fixed319='1';
  area.addEventListener('input',e=>{
-  e.stopImmediatePropagation();
+  // Keep the original BS-TX input handler running: it refreshes the live preview.
   const previous=state.sign.signText||'',next=area.value;
   state.sign.wordColors=mapColors(previous,next,state.sign.wordColors||{});
   state.sign.signText=next;
   state.sign258.selectedWords=[];
   save();updateTokens();
-  const preview=document.getElementById('liveTextPreview307');
-  if(preview&&typeof preview258==='function')preview.innerHTML=preview258();
+  // The original sign258 input handler now refreshes liveTextPreview307 after this capture listener.
  },true);
  const reset=document.getElementById('resetColors258');
  if(reset&&!document.getElementById('restoreDefault319')){
