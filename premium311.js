@@ -29,23 +29,20 @@ function drawPremiumFigures(){
  const select=(key,label)=>'<label style="display:block;margin:9px 0">'+escapeHtml(label)+'<select data-premium-control320="'+key+'" style="width:100%;padding:11px;background:#111;color:white;border:1px solid #666;border-radius:7px">'+optionsFor(key)+'</select></label>';
  const body=box.querySelector('#premiumCastBody311');
  body.innerHTML='<label style="display:block;margin:12px 0"><input type="checkbox" id="premiumCrowd311" '+(settings.forceAudience277?'checked':'')+'> Menschenmasse einschalten</label>'+
- '<label style="display:block;margin:12px 0">Figurenplatz<select id="premiumSlot320" style="width:100%;padding:12px;background:#111;color:white;border:1px solid #666;border-radius:7px">'+figures.map((figure,i)=>'<option value="'+i+'" '+(i===index?'selected':'')+'>Figur '+(i+1)+' · '+escapeHtml(figure.reference320?'Eigene Figur (Referenzfoto)':figure.type)+'</option>').join('')+'</select></label>'+
- (f?'<label style="display:block;margin:12px 0">Figur / Charakter<select id="premiumCharacter320" style="width:100%;padding:12px;background:#111;color:white;border:1px solid #666;border-radius:7px">'+
- '<option value="__reference__" '+(f.reference320?'selected':'')+'>Eigene Figur · Upload im finalen Prompt</option>'+
- [...new Set([f.type,...(typeof ALL_CHARACTERS!=='undefined'?ALL_CHARACTERS:[]).map(item=>item.name)])].map(name=>'<option value="'+escapeHtml(name)+'" '+(!f.reference320&&f.type===name?'selected':'')+'>'+escapeHtml(name)+'</option>').join('')+'</select></label>'+
- '<label style="display:block;margin:12px 0"><input type="checkbox" id="premiumEnabled320" '+(f.enabled?'checked':'')+'> Diese Figur einschalten</label>'+
+ '<label style="display:block;margin:12px 0">Figur auswählen<select id="premiumSlot320" style="width:100%;padding:12px;background:#111;color:white;border:1px solid #666;border-radius:7px">'+figures.map((figure,i)=>'<option value="'+i+'" '+(i===index&&!f?.reference320?'selected':'')+'>Figur '+(i+1)+' · '+escapeHtml(figure.type)+'</option>').join('')+'<option value="reference" '+(f?.reference320?'selected':'')+'>Eigene Figur · Full-Body-Foto im finalen Prompt</option></select></label>'+
+ (f? '<label style="display:block;margin:12px 0"><input type="checkbox" id="premiumEnabled320" '+(f.enabled?'checked':'')+'> Diese Figur einschalten</label>'+
  (f.reference320?'<label style="display:block;margin:12px 0">Referenzname<input id="premiumReferenceName320" style="width:100%;padding:11px" value="'+escapeHtml(f.referenceName320||'Meine Full-Body-Figur')+'"></label><p style="color:#adb4c0">Das Full-Body-Foto erst zusammen mit dem fertigen Master-Prompt anhängen. Kein Datei-Upload im Generator.</p>':'')+
  (f.enabled?select('pose','Pose / Körperhaltung')+select('reaction','Mimik / Reaktion')+select('gesture','Handgeste')+select('target','Blickrichtung')+select('position','Position')+select('prop','Requisit'):''):'<p>Keine Nebenfiguren vorhanden.</p>')+
  '<p style="font-size:12px;color:#adb4c0">Die Figurenplätze bleiben mit Nebenfiguren synchronisiert. Andere Figuren bleiben beim Wechsel erhalten.</p>';
  const remember=()=>{settings.lastChange310='Premium · Figurenregie';save();render()};
  body.querySelector('#premiumCrowd311').onchange=e=>{settings.forceAudience277=e.target.checked;remember()};
- const slot=body.querySelector('#premiumSlot320');if(slot)slot.onchange=e=>{settings.premiumSlot320=Number(e.target.value);remember()};
- if(!f)return;
- body.querySelector('#premiumCharacter320').onchange=e=>{
-  if(e.target.value==='__reference__'){f.reference320=true;f.enabled=true}
-  else{f.reference320=false;f.type=e.target.value}
+ const slot=body.querySelector('#premiumSlot320');
+ if(slot)slot.onchange=e=>{
+  if(e.target.value==='reference'){f.reference320=true;f.enabled=true}
+  else{settings.premiumSlot320=Number(e.target.value)}
   remember();
  };
+ if(!f)return;
  body.querySelector('#premiumEnabled320').onchange=e=>{f.enabled=e.target.checked;remember()};
  const refName=body.querySelector('#premiumReferenceName320');
  if(refName)refName.oninput=e=>{f.referenceName320=e.target.value;save()};
