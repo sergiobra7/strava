@@ -16,7 +16,7 @@ function install(){
  const caption=document.createElement('label');caption.textContent='HEX-Farbe';caption.style.cssText='display:block';
  const hex=document.createElement('input');hex.type='text';hex.value=picker.value;hex.placeholder='#FFFFFF';hex.style.cssText='display:block;width:100%;padding:12px;background:#0b0d11;color:white;border:1px solid #505866;border-radius:8px;margin-top:8px';caption.append(hex);panel.append(caption);
  const hint=document.createElement('p');hint.style.cssText='color:#a7b0bc;font-size:13px';hint.textContent='Logo der ausgewählten Sportmarke: '+(c.brand||'Neutral')+'. Unabhängig von Oberteil- und Hosenfarbe.';panel.append(hint);
- topLabel.parentElement.insertBefore(panel,topLabel.nextSibling);
+ topLabel.parentElement.parentElement.insertBefore(panel,topLabel.parentElement.nextSibling);
  const persist=()=>{save()};
  check.onchange=()=>{c.topLogoVisible314=check.checked;persist()};
  picker.oninput=()=>{c.topLogoColor314=picker.value;hex.value=picker.value;persist()};
