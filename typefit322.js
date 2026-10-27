@@ -10,13 +10,13 @@ function fit(){
  if(!rows.length)return;
  board.style.width='100%';board.style.maxWidth='none';board.style.minHeight='0';
  board.style.height='auto';board.style.aspectRatio='3 / 4';
- board.style.padding='12px 10px';board.style.boxSizing='border-box';
+ board.style.padding='4% 4%';board.style.boxSizing='border-box';
  board.style.display='flex';board.style.alignItems='center';board.style.justifyContent='center';
  board.style.overflow='hidden';
  block.style.display='block';block.style.width='100%';block.style.maxWidth='100%';
  block.style.flex='none';block.style.textAlign='center';block.style.lineHeight='1.04';
  block.style.letterSpacing='-.025em';block.style.overflowWrap='normal';
- const maxW=board.clientWidth-28,maxH=board.clientHeight-30;
+ const maxW=board.clientWidth-board.clientWidth*.08-4,maxH=board.clientHeight-board.clientHeight*.08-4;
  if(maxW<50||maxH<50)return;
  const nonempty=lines.filter(t=>t.trim()).length||1;
  const blank=lines.length-nonempty;
@@ -63,7 +63,7 @@ function attach(){
 const priorRender=render;render=function(){priorRender();attach()};
 const priorPrompt=buildPrompt;buildPrompt=function(){
  let p=priorPrompt();
- if(state.world==='sign')p+='\n\n=== BLACK SIGN: MAXIMUM POSTER TYPOGRAPHY — REFERENCE IMAGE LAYOUT ===\nMake the physical black poster large, visually dominant, and face-on to camera. Use ultra-bold condensed uppercase block letters. Every nonempty original text line may have its OWN optimal font size: shorter lines should be enlarged individually; longer lines must be sized to fit without wrapping or clipping. Preserve the exact authored line breaks and paragraph breaks, with clearly visible paragraph separation. The combined text composition must use nearly all usable poster width AND height, with only 3–5% safety margin at its edges. Do not make a small centered island of text or leave excessive unused black space. Keep every word and punctuation mark fully visible and preserve all user-assigned red/white word colors. This is the highest priority for sign typography; the poster reference image defines scale and visual density, not the scene or characters.\n';
+ if(state.world==='sign')p+='\n\n=== BLACK SIGN: MAXIMUM POSTER TYPOGRAPHY — REFERENCE IMAGE LAYOUT ===\nMake the physical black poster large, visually dominant, and face-on to camera. Use ultra-bold condensed uppercase block letters. Every nonempty original text line may have its OWN optimal font size: shorter lines should be enlarged individually; longer lines must be sized to fit without wrapping or clipping. Preserve the exact authored line breaks and paragraph breaks, with clearly visible paragraph separation. Match the latest supermarket poster reference: an oversized physically dominant overhead black sign, near-edge-to-edge heavy lettering, conspicuous white lines and powerful red emphasis. The combined text composition must use nearly all usable poster width AND height, with a STRICT 4% clear safety margin on all four edges, measured from the physical sign border to the outermost visible glyph. No glyph may touch or cross the border. Do not make a small centered island of text or leave excessive unused black space. Keep every word and punctuation mark fully visible and preserve all user-assigned red/white word colors. This is the highest priority for sign typography; the poster reference image defines scale and visual density, not the scene or characters.\n';
  return p;
 };
 document.addEventListener('input',e=>{if(e.target?.matches?.('textarea[data-bs-section="sign"][data-bs-key="signText"]'))schedule()},true);
