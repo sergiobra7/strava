@@ -1,7 +1,7 @@
 /* V3.1.1 — Premium uses the existing shared figure library; no new tab. */
 (function(){
 'use strict';
-const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;':'&quot;',"'":'&#39;'}[c]));
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 function draw(){
  if(state.world!=='sign')return;
  const panel=document.getElementById('premiumPanel270');if(!panel)return;
