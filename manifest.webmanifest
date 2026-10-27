@@ -1,10 +1,11 @@
 {
-  "name": "STRAVA RUN V3.1.13",
-  "short_name": "STRAVA V3.1.13",
-  "start_url": "./?source=homescreen&v=3113",
+  "name": "STRAVA RUN",
+  "short_name": "STRAVA RUN",
+  "start_url": "./?source=homescreen",
   "scope": "./",
   "display": "standalone",
   "background_color": "#0b0d11",
   "theme_color": "#111418",
-  "lang": "de"
+  "lang": "de",
+  "id": "./"
 }
