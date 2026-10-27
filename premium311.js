@@ -38,7 +38,7 @@ function drawPremiumFigures(){
  body.querySelector('#premiumCrowd311').onchange=e=>{settings.forceAudience277=e.target.checked;remember()};
  const slot=body.querySelector('#premiumSlot320');
  if(slot)slot.onchange=e=>{
-  if(e.target.value==='reference'){f.reference320=true;f.enabled=true}
+  if(e.target.value==='reference'){f.reference320=true;f.enabled=true;f.type='Eigene Figur aus beigefügtem Full-Body-Referenzfoto';f.outfit258={kind:'profession',preset:'Individuell',cap:'Wie Referenzfoto',coat:'Wie Referenzfoto',top:'Wie Referenzfoto',bottom:'Wie Referenzfoto',shoes:'Wie Referenzfoto',palette:'Wie Referenzfoto',accessory:'Keine',position:f.outfit258?.position||'Automatisch',custom:'IDENTITY AND COMPLETE OUTFIT FROM ATTACHED FULL-BODY PHOTO ONLY. Never use former character archetype.'}}
   else{settings.premiumSlot320=Number(e.target.value)}
   remember();
  };
@@ -61,6 +61,7 @@ buildPrompt=function(){
   if(!figure.enabled||!figure.reference320)return;
   prompt+='\n\n=== PREMIUM CUSTOM FIGURE '+(index+1)+' — FULL BODY REFERENCE AT FINAL STAGE ===\n';
   prompt+='REFERENCE NAME: '+(figure.referenceName320||'Custom full-body figure')+'.\n';
+  prompt+='HARD REPLACEMENT: This slot is NOT an Anatolian grandfather, village elder or any former default character. Use ONLY the person shown in the attached full-body reference photograph. Do not retain prior identity, age, clothes, headwear or archetype. Do not generate an additional grandfather as a substitute.\n';
   prompt+='Attach this character full-body photograph separately ONLY when submitting the finished master prompt for image generation. No image is uploaded to the generator.\n';
   prompt+='Preserve exact face, body proportions, identity, outfit and footwear from this reference; follow this figure\'s manually selected pose, reaction, gaze and gesture. Override generic character appearance for this figure only.\n';
  });
