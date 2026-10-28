@@ -16,7 +16,13 @@ function updateTokens(){
  const parent=old.parentElement;
  const selected=new Set((state.sign258?.selectedWords||[]).map(Number));
  parent.innerHTML=tokenize(state.sign.signText).map((word,i)=>'<button type="button" class="btn '+(selected.has(i)?'':'secondary')+'" data-word258="'+i+'" style="padding:7px;background:'+(selected.has(i)?'#fc4c02':'')+'">'+word.replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))+'</button>').join('');
- parent.querySelectorAll('[data-word258]').forEach(el=>el.onclick=e=>{e.preventDefault();const i=Number(el.dataset.word258);if(selected.has(i))selected.delete(i);else selected.add(i);state.sign258.selectedWords=[...selected];save();el.classList.toggle('secondary',!selected.has(i));el.style.background=selected.has(i)?'#fc4c02':''});
+ parent.querySelectorAll('[data-word258]').forEach(el=>{
+  el.style.touchAction='manipulation';el.style.minHeight='46px';
+  let touched=0;
+  const toggle=e=>{if(typeof window.stravaToggleWord333==='function')window.stravaToggleWord333(Number(el.dataset.word258),e);};
+  el.addEventListener('pointerup',e=>{if(e.pointerType==='touch'||e.pointerType==='pen'){touched=Date.now();toggle(e);}});
+  el.addEventListener('click',e=>{if(Date.now()-touched<650){e.preventDefault();return;}toggle(e);});
+ });
 }
 function bind(){
  const area=document.querySelector('textarea[data-bs-section="sign"][data-bs-key="signText"]');
