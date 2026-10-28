@@ -219,23 +219,28 @@ function download(name,body,type){const blob=new Blob([body],{type});const u=URL
  try{render();}catch(e){}
 })();
 </script><script src="master320.js?v=321-placement-20261028"></script><script>
-/* Hide only the duplicated reference-photo prompt-endstage panel; keep original reference controls elsewhere. */
+/* V3.2.2: reference-photo endstage directly before premium scenes, without hiding controls. */
 (function(){
- function hideDuplicate(){
+ function positionReference(){
+  if(state.world!=='sign'||state.tab!=='Smart Director')return;
+  const premium=document.getElementById('premiumPanel270');
+  if(!premium||!premium.parentNode)return;
   const all=[...document.querySelectorAll('#view section,#view details,#view .panel,#view article')];
-  for(const el of all){
+  const reference=all.find(el=>{
    const heading=el.querySelector('h1,h2,h3,summary');
-   if(!heading)continue;
+   if(!heading)return false;
    const title=(heading.textContent||'').replace(/\s+/g,' ').trim().toUpperCase();
-   if(title.includes('FIGUR AUS REFERENZFOTO')&&title.includes('PROMPT-')){
-    el.style.setProperty('display','none','important');
-    el.dataset.hiddenDuplicateReference='true';
-   }
-  }
+   return title.includes('FIGUR AUS REFERENZFOTO')&&title.includes('PROMPT-');
+  });
+  if(!reference||reference===premium||reference.contains(premium)||premium.contains(reference))return;
+  reference.style.removeProperty('display');
+  delete reference.dataset.hiddenDuplicateReference;
+  if(reference.nextElementSibling!==premium)premium.parentNode.insertBefore(reference,premium);
  }
- const old=render;render=function(){old();hideDuplicate();};
- document.addEventListener('DOMContentLoaded',hideDuplicate);
- hideDuplicate();
+ const oldRender=render;
+ render=function(){oldRender();positionReference();};
+ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',positionReference);
+ positionReference();
 })();
 </script><script src="layout321.js?v=321-20261028"></script><script>/* V3.2.1 additive layout */(function(){function move(){if(state.world!=='sign'||state.tab!=='Smart Director')return;const a=document.getElementById('situ269'),b=document.getElementById('premiumPanel270');if(a&&b&&b.parentNode&&a.nextElementSibling!==b)b.parentNode.insertBefore(a,b);}const old=render;render=function(){old();move();};move();})();</script><script>
 /* V3.2.1: visual ordering only; preserve all existing situation and premium controls. */
