@@ -28,12 +28,14 @@ const groups=[
 ];
 function draw(){
  if(state.world!=='sign')return;
- const host=document.getElementById('premiumEditor270');if(!host)return;
+ const premium=document.getElementById('premiumPanel270');if(!premium||!premium.parentNode)return;
+ const host=premium.parentNode;
  let box=document.getElementById('master320'),c=config();
  if(!box){box=document.createElement('details');box.id='master320';box.style.cssText='margin:12px 0 18px;border:2px solid #fc4c02;border-radius:14px;padding:14px;background:#202630;color:#fff';host.append(box);}
+ if(box.nextElementSibling!==premium)host.insertBefore(box,premium);
  let wasOpen=box.open;
  const select=(key,label)=>'<label style="display:block;margin:9px 0 5px">'+label+'</label><select data-m320="'+key+'" style="width:100%;padding:10px;border-radius:8px;background:#10151c;color:white;border:1px solid #667">'+C[key].map(v=>'<option '+(c[key]===v?'selected':'')+'>'+escapeHtml(v)+'</option>').join('')+'</select>';
- let html='<summary style="font-weight:800;font-size:17px;cursor:pointer">NEU V3.2.0 · MASTER-INSZENIERUNG</summary><p style="font-size:12px;color:#d0d5db">Jeder Bereich ist einzeln abschaltbar. Bestehende Premium-Szenen, Text, Outfit und Figuren bleiben erhalten.</p>';
+ let html='<summary style="font-weight:800;font-size:17px;cursor:pointer">MASTER-INSZENIERUNG V3.2.3 · BALKONE & DACHTERRASSEN</summary><p style="font-size:12px;color:#d0d5db">Jeder Bereich ist einzeln abschaltbar. Bestehende Premium-Szenen, Text, Outfit und Figuren bleiben erhalten.</p>';
  for(let [on,title,key,label] of groups)html+='<div style="padding:9px;margin:9px 0;border:1px solid #48515d;border-radius:10px"><label style="display:flex;align-items:center;gap:9px"><input type="checkbox" data-m320="'+on+'" '+(c[on]?'checked':'')+' style="width:18px;height:18px"> <b>'+title+'</b></label>'+select(key,label)+'</div>';
  html+='<div style="padding:9px;border:1px solid #48515d;border-radius:10px"><b>DETAILS & PHYSIK</b>'+select('mount','Befestigung / Halterung')+select('wind','Fahnen-Wind')+select('fabric','Stoffspannung')+select('weathering','Holz-Verwitterung')+select('lens','Brennweite (nur ohne manuelle Kamera)')+'</div>';
  html+='<p style="font-size:12px;color:#cbd5e1">Keine echten Supermarktmarken oder Logos. Keine Personen auf Geländern, morschen Balken oder instabilen Stühlen. Unpassende Posen werden im Prompt physikalisch angepasst; deine Text- und Outfitwerte bleiben unberuehrt.</p>';
