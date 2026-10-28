@@ -1047,6 +1047,12 @@ try{render()}catch(e){console.warn('Premium Studio initial render',e)}
      'FINAL CHECK: verify the text line by line against this map; every red/nonwhite word MUST remain nonwhite and every white word MUST remain white. Do not omit, substitute or shift word colors.',
      '=== END V3.6.5 WORD-COLOR MAP ==='
    ];
+   // Suppress stale gesture prose from inherited prompt sections without altering saved pose data.
+   // The final contract below is the single authority for whether pointing is permitted.
+   out=out.replace(/^.*(?:point(?:ing|s)? (?:at|to|toward)|zeigefinger|index finger|finger pointing|point directly|zeigt? (?:auf|zum) plakat).*$/gim,function(line){
+     if(/(?:exact sign text|word.color|poster text color)/i.test(line))return line;
+     return '[LEGACY POINTING INSTRUCTION REMOVED — follow FINAL FINGER GESTURE contract]';
+   });
    const rules=[
      '=== V3.6.4 CLEAN ACTIVE SCENE & GESTURE CONTRACT ===',
      'Only currently selected controls are authoritative. Ignore older inactive premium scene names, old audience-placement presets and generic crowd venues when they contradict active controls.',
@@ -1054,7 +1060,9 @@ try{render()}catch(e){console.warn('Premium Studio initial render',e)}
      manualPlace?'ACTIVE LOCATION (MASTER): '+manualPlace+'. Do not move the runner to a legacy market hall or parking lot.':'Use the currently active selected location; do not revive inactive location presets.',
      carrier?'ACTIVE PHYSICAL CARRIER (MASTER): '+carrier+'. Respect realistic supports and mounting.':'Use the currently active selected physical message carrier.',
      bodyPose?'ACTIVE RUNNER POSE (MASTER): '+bodyPose+'. Maintain anatomically plausible hands, chair and supports.':'Maintain the active selected body pose and manually chosen gaze.',
-     'INDEX FINGER: OPTIONAL. IF an index finger is extended, it MUST point directly toward the physical sign or one of its printed text lines, never at the lens, the sky, random spectators or empty space. Hands must not obscure lettering. Otherwise use natural open-hand presentation, resting hands or secure grips compatible with the chosen pose.',
+     'FINGER GESTURE — FINAL ANATOMICAL SAFETY LOCK: Default is NO POINTING: all fingers relaxed and naturally resting on chair, thighs, railing or securely holding the selected object. A pointing index finger is permitted ONLY when the active Premium pose explicitly calls for pointing. Generic inherited pointing instructions, reaction presets and legacy figure poses DO NOT authorize pointing.',
+     'IF PREMIUM EXPLICITLY REQUESTS POINTING: the fingertip, extended index-finger axis, wrist, forearm, elbow and shoulder must form one anatomically credible 3D gesture directed to a specific, visibly printed word on the ACTUAL physical sign. The fingertip direction must intersect the printed lettering, not the camera, audience, blank wall, sky, ground, empty side space or a hypothetical off-frame sign. Keep the printed letters unobstructed.',
+     'GEOMETRY FAILSAFE: if the selected runner position, seated-backwards chair pose, sign location, hand reach, camera angle or occlusion makes this pointing alignment implausible or ambiguous, DO NOT extend the index finger; use two relaxed hands on the chair back or another stable natural hand position. Never invent a floating or disconnected pointing arm. Apply this to featured side characters too unless their active Premium pose explicitly specifies a physically valid sign-pointing gesture.',
      'AUDIENCE: spectators selected as reacting must face the runner or the actual front of the sign, with matching head, neck and torso orientation. Some may naturally turn to companions to discuss the writing. Do not mistake incidental background passersby for the reacting audience. Manual audience settings override generic crowd templates.',
      'PHYSICAL GEOMETRY: honor the active camera focal length and sensor-to-runner distance even if the poster text becomes difficult to resolve. Never fake closer camera geometry.',
      'Do not add a second featured side character solely because an older generic character preset names one. Preserve explicitly enabled named side characters.',
