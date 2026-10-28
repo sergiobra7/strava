@@ -16,11 +16,7 @@ function mount(){
  const summary=(state.world==='sign'?'BLACK SIGN':'STRAVA WALL')+' · '+mode+' · '+scene+' · '+cast().length+' Nebenfigur(en) · Masse '+(crowd()?'EIN':'AUS')+' · Hintergrund '+background();
  box.innerHTML='<strong>LIVE STATUS · AKTIVE EINSTELLUNGEN</strong><div style="margin:8px 0;line-height:1.5">'+esc(summary)+'</div><details><summary style="cursor:pointer;color:#ff845c">Alle aktiven Einstellungen anzeigen</summary><div style="margin-top:8px">Figuren: '+esc(names)+'<br>Menschenmasse: '+(crowd()?'EIN':'AUS')+'<br>Hintergrundleben: '+esc(background())+'<br>Bildformat: '+esc(state.common?.format||'')+'<br>Zuletzt geändert: '+esc(conf().lastChange310||'—')+'</div></details>';
  if(state.world!=='sign')return;
- const view=document.getElementById('view');if(!view)return;
- const heading=[...view.querySelectorAll('h2,h3,summary')].find(x=>/NORMAL · FIGURENREGIE|PREMIUM/i.test(x.textContent||''));
- let host=document.getElementById('background310');
- if(!host&&heading){host=document.createElement('div');host.id='background310';host.style.cssText='padding:12px;margin:12px 0;border:1px solid #fc4c02;border-radius:10px';heading.parentNode.insertAdjacentElement('afterend',host);}
- if(host){host.innerHTML='<label style="display:block;font-weight:bold;margin-bottom:6px">NATÜRLICHES HINTERGRUNDLEBEN</label><select id="bgSelect310" style="width:100%;padding:12px;background:#111;color:white;border:1px solid #777;border-radius:7px">'+['Aus','Wenig','Normal','Viel'].map(x=>'<option '+(background()===x?'selected':'')+'>'+x+'</option>').join('')+'</select><small>Alltagspassanten beschäftigen sich mit ihrem Alltag; keine Zuschauergruppe.</small>';host.querySelector('select').onchange=e=>{conf().background310=e.target.value;conf().lastChange310='Hintergrundleben: '+e.target.value;save();mount();};}
+
 }
 const oldRender=render;render=function(){oldRender();mount()};
 const oldPrompt=buildPrompt;buildPrompt=function(){
