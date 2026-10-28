@@ -102,7 +102,8 @@ function effectiveScene338(c,i){
  }
  // With filters active, vary all non-locked scene components rather than
  // merely renaming the same original scene.
- const filtered=!!(location||market||m.mediaOn||m.propOn||m.poseOn||m.crowdOn||m.cameraOn);
+ const cast=(state.sign258&&state.sign258.premiumCast342)||{};
+ const filtered=!!(location||market||m.mediaOn||m.propOn||m.poseOn||m.crowdOn||m.cameraOn||cast.person!=='Automatisch'||cast.audience!=='Automatisch');
  if(filtered){
   a[2]=posters[n%posters.length];
   a[3]=props[(n*3)%props.length];
@@ -119,6 +120,15 @@ function effectiveScene338(c,i){
  if(m.poseOn&&m.pose&&!state.sign258.manualSignPose284)a[5]=m.pose;
  if(m.crowdOn&&m.crowd)a[8]=m.crowd;
  if(m.cameraOn&&m.camera)a[6]=a[6]+' · Kameraperspektive: '+m.camera;
+ const people=['Alleine','Mit Opa','Mit Tante','Mit Opa und Tante','Mit weiterer Figur','Mit zwei Nebenfiguren'];
+ const person=cast.person&&cast.person!=='Automatisch'?cast.person:people[n%people.length];
+ const size=cast.audience&&cast.audience!=='Automatisch'?cast.audience:['Keine','Wenige (3–8)','Mittlere Gruppe (10–25)','Große Menschenmenge (30–60)','XXL-Menschenmenge (60–100)'][n%5];
+ const castLabel=person==='Alleine'?'Hauptfigur alleine':person;
+ a[0]=a[0]+' · '+castLabel;
+ a[7]=size==='Keine'?'Keine weiteren Zuschauer':size==='Wenige (3–8)'?'3–8 Zuschauer':size==='Mittlere Gruppe (10–25)'?'10–25 Zuschauer':size==='Große Menschenmenge (30–60)'?'30–60 Zuschauer':size==='XXL-Menschenmenge (60–100)'?'60–100 Zuschauer':a[7];
+ if(person==='Alleine'&&size==='Keine')a[7]='Keine weiteren Personen';
+ a[8]=castLabel+'. '+(a[7]==='Keine weiteren Personen'?'Keine Publikumsreaktion.':a[8]);
+
  return a;
 }
 function card(c,i){let cam=window.stravaPremiumSceneValues325?window.stravaPremiumSceneValues325(i):{lens:24,distance:15};let active=state.sign258.activeSceneSource267==='premium'&&cfg().scene===i;return '<button class="scene270 '+(active?'selected270':'')+'" data-scene270="'+i+'" aria-pressed="'+active+'"><strong>'+esc270(c[0])+'</strong><small>Ort: '+esc270(c[1])+'<br>Plakat: '+esc270(c[2])+'<br>Requisite: '+esc270(c[3])+'<br>Plakathaltung: '+esc270(c[4])+'<br>Hauptfigur: '+esc270(c[5])+'<br>Mimik: '+esc270(c[6])+'<br>Publikum: '+esc270(c[7])+' · '+esc270(c[8])+'<br><b>Kamera: '+cam.lens+' mm · '+cam.distance+' m</b></small></button>';}
