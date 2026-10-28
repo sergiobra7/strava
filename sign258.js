@@ -203,8 +203,25 @@ document.querySelectorAll('[data-add-premium]').forEach(b=>b.onclick=()=>{let ki
 function selection266(){let s=S();if(!wordSelectionMemory266.size && Array.isArray(s.selectedWords) && s.selectedWords.length){wordSelectionMemory266=new Set(s.selectedWords.map(Number));}return wordSelectionMemory266;}
 function syncSelection266(){S().selectedWords=[...wordSelectionMemory266];save();document.querySelectorAll('[data-word258]').forEach(b=>{let active=wordSelectionMemory266.has(Number(b.dataset.word258));b.classList.toggle('secondary',!active);b.style.background=active?'#fc4c02':'';b.style.outline=active?'2px solid #fff':'none';b.setAttribute('aria-pressed',String(active));});document.querySelectorAll('[data-preview-word258]').forEach(el=>{el.style.outline=wordSelectionMemory266.has(Number(el.dataset.previewWord258))?'2px solid #fc4c02':'none';});}
 function toggleSelection266(id,e){if(e){e.preventDefault();e.stopPropagation();}selection266();if(wordSelectionMemory266.has(id))wordSelectionMemory266.delete(id);else wordSelectionMemory266.add(id);syncSelection266();}
-document.querySelectorAll('[data-preview-word258]').forEach(el=>el.addEventListener('click',e=>toggleSelection266(Number(el.dataset.previewWord258),e)));
-document.querySelectorAll('[data-word258]').forEach(b=>b.addEventListener('click',e=>toggleSelection266(Number(b.dataset.word258),e)));
+document.querySelectorAll('[data-preview-word258]').forEach(el=>{el.style.touchAction='manipulation';el.addEventListener('click',e=>toggleSelection266(Number(el.dataset.previewWord258),e));});
+window.stravaToggleWord333=toggleSelection266;
+function bindTap333(el,attribute){
+ let lastTouch=0;
+ el.style.touchAction='manipulation';
+ el.style.minHeight='46px';
+ el.style.userSelect='none';
+ el.style.webkitUserSelect='none';
+ el.addEventListener('pointerup',e=>{
+  if(e.pointerType==='touch'||e.pointerType==='pen'){
+   lastTouch=Date.now();toggleSelection266(Number(el.dataset[attribute]),e);
+  }
+ });
+ el.addEventListener('click',e=>{
+  if(Date.now()-lastTouch<650){e.preventDefault();e.stopPropagation();return;}
+  toggleSelection266(Number(el.dataset[attribute]),e);
+ });
+}
+document.querySelectorAll('[data-word258]').forEach(b=>bindTap333(b,'word258'));
 let all=$('allWords258');if(all)all.onclick=e=>{e.preventDefault();wordSelectionMemory266=new Set(words258().map(x=>x.idx));syncSelection266();};
 let none=$('noneWords258');if(none)none.onclick=e=>{e.preventDefault();wordSelectionMemory266.clear();S().selectedWords=[];syncSelection266();};
 let applyColor=color=>{let selected=[...selection266()];if(!selected.length)return alert('Bitte zuerst ein oder mehrere Wörter markieren.');selected.forEach(i=>state.sign.wordColors[i]=color);save();document.querySelectorAll('[data-preview-word258]').forEach(el=>{if(selected.includes(Number(el.dataset.previewWord258)))el.style.color=color;});syncSelection266();};
