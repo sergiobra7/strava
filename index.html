@@ -6,7 +6,7 @@
 .awbtn{padding:8px 10px;background:#2c3542;border:1px solid #596274;color:#fff;border-radius:8px}
 .awbtn.active{border-color:#fc4c02;background:#4c2b1c}
 @media(max-width:620px){.autogrid{grid-template-columns:1fr}}
- .quick-search{width:100%;margin-bottom:10px}.quick-results{max-height:52vh;overflow:auto}.quick-item{display:flex;gap:8px;align-items:center;padding:9px;border-bottom:1px solid #353c48}.quick-item button{flex-shrink:0}.quick-item .quick-name{flex:1;min-width:0;overflow-wrap:anywhere}.quick-chip{font-size:11px;color:#b6c2d1}.quick-star{background:none;border:1px solid #4b5260;border-radius:7px;padding:6px;color:#ffb340}.quick-select{background:#fc4c02;color:#fff;border:0;border-radius:7px;padding:8px}.quick-controls{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0}.quick-controls select{width:auto;max-width:100%}</style></head><body><header><div><h1>STRAVA RUN <span class="mark">V3.4.2</span></h1><small>BLACK SIGN + STRAVA WALL · GITHUB EDITION</small></div><div id="saveStatus" class="status">Lokal gespeichert</div></header><main><div class="worlds"><button class="world active" data-world="wall">🧱 STRAVA WALL</button><button class="world" data-world="sign">⬛ BLACK SIGN / PLAKAT</button></div><nav class="tabs" id="tabs"></nav><div id="view"></div><div class="footer">Lokale Offline-Web-App · Keine Bilder werden an einen Server gesendet · Prompt zum Kopieren für ChatGPT/Bildgenerierung</div></main><script>
+ .quick-search{width:100%;margin-bottom:10px}.quick-results{max-height:52vh;overflow:auto}.quick-item{display:flex;gap:8px;align-items:center;padding:9px;border-bottom:1px solid #353c48}.quick-item button{flex-shrink:0}.quick-item .quick-name{flex:1;min-width:0;overflow-wrap:anywhere}.quick-chip{font-size:11px;color:#b6c2d1}.quick-star{background:none;border:1px solid #4b5260;border-radius:7px;padding:6px;color:#ffb340}.quick-select{background:#fc4c02;color:#fff;border:0;border-radius:7px;padding:8px}.quick-controls{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0}.quick-controls select{width:auto;max-width:100%}</style></head><body><header><div><h1>STRAVA RUN <span class="mark">V3.4.3</span></h1><small>BLACK SIGN + STRAVA WALL · GITHUB EDITION</small></div><div id="saveStatus" class="status">Lokal gespeichert</div></header><main><div class="worlds"><button class="world active" data-world="wall">🧱 STRAVA WALL</button><button class="world" data-world="sign">⬛ BLACK SIGN / PLAKAT</button></div><nav class="tabs" id="tabs"></nav><div id="view"></div><div class="footer">Lokale Offline-Web-App · Keine Bilder werden an einen Server gesendet · Prompt zum Kopieren für ChatGPT/Bildgenerierung</div></main><script>
 'use strict';
 const poses=['STAIR CHILL PRO — auf vorhandener Treppe, Unterarme locker auf Knien, natürliche Sitzhaltung','WALL LEAN PRO — Schulter an vorhandener Wand, Arme verschränkt, Beine locker gekreuzt','REVERSE CHAIR PRO — rückwärts auf vorhandenem Stuhl, getrennte Unterarme auf Lehne','An STRAVA-Wand angelehnt, Schulterkontakt, Arme verschränkt, Beine gekreuzt','Rückwärts auf Holzstuhl, Unterarme getrennt auf Lehne','Auf Treppe sitzend, entspannt','Auf Bank sitzend, Beine locker nach vorne','Auf niedriger Mauer sitzend','Selbstbewusst stehend, Hände an Hüften','Ein Fuß auf Treppenstufe, offene Hand zur Wand','Gehend, spontaner Blick zur Statistik','Seitlich stehend, eine Hand in Tasche','An Geländer gelehnt','Auf umgedrehtem Stuhl, seitlicher Blick','Auf Holzstuhl vor der Wand, Oberkörper vorgebeugt','Auf Kante sitzend, Arme locker','Nach dem Lauf, Hände auf Oberschenkeln','Sportflasche in einer Hand, entspannt','Beide Arme locker seitlich, Blick zur Kamera','Auf Treppe mit Kollege diskutierend','Auf Bank zurückgelehnt, Beine ausgestreckt','Neben Wand hockend, ohne verdeckte Schuhe','Mit offenen Händen erklärend','Mit Kollege Schulter an Schulter','Im Schritt stehen geblieben','Seitlich zur Wand, Kopf zur ersten Statistikzeile','Sitzend, Ellbogen auf getrennten Knien','Auf Stuhl sitzend, Beine überschlagen','An Pfosten locker angelehnt (nur wenn vorhanden)','Mit verschränkten Armen, frontaler Blick','Locker an Wand, eine Hand an Hüfte','Auf Bordsteinkante sitzend (wenn vorhanden)','Mit einer Hand auf Stuhllehne','Leicht nach vorn gebeugt, erstaunt','Stehend, provokant grinsend','Auf Bank mit Opa, Gespräch','Auf Stufe sitzend, Kollege daneben','Ruhig sitzend, Hände ineinander','Lässiger Schritt von der Wand weg','Leicht zur Wand gedreht, Kopf zur Kamera','Nach dem Lauf auf Stuhl ausruhend','Locker mit Rücken zur Wand, Kopf seitlich','Offene Hand zur Statistik, andere am Körper','Auf Stuhl quer sitzend','An Treppenwange angelehnt (wenn vorhanden)','Auf Mauer, beide Füße am Boden','Mit Sportflasche an Bank','Kollege etwas erklärend','Opa aufmerksam zuhörend','Sitzend, provokanter Blick','Stehend, breiter sicherer Stand','Lässig neben Wand, Hände in Jackentaschen','An Wand, Kopf leicht zum Opa','Individuelle Pose (Textfeld)'];
 const opaPoses=['Auf abgestelltem alten Mofa, ein Fuß am Boden','Steht am alten Mofa, Hand am Lenker','Mit Sackkarre, beide Hände an Griffen','Schiebt Sackkarre mit Kisten, hält an','Mit Schubkarre, grinsend','Auf altem Fahrrad, ein Fuß am Boden','Schiebt altes Fahrrad','Mit Handwagen, hält inne','Auf Holzkiste neben Mofa','Mit Obstkiste, bleibt stehen','Mit Werkzeugtasche, diskutiert','Stützt sich auf Besen','Mit Eimer, schaut zum Kollegen','An altem Roller gelehnt','Mit Einkaufstrolley','Auf umgedrehtem Holzstuhl','Auf Bank, Hände auf Knien','Auf Holzstuhl, Teeglas in Hand','Mit Einkaufstasche, skeptischer Blick','Steht, offene Hand zum Läufer','Sitzt, schüttelt den Kopf','Mit Gehstock, natürlich stehend','Hände hinter dem Rücken, Statistik betrachtend','Am Schnurrbart nachdenklich','Kratzt sich am Kopf','Lacht, Hand am Bauch','Abwinkende offene Hand','Steht seitlich, Augenbrauen hoch','Sitzt neben Teyze, diskutiert','Auf Treppe, leicht vorgebeugt','An Café-Tisch mit Teeglas','Auf Bank, Arme verschränkt','Schaut zum Kollegen, ungläubig','Steht mit Weste, Hand am Kinn','Mit alter Tasche, im Gehen','Auf niedriger Mauer','Steht mit offenem Mantel','Mit Holzstuhl in der Hand','Sitzt auf Kiste, verschränkt Arme','Mit Fahrrad und Einkaufstasche','Mit Sackkarre und Teeglas (nur plausibel)','Sitzt neben abgestelltem Mofa','Steht am Marktstand (nur wenn vorhanden)','Lacht mit Teyze','Hört aufmerksam zu','Mit gefalteten Händen','Steht ruhig, trockener Blick','Mit Schiebermütze, Kopf zur Statistik','Kopfschüttelnd vorbeigehend','Individuelle Opa-Pose (Textfeld)'];
@@ -610,6 +610,50 @@ draw();
  const root=document.getElementById('view')||document.body;
  new MutationObserver(()=>{const p=document.getElementById('premiumPanel270');if(!p)return;const d=document.getElementById('allSettings339');if(!d||!document.getElementById('premiumCategory340_camera')||document.getElementById('premiumCast311')?.parentElement?.id!=='premiumCategory340_figures')schedule();}).observe(root,{childList:true,subtree:true});
  schedule();
+})();
+</script><script>
+/* V3.4.3 final premium scene contract */
+(function(){
+ const old=buildPrompt;
+ buildPrompt=function(){
+  let p=old();
+  if(state.world!=='sign')return p;
+  const z=state.sign258||{},q=z.premium270||{},m=z.master320||{},cast=z.premiumCast342||{};
+  if(z.activeSceneSource267!=='premium'||!Number.isInteger(q.scene))return p;
+  const strip=['AUTHORITATIVE V2.9.0 SCENE LOCK','ACTIVE PREMIUM SCENE','PREMIUM SCENE FALLBACK','FINAL ACTIVE MASTER CONFLICT RESOLUTION'];
+  for(const label of strip){
+   const start=p.indexOf('=== '+label+' ===');
+   if(start<0)continue;
+   const next=p.indexOf('\n\n===',start+8);
+   p=p.slice(0,start)+(next<0?'':p.slice(next));
+  }
+  const loc=m.heightOn&&m.height&&m.height!=='Keine erhoehte Position'?m.height+(m.marketOn&&m.market?' · '+m.market:''):q.location||'';
+  const poster=m.mediaOn&&m.media&&m.media!=='Bestehendes XXL-Plakat'?m.media:q.poster||'';
+  const prop=m.propOn&&m.prop?m.prop:q.prop||'';
+  const pose=z.manualSignPose284?'Use the selected manual sign pose':m.poseOn&&m.pose?m.pose:q.position||'';
+  const crowd=cast.audience&&cast.audience!=='Automatisch'?cast.audience:q.audience||'';
+  const person=cast.person&&cast.person!=='Automatisch'?cast.person:'As selected in the premium scene';
+  const none=crowd==='Keine'||crowd.indexOf('Keine weiteren')===0;
+  const only=person==='Alleine'||person==='Hauptfigur ohne Begleitfigur';
+  const parts=[
+   '=== V3.4.3 FINAL PREMIUM SCENE CONTRACT — HIGHEST PRIORITY ===',
+   'Exactly one coherent documentary photograph. This block overrides incompatible earlier scene instructions.',
+   'SELECTED SCENE: '+(q.title||'Premium scene'),
+   'ONLY VENUE: '+loc,
+   'MESSAGE CARRIER: '+poster,
+   'PROP: '+prop,
+   'RUNNER BODY POSE: '+pose,
+   'FEATURED PEOPLE: '+(only?'Runner only, no companion characters':person),
+   'ADDITIONAL AUDIENCE: '+(none?'No spectators, no crowd, no background people':crowd),
+   'AUDIENCE REACTION: '+(none?'None':q.reaction||'Natural'),
+   'CAMERA: '+(z.manualCamera267?'Respect manual camera':m.cameraOn&&m.camera?m.camera:'Respect the selected camera'),
+   'No additional people if the audience is set to none. Companion figures, if chosen, are distinct from spectators.',
+   'Use physically safe, plausible supports and coherent mounting. Preserve exact lettering, word colors, outfit, face, cap and shoe reference.',
+   'Ignore incompatible earlier location, crowd, cast, pose, poster or venue descriptions.',
+   '=== END FINAL PREMIUM SCENE CONTRACT ==='
+  ];
+  return p+'\n\n'+parts.join('\n');
+ };
 })();
 </script></body></html>
 , 'm');p=p.replace(rx,(_,head)=>head+value);}
