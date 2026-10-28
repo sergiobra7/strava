@@ -218,4 +218,23 @@ function download(name,body,type){const blob=new Blob([body],{type});const u=URL
  };
  try{render();}catch(e){}
 })();
-</script><script src="master320.js?v=321-placement-20261028"></script></body></html>
+</script><script src="master320.js?v=321-placement-20261028"></script><script>
+/* Hide only the duplicated reference-photo prompt-endstage panel; keep original reference controls elsewhere. */
+(function(){
+ function hideDuplicate(){
+  const all=[...document.querySelectorAll('#view section,#view details,#view .panel,#view article')];
+  for(const el of all){
+   const heading=el.querySelector('h1,h2,h3,summary');
+   if(!heading)continue;
+   const title=(heading.textContent||'').replace(/\s+/g,' ').trim().toUpperCase();
+   if(title.includes('FIGUR AUS REFERENZFOTO')&&title.includes('PROMPT-')){
+    el.style.setProperty('display','none','important');
+    el.dataset.hiddenDuplicateReference='true';
+   }
+  }
+ }
+ const old=render;render=function(){old();hideDuplicate();};
+ document.addEventListener('DOMContentLoaded',hideDuplicate);
+ hideDuplicate();
+})();
+</script></body></html>
