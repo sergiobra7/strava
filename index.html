@@ -107,7 +107,7 @@ function mainDirector(){const poseList=state.world==='wall'?poses:signPoses;retu
 const FEATURED_30=['Straßenbauarbeiter','Bauarbeiter','Maurer','Malermeister','Bauleiter','Müllwerker','Hausmeister','Kioskbesitzer','Dönerverkäufer','Bäcker','Gemüsehändler','Taxifahrer','Automechaniker','Paketbote','Cafébesitzer','Anatolischer Dorf-Opa','Weißbärtiger Dede','Mofa-Opa','Teeglas-Opa','Anatolische Teyze','Schlagfertige Dorf-Teyze','Neugieriger Nachbar','Geschäftsmann','Mantelmann','Deutschrap-Boss – korpulent, Glatze, langer schwarzer Mantel (fiktional)','Türsteher','Bodybuilder','Fitness-Anfänger','Büroangestellter','Älterer Sportler'];
 function featuredSideCatalog(){return `<section class="panel"><h2>NF-KATALOG · 30 Nebenfiguren direkt hinzufügen</h2><p class="hint">Jede Figur wird einzeln aktiviert und besitzt anschließend eigene Pose, Reaktion, Gestik, Blickziel und Freitextfelder. Bereits vorhandene Figuren werden nicht entfernt.</p><div class="quick-results">${FEATURED_30.map((name,i)=>`<div class="quick-item"><span class="quick-name"><b>NF-TYP-${String(i+1).padStart(2,'0')}</b> · ${esc(name)}</span><button class="quick-select" data-featured-side="${i}">+ Hinzufügen</button></div>`).join('')}</div></section>`}
 function sideDirector(){let h=`<div class="notice">NF · Jede Nebenfigur einzeln aktivieren. Nur angehakte Figuren erscheinen. Jede hat ihre eigene Pose, Reaktion, Mimik, Gestik, Blickziel und freie Anweisungen. <b>STRICT EYE CONTACT LOCK:</b> Pupillen, Augen, Kopf, Hals und Kinn müssen präzise zum gewählten Ziel passen.</div><div class="actions"><button class="btn" id="addSide">+ NF · Nebenfigur hinzufügen</button></div>`;
-h+=featuredSideCatalog();state.director.sides.forEach((f,i)=>{let catOptions=Object.keys(CHAR_CATEGORIES);let category=ALL_CHARACTERS.find(x=>x.name===f.type)?.category||catOptions[0];const reactionNames=CODE_REACTIONS.map(x=>x[1]);const cats=[...new Set(CODE_REACTIONS.map(x=>x[0]))];h+=`<section class="panel"><h2>${sideId(f,i)} · Nebenfigur ${i+1} <button class="btn ghost" data-remove-side="${i}" style="float:right;padding:5px 8px">Entfernen</button></h2><div class="check"><input type="checkbox" data-side="${i}" data-skey="enabled" ${f.enabled?'checked':''} id="sideOn${i}"><label for="sideOn${i}">${sideId(f,i)} · Im Bild anzeigen</label></div>${f.enabled?`<div class="field"><label>NF-KAT · Kategorie</label><select data-sidecat="${i}">${catOptions.map((x,j)=>`<option value="${esc(x)}" ${x===category?'selected':''}>${code('KAT',j)} · ${esc(x)}</option>`).join('')}</select></div>${sideField(i,'type','NF-TYP · Charakter',CHAR_CATEGORIES[category],'NF-TYP')}${sideField(i,'pose','PO · Pose & Körperhaltung',SIDE_POSES,'PO')}${sideField(i,'reaction','RE · Reaktion & Gesichtsausdruck',reactionNames,'RE')}${sideField(i,'target','BL · Strenger Blickziel-Lock',GAZE_TARGETS,'BL')}${sideField(i,'gesture','GE · Gestik',GESTURES,'GE')}${sideField(i,'prop','RP · Requisiten',extraCharacterProps,'RP')}${sideArea(i,'style','KL-FREI · Kleidung / Erscheinung')}${sideArea(i,'freePose','PO-FREI · Eigene Pose')}${sideArea(i,'freeAction','AK-FREI · Eigene Handlung')}${sideArea(i,'freeReaction','RE-FREI · Eigene Reaktion')}${sideField(i,'freeMode','FREI-MOD · Freitext verwenden',['Ergänzen','Ersetzen'],'FREI-MOD')}`:'<p class="hint">Deaktiviert – wird nicht im Bild erzeugt.</p>'}</section>`});return h}
+h+=featuredSideCatalog();state.director.sides.forEach((f,i)=>{let catOptions=Object.keys(CHAR_CATEGORIES);let category=ALL_CHARACTERS.find(x=>x.name===f.type)?.category||catOptions[0];const reactionNames=[...new Set(CODE_REACTIONS.map(x=>x[1]))];const cats=[...new Set(CODE_REACTIONS.map(x=>x[0]))];h+=`<section class="panel"><h2>${sideId(f,i)} · Nebenfigur ${i+1} <button class="btn ghost" data-remove-side="${i}" style="float:right;padding:5px 8px">Entfernen</button></h2><div class="check"><input type="checkbox" data-side="${i}" data-skey="enabled" ${f.enabled?'checked':''} id="sideOn${i}"><label for="sideOn${i}">${sideId(f,i)} · Im Bild anzeigen</label></div>${f.enabled?`<div class="field"><label>NF-KAT · Kategorie</label><select data-sidecat="${i}">${catOptions.map((x,j)=>`<option value="${esc(x)}" ${x===category?'selected':''}>${code('KAT',j)} · ${esc(x)}</option>`).join('')}</select></div>${sideField(i,'type','NF-TYP · Charakter',CHAR_CATEGORIES[category],'NF-TYP')}${sideField(i,'pose','PO · Pose & Körperhaltung',SIDE_POSES,'PO')}${sideField(i,'reaction','RE · Reaktion & Gesichtsausdruck',reactionNames,'RE')}${sideField(i,'target','BL · Strenger Blickziel-Lock',GAZE_TARGETS,'BL')}${sideField(i,'gesture','GE · Gestik',GESTURES,'GE')}${sideField(i,'prop','RP · Requisiten',extraCharacterProps,'RP')}${sideArea(i,'style','KL-FREI · Kleidung / Erscheinung')}${sideArea(i,'freePose','PO-FREI · Eigene Pose')}${sideArea(i,'freeAction','AK-FREI · Eigene Handlung')}${sideArea(i,'freeReaction','RE-FREI · Eigene Reaktion')}${sideField(i,'freeMode','FREI-MOD · Freitext verwenden',['Ergänzen','Ersetzen'],'FREI-MOD')}`:'<p class="hint">Deaktiviert – wird nicht im Bild erzeugt.</p>'}</section>`});return h}
 function advancedView(){return `<div class="notice">Alle bisherigen Regler und Pose Directors sind hier unverändert weiter erreichbar. Im neuen Haupt- und Nebenfiguren-Director werden die neuen unabhängigen Figuren verwaltet; die alten Legacy-Figuren werden bei aktiver neuer Figurensteuerung im Prompt nicht zusätzlich dupliziert.</div><div class="grid">${panel('Bestehende Figuren-Einstellungen',charactersView())}${panel('Bestehende Pose Directors',posesView())}${panel('Bestehender Outfit Director',outfitView())}</div>`}
 function savedSets(){try{return JSON.parse(localStorage.getItem('stravaV256Sets')||'[]')}catch{return []}}
 function storeSets(a){localStorage.setItem('stravaV256Sets',JSON.stringify(a))}
@@ -754,18 +754,31 @@ return '<div class="ps-poster-fit" style="background:#050505;border:6px solid #4
 }
 function fitPoster357(host){
 const box=host.querySelector('.ps-poster-lines');if(!box)return;
-const lines=[...box.querySelectorAll('.ps-poster-line')];if(!lines.length)return;
-const availableW=box.clientWidth,availableH=box.clientHeight;
-if(availableW<20||availableH<20)return;
-const canvas=document.createElement('canvas'),ctx=canvas.getContext('2d');
-const family=getComputedStyle(box).fontFamily;
-ctx.font='900 100px '+family;
+const lines=Array.from(box.querySelectorAll('.ps-poster-line'));if(!lines.length)return;
+const w=box.clientWidth,h=box.clientHeight;if(w<20||h<20)return;
+const ctx=document.createElement('canvas').getContext('2d');ctx.font='900 100px '+getComputedStyle(box).fontFamily;
 const widths=lines.map(line=>line.dataset.empty==='1'?0:Math.max(1,ctx.measureText(line.textContent).width)/100);
-const gaps=lines.map(line=>line.dataset.empty==='1');
-const heightAt=base=>lines.reduce((sum,line,i)=>sum+(gaps[i]?base*.42:Math.min(base*1.5,availableW/widths[i])*1.04),0);
-let lo=1,hi=1000;
-for(let n=0;n<30;n++){const mid=(lo+hi)/2;if(heightAt(mid)<=availableH)lo=mid;else hi=mid}
-lines.forEach((line,i)=>{const size=gaps[i]?lo*.42:Math.min(lo*1.5,availableW/widths[i]);line.style.fontSize=size.toFixed(2)+'px';line.style.height=(gaps[i]?size:size*1.04).toFixed(2)+'px';line.style.lineHeight=gaps[i]?'1':'1.04'});
+function apply(base){
+let total=0;
+lines.forEach((line,i)=>{
+ const gap=line.dataset.empty==='1';
+ const size=gap?base*.42:Math.min(base*1.5,w/Math.max(widths[i],.01)*.96);
+ line.style.fontSize=size.toFixed(2)+'px';line.style.lineHeight='1.02';
+ line.style.height=(size*(gap?1:1.06)).toFixed(2)+'px';
+ total+=size*(gap?1:1.06);
+});
+return total;
+}
+let lo=1,hi=350;
+for(let i=0;i<25;i++){const mid=(lo+hi)/2;if(apply(mid)<h*.96)lo=mid;else hi=mid}
+apply(lo);
+for(let n=0;n<8;n++){
+ const actualW=Math.max(...lines.map(line=>line.scrollWidth),0);
+ const actualH=lines.reduce((sum,line)=>sum+line.getBoundingClientRect().height,0);
+ if(actualW<w*.99&&actualH<h*.99)break;
+ const ratio=Math.min(w*.97/Math.max(actualW,1),h*.97/Math.max(actualH,1),.95);
+ lines.forEach(line=>{const size=parseFloat(line.style.fontSize)*ratio;line.style.fontSize=size.toFixed(2)+'px';line.style.height=(size*(line.dataset.empty==='1'?1:1.06)).toFixed(2)+'px'});
+}
 }
 function posterPanel355(){
 const fontChoices=["Anton","Impact","Oswald","Bebas Neue","Barlow Condensed","Roboto Condensed","Archivo Black","Teko"];
@@ -969,6 +982,10 @@ try{render()}catch(e){console.warn('Premium Studio initial render',e)}
      out=stripBlock(out,label);
    }
    out=out.replace(/no pointing index fingers\.?/gi,'No arbitrary pointing gestures.');
+   // Remove superseded generic scene contracts; active selections are resolved below.
+   for(const label of ['V3.2.0 MASTER PRESENTATION DIRECTOR — FINAL SCENE PRIORITY','V3.4.3 FINAL PREMIUM SCENE CONTRACT — HIGHEST PRIORITY']){
+     out=stripBlock(out,label);
+   }
    // Old venue labels in inactive scenes are explicitly non-authoritative.
    const manualPlace=m.heightOn&&m.height&&m.height!=='Keine erhoehte Position'?m.height:null;
    const carrier=m.mediaOn&&m.media&&m.media!=='Bestehendes XXL-Plakat'?m.media:null;
