@@ -28,9 +28,9 @@ const groups=[
 ];
 function draw(){
  if(state.world!=='sign')return;
- const host=document.getElementById('view');if(!host)return;
+ const host=document.getElementById('premiumEditor270');if(!host)return;
  let box=document.getElementById('master320'),c=config();
- if(!box){box=document.createElement('details');box.id='master320';box.style.cssText='margin:12px 0 18px;border:2px solid #fc4c02;border-radius:14px;padding:14px;background:#202630;color:#fff';host.prepend(box);}
+ if(!box){box=document.createElement('details');box.id='master320';box.style.cssText='margin:12px 0 18px;border:2px solid #fc4c02;border-radius:14px;padding:14px;background:#202630;color:#fff';host.append(box);}
  let wasOpen=box.open;
  const select=(key,label)=>'<label style="display:block;margin:9px 0 5px">'+label+'</label><select data-m320="'+key+'" style="width:100%;padding:10px;border-radius:8px;background:#10151c;color:white;border:1px solid #667">'+C[key].map(v=>'<option '+(c[key]===v?'selected':'')+'>'+escapeHtml(v)+'</option>').join('')+'</select>';
  let html='<summary style="font-weight:800;font-size:17px;cursor:pointer">NEU V3.2.0 · MASTER-INSZENIERUNG</summary><p style="font-size:12px;color:#d0d5db">Jeder Bereich ist einzeln abschaltbar. Bestehende Premium-Szenen, Text, Outfit und Figuren bleiben erhalten.</p>';
