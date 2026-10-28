@@ -83,21 +83,42 @@ function bindBakery276(){
 }
 const css=document.createElement('style');css.textContent=`#premiumTab270{border:2px solid #485261;border-radius:9px;background:#303845;color:white;padding:11px;font-weight:800;cursor:pointer}#premiumTab270.active{border:3px solid #fc4c02;background:#fc4c02}#premiumPanel270{border:2px solid #fc4c02;border-radius:12px;background:#1a222c;padding:12px;margin:10px 0}#premiumPanel270 label{display:block;margin:12px 0 5px;font-weight:700}#premiumPanel270 select{width:100%;background:#161c24;color:white;padding:10px;border:2px solid #586171;border-radius:8px}#premiumPanel270 select:focus{outline:2px solid #fc4c02}#premiumPanel270 .selected270{border:3px solid #fc4c02!important;background:#33271e!important}#premiumPanel270 .scene270{width:100%;text-align:left;display:block;border:2px solid #55606c;border-radius:11px;background:#252f39;color:#fff;padding:12px;margin:9px 0}#premiumPanel270 .scene270 small{display:block;line-height:1.65;color:#e4e6ea;margin-top:6px}#premiumPanel270 .action270{width:100%;padding:12px;background:#fc4c02;color:white;border:2px solid #fc4c02;border-radius:9px;font-weight:800;margin:8px 0}`;document.head.append(css);
 function field(k,label,arr){let v=cfg()[k]||arr[0];return '<label>'+esc270(label)+'</label><select data-premium270="'+k+'">'+arr.map(z=>'<option '+(z===v?'selected':'')+'>'+esc270(z)+'</option>').join('')+'</select>';}
+/* V3.4.1 test: filtered combinatorial recommendations, no removal of original presets. */
 function effectiveScene338(c,i){
  const m=(state.sign258&&state.sign258.master320)||{};
- if(!m.heightOn&&!m.mediaOn&&!m.poseOn&&!m.propOn)return c;
- const a=c.slice();
- const places=['an einer belebten Einkaufsstraße','über einem Marktplatz','mit Blick auf einen Supermarktvorplatz','an einer Fußgängerzone','über einer Stadtpromenade','an einem historischen Platz','über einem Bahnhofsvorplatz','an einer modernen Stadtplaza','über einem Wochenmarkt','mit Blick auf eine Parkpromenade','an einer Altstadtgasse','über einem weiten öffentlichen Platz'];
- if(m.heightOn&&m.height){
-  a[0]='MASTER '+String(i+1).padStart(3,'0')+' · '+m.height+' · '+places[i%places.length];
-  a[1]=m.height+' '+places[i%places.length];
+ const p=cfg(),round=Number(p.rotation)||0;
+ const a=c.slice(),n=i+round;
+ const places=['belebter Marktplatz','breite Einkaufsstraße','Supermarktvorplatz','Fußgängerzone','Stadtpromenade','historischer Platz','Bahnhofsvorplatz','moderne Stadtplaza','Wochenmarkt','Parkpromenade','Altstadtgasse','öffentlicher Platz'];
+ const reactions=['Neugierige Blicke und spontane Gespräche','Einige fotografieren, andere gehen weiter','Überraschte Passanten bleiben stehen','Zwei diskutieren, andere schmunzeln','Gemischte stille und lachende Reaktionen','Menschen schauen vom gegenüberliegenden Gehweg','Kleine Gruppen beobachten aus Distanz','Passanten tauschen Blicke und kommentieren','Einzelne zeigen auf die Botschaft','Menschen bleiben kurz stehen und lesen'];
+ const audiences=['8–15 Passanten','15–25 Passanten','25–40 Passanten','5–12 Passanten','10–20 Passanten','20–35 Passanten'];
+ const props=['Stuhl','Holzrahmen','Holzkiste','Sitzbank','Metallrahmen','Staffelei','Klapptisch','Standfuß','Keine Requisite','Leichte Palette'];
+ const posters=['Panorama-Schild','XXL-Rechteckschild quer','Standbanner mit Ballast','XXL-Quadratschild','Holzrahmen-Plakat','Metallrahmen-Plakat','Zwei separate Plakate','Bodenplakat'];
+ const poses=['Breiter stabiler Stand','Neben Plakat links','Neben Plakat rechts','Auf sicherem Stuhl sitzend','Auf niedriger Stufe sitzend','Am Geländer stehend'];
+ const location=(m.heightOn&&m.height&&m.height!=='Keine erhoehte Position')?m.height:null;
+ const market=(m.marketOn&&m.market)?m.market:null;
+ if(location||market){
+  a[1]=[location,market||('mit Blick auf '+places[n%places.length])].filter(Boolean).join(' · ');
+  a[0]='PREMIUM '+String(n+1).padStart(3,'0')+' · '+a[1];
+ }
+ // With filters active, vary all non-locked scene components rather than
+ // merely renaming the same original scene.
+ const filtered=!!(location||market||m.mediaOn||m.propOn||m.poseOn||m.crowdOn||m.cameraOn);
+ if(filtered){
+  a[2]=posters[n%posters.length];
+  a[3]=props[(n*3)%props.length];
+  a[4]='Passend und standsicher befestigt';
+  a[5]=poses[n%poses.length];
+  a[7]=audiences[n%audiences.length];
+  a[8]=reactions[n%reactions.length];
  }
  if(m.mediaOn&&m.media&&m.media!=='Bestehendes XXL-Plakat'){
   a[2]=m.media;
-  a[4]=/fahne|banner|flag/i.test(m.media)?'Fest montiert / sicher gespannt':'Physikalisch passend befestigt';
+  a[4]=/fahne|banner|flag/i.test(m.media)?'Sicher montiert oder gespannt':'Passend zum Werbemittel standsicher befestigt';
  }
  if(m.propOn&&m.prop)a[3]=m.prop;
  if(m.poseOn&&m.pose&&!state.sign258.manualSignPose284)a[5]=m.pose;
+ if(m.crowdOn&&m.crowd)a[8]=m.crowd;
+ if(m.cameraOn&&m.camera)a[6]=a[6]+' · Kameraperspektive: '+m.camera;
  return a;
 }
 function card(c,i){let cam=window.stravaPremiumSceneValues325?window.stravaPremiumSceneValues325(i):{lens:24,distance:15};let active=state.sign258.activeSceneSource267==='premium'&&cfg().scene===i;return '<button class="scene270 '+(active?'selected270':'')+'" data-scene270="'+i+'" aria-pressed="'+active+'"><strong>'+esc270(c[0])+'</strong><small>Ort: '+esc270(c[1])+'<br>Plakat: '+esc270(c[2])+'<br>Requisite: '+esc270(c[3])+'<br>Plakathaltung: '+esc270(c[4])+'<br>Hauptfigur: '+esc270(c[5])+'<br>Mimik: '+esc270(c[6])+'<br>Publikum: '+esc270(c[7])+' · '+esc270(c[8])+'<br><b>Kamera: '+cam.lens+' mm · '+cam.distance+' m</b></small></button>';}
