@@ -237,4 +237,19 @@ function download(name,body,type){const blob=new Blob([body],{type});const u=URL
  document.addEventListener('DOMContentLoaded',hideDuplicate);
  hideDuplicate();
 })();
-</script><script src="layout321.js?v=321-20261028"></script><script>/* V3.2.1 additive layout */(function(){function move(){if(state.world!=='sign'||state.tab!=='Smart Director')return;const a=document.getElementById('situ269'),b=document.getElementById('premiumPanel270');if(a&&b&&b.parentNode&&a.nextElementSibling!==b)b.parentNode.insertBefore(a,b);}const old=render;render=function(){old();move();};move();})();</script></body></html>
+</script><script src="layout321.js?v=321-20261028"></script><script>/* V3.2.1 additive layout */(function(){function move(){if(state.world!=='sign'||state.tab!=='Smart Director')return;const a=document.getElementById('situ269'),b=document.getElementById('premiumPanel270');if(a&&b&&b.parentNode&&a.nextElementSibling!==b)b.parentNode.insertBefore(a,b);}const old=render;render=function(){old();move();};move();})();</script><script>
+/* V3.2.1: visual ordering only; preserve all existing situation and premium controls. */
+(function(){
+ const oldRender=render;
+ render=function(){
+  oldRender();
+  if(state.world!=='sign'||state.tab!=='Smart Director')return;
+  const situation=document.getElementById('situ269');
+  const premium=document.getElementById('premiumPanel270');
+  if(!situation||!premium)return;
+  if(situation.contains(premium)||premium.contains(situation))return;
+  premium.parentNode.insertBefore(situation,premium);
+ };
+ try{render();}catch(e){console.warn('Situation ordering',e);}
+})();
+</script></body></html>
