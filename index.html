@@ -828,33 +828,6 @@ const prevPrompt=typeof buildPrompt==='function'?buildPrompt:null;
 if(prevPrompt)buildPrompt=function(){let output=prevPrompt();if(state.world!=='sign'||p.selected<0)return output;const c=scene(p.selected);const o=optical(p.selected);return output+'\n\n=== PREMIUM STUDIO V3.6.1 · AUSGEWÄHLTE SZENE ===\n'+JSON.stringify({...c,cameraLensMm:o.lens,cameraDistanceM:o.distance,imageFormat:o.format,cameraMode:o.manual?'MANUELL':'SZENE'},null,2)+'\nMANUALLY SELECTED PREMIUM STUDIO VALUES OVERRIDE CONFLICTING AUTOMATIC SCENE SUGGESTIONS.'};
 try{render()}catch(e){console.warn('Premium Studio initial render',e)}
 })();
-</script></body></html>
-, 'm');p=p.replace(rx,(_,head)=>head+value);}
- if(c.heightOn&&c.height!==C.height[0]){
-  priority.push('ELEVATED LOCATION OVERRIDE: '+c.height+'. This is the sole active scene location. Ignore conflicting lower-priority premium location labels.');
-  replaceReg('REG-02','ELEVATED LOCATION: '+c.height);
- }
- if(c.mediaOn&&activePremium)priority.push('MASTER CARRIER OVERRIDES PREMIUM POSTER TYPE: '+c.media+'.');
- if(c.propOn&&activePremium)priority.push('MASTER PROP OVERRIDES PREMIUM PROP: '+c.prop+'.');
- if(manual.manualSignPose284&&c.poseOn)priority.push('MANUAL SIGN POSE OVERRIDES MASTER BODY POSE. Do not enforce conflicting body pose.');
- if((manual.manualCrowd290||manual.forceAudience277)&&c.crowdOn)priority.push('MANUAL AUDIENCE OVERRIDES MASTER BACKGROUND AUDIENCE.');
- if(manual.manualGaze288&&activePremium)priority.push('MANUAL GAZE OVERRIDES PREMIUM EXPRESSION/Gaze.');
- if(manual.manualCamera267&&c.cameraOn)priority.push('MANUAL CAMERA OVERRIDES MASTER CAMERA SUGGESTION.');
- if(priority.length)p+='\\n\\n=== RESOLVED USER PRIORITIES ===\\n'+priority.join('\\n');
-
- let out=['\n\n=== V3.2.0 MASTER PRESENTATION DIRECTOR — FINAL SCENE PRIORITY ===','Retain exact manually entered sign text, line breaks, red/white word colors, maximum readable typography, runner identity, PUMA outfit, cap, original selected figures and all other unrelated settings. The following activated choices override only conflicting location, prop, pose or presentation descriptions. Treat all objects as physical real-world objects photographed together with coherent perspective, light, scale, contact shadows and real mechanical supports. Never composite a fake billboard onto a photograph.'];
- if(c.mediaOn)out.push('PHYSICAL MESSAGE CARRIER: '+c.media+'. Present full original sign text on one flat readable surface, safely within the frame. Mounting: '+c.mount+'. Fabric tension: '+c.fabric+'. Wind: '+c.wind+'. For long text use a taut supported fabric/banner, not a flapping distorted flag. Any frame, mast, support and fastening must be visible and physically plausible.');
- if(c.propOn&&c.prop!==C.prop[0])out.push('PROP: '+c.prop+'. Weathering: '+c.weathering+'. Aged timber is rough, cracked, grey, mossy, decades outdoors, naturally resting on ground. If supporting a person or banner, the load-bearing core and joints must be structurally sound. Provide clear feet/seat contact, stable placement, plausible grip and shadows. No standing on an ordinary chair or rotten timber.');
- if(c.heightOn&&c.height!==C.height[0])out.push('ELEVATED LOCATION: '+c.height+'. The person stands fully BEHIND a realistic safe balcony/roof/terrace guardrail or on a wide stable landing, never on railing or edge. If a hanging banner is selected, mount it to suitable structure with realistic visible attachments; no unsupported weight or dangerous protrusion. Show credible view from street or courtyard below.');
- if(c.marketOn)out.push('ANONYMOUS GERMAN GROCERY STORE BACKGROUND: '+c.market+'. Include plausible building, glass entrance, cart shelter, parked vehicles, road markings and natural depth. STRICTLY NO real retailer names, logos, brand colors or imitation trademarks; no suggestion of sponsorship. If elevated location is also enabled, show the neutral store from the elevated viewpoint rather than teleporting the subject to the parking lot.');
- if(c.poseOn)out.push('SELECTED BODY POSE: '+c.pose+'. Adjust only if incompatible with the chosen carrier or location. Standing and sitting require stable support; hands grip real load-bearing edges or pole; avoid extra limbs and floating boards. If the selected pose requires a chair but none is selected, include a sturdy chair as necessary physical support. Explain the adjustment through the resulting visual composition.');
- if(c.crowdOn)out.push('BACKGROUND AUDIENCE: '+c.crowd+'. Realistic distance, subtle authentic reactions, no staged identical poses, avoid distracting from legible main text.');
- if(c.cameraOn)out.push('SCENE CAMERA: '+c.camera+'. Lens suggestion: '+c.lens+'. If manual camera controls are enabled in existing settings, those user-entered controls take precedence over this suggestion. Ensure full readable banner and safe architectural geometry.');
- out.push('COMBINATION PRIORITY: For balcony plus flag use secured balcony banner; for roof plus board use weighted freestanding stand; for aged timber plus seated person use sound broad stable timber; for supermarket plus shopping cart attach board to cart; for large long copy prefer rigid board or taut banner. Never silently alter the user original text, sign colors, identity, outfit or camera manual values.\n=== END MASTER PRESENTATION DIRECTOR ===');
- return p+out.join('\n');
-};
-draw();
-})();
 </script><script>
 /* V3.2.2: reference-photo endstage directly before premium scenes, without hiding controls. */
 (function(){
@@ -974,5 +947,49 @@ draw();
  }
  render=function(){old();syncStudio();requestAnimationFrame(syncStudio);};
  syncStudio();
+})();
+</script><script>
+/* V3.6.2 — centralized non-destructive final prompt consistency layer. */
+(function(){
+ 'use strict';
+ const previous=buildPrompt;
+ function stripBlock(s,label){
+   const start='=== '+label+' ===',a=s.indexOf(start);
+   if(a<0)return s;
+   const end=s.indexOf('\n\n===',a+start.length);
+   return s.slice(0,a)+(end<0?'':s.slice(end));
+ }
+ buildPrompt=function(){
+   let out=previous();
+   if(state.world!=='sign')return out;
+   const z=state.sign258||{},m=z.master320||{},premium=z.premium270||{};
+   const studio=window.stravaPremiumStudio||null;
+   // Remove superseded explanatory sections, not identity, footwear, outfit or text locks.
+   for(const label of ['USER PRIORITIES','RESOLVED USER PRIORITIES','PREMIUM SCENE FALLBACK','FINAL ACTIVE MASTER CONFLICT RESOLUTION']){
+     out=stripBlock(out,label);
+   }
+   out=out.replace(/no pointing index fingers\.?/gi,'No arbitrary pointing gestures.');
+   // Old venue labels in inactive scenes are explicitly non-authoritative.
+   const manualPlace=m.heightOn&&m.height&&m.height!=='Keine erhoehte Position'?m.height:null;
+   const carrier=m.mediaOn&&m.media&&m.media!=='Bestehendes XXL-Plakat'?m.media:null;
+   const bodyPose=m.poseOn&&!z.manualSignPose284?m.pose:null;
+   const currentFont=(()=>{try{const p=JSON.parse(localStorage.getItem('strava-premium-studio-350')||'{}');return p.posterFont||'Anton'}catch(e){return 'Anton'}})();
+   // Eliminate contradictory legacy DIN-only instructions when a live font choice exists.
+   out=out.replace(/Font:\s*DIN Condensed Bold\./gi,'Font: '+currentFont+'.');
+   const rules=[
+     '=== V3.6.2 ACTIVE SCENE & GESTURE CONSISTENCY — FINAL AUTHORITY ===',
+     'Only currently selected controls are authoritative. Ignore older inactive premium scene names, old audience-placement presets and generic crowd venues when they contradict active controls.',
+     'ACTIVE POSTER FONT: '+currentFont+'. Use this font appearance for the printed sign lettering, while retaining all exact authored words, line breaks and selected word colors.',
+     manualPlace?'ACTIVE LOCATION (MASTER): '+manualPlace+'. Do not move the runner to a legacy market hall or parking lot.':'Use the currently active selected location; do not revive inactive location presets.',
+     carrier?'ACTIVE PHYSICAL CARRIER (MASTER): '+carrier+'. Respect realistic supports and mounting.':'Use the currently active selected physical message carrier.',
+     bodyPose?'ACTIVE RUNNER POSE (MASTER): '+bodyPose+'. Maintain anatomically plausible hands, chair and supports.':'Maintain the active selected body pose and manually chosen gaze.',
+     'INDEX FINGER: OPTIONAL. IF an index finger is extended, it MUST point directly toward the physical sign or one of its printed text lines, never at the lens, the sky, random spectators or empty space. Hands must not obscure lettering. Otherwise use natural open-hand presentation, resting hands or secure grips compatible with the chosen pose.',
+     'AUDIENCE: spectators selected as reacting must face the runner or the actual front of the sign, with matching head, neck and torso orientation. Some may naturally turn to companions to discuss the writing. Do not mistake incidental background passersby for the reacting audience. Manual audience settings override generic crowd templates.',
+     'PHYSICAL GEOMETRY: honor the active camera focal length and sensor-to-runner distance even if the poster text becomes difficult to resolve. Never fake closer camera geometry.',
+     'Do not add a second featured side character solely because an older generic character preset names one. Preserve explicitly enabled named side characters.',
+     '=== END V3.6.2 ACTIVE CONTRACT ==='
+   ];
+   return out.trimEnd()+'\n\n'+rules.join('\n');
+ };
 })();
 </script></body></html>
