@@ -1008,6 +1008,41 @@ try{render()}catch(e){console.warn('Premium Studio initial render',e)}
    const currentFont=(()=>{try{const p=JSON.parse(localStorage.getItem('strava-premium-studio-350')||'{}');return p.posterFont||'Anton'}catch(e){return 'Anton'}})();
    // Eliminate contradictory legacy DIN-only instructions when a live font choice exists.
    out=out.replace(/Font:\s*DIN Condensed Bold\./gi,'Font: '+currentFont+'.');
+   // Build a lossless, position-based color contract from the same token indices as the UI.
+   const sign=state.sign||{},tokens=String(sign.signText||'').split(/(\s+)/);
+   const colors=sign.wordColors||{};
+   const rows=[[]];let wordNumber=0,redCount=0,invalid=0;
+   tokens.forEach((token,i)=>{
+     if(!token)return;
+     if(/^\s+$/.test(token)){
+       for(const part of token.split(/(\n)/)){
+         if(part==='\n')rows.push([]);
+       }
+       return;
+     }
+     const raw=String(colors[i]||'#ffffff');
+     const valid=/^#[0-9a-f]{6}$/i.test(raw);
+     if(!valid)invalid++;
+     const color=valid?raw.toUpperCase():'#FFFFFF';
+     if(color!=='#FFFFFF')redCount++;
+     wordNumber++;
+     rows[rows.length-1].push({word:token,color:color,position:wordNumber,tokenIndex:i});
+   });
+   const colorLegend=rows.map((row,i)=>{
+     if(!row.length)return 'LINE '+(i+1)+': [EMPTY LINE]';
+     return 'LINE '+(i+1)+': '+row.map(w=>'['+w.position+'|'+w.word+'|'+w.color+']').join(' ');
+   });
+   const wordColorContract=[
+     '=== V3.6.5 EXACT SIGN TEXT AND WORD-COLOR MAP — NON-NEGOTIABLE ===',
+     'Print EXACTLY the sign text already provided, preserving every line break, space, quotation mark and punctuation mark. The following color map is POSITIONAL, not a search-and-replace list. Each bracket identifies one specific word occurrence, even when words repeat.',
+     'The text color of EVERY word is explicitly specified below. #FFFFFF means pure WHITE; #FF3434 means bright RED. For any other hexadecimal color, reproduce that exact color. NEVER default a colored word to white. Never recolor adjacent words.',
+     'READ THE FULL MAP before generating the photograph. The map applies to the printed lettering on the actual physical sign, not to a caption or a separate overlay.',
+     'WORD COLOR MAP ('+wordNumber+' words, '+redCount+' nonwhite, '+rows.length+' lines):',
+     ...colorLegend,
+     invalid?'WARNING: '+invalid+' invalid color value(s) were safely interpreted as white.':'COLOR VALIDATION: all active color values are valid hexadecimal colors.',
+     'FINAL CHECK: verify the text line by line against this map; every red/nonwhite word MUST remain nonwhite and every white word MUST remain white. Do not omit, substitute or shift word colors.',
+     '=== END V3.6.5 WORD-COLOR MAP ==='
+   ];
    const rules=[
      '=== V3.6.4 CLEAN ACTIVE SCENE & GESTURE CONTRACT ===',
      'Only currently selected controls are authoritative. Ignore older inactive premium scene names, old audience-placement presets and generic crowd venues when they contradict active controls.',
@@ -1021,7 +1056,7 @@ try{render()}catch(e){console.warn('Premium Studio initial render',e)}
      'Do not add a second featured side character solely because an older generic character preset names one. Preserve explicitly enabled named side characters.',
      '=== END V3.6.4 CLEAN CONTRACT ==='
    ];
-   return out.trimEnd()+'\n\n'+rules.join('\n');
+   return out.trimEnd()+'\n\n'+rules.join('\n')+'\n\n'+wordColorContract.join('\n');
  };
 })();
 </script></body></html>
