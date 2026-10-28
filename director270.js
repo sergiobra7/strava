@@ -87,7 +87,7 @@ function field(k,label,arr){let v=cfg()[k]||arr[0];return '<label>'+esc270(label
 function effectiveScene338(c,i){
  const m=(state.sign258&&state.sign258.master320)||{};
  const p=cfg(),round=Number(p.rotation)||0;
- const a=c.slice(),n=i+round;
+ const a=c.slice(),n=i+round*10;
  const places=['belebter Marktplatz','breite Einkaufsstraße','Supermarktvorplatz','Fußgängerzone','Stadtpromenade','historischer Platz','Bahnhofsvorplatz','moderne Stadtplaza','Wochenmarkt','Parkpromenade','Altstadtgasse','öffentlicher Platz'];
  const reactions=['Neugierige Blicke und spontane Gespräche','Einige fotografieren, andere gehen weiter','Überraschte Passanten bleiben stehen','Zwei diskutieren, andere schmunzeln','Gemischte stille und lachende Reaktionen','Menschen schauen vom gegenüberliegenden Gehweg','Kleine Gruppen beobachten aus Distanz','Passanten tauschen Blicke und kommentieren','Einzelne zeigen auf die Botschaft','Menschen bleiben kurz stehen und lesen'];
  const audiences=['8–15 Passanten','15–25 Passanten','25–40 Passanten','5–12 Passanten','10–20 Passanten','20–35 Passanten'];
@@ -103,7 +103,7 @@ function effectiveScene338(c,i){
  // With filters active, vary all non-locked scene components rather than
  // merely renaming the same original scene.
  const cast=(state.sign258&&state.sign258.premiumCast342)||{};
- const filtered=!!(location||market||m.mediaOn||m.propOn||m.poseOn||m.crowdOn||m.cameraOn||cast.person!=='Automatisch'||cast.audience!=='Automatisch');
+ const filtered=!!(location||market||m.mediaOn||m.propOn||m.poseOn||m.crowdOn||m.cameraOn||(cast.person&&cast.person!=='Automatisch')||(cast.audience&&cast.audience!=='Automatisch'));
  if(filtered){
   a[2]=posters[n%posters.length];
   a[3]=props[(n*3)%props.length];
@@ -122,11 +122,12 @@ function effectiveScene338(c,i){
  if(m.cameraOn&&m.camera)a[6]=a[6]+' · Kameraperspektive: '+m.camera;
  const people=['Alleine','Mit Opa','Mit Tante','Mit Opa und Tante','Mit weiterer Figur','Mit zwei Nebenfiguren'];
  const person=cast.person&&cast.person!=='Automatisch'?cast.person:people[n%people.length];
- const size=cast.audience&&cast.audience!=='Automatisch'?cast.audience:['Keine','Wenige (3–8)','Mittlere Gruppe (10–25)','Große Menschenmenge (30–60)','XXL-Menschenmenge (60–100)'][n%5];
- const castLabel=person==='Alleine'?'Hauptfigur alleine':person;
+ const size=cast.audience&&cast.audience!=='Automatisch'?cast.audience:(person==='Alleine'?'Keine':['Keine','Wenige (3–8)','Mittlere Gruppe (10–25)','Große Menschenmenge (30–60)','XXL-Menschenmenge (60–100)'][n%5]);
+ const castLabel=person==='Alleine'?'Hauptfigur ohne Begleitfigur':person;
  a[0]=a[0]+' · '+castLabel;
  a[7]=size==='Keine'?'Keine weiteren Zuschauer':size==='Wenige (3–8)'?'3–8 Zuschauer':size==='Mittlere Gruppe (10–25)'?'10–25 Zuschauer':size==='Große Menschenmenge (30–60)'?'30–60 Zuschauer':size==='XXL-Menschenmenge (60–100)'?'60–100 Zuschauer':a[7];
  if(person==='Alleine'&&size==='Keine')a[7]='Keine weiteren Personen';
+ if(person==='Alleine'&&size!=='Keine')a[8]='Nur die Hauptfigur als Akteur, Zuschauer bleiben separate Passanten. '+a[8];
  a[8]=castLabel+'. '+(a[7]==='Keine weiteren Personen'?'Keine Publikumsreaktion.':a[8]);
 
  return a;
