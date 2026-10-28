@@ -6,7 +6,7 @@
 .awbtn{padding:8px 10px;background:#2c3542;border:1px solid #596274;color:#fff;border-radius:8px}
 .awbtn.active{border-color:#fc4c02;background:#4c2b1c}
 @media(max-width:620px){.autogrid{grid-template-columns:1fr}}
- .quick-search{width:100%;margin-bottom:10px}.quick-results{max-height:52vh;overflow:auto}.quick-item{display:flex;gap:8px;align-items:center;padding:9px;border-bottom:1px solid #353c48}.quick-item button{flex-shrink:0}.quick-item .quick-name{flex:1;min-width:0;overflow-wrap:anywhere}.quick-chip{font-size:11px;color:#b6c2d1}.quick-star{background:none;border:1px solid #4b5260;border-radius:7px;padding:6px;color:#ffb340}.quick-select{background:#fc4c02;color:#fff;border:0;border-radius:7px;padding:8px}.quick-controls{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0}.quick-controls select{width:auto;max-width:100%}</style></head><body><header><div><h1>STRAVA RUN <span class="mark">V3.3.9</span></h1><small>BLACK SIGN + STRAVA WALL · GITHUB EDITION</small></div><div id="saveStatus" class="status">Lokal gespeichert</div></header><main><div class="worlds"><button class="world active" data-world="wall">🧱 STRAVA WALL</button><button class="world" data-world="sign">⬛ BLACK SIGN / PLAKAT</button></div><nav class="tabs" id="tabs"></nav><div id="view"></div><div class="footer">Lokale Offline-Web-App · Keine Bilder werden an einen Server gesendet · Prompt zum Kopieren für ChatGPT/Bildgenerierung</div></main><script>
+ .quick-search{width:100%;margin-bottom:10px}.quick-results{max-height:52vh;overflow:auto}.quick-item{display:flex;gap:8px;align-items:center;padding:9px;border-bottom:1px solid #353c48}.quick-item button{flex-shrink:0}.quick-item .quick-name{flex:1;min-width:0;overflow-wrap:anywhere}.quick-chip{font-size:11px;color:#b6c2d1}.quick-star{background:none;border:1px solid #4b5260;border-radius:7px;padding:6px;color:#ffb340}.quick-select{background:#fc4c02;color:#fff;border:0;border-radius:7px;padding:8px}.quick-controls{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0}.quick-controls select{width:auto;max-width:100%}</style></head><body><header><div><h1>STRAVA RUN <span class="mark">V3.4.0</span></h1><small>BLACK SIGN + STRAVA WALL · GITHUB EDITION</small></div><div id="saveStatus" class="status">Lokal gespeichert</div></header><main><div class="worlds"><button class="world active" data-world="wall">🧱 STRAVA WALL</button><button class="world" data-world="sign">⬛ BLACK SIGN / PLAKAT</button></div><nav class="tabs" id="tabs"></nav><div id="view"></div><div class="footer">Lokale Offline-Web-App · Keine Bilder werden an einen Server gesendet · Prompt zum Kopieren für ChatGPT/Bildgenerierung</div></main><script>
 'use strict';
 const poses=['STAIR CHILL PRO — auf vorhandener Treppe, Unterarme locker auf Knien, natürliche Sitzhaltung','WALL LEAN PRO — Schulter an vorhandener Wand, Arme verschränkt, Beine locker gekreuzt','REVERSE CHAIR PRO — rückwärts auf vorhandenem Stuhl, getrennte Unterarme auf Lehne','An STRAVA-Wand angelehnt, Schulterkontakt, Arme verschränkt, Beine gekreuzt','Rückwärts auf Holzstuhl, Unterarme getrennt auf Lehne','Auf Treppe sitzend, entspannt','Auf Bank sitzend, Beine locker nach vorne','Auf niedriger Mauer sitzend','Selbstbewusst stehend, Hände an Hüften','Ein Fuß auf Treppenstufe, offene Hand zur Wand','Gehend, spontaner Blick zur Statistik','Seitlich stehend, eine Hand in Tasche','An Geländer gelehnt','Auf umgedrehtem Stuhl, seitlicher Blick','Auf Holzstuhl vor der Wand, Oberkörper vorgebeugt','Auf Kante sitzend, Arme locker','Nach dem Lauf, Hände auf Oberschenkeln','Sportflasche in einer Hand, entspannt','Beide Arme locker seitlich, Blick zur Kamera','Auf Treppe mit Kollege diskutierend','Auf Bank zurückgelehnt, Beine ausgestreckt','Neben Wand hockend, ohne verdeckte Schuhe','Mit offenen Händen erklärend','Mit Kollege Schulter an Schulter','Im Schritt stehen geblieben','Seitlich zur Wand, Kopf zur ersten Statistikzeile','Sitzend, Ellbogen auf getrennten Knien','Auf Stuhl sitzend, Beine überschlagen','An Pfosten locker angelehnt (nur wenn vorhanden)','Mit verschränkten Armen, frontaler Blick','Locker an Wand, eine Hand an Hüfte','Auf Bordsteinkante sitzend (wenn vorhanden)','Mit einer Hand auf Stuhllehne','Leicht nach vorn gebeugt, erstaunt','Stehend, provokant grinsend','Auf Bank mit Opa, Gespräch','Auf Stufe sitzend, Kollege daneben','Ruhig sitzend, Hände ineinander','Lässiger Schritt von der Wand weg','Leicht zur Wand gedreht, Kopf zur Kamera','Nach dem Lauf auf Stuhl ausruhend','Locker mit Rücken zur Wand, Kopf seitlich','Offene Hand zur Statistik, andere am Körper','Auf Stuhl quer sitzend','An Treppenwange angelehnt (wenn vorhanden)','Auf Mauer, beide Füße am Boden','Mit Sportflasche an Bank','Kollege etwas erklärend','Opa aufmerksam zuhörend','Sitzend, provokanter Blick','Stehend, breiter sicherer Stand','Lässig neben Wand, Hände in Jackentaschen','An Wand, Kopf leicht zum Opa','Individuelle Pose (Textfeld)'];
 const opaPoses=['Auf abgestelltem alten Mofa, ein Fuß am Boden','Steht am alten Mofa, Hand am Lenker','Mit Sackkarre, beide Hände an Griffen','Schiebt Sackkarre mit Kisten, hält an','Mit Schubkarre, grinsend','Auf altem Fahrrad, ein Fuß am Boden','Schiebt altes Fahrrad','Mit Handwagen, hält inne','Auf Holzkiste neben Mofa','Mit Obstkiste, bleibt stehen','Mit Werkzeugtasche, diskutiert','Stützt sich auf Besen','Mit Eimer, schaut zum Kollegen','An altem Roller gelehnt','Mit Einkaufstrolley','Auf umgedrehtem Holzstuhl','Auf Bank, Hände auf Knien','Auf Holzstuhl, Teeglas in Hand','Mit Einkaufstasche, skeptischer Blick','Steht, offene Hand zum Läufer','Sitzt, schüttelt den Kopf','Mit Gehstock, natürlich stehend','Hände hinter dem Rücken, Statistik betrachtend','Am Schnurrbart nachdenklich','Kratzt sich am Kopf','Lacht, Hand am Bauch','Abwinkende offene Hand','Steht seitlich, Augenbrauen hoch','Sitzt neben Teyze, diskutiert','Auf Treppe, leicht vorgebeugt','An Café-Tisch mit Teeglas','Auf Bank, Arme verschränkt','Schaut zum Kollegen, ungläubig','Steht mit Weste, Hand am Kinn','Mit alter Tasche, im Gehen','Auf niedriger Mauer','Steht mit offenem Mantel','Mit Holzstuhl in der Hand','Sitzt auf Kiste, verschränkt Arme','Mit Fahrrad und Einkaufstasche','Mit Sackkarre und Teeglas (nur plausibel)','Sitzt neben abgestelltem Mofa','Steht am Marktstand (nur wenn vorhanden)','Lacht mit Teyze','Hört aufmerksam zu','Mit gefalteten Händen','Steht ruhig, trockener Blick','Mit Schiebermütze, Kopf zur Statistik','Kopfschüttelnd vorbeigehend','Individuelle Opa-Pose (Textfeld)'];
@@ -514,38 +514,88 @@ draw();
  };
 })();
 </script><script>
-/* V3.3.9: single collapsible settings drawer, recommendations always visible. */
+/* V3.4.0: five categorized premium filters, all original controls retained. */
 (function(){
  let busy=false;
+ const cats=[
+  ['place','01 · ORT & KULISSE'],
+  ['props','02 · PLAKAT & REQUISITEN'],
+  ['figures','03 · FIGUREN & POSEN'],
+  ['crowd','04 · PUBLIKUM & REAKTIONEN'],
+  ['camera','05 · KAMERA & BILDWIRKUNG']
+ ];
+ function makeDetails(id,title,open){
+  let el=document.getElementById(id);
+  if(el)return el;
+  el=document.createElement('details');el.id=id;el.open=!!open;
+  el.style.cssText='margin:10px 0;border:1px solid #59616e;border-radius:12px;padding:12px;background:#202630;color:#fff';
+  const summary=document.createElement('summary');summary.textContent=title;
+  summary.style.cssText='font-size:15px;font-weight:800;cursor:pointer;padding:5px 0;touch-action:manipulation';
+  el.append(summary);return el;
+ }
+ function move(el,dest){if(el&&dest&&el.parentElement!==dest)dest.append(el);}
  function organize(){
   if(state.world!=='sign'||state.tab!=='Smart Director')return;
-  const premium=document.getElementById('premiumPanel270');
-  if(!premium)return;
-  let drawer=document.getElementById('allSettings339');
-  if(!drawer){
-   drawer=document.createElement('details');
-   drawer.id='allSettings339';
-   drawer.open=!!(state.sign258&&state.sign258.allSettingsOpen339);
-   drawer.style.cssText='margin:16px 0;border:2px solid #fc4c02;border-radius:14px;padding:12px;background:#171c24;color:#fff';
-   const summary=document.createElement('summary');
-   summary.textContent='ALLE EINSTELLUNGEN · FILTER & MANUELLE REGIE';
-   summary.style.cssText='font-weight:800;font-size:17px;cursor:pointer;padding:10px 2px;touch-action:manipulation';
-   drawer.append(summary);
-   drawer.addEventListener('toggle',()=>{if(state.sign258){state.sign258.allSettingsOpen339=drawer.open;save();}});
+  const p=document.getElementById('premiumPanel270');if(!p)return;
+  const z=state.sign258||(state.sign258={});
+  let drawer=makeDetails('allSettings339','⚙ ALLE SZENEN-FILTER & EINSTELLUNGEN',z.allSettingsOpen339);
+  drawer.style.cssText='margin:16px 0;border:2px solid #fc4c02;border-radius:14px;padding:12px;background:#171c24;color:#fff';
+  if(!drawer.dataset.bound340){drawer.dataset.bound340='1';drawer.addEventListener('toggle',()=>{z.allSettingsOpen339=drawer.open;save();});}
+  const heading=[...p.querySelectorAll(':scope > h3')].find(e=>e.textContent.includes('EMPFEHLUNGEN'));
+  if(drawer.parentElement!==p||drawer.nextElementSibling!==heading)p.insertBefore(drawer,heading||null);
+  const sections={};
+  for(const [key,title] of cats){
+   const el=makeDetails('premiumCategory340_'+key,title,z.premiumCategory340&&z.premiumCategory340[key]);
+   if(!el.dataset.bound340){el.dataset.bound340='1';el.addEventListener('toggle',()=>{z.premiumCategory340=z.premiumCategory340||{};z.premiumCategory340[key]=el.open;save();});}
+   move(el,drawer);sections[key]=el;
   }
-  const heading=[...premium.querySelectorAll(':scope > h3')].find(el=>el.textContent.includes('EMPFEHLUNGEN'));
-  if(drawer.parentElement!==premium||drawer.nextElementSibling!==heading)premium.insertBefore(drawer,heading||null);
-  const ids=['master320','manualRegie328','premiumEditor270','premiumCast311'];
-  for(const id of ids){
-   const el=document.getElementById(id);
-   if(el&&el!==drawer&&el.parentElement!==drawer)drawer.append(el);
-   if(el){el.hidden=false;el.style.removeProperty('display');}
+  const master=document.getElementById('master320');
+  if(master){
+   // Preserve master module and its live handlers. Move its existing category groups.
+   master.hidden=false;master.style.removeProperty('display');
+   move(master,sections.place);
+   const blocks=[...master.children].filter(e=>e.tagName==='DIV'&&e.querySelector('[data-m320]'));
+   for(const block of blocks){
+    const keys=[...block.querySelectorAll('[data-m320]')].map(e=>e.dataset.m320);
+    const category=keys.includes('heightOn')||keys.includes('marketOn')?'place':
+      keys.includes('mediaOn')||keys.includes('propOn')?'props':
+      keys.includes('poseOn')?'figures':
+      keys.includes('crowdOn')?'crowd':
+      keys.includes('cameraOn')?'camera':
+      keys.some(k=>['mount','wind','fabric','weathering'].includes(k))?'props':'camera';
+    move(block,sections[category]);
+   }
+   // Keep the master details element as an original-module holder, not a duplicate menu.
+   master.style.display='none';
   }
+  const editor=document.getElementById('premiumEditor270');
+  if(editor){
+   move(editor,sections.props);
+   const labels=[...editor.querySelectorAll('label')];
+   for(const label of labels){
+    const text=(label.textContent||'').toLowerCase();
+    const field=label.querySelector('select,input,textarea')||label.nextElementSibling;
+    if(!field||!field.matches||!field.matches('select,input,textarea'))continue;
+    const cat=/publikum|reaktion/.test(text)?'crowd':/position|mimik|blick|haltung/.test(text)?'figures':'props';
+    const row=label.parentElement&&label.parentElement!==editor&&label.parentElement.querySelectorAll('select').length===1?label.parentElement:null;
+    move(row||label,sections[cat]);
+    if(!row)move(field,sections[cat]);
+   }
+   editor.style.display='none';
+  }
+  move(document.getElementById('manualRegie328'),sections.figures);
+  move(document.getElementById('premiumCast311'),sections.figures);
+  let bar=document.getElementById('premiumActiveFilters340');
+  if(!bar){bar=document.createElement('p');bar.id='premiumActiveFilters340';bar.style.cssText='font-size:12px;line-height:1.6;color:#d8e2ed;margin:10px 0';p.insertBefore(bar,heading||null);}
+  const m=z.master320||{};
+  const active=[['ORT',m.heightOn,m.height],['KULISSE',m.marketOn,m.market],['PLAKAT',m.mediaOn,m.media],['REQUISITE',m.propOn,m.prop],['POSE',m.poseOn,m.pose],['PUBLIKUM',m.crowdOn,m.crowd],['KAMERA',m.cameraOn,m.camera]].filter(a=>a[1]&&a[2]);
+  const next=active.length?'AKTIVE MASTER-FILTER ('+active.length+'): '+active.map(a=>a[0]+': '+a[2]).join(' · '):'Keine Master-Filter aktiv · Premium-Empfehlungen automatisch';
+  if(bar.textContent!==next)bar.textContent=next;
  }
  function schedule(){if(busy)return;busy=true;requestAnimationFrame(()=>{busy=false;organize();});}
  const old=render;render=function(){old();schedule();};
  const root=document.getElementById('view')||document.body;
- new MutationObserver(()=>{const p=document.getElementById('premiumPanel270');if(!p)return;const d=document.getElementById('allSettings339');if(!d||['master320','manualRegie328','premiumEditor270','premiumCast311'].some(id=>{const e=document.getElementById(id);return e&&e.parentElement!==d;}))schedule();}).observe(root,{childList:true,subtree:true});
+ new MutationObserver(()=>{const p=document.getElementById('premiumPanel270');if(!p)return;const d=document.getElementById('allSettings339');if(!d||!document.getElementById('premiumCategory340_camera')||document.getElementById('premiumCast311')?.parentElement?.id!=='premiumCategory340_figures')schedule();}).observe(root,{childList:true,subtree:true});
  schedule();
 })();
 </script></body></html>
