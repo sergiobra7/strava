@@ -903,6 +903,23 @@ up394.onclick=()=>{
  requestAnimationFrame(()=>document.getElementById('psCameraTarget394')?.scrollIntoView({behavior:'smooth',block:'center'}));
 };
 
+// Remove only orphaned floating UP-arrow controls from older injected versions.
+// The two official controls are preserved by their stable IDs.
+function cleanLegacyUpArrows395(){
+ const official=new Set(['psJump361','psCameraJump394']);
+ for(const el of document.querySelectorAll('button,[role="button"]')){
+  if(official.has(el.id)||el.closest('#ps350'))continue;
+  const label=(el.textContent||'').trim(),aria=(el.getAttribute('aria-label')||'').toLowerCase();
+  const upward=/^(↑|⬆|⬆️|⇧|▲|⤴|🔼)$/.test(label)||(/nach oben|back to top|scroll to top/.test(aria)&&label.length<5);
+  if(!upward)continue;
+  const css=getComputedStyle(el),rect=el.getBoundingClientRect();
+  if(css.position!=='fixed'||rect.width<35||rect.width>110||rect.height<35||rect.height>110)continue;
+  if(rect.right<innerWidth-110||rect.top<innerHeight*0.40)continue;
+  el.remove();
+ }
+}
+cleanLegacyUpArrows395();
+setTimeout(cleanLegacyUpArrows395,350);
 const poster=root.querySelector('#psPosterPanel355');
 if(poster){
 poster.ontoggle=()=>{p.posterOpen=poster.open;persist()};
