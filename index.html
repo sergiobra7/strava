@@ -835,7 +835,7 @@ const editKeys390=['place','carrier','format','hold','pose','prop','cast','audie
 const editLabels390={place:'Ort',carrier:'Werbemittel',format:'Format / Größe',hold:'Plakathaltung / Befestigung',pose:'Hauptfigur-Pose',prop:'Requisite',cast:'Besetzung',audience:'Publikum (z. B. 20 Personen)',action:'Aktion / Reaktion',cam:'Kameraperspektive',frame:'Bildausschnitt',position:'Balkonposition'};
 function sceneKey390(n){return 'premium-scene-'+String(p.round*10+n+1).padStart(3,'0');}
 function entry390(n){p.sceneEdits390=p.sceneEdits390||{};const id=sceneKey390(n);return p.sceneEdits390[id]||(p.sceneEdits390[id]={enabled:false,values:{}});}
-function effective390(n){const c=scene(n),e=entry390(n);return e.enabled?{...c,...e.values}:c;}
+function effective390(n){const c=scene(n),e=entry390(n);return {...c,...(e.enabled?e.values:{}),...(e.confirmed393||{})};}
 function editor390(n){
  const e=entry390(n),base=scene(n),effective=effective390(n);
  return '<div class="ps-edit390" data-ps-edit-card="'+n+'" style="margin:10px 0;padding:10px;border:1px solid '+(e.enabled?'#fc4c02':'#4b8d5b')+';border-radius:10px;background:#121a22;text-align:left">'+
@@ -848,11 +848,11 @@ function editor390(n){
 function syncActive390(n){
  if(p.selected!==n)return;
  const c=effective390(n);state.sign258=state.sign258||{};const q=state.sign258.premium270=state.sign258.premium270||{};
- q.title=scene(n).title;q.location=c.place;q.poster=c.carrier+' · '+c.format;q.holding=c.hold;q.position=c.pose;q.prop=c.prop;q.cast=c.cast;q.companion=c.cast;q.audience=c.audience;q.expression=c.action;q.reaction=c.action;q.camera=c.cam;q.frame=c.frame;q.positionOnBalcony=c.position;q.manualScene390=entry390(n).enabled;
+ q.title=scene(n).title;q.location=c.place;q.poster=c.carrier+' · '+c.format;q.holding=c.hold;q.position=c.pose;q.prop=c.prop;q.cast=c.cast;q.companion=c.cast;q.audience=c.audience;q.expression=c.action;q.reaction=c.action;q.camera=c.cam;q.frame=c.frame;q.positionOnBalcony=c.position;q.manualScene390=entry390(n).enabled||!!Object.keys(entry390(n).confirmed393||{}).length;
  state.sign258.activeSceneSource267='premium';
  try{save()}catch(e){}
 }
-window.stravaEffectiveScene390=function(){if(p.selected<0)return null;return {id:sceneKey390(p.selected),original:scene(p.selected),effective:effective390(p.selected),manual:entry390(p.selected).enabled};};
+window.stravaEffectiveScene390=function(){if(p.selected<0)return null;return {id:sceneKey390(p.selected),original:scene(p.selected),effective:effective390(p.selected),manual:entry390(p.selected).enabled||!!Object.keys(entry390(p.selected).confirmed393||{}).length};};
 function explainScene381(c,n){
  const audience={'Keine':'Keine gezielt versammelten Zuschauer.','Klein (3–8)':'3 bis 8 deutlich sichtbare Zuschauer.','Mittel (10–25)':'10 bis 25 Zuschauer, sichtbar im Bild verteilt.','Groß (30–60)':'30 bis 60 sichtbare Zuschauer als größere Gruppe.','XXL (60–100)':'60 bis 100 sichtbare Zuschauer; eine große Menschenmenge, nicht nur einzelne Passanten.'};
  const carriers={'Plakat':'Starre bedruckte Werbefläche mit glaubwürdiger Halterung.','Banner':'Flexibles bedrucktes Banner, je nach Haltung befestigt oder gespannt.','Beachflag':'Stofffahne an gebogenem Mast mit eigenem Standfuß.','Fahne':'Beweglicher Stoff an geeigneter Stange oder Halterung.','Holzschild':'Massives Schild mit sichtbarer Holzstruktur und realistischem Gewicht.','Spezialträger':'Besonders großer Träger, dessen Befestigung zur ausgewählten Haltung passen muss.'};
@@ -864,23 +864,31 @@ function explainScene381(c,n){
  const prop={'Keine':'Kein zusätzliches Requisit.','Stuhl':'Ein physikalisch geeigneter Stuhl.','Fahrrad':'Ein Fahrrad als Szenenrequisit.','Einkaufswagen':'Ein realer Einkaufswagen.','Altes Holz':'Ein alter Holzgegenstand als sichtbares Requisit.'};
  const opticalNow=optical(n);
  const lines=[
- ['📍 Ort',c.place,'Die Szene findet an diesem konkreten Ort statt.'],
- ['🪧 Werbemittel',c.carrier+' · '+c.format,carriers[c.carrier]||'Realistischer Plakatträger in der ausgewählten Größe.'],
- ['🙌 Befestigung',c.hold,holds[c.hold]||'Halterung passend zu Träger und Umgebung.'],
- ['🧍 Pose',c.pose,poses[c.pose]||'Natürliche, anatomisch korrekte Körperhaltung.'],
- ['🪑 Requisite',c.prop,prop[c.prop]||'Passendes reales Requisit.'],
- ['👴 Figuren',c.companion,cast[c.cast]||'Ausgewählte zusätzliche Figuren.'],
- ['👥 Publikum',c.audience,audience[c.audience]||'Die ausgewählte Zuschauerzahl ist verbindlich.'],
- ['🎭 Aktion',c.action,'Sichtbare Handlung oder Reaktion: '+c.action+'.'],
- ['📷 Kamera',c.cam+' · '+c.frame,(cams[c.cam]||'Gewählte Kameraperspektive.')+' '+(frames[c.frame]||'')],
- ['🔭 Brennweite',opticalNow.lens+' mm','Objektiv-Brennweite; beeinflusst den sichtbaren Bildwinkel.'],
- ['📏 Entfernung',opticalNow.distance+' m','Abstand vom Kamerasensor zur Hauptfigur; kein künstliches Heranzoomen.'],
- ['🖼️ Format',opticalNow.format,'Seitenverhältnis des fertigen Bildes.']
+ ['place','📍 Ort',c.place,'Die Szene findet an diesem Ort statt.'],
+ ['carrier','🪧 Werbemittel',c.carrier,carriers[c.carrier]||'Realistischer Plakatträger.'],
+ ['format','📐 Größe / Format',c.format,'Größe und Ausrichtung des Plakats.'],
+ ['hold','🙌 Befestigung',c.hold,holds[c.hold]||'Realistische Befestigung.'],
+ ['pose','🧍 Pose',c.pose,poses[c.pose]||'Natürliche Körperhaltung.'],
+ ['prop','🪑 Requisite',c.prop,prop[c.prop]||'Passendes reales Requisit.'],
+ ['cast','👴 Figuren',c.cast,cast[c.cast]||'Zusätzliche Figuren.'],
+ ['audience','👥 Publikum',c.audience,audience[c.audience]||'Zuschauerzahl ist verbindlich.'],
+ ['action','🎭 Aktion',c.action,'Sichtbare Reaktion: '+c.action],
+ ['cam','📷 Kamera',c.cam,cams[c.cam]||'Kameraperspektive.'],
+ ['frame','🎞️ Bildausschnitt',c.frame,frames[c.frame]||'Bildausschnitt.'],
+ ['position','🏠 Balkonposition',c.position,'Position am Balkon.']
  ];
- if(c.loc==='Balkon')lines.push(['🏠 Balkonposition',c.position,'Position der Figur oder des Banners am Balkon.']);
- return '<div style="margin-top:10px;padding:10px;border:1px solid #526070;border-radius:9px;background:#131b25;text-align:left"><b style="color:#ffb077">📖 BEDEUTUNG DER AKTIVEN SZENENWERTE</b>'+lines.map(row=>'<div style="margin-top:8px"><b>'+esc(row[0])+': '+esc(row[1])+'</b><br><span style="font-weight:400;color:#cbd4df">'+esc(row[2])+'</span></div>').join('')+'</div>';
+ const e=entry390(n),base=scene(n);
+ return '<div style="margin-top:10px;padding:10px;border:1px solid #526070;border-radius:9px;background:#131b25;text-align:left"><b style="color:#ffb077">📖 BEDEUTUNG DER AKTIVEN SZENENWERTE</b><div style="font-size:12px;color:#b5c3d2">✏️ bearbeiten · ✓ speichern · ✕ Original</div>'+
+ lines.map(row=>{
+  const k=row[0],manual=Object.hasOwn(e.confirmed393||{},k)||(e.enabled&&Object.hasOwn(e.values||{},k));
+  const open=!!editing393[sceneKey390(n)+'/'+k];
+  return '<div style="margin-top:9px;padding:9px;border:1px solid '+(manual?'#fc4c02':'#415361')+';border-radius:8px"><div style="display:flex;justify-content:space-between;gap:5px"><b style="overflow-wrap:anywhere">'+esc(row[1])+': '+esc(row[2])+' <span style="font-size:11px;color:'+(manual?'#ff985c':'#86d59a')+'">'+(manual?'🟠 Manuell':'🟢 Original')+'</span></b><span style="flex-shrink:0"><button type="button" data-ps-pencil393="'+n+'" data-key393="'+k+'" style="padding:6px;background:#26313e;color:white;border:1px solid #667;border-radius:6px">✏️</button> '+(manual||open?'<button type="button" data-ps-x393="'+n+'" data-key393="'+k+'" style="padding:6px;background:#392b2b;color:#ffac9d;border:1px solid #8a5656;border-radius:6px">✕</button>':'')+'</span></div>'+
+  (open?'<textarea data-ps-input393="'+n+'" data-key393="'+k+'" rows="2" style="box-sizing:border-box;width:100%;margin-top:8px;padding:8px;border:1px solid #718095;border-radius:7px;background:#1b2531;color:white;font-size:15px">'+esc(row[2])+'</textarea><button type="button" data-ps-check393="'+n+'" data-key393="'+k+'" style="margin-top:5px;padding:8px;background:#176e47;color:white;border:1px solid #51ad78;border-radius:7px">✓ Übernehmen</button><div style="font-size:11px;color:#aebccc">Original: '+esc(base[k]||'—')+'</div>':'')+
+  '<div style="font-size:13px;color:#cbd4df;margin-top:5px">'+esc(row[3])+'</div></div>';
+ }).join('')+'<div style="font-size:12px;color:#aebccc;margin-top:10px">🔭 '+esc(opticalNow.lens)+' mm · 📏 '+esc(opticalNow.distance)+' m · 🖼️ '+esc(opticalNow.format)+' (Kameraeinstellungen)</div></div>';
 }
-const cardsHtml=cards.map((original,n)=>{const c=effective390(n);return '<div class="ps-card '+(p.selected===n?'on':'')+'" style="text-align:left"><button type="button" data-ps-scene="'+n+'" style="width:100%;border:0;background:transparent;color:inherit;text-align:left;padding:0;cursor:pointer"><strong>PREMIUM '+String(n+1+p.round*10).padStart(3,'0')+' · '+esc(c.title)+'</strong><small>📍 Ort: '+esc(c.place)+'<br>🪧 Werbemittel: '+esc(c.carrier)+' · '+esc(c.format)+'<br>🙌 Plakathaltung: '+esc(c.hold)+'<br>🧍 Pose: '+esc(c.pose)+'<br>🪑 Requisite: '+esc(c.prop)+'<br>👴 Figuren: '+esc(c.companion)+'<br>👥 Publikum: '+esc(c.audience)+'<br>🎭 Aktion: '+esc(c.action)+'<br>📷 Kamera: '+esc(c.cam)+' · '+esc(c.frame)+'<br>🔭 Brennweite: '+esc(optical(n).lens)+' mm<br>📏 Entfernung: '+esc(optical(n).distance)+' m<br>🖼️ Bildformat: '+esc(optical(n).format)+(optical(n).manual?' · Manuell':'')+(c.loc==='Balkon'?'<br>🏠 Balkonposition: '+esc(c.position):'')+'</small><div style="margin-top:9px;font-weight:800;color:#ff8753">'+(p.selected===n?'✓ AUSGEWÄHLT':'SZENE ÜBERNEHMEN')+'</div>'+explainScene381(c,n)+'</button>'+editor390(n)+'</div>'}).join('');
+const editing393={};
+const cardsHtml=cards.map((original,n)=>{const c=effective390(n);return '<div class="ps-card '+(p.selected===n?'on':'')+'" style="text-align:left"><button type="button" data-ps-scene="'+n+'" style="width:100%;border:0;background:transparent;color:inherit;text-align:left;padding:0;cursor:pointer"><strong>PREMIUM '+String(n+1+p.round*10).padStart(3,'0')+' · '+esc(c.title)+'</strong><small>📍 Ort: '+esc(c.place)+'<br>🪧 Werbemittel: '+esc(c.carrier)+' · '+esc(c.format)+'<br>🙌 Plakathaltung: '+esc(c.hold)+'<br>🧍 Pose: '+esc(c.pose)+'<br>🪑 Requisite: '+esc(c.prop)+'<br>👴 Figuren: '+esc(c.companion)+'<br>👥 Publikum: '+esc(c.audience)+'<br>🎭 Aktion: '+esc(c.action)+'<br>📷 Kamera: '+esc(c.cam)+' · '+esc(c.frame)+'<br>🔭 Brennweite: '+esc(optical(n).lens)+' mm<br>📏 Entfernung: '+esc(optical(n).distance)+' m<br>🖼️ Bildformat: '+esc(optical(n).format)+(optical(n).manual?' · Manuell':'')+(c.loc==='Balkon'?'<br>🏠 Balkonposition: '+esc(c.position):'')+'</small><div style="margin-top:9px;font-weight:800;color:#ff8753">'+(p.selected===n?'✓ AUSGEWÄHLT':'SZENE ÜBERNEHMEN')+'</div></button>'+explainScene381(c,n)+'</div>'}).join('');
 root.innerHTML='<div id="ps350"><div class="ps-title">🎬 PREMIUM STUDIO</div><div class="ps-muted">Vier Kategorien · deine Auswahl bleibt verbindlich</div>'+section('mode','AUSWAHLMODUS',field('mode','Modus',['SMART MIX','EIGENE AUSWAHL'])+'<div class="ps-muted">'+(p.mode==='SMART MIX'?'🎲 Alle Szenenmerkmale werden automatisch variiert.':'🎯 Gewählte Merkmale bleiben fest; alle anderen variieren automatisch.')+'</div>')+(p.mode==='EIGENE AUSWAHL'?section('categories','KATEGORIEN',tiles+(p.opened?'<div style="margin-top:14px">'+body+'</div>':'')):'')+summary+quickActions361+posterPanel355()+'<div id="psPremiumRecommendations391" class="ps-title">🎲 10 PREMIUM-EMPFEHLUNGEN</div>'+cardsHtml+'<button class="ps-action" data-ps-next>🔄 10 WEITERE EMPFEHLUNGEN</button><button class="ps-action" style="background:#303845;border:1px solid #677181" data-ps-reset>↺ PREMIUM-FILTER ZURÜCKSETZEN</button></div>';
 root.querySelectorAll('[data-ps-open]').forEach(b=>b.onclick=()=>{p.opened=p.opened===b.dataset.psOpen?'':b.dataset.psOpen;persist();draw()});
 root.querySelectorAll('[data-ps-key]').forEach(b=>b.onclick=()=>{const k=b.dataset.psKey,v=b.dataset.psVal;p[k]=v;if(k==='group')p.location='Automatisch';if(k==='mode'&&v==='SMART MIX'){Object.keys(defaults).forEach(key=>{if(!['mode','opened','round','selected','last'].includes(key))p[key]=defaults[key]});p.opened='';}else if(k!=='mode')p.mode='EIGENE AUSWAHL';p.selected=-1;p.last=k+' → '+v;persist();draw()});
@@ -903,20 +911,9 @@ if(!window.psPosterResize357){window.psPosterResize357=true;window.addEventListe
 const manualToggle=root.querySelector('[data-ps-manual]');if(manualToggle)manualToggle.onchange=()=>{p.manualCamera=manualToggle.checked;p.last=p.manualCamera?'Kamera → Manuell':'Kamera → Szenenwerte';syncCamera354();persist();draw()};
 root.querySelectorAll('[data-ps-opt]').forEach(el=>el.onchange=()=>{if(!p.manualCamera)return;const key=el.dataset.psOpt,val=el.value;if((key==='lens'||key==='distance')&&(!Number.isFinite(Number(val))||Number(val)<=0)){draw();return;}if(key==='lens')p.manualLens=val;if(key==='distance')p.manualDistance=val;if(key==='format')p.manualFormat=val;p.last='Manuelle Kamera · '+key+' → '+val;syncCamera354();persist();draw()});
 const bakery=root.querySelector('[data-ps-bakery]');if(bakery)bakery.onchange=()=>{p.bakery=bakery.value;p.last='Bäckereiname → '+p.bakery;p.selected=-1;persist();draw()};
-root.querySelectorAll('[data-ps-manual390]').forEach(el=>el.onchange=()=>{
- const n=Number(el.dataset.psManual390);entry390(n).enabled=el.checked;
- syncActive390(n);persist();draw();
-});
-root.querySelectorAll('[data-ps-reset390]').forEach(el=>el.onclick=()=>{
- const n=Number(el.dataset.psReset390);if(!confirm('Manuelle Änderungen dieser Szene löschen und Originalwerte wiederherstellen?'))return;
- const e=entry390(n);e.enabled=false;e.values={};syncActive390(n);persist();draw();
-});
-root.querySelectorAll('[data-ps-edit390]').forEach(el=>el.oninput=()=>{
- const n=Number(el.dataset.psEdit390),k=el.dataset.psEditKey390,e=entry390(n),v=el.value.trim();
- if(v)e.values[k]=v;else delete e.values[k];
- syncActive390(n);persist();
- const live=root.querySelector('[data-ps-live390="'+n+'"]');if(live){const c=effective390(n);live.textContent='Wirksam: '+c.place+' · '+c.pose+' · '+c.audience;}
-});
+root.querySelectorAll('[data-ps-pencil393]').forEach(el=>el.onclick=()=>{const n=+el.dataset.psPencil393,k=el.dataset.key393,id=sceneKey390(n)+'/'+k;editing393[id]=!editing393[id];const y=scrollY;draw();scrollTo(0,y);if(editing393[id])root.querySelector('[data-ps-input393="'+n+'"][data-key393="'+k+'"]')?.focus({preventScroll:true});});
+root.querySelectorAll('[data-ps-check393]').forEach(el=>el.onclick=()=>{const n=+el.dataset.psCheck393,k=el.dataset.key393,id=sceneKey390(n)+'/'+k,input=root.querySelector('[data-ps-input393="'+n+'"][data-key393="'+k+'"]');if(!input?.value.trim()){if(input)input.style.borderColor='red';return;}const e=entry390(n);e.confirmed393=e.confirmed393||{};e.confirmed393[k]=input.value.trim();if(e.values)delete e.values[k];syncActive390(n);persist();delete editing393[id];const y=scrollY;draw();scrollTo(0,y);});
+root.querySelectorAll('[data-ps-x393]').forEach(el=>el.onclick=()=>{const n=+el.dataset.psX393,k=el.dataset.key393,e=entry390(n);if(e.confirmed393)delete e.confirmed393[k];if(e.values)delete e.values[k];delete editing393[sceneKey390(n)+'/'+k];syncActive390(n);persist();const y=scrollY;draw();scrollTo(0,y);});
 root.querySelectorAll('[data-ps-scene]').forEach(b=>b.onclick=()=>{p.selected=Number(b.dataset.psScene);const c=effective390(p.selected);p.last='Premium '+String(p.selected+1+p.round*10).padStart(3,'0')+' übernommen';state.sign258=state.sign258||{};const q=state.sign258.premium270=state.sign258.premium270||{};q.scene=null;q.title=c.title;q.location=c.place;q.poster=c.carrier+' · '+c.format;q.prop=c.prop;q.holding=c.hold;q.position=c.pose;q.expression=c.action;q.audience=c.audience;q.reaction=c.action;q.camera=c.cam;q.frame=c.frame;q.ambience=c.ambience;q.cast=c.cast;q.companion=c.companion;q.positionOnBalcony=c.position;q.description='SELECTED PREMIUM STUDIO SCENE: '+c.title+'. LOCATION: '+c.place+'. PROP: '+c.prop+'. POSTER: '+q.poster+'. HOLDING: '+c.hold+'. RUNNER POSE: '+c.pose+'. COMPANIONS: '+c.companion+'. AUDIENCE: '+c.audience+'. CAMERA: '+c.cam+', '+c.frame+'. BALCONY POSITION: '+c.position+'.';state.sign258.activeSceneSource267='premium';syncActive390(p.selected);syncCamera354();persist();draw()});
 root.querySelector('[data-ps-next]').onclick=()=>{p.round++;p.selected=-1;p.last='10 weitere Empfehlungen';persist();draw()};
 root.querySelector('[data-ps-reset]').onclick=()=>{if(!confirm('Nur Premium-Filter zurücksetzen?'))return;p={...defaults,manualCamera:p.manualCamera,manualLens:p.manualLens,manualDistance:p.manualDistance,manualFormat:p.manualFormat,sceneFormat:p.sceneFormat,cameraMemory354:true};syncCamera354();persist();draw()};
