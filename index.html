@@ -1165,15 +1165,72 @@ const clean=(v)=>val(v).replace(/\s+/g,' ').trim();
 const readPremium=()=>{try{return JSON.parse(localStorage.getItem('strava-premium-studio-350')||'{}')}catch(e){return {}}};
 function resolved(){
  const p=readPremium(),s=state.sign258||{},q=s.premium270||{},m=s.master320||{},c=state.common||{},z=state.sign||{};
- const selected=Number.isInteger(p.selected)&&p.selected>=0&&s.activeSceneSource267==='premium'&&!!q.title;
  const edit=window.stravaEffectiveScene390?window.stravaEffectiveScene390():null;
- if(edit&&edit.manual){const x=edit.effective;q.location=x.place;q.poster=x.carrier+' · '+x.format;q.holding=x.hold;q.position=x.pose;q.audience=x.audience;q.cast=x.cast;q.expression=x.action;q.camera=x.cam;q.frame=x.frame;q.prop=x.prop;}
- const location=selected&&q.manualScene390?val(q.location):m.heightOn&&active(m.height)?m.height:selected?q.location:val(s.locationMode,'Realistic outdoor setting');
+ // V3.9.2: the visually selected Premium card is the source of truth.
+ // Keep legacy fallback only when no selected Premium card is available.
+ const selected=Number.isInteger(p.selected)&&p.selected>=0&&!!edit&&!!edit.effective;
+ if(selected){const x=edit.effective;q.title=edit.original.title;q.location=x.place;q.poster=x.carrier+' · '+x.format;q.holding=x.hold;q.position=x.pose;q.audience=x.audience;q.cast=x.cast;q.companion=x.cast;q.expression=x.action;q.camera=x.cam;q.frame=x.frame;q.prop=x.prop;q.positionOnBalcony=x.position;q.manualScene390=edit.manual;}
+ const location=selected?val(q.location):m.heightOn&&active(m.height)?m.height:val(s.locationMode,'Realistic outdoor setting');
  const hold=selected?val(q.holding,'Automatic realistic support'):val(s.signMount,'Natural support');
  const carrier=selected?val(q.poster,'Black sign'):m.mediaOn&&active(m.media)?m.media:val(m.media,'Black sign');
  const audience=selected?val(q.audience,'Keine'):m.crowdOn?val(m.crowd,'Keine'):'Keine';
  const lens=val(c.cameraLens,p.manualLens||'24'),distance=val(c.personDistance,p.manualDistance||'15'),format=val(c.format,'4:5');
  return {p,s,q,m,c,z,selected,location,hold,carrier,audience,lens,distance,format};
+}
+/* V3.9.2: deterministic, offline Premium vocabulary; retain German source for arbitrary free text. */
+function premiumEnglish392(value,kind){
+ const raw=String(value==null?'':value).trim();
+ const dict={
+ 'Balkon 1. Stock':'first-floor balcony','Balkon 2. Stock':'second-floor balcony',
+ 'Am Geländer befestigt':'securely fixed to the existing balcony railing; no freestanding base',
+ 'Über Kopf · beide Arme':'held overhead with both arms and visible hands',
+ 'Vor Körper · beide Hände':'held in front of the body with both hands',
+ 'Seitlich':'to the side','Lehnen':'leaning naturally with realistic body support',
+ 'Stehen':'standing naturally','Sitzen':'sitting naturally',
+ 'Rückwärts sitzen':'sitting backwards on a chair',
+ 'Rückwärts auf Stuhl, Unterarme auf Lehne':'sitting backwards on a chair with both forearms resting separately on its backrest',
+ 'Stuhl':'a real chair','Gemischt':'a mixed group of people',
+ 'Keine':'none','Dokumentarisch':'documentary viewpoint','Mittel':'medium framing',
+ 'Spezialträger':'specialized physical sign or banner carrier',
+ 'XXL-Quer':'extra-large landscape format',
+ 'schaut neugierig zu':'watching curiously',
+ 'Klein (3–8)':'3 to 8 spectators','Mittel (10–25)':'10 to 25 spectators',
+ 'Groß (30–60)':'30 to 60 spectators','XXL (60–100)':'60 to 100 spectators'
+ };
+ const exact=dict[raw];if(exact)return exact;
+ if(kind==='place'){
+  const balcony=raw.match(/^Balkon\\s*[·,-]\\s*(\\d+)\\.?\\s*Stock/i);
+  if(balcony)return 'balcony on floor '+balcony[1]+' (German floor numbering)';
+ }
+ if(kind==='audience'){
+  const m=raw.match(/(\\d+)\\s*[–-]\\s*(\\d+)/);
+  if(m)return m[1]+' to '+m[2]+' spectators';
+  const n=raw.match(/^(\\d+)\\s*(?:Personen|Zuschauer)/i);
+  if(n)return n[1]+' spectators';
+ }
+ if(kind==='carrier'){
+  return raw.replace(/Spezialträger/gi,'specialized physical sign carrier').replace(/XXL-Quer/gi,'extra-large landscape format').replace(/Beachflag/gi,'fabric beachflag');
+ }
+ return raw;
+}
+function premiumContract392(r){
+ if(!r.selected)return [];
+ const q=r.q,edit=window.stravaEffectiveScene390?window.stravaEffectiveScene390():null;
+ const x=edit&&edit.effective?edit.effective:null;
+ const pairs=[
+ ['Location','place',r.location],['Carrier','carrier',x?x.carrier:r.carrier],
+ ['Sign size / orientation','format',x?x.format:''],['Mounting','hold',r.hold],
+ ['Runner pose','pose',q.position],['Physical prop','prop',q.prop],
+ ['Cast','cast',q.cast],['Audience count','audience',r.audience],
+ ['Audience action','action',q.expression],['Camera viewpoint','cam',q.camera],
+ ['Framing','frame',q.frame],['Balcony position','position',q.positionOnBalcony]
+ ];
+ return ['','02A / SELECTED PREMIUM SCENE — AUTHORITATIVE FIELD-BY-FIELD CONTRACT',
+ 'Premium scene '+String(r.p.selected+1+(r.p.round||0)*10).padStart(3,'0')+'; '+(edit&&edit.manual?'MANUAL OVERRIDES ACTIVE':'ORIGINAL VALUES ACTIVE')+'.',
+ ...pairs.map(([label,kind,raw])=>label+': '+premiumEnglish392(raw,kind)+' [original displayed value: '+String(raw||'—')+'].'),
+ 'The English meaning of every field above is authoritative. Preserve each source value exactly in substance; do not swap in legacy location, carrier, pose, mount, cast or crowd presets. A free-text German value is authoritative even when no fixed translation exists.',
+ 'Audience COUNT and audience PLACEMENT are independent. Never replace the specified count with a placement description.',
+ 'Camera lens, sensor distance, image aspect ratio, exact sign text, word colors, identity photos and outfit remain controlled by their dedicated active settings.'];
 }
 function validate(r){
  const errors=[];
@@ -1209,12 +1266,12 @@ buildPrompt=function(){
  const locationPhoto=c.backgroundLock?'If a LOCATION PHOTO is attached, preserve its architecture, perspective, lighting and all existing details.':'Use the selected realistic location.';
  const rail=/Geländer/i.test(r.hold);
  const material=rail?'Use a securely attached textile banner or physically compatible railing-mounted rigid sign, fixed to the existing railing with believable fasteners; NO freestanding base, pole or beachflag.':/Beachflag/i.test(r.carrier)?'Use a real fabric beachflag on a flexible curved mast with a stable base; never depict a foam-board sign.':'Use a real physical sign with mounting appropriate to the selected carrier, location and gravity.';
- const pose=r.selected&&q.manualScene390?val(q.position):val(z.runnerPose, r.selected?val(q.position):'Natural standing pose');
+ const pose=r.selected?val(q.position,'Natural standing pose'):val(z.runnerPose,'Natural standing pose');
  const gaze=val(s.mainGaze,'Natural gaze consistent with the scene');
  const font=val(p.posterFont,s.font||'Anton');
  const action=r.selected?val(q.expression):val(s.mainAction);
  const out=[
- 'STRAVA RUN V3.9.0 — BLACK SIGN · SINGLE-SOURCE MASTER PROMPT',
+ 'STRAVA RUN V3.9.2 — BLACK SIGN · PREMIUM SCENE FIDELITY',
  'OUTPUT: Exactly ONE native '+r.format+' ultra-photorealistic documentary photograph. Real anatomy, light, shadows and materials; no CGI.',
  '',
  '01 / REFERENCE IDENTITY',
@@ -1225,10 +1282,11 @@ buildPrompt=function(){
  '02 / LOCATION AND CAMERA',
  'Location: '+r.location+'.'+(r.selected&&clean(r.location)===clean(q.location)?' Selected Premium scene: '+val(q.title)+'.':''),
  'Camera: '+r.lens+' mm full-frame equivalent; camera sensor exactly '+r.distance+' m from the runner; native '+r.format+'. Maintain physical angular scale. Do not zoom, crop, move closer or enlarge subjects to rescue lettering. At long distances show proportionally more surroundings.',
- 'Viewpoint: '+val(r.selected?q.camera:s.camera,'Natural documentary viewpoint')+'.',
+ 'Viewpoint: '+val(r.selected?premiumEnglish392(q.camera,'cam'):s.camera,'Natural documentary viewpoint')+'.',
+ ...premiumContract392(r),
  '',
  '03 / RUNNER AND OUTFIT',
- 'Pose: '+pose+'. Gaze: '+gaze+'. Expression/action: '+val(action,'natural')+'.',
+ 'Pose: '+(r.selected?premiumEnglish392(pose,'pose'):pose)+'. Gaze: '+gaze+'. Expression/action: '+val(r.selected?premiumEnglish392(action,'action'):action,'natural')+'.',
  'Outfit: '+outfit+'. Use only authentic correctly placed logos, no invented sleeve stripes.',
  'Gesture: no index-finger pointing by default. Point ONLY if explicitly selected in an active Premium pose, with fingertip and arm anatomically directed to actual visible sign lettering. Otherwise relaxed hands, especially on the chair back when seated backwards.',
  'ANATOMY LOCK — ALL FIGURES: every arm, elbow, forearm, wrist, hand and finger must have a continuous anatomically correct path with distinct contours. Never fuse sleeves, skin, arms or hands. Both hands must exist and remain visibly identifiable wherever pose and framing allow. Sleeves terminate at clearly identifiable wrists; no hidden missing hands, extra fingers, duplicated joints, melted fabric or merged limbs.',
@@ -1236,7 +1294,7 @@ buildPrompt=function(){
  'SIDE CHARACTER ANATOMY: apply the same hand, wrist, sleeve, forearm and finger separation rules to every visible side character and spectator.',
  '',
  '04 / PHYSICAL SIGN AND PRINT',
- 'Carrier: '+r.carrier+'. Mount: '+r.hold+'.',
+ 'Carrier: '+(r.selected?premiumEnglish392(r.carrier,'carrier'):r.carrier)+'. Mount: '+(r.selected?premiumEnglish392(r.hold,'hold'):r.hold)+'.',
  material,
  'Font: '+font+'. Real printed text on the sign, front readable to camera; balanced 5% minimum clear edge margin. Preserve authored line breaks, empty lines, punctuation and capitalization. No text substitutions.',
  'EXACT SIGN TEXT:',
@@ -1247,8 +1305,8 @@ buildPrompt=function(){
  wordMap(z),
  '',
  '05 / PEOPLE AND BACKGROUND',
- 'Audience: '+r.audience+'. '+(crowdOff?'No intentionally gathered audience. Natural incidental passersby only if appropriate.':'Depict the specified audience count, realistically distributed across visible foreground, midground and background, facing the runner or readable sign. Do not silently omit the crowd.'),
- 'Premium scene cast: '+(r.selected?val(q.cast,'Automatic'):'No Premium cast override')+'. A selected Opa/Teyze or mixed cast is additional to the audience count, not a replacement for it.',
+ 'Audience: '+(r.selected?premiumEnglish392(r.audience,'audience'):r.audience)+'. '+(crowdOff?'No intentionally gathered audience. Natural incidental passersby only if appropriate.':'Depict the specified audience count, realistically distributed across visible foreground, midground and background, facing the runner or readable sign. Do not silently omit the crowd.'),
+ 'Premium scene cast: '+(r.selected?premiumEnglish392(val(q.cast,'Automatic'),'cast'):'No Premium cast override')+'. A selected Opa/Teyze or mixed cast is additional to the audience count, not a replacement for it.',
  'Individually enabled side characters: '+(sides.length?sides.join(' | '):'None')+'. Do not invent extra named side characters beyond active Premium cast and enabled characters.',
  'Background ambience: '+val(r.selected?q.ambience:p.ambience,'Natural')+'.',
  '',
@@ -1261,6 +1319,6 @@ buildPrompt=function(){
  window.__stravaPromptAudit380={resolved:{location:r.location,carrier:r.carrier,hold:r.hold,audience:r.audience,lens:r.lens,distance:r.distance,format:r.format,scene:r.selected?q.title:null},errors:issues,wordLines:wordMap(z).split('\n').length};
  return out.join('\n');
 };
-window.stravaAudit380=function(){const r=resolved();return {version:'3.8.0',current:window.__stravaPromptAudit380||null,errors:validate(r),premiumSceneActive:r.selected,filters:Object.keys(r.p||{}),note:'All currently selected values are checked at prompt construction; visual generation is not metrically certifiable.'};};
+window.stravaAudit380=function(){const r=resolved();return {version:'3.9.2',current:window.__stravaPromptAudit380||null,errors:validate(r),premiumSceneActive:r.selected,filters:Object.keys(r.p||{}),note:'All currently selected values are checked at prompt construction; visual generation is not metrically certifiable.'};};
 })();
 </script></body></html>
