@@ -839,7 +839,10 @@ function setFilter311(k,v){
  const changed=impacted.filter(x=>locks[x]&&before[x]!=='Automatisch'&&p[x]!==before[x]);
  if(changed.length){Object.assign(p,before);p.last='🔒 Konflikt: '+changed.join(', ')+' ist fixiert. Zuerst entsperren.';persist();draw();return}
  if(k==='mode'&&v==='SMART MIX'){p.selected=-1}else if(k!=='mode')p.mode='EIGENE AUSWAHL';
- p.selected=-1;p.last=k+' → '+v;persist();draw();
+ p.selected=-1;p.last=k+' → '+v;
+ // A changed filter invalidates older per-card overrides; avoid resurrecting stale scenes.
+ if(k!=='mode')p.sceneEdits390={};
+ persist();draw();
 }
 function quick311(){const loc=p.location,car=p.carrier;const steps=[
  ['group','① 📍 ORTSGRUPPE',groups.place],['location','② 🏪 KONKRETER ORT',['Automatisch',...locationPool()]],
@@ -970,7 +973,19 @@ const editKeys390=['place','area','seat','carrier','format','hold','pose','prop'
 const editLabels390={area:'Bereich',seat:'Sitzgelegenheit',place:'Ort',carrier:'Werbemittel',format:'Format / Größe',hold:'Plakathaltung / Befestigung',pose:'Hauptfigur-Pose',prop:'Requisite',cast:'Besetzung',audience:'Publikum (z. B. 20 Personen)',action:'Aktion / Reaktion',cam:'Kameraperspektive',frame:'Bildausschnitt',position:'Balkonposition'};
 function sceneKey390(n){return 'premium-scene-'+String(p.round*10+n+1).padStart(3,'0');}
 function entry390(n){p.sceneEdits390=p.sceneEdits390||{};const id=sceneKey390(n);return p.sceneEdits390[id]||(p.sceneEdits390[id]={enabled:false,values:{}});}
-function effective390(n){const c=scene(n),e=entry390(n);return {...c,...(e.enabled?e.values:{}),...(e.confirmed393||{})};}
+function effective390(n){
+ const c=scene(n),e=entry390(n),overrides={...(e.enabled?e.values:{}),...(e.confirmed393||{})};
+ const authoritative={place:'location',carrier:'carrier',format:'format',pose:'pose',cast:'cast',audience:'audience',cam:'camera',frame:'frame',hold:'mount311',area:'area311',seat:'seat311',action:'action311',prop:'prop'};
+ for(const [key,filter] of Object.entries(authoritative)){
+  const selected=p[filter];
+  if(selected!==undefined&&selected!=='Automatisch'&&selected!=='SMART CINEMATIC MIX')delete overrides[key];
+ }
+ if(p.cameraMix311&&p.cameraMix311!=='SMART CINEMATIC MIX')delete overrides.cam;
+ const x={...c,...overrides};
+ x.companion=x.cast==='Alleine'?'Keine':x.cast==='Opa & Teyze'?'Opa und Teyze':x.cast;
+ x.title=x.place+' · '+(x.cast==='Alleine'?'Solo':x.cast)+' · '+x.action;
+ return x;
+}
 function editor390(n){
  const e=entry390(n),base=scene(n),effective=effective390(n);
  return '<div class="ps-edit390" data-ps-edit-card="'+n+'" style="margin:10px 0;padding:10px;border:1px solid '+(e.enabled?'#fc4c02':'#4b8d5b')+';border-radius:10px;background:#121a22;text-align:left">'+
