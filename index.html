@@ -736,6 +736,24 @@ const companion=cast==='Opa'?'Opa':cast==='Teyze'?'Teyze':cast==='Opa & Teyze'?'
 const position=balcony?value('balcony',seed+1):'Passend zum Standort';
 return {place,loc,carrier,format,cast,pose,audience,prop,cam,frame,hold,action,companion,position,ambience:value('ambience',seed),title:place+' · '+(cast==='Alleine'?'Solo':cast)+' · '+action};
 }
+function auditPremiumScenes380(){
+ const original=p.round,problems=[],samples=[];let total=0;
+ try{
+ for(let round=0;round<12;round++){
+  p.round=round;
+  for(let i=0;i<10;i++){
+   const x=scene(i);total++;
+   const keys=['place','loc','carrier','format','cast','pose','audience','prop','cam','frame','hold','action'];
+   const missing=keys.filter(k=>!x[k]||x[k]==='Automatisch');
+   if(missing.length)problems.push({scene:round*10+i+1,missing});
+   if(x.hold==='Am Geländer befestigt'&&x.carrier==='Beachflag')problems.push({scene:round*10+i+1,issue:'Beachflag incompatible with railing'});
+   if(i===2&&round===0)samples.push(x);
+  }
+ }
+ }finally{p.round=original}
+ return {total,problems,samples};
+}
+window.stravaPremiumScenesAudit380=auditPremiumScenes380;
 function sceneOptical(n){return window.stravaPremiumSceneValues325?window.stravaPremiumSceneValues325(n+p.round*10):{lens:24,distance:15};}
 function optical(n){const v=n>=0?sceneOptical(n):{lens:state.common.cameraLens||24,distance:state.common.personDistance||15};return {lens:p.manualCamera?p.manualLens:v.lens,distance:p.manualCamera?p.manualDistance:v.distance,format:p.manualCamera?p.manualFormat:p.sceneFormat,manual:!!p.manualCamera};}
 function syncCamera354(){state.sign258=state.sign258||{};state.sign258.manualCamera267=!!p.manualCamera;const o=optical(p.selected);if(p.manualCamera||p.selected>=0){state.common.cameraLens=String(o.lens);state.common.personDistance=String(o.distance)}state.common.format=o.format;}
@@ -834,7 +852,7 @@ if(!window.psPosterResize357){window.psPosterResize357=true;window.addEventListe
 const manualToggle=root.querySelector('[data-ps-manual]');if(manualToggle)manualToggle.onchange=()=>{p.manualCamera=manualToggle.checked;p.last=p.manualCamera?'Kamera → Manuell':'Kamera → Szenenwerte';syncCamera354();persist();draw()};
 root.querySelectorAll('[data-ps-opt]').forEach(el=>el.onchange=()=>{if(!p.manualCamera)return;const key=el.dataset.psOpt,val=el.value;if((key==='lens'||key==='distance')&&(!Number.isFinite(Number(val))||Number(val)<=0)){draw();return;}if(key==='lens')p.manualLens=val;if(key==='distance')p.manualDistance=val;if(key==='format')p.manualFormat=val;p.last='Manuelle Kamera · '+key+' → '+val;syncCamera354();persist();draw()});
 const bakery=root.querySelector('[data-ps-bakery]');if(bakery)bakery.onchange=()=>{p.bakery=bakery.value;p.last='Bäckereiname → '+p.bakery;p.selected=-1;persist();draw()};
-root.querySelectorAll('[data-ps-scene]').forEach(b=>b.onclick=()=>{p.selected=Number(b.dataset.psScene);const c=cards[p.selected];p.last='Premium '+String(p.selected+1+p.round*10).padStart(3,'0')+' übernommen';state.sign258=state.sign258||{};const q=state.sign258.premium270=state.sign258.premium270||{};q.scene=null;q.title=c.title;q.location=c.place;q.poster=c.carrier+' · '+c.format;q.prop=c.prop;q.holding=c.hold;q.position=c.pose;q.expression=c.action;q.audience=c.audience;q.reaction=c.action;q.description='SELECTED PREMIUM STUDIO SCENE: '+c.title+'. LOCATION: '+c.place+'. PROP: '+c.prop+'. POSTER: '+q.poster+'. HOLDING: '+c.hold+'. RUNNER POSE: '+c.pose+'. COMPANIONS: '+c.companion+'. AUDIENCE: '+c.audience+'. CAMERA: '+c.cam+', '+c.frame+'. BALCONY POSITION: '+c.position+'.';state.sign258.activeSceneSource267='premium';syncCamera354();persist();draw()});
+root.querySelectorAll('[data-ps-scene]').forEach(b=>b.onclick=()=>{p.selected=Number(b.dataset.psScene);const c=cards[p.selected];p.last='Premium '+String(p.selected+1+p.round*10).padStart(3,'0')+' übernommen';state.sign258=state.sign258||{};const q=state.sign258.premium270=state.sign258.premium270||{};q.scene=null;q.title=c.title;q.location=c.place;q.poster=c.carrier+' · '+c.format;q.prop=c.prop;q.holding=c.hold;q.position=c.pose;q.expression=c.action;q.audience=c.audience;q.reaction=c.action;q.camera=c.cam;q.frame=c.frame;q.ambience=c.ambience;q.cast=c.cast;q.companion=c.companion;q.positionOnBalcony=c.position;q.description='SELECTED PREMIUM STUDIO SCENE: '+c.title+'. LOCATION: '+c.place+'. PROP: '+c.prop+'. POSTER: '+q.poster+'. HOLDING: '+c.hold+'. RUNNER POSE: '+c.pose+'. COMPANIONS: '+c.companion+'. AUDIENCE: '+c.audience+'. CAMERA: '+c.cam+', '+c.frame+'. BALCONY POSITION: '+c.position+'.';state.sign258.activeSceneSource267='premium';syncCamera354();save();persist();draw()});
 root.querySelector('[data-ps-next]').onclick=()=>{p.round++;p.selected=-1;p.last='10 weitere Empfehlungen';persist();draw()};
 root.querySelector('[data-ps-reset]').onclick=()=>{if(!confirm('Nur Premium-Filter zurücksetzen?'))return;p={...defaults,manualCamera:p.manualCamera,manualLens:p.manualLens,manualDistance:p.manualDistance,manualFormat:p.manualFormat,sceneFormat:p.sceneFormat,cameraMemory354:true};syncCamera354();persist();draw()};
 }
@@ -1085,7 +1103,7 @@ function resolved(){
  const selected=Number.isInteger(p.selected)&&p.selected>=0&&s.activeSceneSource267==='premium'&&!!q.title;
  const location=(m.heightOn&&active(m.height)?m.height:selected?q.location:val(s.locationMode,'Realistic outdoor setting'));
  const hold=selected?val(q.holding,'Automatic realistic support'):val(s.signMount,'Natural support');
- const carrier=m.mediaOn&&active(m.media)?m.media:selected?val(q.poster,'Black sign'):val(m.media,'Black sign');
+ const carrier=selected?val(q.poster,'Black sign'):m.mediaOn&&active(m.media)?m.media:val(m.media,'Black sign');
  const audience=selected?val(q.audience,'Keine'):m.crowdOn?val(m.crowd,'Keine'):'Keine';
  const lens=val(c.cameraLens,p.manualLens||'24'),distance=val(c.personDistance,p.manualDistance||'15'),format=val(c.format,'4:5');
  return {p,s,q,m,c,z,selected,location,hold,carrier,audience,lens,distance,format};
