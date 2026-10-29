@@ -847,7 +847,7 @@ function editor390(n){
 }
 function syncActive390(n){
  if(p.selected!==n)return;
- const c=effective390(n),q=(state.sign258=state.sign258||{}).premium270=(state.sign258.premium270||{});
+ const c=effective390(n);state.sign258=state.sign258||{};const q=state.sign258.premium270=state.sign258.premium270||{};
  q.title=scene(n).title;q.location=c.place;q.poster=c.carrier+' · '+c.format;q.holding=c.hold;q.position=c.pose;q.prop=c.prop;q.cast=c.cast;q.companion=c.cast;q.audience=c.audience;q.expression=c.action;q.reaction=c.action;q.camera=c.cam;q.frame=c.frame;q.positionOnBalcony=c.position;q.manualScene390=entry390(n).enabled;
  state.sign258.activeSceneSource267='premium';
  try{save()}catch(e){}
@@ -1168,7 +1168,7 @@ function resolved(){
  const selected=Number.isInteger(p.selected)&&p.selected>=0&&s.activeSceneSource267==='premium'&&!!q.title;
  const edit=window.stravaEffectiveScene390?window.stravaEffectiveScene390():null;
  if(edit&&edit.manual){const x=edit.effective;q.location=x.place;q.poster=x.carrier+' · '+x.format;q.holding=x.hold;q.position=x.pose;q.audience=x.audience;q.cast=x.cast;q.expression=x.action;q.camera=x.cam;q.frame=x.frame;q.prop=x.prop;}
- const location=(m.heightOn&&active(m.height)?m.height:selected?q.location:val(s.locationMode,'Realistic outdoor setting'));
+ const location=selected&&q.manualScene390?val(q.location):m.heightOn&&active(m.height)?m.height:selected?q.location:val(s.locationMode,'Realistic outdoor setting');
  const hold=selected?val(q.holding,'Automatic realistic support'):val(s.signMount,'Natural support');
  const carrier=selected?val(q.poster,'Black sign'):m.mediaOn&&active(m.media)?m.media:val(m.media,'Black sign');
  const audience=selected?val(q.audience,'Keine'):m.crowdOn?val(m.crowd,'Keine'):'Keine';
