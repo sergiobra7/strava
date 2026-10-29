@@ -14,7 +14,7 @@
 #premiumPanel270 > #premiumCards270{display:block!important}
 #premiumPanel270 > #refreshPremium270{display:block!important;margin:14px 0}
 #premiumPanel270 #allSettings339,#premiumPanel270 #master320,#premiumPanel270 #premiumEditor270,#premiumPanel270 #premiumCast311,#premiumPanel270 #manualRegie328,#premiumPanel270 #premiumActiveFilters340{display:none!important}
-</style><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Anton&family=Archivo+Black&family=Barlow+Condensed:wght@900&family=Bebas+Neue&family=Oswald:wght@700&family=Roboto+Condensed:wght@900&family=Teko:wght@700&display=swap" rel="stylesheet"></head><body><header><div><h1>STRAVA RUN <span class="mark">V3.10.7</span></h1><small>BLACK SIGN + STRAVA WALL · GITHUB EDITION</small></div><div style="display:flex;align-items:center;gap:9px;flex-wrap:wrap;justify-content:flex-end"><span id="saveStatus" class="status">Lokal gespeichert</span><button id="stravaRefresh401" type="button" title="Neueste GitHub-Version laden" style="background:#2cbd79;color:#101510;border:0;border-radius:9px;padding:10px 13px;font-weight:800;cursor:pointer">🔄 Aktualisieren</button></div></header><main><div class="worlds"><button class="world active" data-world="wall">🧱 STRAVA WALL</button><button class="world" data-world="sign">⬛ BLACK SIGN / PLAKAT</button></div><div style="display:flex;align-items:center;justify-content:space-between;gap:10px;margin:9px 0"><button id="presetShortcut403" type="button" style="background:#f2bd49;color:#151515;border:2px solid #f8d57b;border-radius:10px;padding:12px 16px;font-size:15px;font-weight:900;cursor:pointer;flex:1">⭐ MEINE PRESETS · GALERIE ÖFFNEN</button></div><section id="presetDirect404" hidden style="margin:14px 0;padding:14px;border:2px solid #f2bd49;border-radius:14px;background:#151a21"></section><nav class="tabs" id="tabs"></nav><div id="view"></div><div class="footer">Lokale Offline-Web-App · Keine Bilder werden an einen Server gesendet · Prompt zum Kopieren für ChatGPT/Bildgenerierung</div></main><script>
+</style><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Anton&family=Archivo+Black&family=Barlow+Condensed:wght@900&family=Bebas+Neue&family=Oswald:wght@700&family=Roboto+Condensed:wght@900&family=Teko:wght@700&display=swap" rel="stylesheet"></head><body><header><div><h1>STRAVA RUN <span class="mark">V3.11.0</span></h1><small>BLACK SIGN + STRAVA WALL · GITHUB EDITION</small></div><div style="display:flex;align-items:center;gap:9px;flex-wrap:wrap;justify-content:flex-end"><span id="saveStatus" class="status">Lokal gespeichert</span><button id="stravaRefresh401" type="button" title="Neueste GitHub-Version laden" style="background:#2cbd79;color:#101510;border:0;border-radius:9px;padding:10px 13px;font-weight:800;cursor:pointer">🔄 Aktualisieren</button></div></header><main><div class="worlds"><button class="world active" data-world="wall">🧱 STRAVA WALL</button><button class="world" data-world="sign">⬛ BLACK SIGN / PLAKAT</button></div><div style="display:flex;align-items:center;justify-content:space-between;gap:10px;margin:9px 0"><button id="presetShortcut403" type="button" style="background:#f2bd49;color:#151515;border:2px solid #f8d57b;border-radius:10px;padding:12px 16px;font-size:15px;font-weight:900;cursor:pointer;flex:1">⭐ MEINE PRESETS · GALERIE ÖFFNEN</button></div><section id="presetDirect404" hidden style="margin:14px 0;padding:14px;border:2px solid #f2bd49;border-radius:14px;background:#151a21"></section><nav class="tabs" id="tabs"></nav><div id="view"></div><div class="footer">Lokale Offline-Web-App · Keine Bilder werden an einen Server gesendet · Prompt zum Kopieren für ChatGPT/Bildgenerierung</div></main><script>
 'use strict';
 const poses=['STAIR CHILL PRO — auf vorhandener Treppe, Unterarme locker auf Knien, natürliche Sitzhaltung','WALL LEAN PRO — Schulter an vorhandener Wand, Arme verschränkt, Beine locker gekreuzt','REVERSE CHAIR PRO — rückwärts auf vorhandenem Stuhl, getrennte Unterarme auf Lehne','An STRAVA-Wand angelehnt, Schulterkontakt, Arme verschränkt, Beine gekreuzt','Rückwärts auf Holzstuhl, Unterarme getrennt auf Lehne','Auf Treppe sitzend, entspannt','Auf Bank sitzend, Beine locker nach vorne','Auf niedriger Mauer sitzend','Selbstbewusst stehend, Hände an Hüften','Ein Fuß auf Treppenstufe, offene Hand zur Wand','Gehend, spontaner Blick zur Statistik','Seitlich stehend, eine Hand in Tasche','An Geländer gelehnt','Auf umgedrehtem Stuhl, seitlicher Blick','Auf Holzstuhl vor der Wand, Oberkörper vorgebeugt','Auf Kante sitzend, Arme locker','Nach dem Lauf, Hände auf Oberschenkeln','Sportflasche in einer Hand, entspannt','Beide Arme locker seitlich, Blick zur Kamera','Auf Treppe mit Kollege diskutierend','Auf Bank zurückgelehnt, Beine ausgestreckt','Neben Wand hockend, ohne verdeckte Schuhe','Mit offenen Händen erklärend','Mit Kollege Schulter an Schulter','Im Schritt stehen geblieben','Seitlich zur Wand, Kopf zur ersten Statistikzeile','Sitzend, Ellbogen auf getrennten Knien','Auf Stuhl sitzend, Beine überschlagen','An Pfosten locker angelehnt (nur wenn vorhanden)','Mit verschränkten Armen, frontaler Blick','Locker an Wand, eine Hand an Hüfte','Auf Bordsteinkante sitzend (wenn vorhanden)','Mit einer Hand auf Stuhllehne','Leicht nach vorn gebeugt, erstaunt','Stehend, provokant grinsend','Auf Bank mit Opa, Gespräch','Auf Stufe sitzend, Kollege daneben','Ruhig sitzend, Hände ineinander','Lässiger Schritt von der Wand weg','Leicht zur Wand gedreht, Kopf zur Kamera','Nach dem Lauf auf Stuhl ausruhend','Locker mit Rücken zur Wand, Kopf seitlich','Offene Hand zur Statistik, andere am Körper','Auf Stuhl quer sitzend','An Treppenwange angelehnt (wenn vorhanden)','Auf Mauer, beide Füße am Boden','Mit Sportflasche an Bank','Kollege etwas erklärend','Opa aufmerksam zuhörend','Sitzend, provokanter Blick','Stehend, breiter sicherer Stand','Lässig neben Wand, Hände in Jackentaschen','An Wand, Kopf leicht zum Opa','Individuelle Pose (Textfeld)'];
 const opaPoses=['Auf abgestelltem alten Mofa, ein Fuß am Boden','Steht am alten Mofa, Hand am Lenker','Mit Sackkarre, beide Hände an Griffen','Schiebt Sackkarre mit Kisten, hält an','Mit Schubkarre, grinsend','Auf altem Fahrrad, ein Fuß am Boden','Schiebt altes Fahrrad','Mit Handwagen, hält inne','Auf Holzkiste neben Mofa','Mit Obstkiste, bleibt stehen','Mit Werkzeugtasche, diskutiert','Stützt sich auf Besen','Mit Eimer, schaut zum Kollegen','An altem Roller gelehnt','Mit Einkaufstrolley','Auf umgedrehtem Holzstuhl','Auf Bank, Hände auf Knien','Auf Holzstuhl, Teeglas in Hand','Mit Einkaufstasche, skeptischer Blick','Steht, offene Hand zum Läufer','Sitzt, schüttelt den Kopf','Mit Gehstock, natürlich stehend','Hände hinter dem Rücken, Statistik betrachtend','Am Schnurrbart nachdenklich','Kratzt sich am Kopf','Lacht, Hand am Bauch','Abwinkende offene Hand','Steht seitlich, Augenbrauen hoch','Sitzt neben Teyze, diskutiert','Auf Treppe, leicht vorgebeugt','An Café-Tisch mit Teeglas','Auf Bank, Arme verschränkt','Schaut zum Kollegen, ungläubig','Steht mit Weste, Hand am Kinn','Mit alter Tasche, im Gehen','Auf niedriger Mauer','Steht mit offenem Mantel','Mit Holzstuhl in der Hand','Sitzt auf Kiste, verschränkt Arme','Mit Fahrrad und Einkaufstasche','Mit Sackkarre und Teeglas (nur plausibel)','Sitzt neben abgestelltem Mofa','Steht am Marktstand (nur wenn vorhanden)','Lacht mit Teyze','Hört aufmerksam zu','Mit gefalteten Händen','Steht ruhig, trockener Blick','Mit Schiebermütze, Kopf zur Statistik','Kopfschüttelnd vorbeigehend','Individuelle Opa-Pose (Textfeld)'];
@@ -754,16 +754,16 @@ draw();
 (function(){
 const KEY='strava-premium-studio-350';
 const groups={
-place:['Automatisch','Stadt & Straße','Gebäude & Balkon','Einkaufen','Verkehr','Park & Freizeit','Gastronomie','Events','Besondere Kulissen'],
+place:['Automatisch','Stadt & Straße','Gebäude & Balkon','Einkaufen','Verkehr','Park & Freizeit','Gastronomie','Events','Besondere Kulissen','Baustellen & Industrie','Sport & Events'],
 location:['Automatisch'],
 ambience:['Automatisch','Ruhig','Belebt','Sehr belebt'],
-carrier:['Automatisch','Plakat','Banner','Beachflag','Fahne','Holzschild','Spezialträger'],
+carrier:['Automatisch','Plakat','Banner','Beachflag','Holzschild','Spezialträger','XXL-Werbetafel','Bauzaunbanner','Schaufensterbeschriftung','Wandbeschriftung','Rolltorbeschriftung','LED-Werbefläche','Digitale Anzeigetafel','Leuchtkasten','Leuchtschrift','Lichtprojektion','Kreidetafel','Bodenbeschriftung','Buchstabeninstallation','Fahrzeugbeschriftung','Werbeanhänger'],
 format:['Automatisch','Hochformat','Querformat','XXL-Quer','XXL-Hoch'],
 pose:['Automatisch','Stehen','Sitzen','Rückwärts sitzen','Lehnen','Bewegung','Gestikulieren','Interaktion'],
 prop:['Automatisch','Keine','Stuhl','Fahrrad','Einkaufswagen','Altes Holz'],
 cast:['Automatisch','Alleine','Opa','Teyze','Opa & Teyze','Weitere Figuren','Gemischt'],
 audience:['Automatisch','Keine','Klein (3–8)','Mittel (10–25)','Groß (30–60)','XXL (60–100)'],
-camera:['Automatisch','Frontal','Seitlich','Untersicht','Weitwinkel','Dokumentarisch'],
+camera:['Automatisch','Frontal','Seitlich','Untersicht','Weitwinkel','Dokumentarisch','Hero Low Angle','Symmetrical Wide','Cinematic Three-Quarter','Foreground Depth','Long Shot','Medium Full Shot','Over-the-Shoulder','Elevated Cinematic','Long-Lens Cinematic','Frame Within Frame','Diagonal Depth','Cinematic Group Tableau'],
 frame:['Automatisch','Nah','Mittel','Weit','XXL-Kulisse'],
 floor:['Automatisch','Erdgeschoss','1. Stock','2. Stock'],
 balcony:['Automatisch','Mittig','Seitlich','Hinter Geländer','Banner am Geländer','Banner vor Balkonfront'],
@@ -772,14 +772,16 @@ hold:['Automatisch','Über Kopf · beide Arme','Vor Körper · beide Hände','Se
 const places={
 'Stadt & Straße':['Fußgängerzone','Marktplatz','Altstadt','Breite Straße','Stadtplatz'],
 'Gebäude & Balkon':['Balkon','Dachterrasse','Außentreppe','Hauseingang','Innenhof'],
-'Einkaufen':['Supermarkteingang','Supermarktparkplatz','Einkaufszentrum','Wochenmarkt','Baumarkt'],
-'Verkehr':['Bahnhofsvorplatz','Bahnhofseingang','Bushaltestelle','Straßenbahnhaltestelle','Parkhaus'],
+'Einkaufen':['Supermarkt','Supermarkteingang','Supermarktparkplatz','Einkaufszentrum','Wochenmarkt','Baumarkt','Möbelhaus','Waschsalon'],
+'Verkehr':['Bahnhofsvorplatz','Bahnhofseingang','Bushaltestelle','Straßenbahnhaltestelle','Parkhaus','Tankstelle'],
 'Park & Freizeit':['Stadtpark','Promenade','Sportplatz','Skatepark','Uferweg'],
-'Gastronomie':['Bäckerei','Café','Restaurant','Imbiss','Eisdiele'],
+'Gastronomie':['Bäckerei','Café','Restaurant','Imbiss','Eisdiele','Dönerladen','Kiosk'],
 'Events':['Messevorplatz','Stadtfest','Volksfest','Sportevent'],
-'Besondere Kulissen':['Industriehof','Backsteinfassade','Brücke','Parkdeck','Gewerbehof']
+'Besondere Kulissen':['Industriehof','Backsteinfassade','Brücke','Parkdeck','Gewerbehof','Hochhausfassade','Industriehalle','Großes Rolltor'],
+'Baustellen & Industrie':['Baustelle','Bauzaun','Rohbau','Werkstatt','Autowerkstatt','Lagerhalle','Waschanlage'],
+'Sport & Events':['Stadion','Fitnessstudio','Sporthalle','Stadionvorplatz','Sportplatz','Messevorplatz']
 };
-const defaults={posterAlign396:'center',mode:'SMART MIX',group:'Automatisch',location:'Automatisch',ambience:'Automatisch',carrier:'Automatisch',format:'Automatisch',pose:'Automatisch',prop:'Automatisch',cast:'Automatisch',audience:'Automatisch',camera:'Automatisch',frame:'Automatisch',floor:'Automatisch',balcony:'Automatisch',hold:'Automatisch',bakery:'',manualCamera:false,manualLens:'24',manualDistance:'15',manualFormat:'4:5',sceneFormat:'4:5',round:0,selected:-1,opened:'',last:'Noch keine Eingabe'};
+const defaults={posterAlign396:'center',area311:'Automatisch',mount311:'Automatisch',seat311:'Automatisch',action311:'Automatisch',cameraMix311:'SMART CINEMATIC MIX',cameraLock311:false,mode:'SMART MIX',group:'Automatisch',location:'Automatisch',ambience:'Automatisch',carrier:'Automatisch',format:'Automatisch',pose:'Automatisch',prop:'Automatisch',cast:'Automatisch',audience:'Automatisch',camera:'Automatisch',frame:'Automatisch',floor:'Automatisch',balcony:'Automatisch',hold:'Automatisch',bakery:'',manualCamera:false,manualLens:'24',manualDistance:'15',manualFormat:'4:5',sceneFormat:'4:5',round:0,selected:-1,opened:'',last:'Noch keine Eingabe'};
 let p;try{p=Object.assign({},defaults,JSON.parse(localStorage.getItem(KEY)||'{}'))}catch(e){p={...defaults}}
 if(p.mode==='FIX & MIX'||p.mode==='WUNSCHSZENE')p.mode='EIGENE AUSWAHL';
 if(p.mode!=='SMART MIX'&&p.mode!=='EIGENE AUSWAHL')p.mode='SMART MIX';
@@ -788,20 +790,61 @@ const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&
 const choose=(arr,n)=>arr[((n%arr.length)+arr.length)%arr.length];
 const pool=(k)=>groups[k].filter(x=>x!=='Automatisch');
 const value=(k,n)=>p[k]!=='Automatisch'?p[k]:choose(pool(k),n);
+/* V3.11.0: shared venue/medium/pose compatibility and cinematic camera vocabulary. */
+const areas311={
+'Balkon':['Geländer','Balkonfront','Sitzbereich'],'Supermarkt':['Eingang','Einkaufswagenunterstand','Parkplatz','Regalgang'],'Supermarkteingang':['Eingang','Einkaufswagenunterstand'],'Baustelle':['Bauzaun','Rohbau','Baustellenzufahrt'],'Bäckerei':['Eingang','Außentreppe','Terrasse'],'Bahnhofseingang':['Eingang','Vorplatz'],'Parkhaus':['Einfahrt','Rolltor','Parkdeck'],'Stadion':['Tribüne','Vorplatz'],'Waschsalon':['Wartebereich','Schaufenster'],'Werkstatt':['Rolltor','Werkbank'],'Einkaufszentrum':['Eingang','Mall','Schaufenster'],'Tankstelle':['Zapfsäulen','Shop-Eingang']};
+const media311={
+'Balkon':['Banner','Plakat','Holzschild'],'Supermarkt':['LED-Werbefläche','Schaufensterbeschriftung','XXL-Werbetafel','Plakat','Banner'],'Supermarkteingang':['LED-Werbefläche','Schaufensterbeschriftung','XXL-Werbetafel','Plakat'],'Baustelle':['Bauzaunbanner','Wandbeschriftung','Banner','XXL-Werbetafel'],'Bäckerei':['Kreidetafel','Schaufensterbeschriftung','Leuchtkasten','Plakat'],'Parkhaus':['Rolltorbeschriftung','Wandbeschriftung','LED-Werbefläche'],'Stadion':['Digitale Anzeigetafel','Banner','LED-Werbefläche'],'Waschsalon':['Leuchtkasten','Schaufensterbeschriftung','Kreidetafel'],'Werkstatt':['Rolltorbeschriftung','Wandbeschriftung','Plakat'],'Bahnhofseingang':['Digitale Anzeigetafel','Leuchtkasten','XXL-Werbetafel'],'Tankstelle':['LED-Werbefläche','Leuchtkasten','Fahrzeugbeschriftung']};
+const mount311={
+'Banner':['Am Geländer befestigt','An vorhandenen Pfosten gespannt','Seitlich'],
+'Bauzaunbanner':['Am Bauzaun befestigt'],
+'LED-Werbefläche':['An Fassade montiert','Freistehend mit sicherem Standfuß'],
+'Digitale Anzeigetafel':['Fest montiert'],
+'Schaufensterbeschriftung':['Direkt auf Glas'],
+'Wandbeschriftung':['Direkt auf Wand'],
+'Rolltorbeschriftung':['Direkt auf Rolltor'],
+'Kreidetafel':['Freistehend auf Staffelei','An Wand befestigt'],
+'Leuchtkasten':['An Fassade montiert','Freistehend mit sicherem Standfuß'],
+'Bodenbeschriftung':['Direkt auf Boden'],
+'Fahrzeugbeschriftung':['Direkt auf Fahrzeug'],
+'Werbeanhänger':['Auf geeignetem Anhänger montiert'],
+'Lichtprojektion':['Auf ebene Wand projiziert'],
+'Leuchtschrift':['An Fassade montiert'],
+'Buchstabeninstallation':['Freistehend mit sicherem Standfuß']};
+const seats311={'Balkon':['Stuhl','Bank'],'Supermarkt':['Bank','Keine'],'Supermarkteingang':['Bank','Keine'],'Baustelle':['Sicherer Betonblock','Hocker','Keine'],'Bäckerei':['Café-Stuhl','Außentreppe','Bank'],'Parkhaus':['Niedrige Mauer','Keine'],'Stadion':['Tribünensitz','Bank'],'Waschsalon':['Wartebank','Keine'],'Werkstatt':['Hocker','Keine'],'Bahnhofseingang':['Wartebank','Treppe'],'Tankstelle':['Bank','Keine']};
+const camera311=[
+['Hero Low Angle',24,12,0.75,'Weit'],['Symmetrical Wide',28,12,1.45,'Weit'],
+['Cinematic Three-Quarter',28,10,1.5,'Mittel'],['Foreground Depth',28,11,1.5,'Weit'],
+['Long Shot',20,20,1.5,'XXL-Kulisse'],['Medium Full Shot',35,7,1.5,'Mittel'],
+['Over-the-Shoulder',35,8,1.55,'Mittel'],['Elevated Cinematic',28,13,3,'Weit'],
+['Long-Lens Cinematic',55,16,1.5,'Mittel'],['Frame Within Frame',28,10,1.5,'Weit'],
+['Diagonal Depth',28,12,1.5,'Weit'],['Cinematic Group Tableau',35,9,1.45,'Mittel']];
+function choices311(key,loc,carrier){
+ if(key==='area311')return areas311[loc]||['Eingang','Vorplatz','Hauptbereich','Seitenbereich'];
+ if(key==='carrier')return media311[loc]||['Plakat','Banner','XXL-Werbetafel','Wandbeschriftung','LED-Werbefläche','Kreidetafel'];
+ if(key==='mount311')return mount311[carrier]||['Freistehend mit sicherem Standfuß','Seitlich','Vor Körper · beide Hände'];
+ if(key==='seat311')return seats311[loc]||['Bank','Stuhl','Treppe','Keine'];
+ if(key==='action311')return ['Botschaft betrachten','Auf Botschaft zeigen','Mit Begleitperson sprechen','Über Botschaft lachen','Überrascht reagieren','Ruhig beobachten'];
+ return [];
+}
+function pick311(key,arr,seed){return p[key]&&p[key]!=='Automatisch'&&arr.includes(p[key])?p[key]:choose(arr,seed)}
+function cameraValue311(n){if(p.manualCamera||p.cameraLock311)return null;const style=p.cameraMix311&&p.cameraMix311!=='SMART CINEMATIC MIX'?p.cameraMix311:camera311[(n+p.round*3)%camera311.length][0];return camera311.find(c=>c[0]===style)||camera311[0]}
+function reconcile311(){const loc=p.location==='Automatisch'?'':p.location;for(const k of ['area311','carrier','mount311','seat311','action311']){const opts=choices311(k,loc,p.carrier);if(p[k]!=='Automatisch'&&!opts.includes(p[k]))p[k]='Automatisch'}if(p.pose!=='Sitzen'&&p.pose!=='Rückwärts sitzen')p.seat311='Automatisch';}
+window.stravaSmartSceneMatrix311={areas:areas311,media:media311,mount:mount311,seats:seats311,cameras:camera311,choices:choices311};
 function locationPool(){const base=p.group==='Automatisch'?Object.values(places).flat():places[p.group]||[];return [...new Set([...base,'Balkon'])]}
 function scene(n){
 const seed=n+p.round*13,loc=p.location!=='Automatisch'?p.location:choose(locationPool(),seed*7+Math.floor(seed/3));
 const balcony=loc==='Balkon',bakery=loc==='Bäckerei';
 const place=(bakery&&p.bakery.trim()?p.bakery.trim()+' · Bäckerei':loc)+(balcony?' · '+value('floor',seed):'');
-const carrier=value('carrier',seed+2),format=value('format',seed+3);
+const carrier=p.carrier!=='Automatisch'?p.carrier:choose(choices311('carrier',loc),seed+2),format=value('format',seed+3);
 const cast=value('cast',seed+5),pose=value('pose',seed+1),audience=value('audience',seed+6);
-const prop=value('prop',seed+2),cam=value('camera',seed+4),frame=value('frame',seed+1);
-const hold=p.hold!=='Automatisch'?p.hold:(balcony&&carrier==='Banner'?'Am Geländer befestigt':pose==='Sitzen'||pose==='Rückwärts sitzen'?'Vor Körper · beide Hände':choose(['Über Kopf · beide Arme','Vor Körper · beide Hände','Seitlich'],seed));
+const prop=value('prop',seed+2),cinema=cameraValue311(n),cam=p.camera!=='Automatisch'?p.camera:cinema?cinema[0]:value('camera',seed+4),frame=p.frame!=='Automatisch'?p.frame:cinema?cinema[4]:value('frame',seed+1);
+const mounts=choices311('mount311',loc,carrier);const hold=p.mount311!=='Automatisch'&&mounts.includes(p.mount311)?p.mount311:p.hold!=='Automatisch'&&mounts.includes(p.hold)?p.hold:choose(mounts,seed);
 const reactions=['schaut neugierig zu','zeigt auf den Plakattext','reagiert skeptisch','lächelt überrascht','diskutiert über die Botschaft','beobachtet aufmerksam','schüttelt den Kopf','lacht','bleibt stehen','gestikuliert lebhaft'];
-const action=choose(reactions,seed*3+Math.floor(seed/2));
+const action=p.action311!=='Automatisch'?p.action311:choose(choices311('action311',loc,carrier),seed*3+Math.floor(seed/2));const area=pick311('area311',choices311('area311',loc),seed);const seat=(pose==='Sitzen'||pose==='Rückwärts sitzen')?pick311('seat311',choices311('seat311',loc),seed+1):'Keine';
 const companion=cast==='Opa'?'Opa':cast==='Teyze'?'Teyze':cast==='Opa & Teyze'?'Opa und Teyze':cast==='Alleine'?'Keine':cast;
 const position=balcony?value('balcony',seed+1):'Passend zum Standort';
-return {place,loc,carrier,format,cast,pose,audience,prop,cam,frame,hold,action,companion,position,ambience:value('ambience',seed),title:place+' · '+(cast==='Alleine'?'Solo':cast)+' · '+action};
+return {place,loc,area,seat,carrier,format,cast,pose,audience,prop,cam,frame,hold,action,companion,position,cameraHeight311:cinema?cinema[3]:1.5,ambience:value('ambience',seed),title:place+' · '+(cast==='Alleine'?'Solo':cast)+' · '+action};
 }
 function auditPremiumScenes380(){
  const original=p.round,problems=[],samples=[];let total=0;
@@ -822,7 +865,7 @@ function auditPremiumScenes380(){
 }
 window.stravaPremiumScenesAudit380=auditPremiumScenes380;
 function sceneOptical(n){return window.stravaPremiumSceneValues325?window.stravaPremiumSceneValues325(n+p.round*10):{lens:24,distance:15};}
-function optical(n){const v=n>=0?sceneOptical(n):{lens:state.common.cameraLens||24,distance:state.common.personDistance||15};return {lens:p.manualCamera?p.manualLens:v.lens,distance:p.manualCamera?p.manualDistance:v.distance,format:p.manualCamera?p.manualFormat:p.sceneFormat,manual:!!p.manualCamera};}
+function optical(n){const cinema=n>=0?cameraValue311(n):null;const v=cinema?{lens:cinema[1],distance:cinema[2]}:n>=0?sceneOptical(n):{lens:state.common.cameraLens||24,distance:state.common.personDistance||15};return {lens:p.manualCamera?p.manualLens:v.lens,distance:p.manualCamera?p.manualDistance:v.distance,format:p.manualCamera?p.manualFormat:p.sceneFormat,manual:!!p.manualCamera};}
 function syncCamera354(){state.sign258=state.sign258||{};state.sign258.manualCamera267=!!p.manualCamera;const o=optical(p.selected);if(p.manualCamera||p.selected>=0){state.common.cameraLens=String(o.lens);state.common.personDistance=String(o.distance)}state.common.format=o.format;}
 function cameraPanel354(){const o=optical(p.selected);return '<div id="psCameraTarget394" class="ps-panel" style="border:2px solid #fc4c02"><div class="ps-title" style="color:#ff8753">KAMERA · LIVE &nbsp; <label style="display:inline;font-size:15px;color:white"><input type="checkbox" data-ps-manual style="width:22px;height:22px;vertical-align:middle" '+(p.manualCamera?'checked':'')+'> Manuell ✓</label></div><div class="ps-grid"><div><label>Brennweite (mm)</label><input data-ps-opt="lens" type="number" min="10" max="200" step="1" value="'+esc(o.lens)+'" '+(p.manualCamera?'':'disabled')+'></div><div><label>Kameraentfernung (m)</label><input data-ps-opt="distance" type="number" min="1" max="500" step="0.5" value="'+esc(o.distance)+'" '+(p.manualCamera?'':'disabled')+'></div></div><label>Bildformat</label><select data-ps-opt="format" '+(p.manualCamera?'':'disabled')+'>'+['4:5','9:16'].map(v=>'<option value="'+v+'" '+(o.format===v?'selected':'')+'>'+v+'</option>').join('')+'</select><p class="ps-muted" style="margin-top:10px">'+(p.manualCamera?'🟠 AKTIV: MANUELLE KAMERA':'🟢 AKTIV: '+(p.selected>=0?'PREMIUM '+String(p.selected+1+p.round*10).padStart(3,'0')+' · SZENENKAMERA':'SZENENKAMERA · Bitte Empfehlung auswählen'))+'</p></div>';}
 
@@ -878,19 +921,19 @@ function draw(){
 if(state.world!=='sign'||state.tab!=='Smart Director'){const jump=document.getElementById('psJump361');if(jump)jump.remove();const up=document.getElementById('psCameraJump394');if(up)up.remove();return;}
 const root=document.getElementById('view');if(!root)return;
 const groupsOpen=[
-['ort','📍 ORT & KULISSE'],['plakat','🪧 PLAKAT & POSEN'],
+['ort','📍 ORT & KULISSE'],['plakat','🪧 BOTSCHAFT & POSEN'],
 ['menschen','👥 FIGUREN & MENSCHEN'],['kamera','📷 KAMERA & BILD']
 ];
 const tiles='<div class="ps-grid">'+groupsOpen.map(x=>'<button type="button" class="ps-tile '+(p.opened===x[0]?'on':'')+'" data-ps-open="'+x[0]+'">'+x[1]+'</button>').join('')+'</div>';
 let body='';
 if(p.opened==='ort'){
-body=field('group','Ortsgruppe',groups.place)+field('location','Konkreter Ort',['Automatisch',...locationPool()])+field('ambience','Umgebung');
+body=field('group','① Ortsgruppe',groups.place)+field('location','② Konkreter Ort',['Automatisch',...locationPool()])+field('area311','③ Bereich',['Automatisch',...choices311('area311',p.location)])+field('ambience','Umgebung');
 if(p.location==='Balkon'||(p.group==='Gebäude & Balkon'&&p.location==='Automatisch'))body+=field('floor','Balkon-Etage')+field('balcony','Balkonposition');
 if(p.location==='Bäckerei'||(p.group==='Gastronomie'&&p.location==='Automatisch'))body+='<label>Eigener Bäckereiname (optional)</label><input data-ps-bakery maxlength="90" placeholder="Eigener Name" value="'+esc(p.bakery)+'">';
 }
-if(p.opened==='plakat')body=field('carrier','Werbemittel')+field('format','Format & Größe')+field('pose','Hauptfigur-Pose')+field('hold','Plakathaltung / Befestigung')+field('prop','Requisite');
+if(p.opened==='plakat')body=field('carrier','③ Botschaftsmedium',['Automatisch',...choices311('carrier',p.location)])+field('mount311','④ Befestigung',['Automatisch',...choices311('mount311',p.location,p.carrier)])+field('format','Format & Größe')+field('pose','⑤ Hauptfigur-Pose')+((p.pose==='Sitzen'||p.pose==='Rückwärts sitzen')?field('seat311','Sitzgelegenheit',['Automatisch',...choices311('seat311',p.location)]):'')+field('action311','Handlung',['Automatisch',...choices311('action311',p.location,p.carrier)])+field('prop','Requisite');
 if(p.opened==='menschen')body=field('cast','Besetzung')+field('audience','Publikum');
-if(p.opened==='kamera')body=field('camera','Kameraperspektive')+field('frame','Bildausschnitt')+cameraPanel354();
+if(p.opened==='kamera')body=field('cameraMix311','🎬 Cinematic-Kamerastil',['SMART CINEMATIC MIX',...camera311.map(c=>c[0])])+field('camera','Kameraperspektive')+field('frame','Bildausschnitt')+cameraPanel354();
 syncCamera354();
 cards=Array.from({length:10},(_,n)=>scene(n));
 const fixed=['location','carrier','format','pose','cast','audience','camera'].map(k=>p[k]).filter(v=>v!=='Automatisch');
@@ -899,8 +942,8 @@ const summary='<div class="ps-panel"><div class="ps-title">🟠 LIVE · AKTIVE A
 const quickActions361='<div id="psQuickActions361" class="ps-panel" style="border:2px solid #fc4c02;padding:14px;margin:12px 0 16px;scroll-margin-top:110px"><button type="button" data-ps-update361 style="display:block;width:100%;background:#303846;color:white;border:0;border-radius:10px;padding:15px;font-size:16px;font-weight:800;margin-bottom:10px">↻ Werte aktualisieren</button><button type="button" data-ps-copy361 style="display:block;width:100%;background:#fc4c02;color:white;border:0;border-radius:10px;padding:15px;font-size:16px;font-weight:800">▣ Master-Prompt direkt kopieren</button><div data-ps-copy-status361 style="color:#7cdda4;font-size:13px;margin-top:6px" aria-live="polite"></div></div>';
 
 /* V3.9.0 independent per-card manual edits. Original scene(n) is never mutated. */
-const editKeys390=['place','carrier','format','hold','pose','prop','cast','audience','action','cam','frame','position'];
-const editLabels390={place:'Ort',carrier:'Werbemittel',format:'Format / Größe',hold:'Plakathaltung / Befestigung',pose:'Hauptfigur-Pose',prop:'Requisite',cast:'Besetzung',audience:'Publikum (z. B. 20 Personen)',action:'Aktion / Reaktion',cam:'Kameraperspektive',frame:'Bildausschnitt',position:'Balkonposition'};
+const editKeys390=['place','area','seat','carrier','format','hold','pose','prop','cast','audience','action','cam','frame','position'];
+const editLabels390={area:'Bereich',seat:'Sitzgelegenheit',place:'Ort',carrier:'Werbemittel',format:'Format / Größe',hold:'Plakathaltung / Befestigung',pose:'Hauptfigur-Pose',prop:'Requisite',cast:'Besetzung',audience:'Publikum (z. B. 20 Personen)',action:'Aktion / Reaktion',cam:'Kameraperspektive',frame:'Bildausschnitt',position:'Balkonposition'};
 function sceneKey390(n){return 'premium-scene-'+String(p.round*10+n+1).padStart(3,'0');}
 function entry390(n){p.sceneEdits390=p.sceneEdits390||{};const id=sceneKey390(n);return p.sceneEdits390[id]||(p.sceneEdits390[id]={enabled:false,values:{}});}
 function effective390(n){const c=scene(n),e=entry390(n);return {...c,...(e.enabled?e.values:{}),...(e.confirmed393||{})};}
@@ -916,7 +959,7 @@ function editor390(n){
 function syncActive390(n){
  if(p.selected!==n)return;
  const c=effective390(n);state.sign258=state.sign258||{};const q=state.sign258.premium270=state.sign258.premium270||{};
- q.title=scene(n).title;q.location=c.place;q.poster=c.carrier+' · '+c.format;q.holding=c.hold;q.position=c.pose;q.prop=c.prop;q.cast=c.cast;q.companion=c.cast;q.audience=c.audience;q.expression=c.action;q.reaction=c.action;q.camera=c.cam;q.frame=c.frame;q.positionOnBalcony=c.position;q.manualScene390=entry390(n).enabled||!!Object.keys(entry390(n).confirmed393||{}).length;
+ q.title=scene(n).title;q.area311=c.area;q.seat311=c.seat;q.cameraHeight311=c.cameraHeight311;q.location=c.place;q.poster=c.carrier+' · '+c.format;q.holding=c.hold;q.position=c.pose;q.prop=c.prop;q.cast=c.cast;q.companion=c.cast;q.audience=c.audience;q.expression=c.action;q.reaction=c.action;q.camera=c.cam;q.frame=c.frame;q.positionOnBalcony=c.position;q.manualScene390=entry390(n).enabled||!!Object.keys(entry390(n).confirmed393||{}).length;
  state.sign258.activeSceneSource267='premium';
  try{save()}catch(e){}
 }
@@ -932,7 +975,7 @@ function explainScene381(c,n){
  const prop={'Keine':'Kein zusätzliches Requisit.','Stuhl':'Ein physikalisch geeigneter Stuhl.','Fahrrad':'Ein Fahrrad als Szenenrequisit.','Einkaufswagen':'Ein realer Einkaufswagen.','Altes Holz':'Ein alter Holzgegenstand als sichtbares Requisit.'};
  const opticalNow=optical(n);
  const lines=[
- ['place','📍 Ort',c.place,'Die Szene findet an diesem Ort statt.'],
+ ['place','📍 Ort',c.place,'Die Szene findet an diesem Ort statt.'],['area','🏪 Bereich',c.area,'Konkreter Schauplatz.'],['seat','🪑 Sitzfläche',c.seat,'Realistische Sitzgelegenheit.'],
  ['carrier','🪧 Werbemittel',c.carrier,carriers[c.carrier]||'Realistischer Plakatträger.'],
  ['format','📐 Größe / Format',c.format,'Größe und Ausrichtung des Plakats.'],
  ['hold','🙌 Befestigung',c.hold,holds[c.hold]||'Realistische Befestigung.'],
@@ -955,10 +998,10 @@ function explainScene381(c,n){
   '<div style="font-size:13px;color:#cbd4df;margin-top:5px">'+esc(row[3])+'</div></div>';
  }).join('')+'<div style="font-size:12px;color:#aebccc;margin-top:10px">🔭 '+esc(opticalNow.lens)+' mm · 📏 '+esc(opticalNow.distance)+' m · 🖼️ '+esc(opticalNow.format)+' (Kameraeinstellungen)</div></div>';
 }
-const cardsHtml=cards.map((original,n)=>{const c=effective390(n);return '<div class="ps-card '+(p.selected===n?'on':'')+'" style="text-align:left"><button type="button" data-ps-scene="'+n+'" style="width:100%;border:0;background:transparent;color:inherit;text-align:left;padding:0;cursor:pointer"><strong>PREMIUM '+String(n+1+p.round*10).padStart(3,'0')+' · '+esc(c.title)+'</strong><small>📍 Ort: '+esc(c.place)+'<br>🪧 Werbemittel: '+esc(c.carrier)+' · '+esc(c.format)+'<br>🙌 Plakathaltung: '+esc(c.hold)+'<br>🧍 Pose: '+esc(c.pose)+'<br>🪑 Requisite: '+esc(c.prop)+'<br>👴 Figuren: '+esc(c.companion)+'<br>👥 Publikum: '+esc(c.audience)+'<br>🎭 Aktion: '+esc(c.action)+'<br>📷 Kamera: '+esc(c.cam)+' · '+esc(c.frame)+'<br>🔭 Brennweite: '+esc(optical(n).lens)+' mm<br>📏 Entfernung: '+esc(optical(n).distance)+' m<br>🖼️ Bildformat: '+esc(optical(n).format)+(optical(n).manual?' · Manuell':'')+(c.loc==='Balkon'?'<br>🏠 Balkonposition: '+esc(c.position):'')+'</small><div style="margin-top:9px;font-weight:800;color:#ff8753">'+(p.selected===n?'✓ AUSGEWÄHLT':'SZENE ÜBERNEHMEN')+'</div></button>'+explainScene381(c,n)+'</div>'}).join('');
+const cardsHtml=cards.map((original,n)=>{const c=effective390(n);return '<div class="ps-card '+(p.selected===n?'on':'')+'" style="text-align:left"><button type="button" data-ps-scene="'+n+'" style="width:100%;border:0;background:transparent;color:inherit;text-align:left;padding:0;cursor:pointer"><strong>PREMIUM '+String(n+1+p.round*10).padStart(3,'0')+' · '+esc(c.title)+'</strong><small>📍 Ort: '+esc(c.place)+'<br>🏪 Bereich: '+esc(c.area)+'<br>🪑 Sitzfläche: '+esc(c.seat)+'<br>🪧 Botschaftsmedium: '+esc(c.carrier)+' · '+esc(c.format)+'<br>🙌 Plakathaltung: '+esc(c.hold)+'<br>🧍 Pose: '+esc(c.pose)+'<br>🪑 Requisite: '+esc(c.prop)+'<br>👴 Figuren: '+esc(c.companion)+'<br>👥 Publikum: '+esc(c.audience)+'<br>🎭 Aktion: '+esc(c.action)+'<br>📷 Kamera: '+esc(c.cam)+' · '+esc(c.frame)+'<br>🔭 Brennweite: '+esc(optical(n).lens)+' mm<br>📏 Entfernung: '+esc(optical(n).distance)+' m<br>🖼️ Bildformat: '+esc(optical(n).format)+(optical(n).manual?' · Manuell':'')+(c.loc==='Balkon'?'<br>🏠 Balkonposition: '+esc(c.position):'')+'</small><div style="margin-top:9px;font-weight:800;color:#ff8753">'+(p.selected===n?'✓ AUSGEWÄHLT':'SZENE ÜBERNEHMEN')+'</div></button>'+explainScene381(c,n)+'</div>'}).join('');
 root.innerHTML='<div id="ps350"><div class="ps-title">🎬 PREMIUM STUDIO</div><div class="ps-muted">Vier Kategorien · deine Auswahl bleibt verbindlich</div>'+section('mode','AUSWAHLMODUS',field('mode','Modus',['SMART MIX','EIGENE AUSWAHL'])+'<div class="ps-muted">'+(p.mode==='SMART MIX'?'🎲 Alle Szenenmerkmale werden automatisch variiert.':'🎯 Gewählte Merkmale bleiben fest; alle anderen variieren automatisch.')+'</div>')+(p.mode==='EIGENE AUSWAHL'?section('categories','KATEGORIEN',tiles+(p.opened?'<div style="margin-top:14px">'+body+'</div>':'')):'')+summary+quickActions361+posterPanel355()+'<div id="psPremiumRecommendations391" class="ps-title">🎲 10 PREMIUM-EMPFEHLUNGEN</div>'+cardsHtml+'<button class="ps-action" data-ps-next>🔄 10 WEITERE EMPFEHLUNGEN</button><button class="ps-action" style="background:#303845;border:1px solid #677181" data-ps-reset>↺ PREMIUM-FILTER ZURÜCKSETZEN</button></div>';
 root.querySelectorAll('[data-ps-open]').forEach(b=>b.onclick=()=>{p.opened=p.opened===b.dataset.psOpen?'':b.dataset.psOpen;persist();draw()});
-root.querySelectorAll('[data-ps-key]').forEach(b=>b.onclick=()=>{const k=b.dataset.psKey,v=b.dataset.psVal;p[k]=v;if(k==='group')p.location='Automatisch';if(k==='mode'&&v==='SMART MIX'){Object.keys(defaults).forEach(key=>{if(!['mode','opened','round','selected','last'].includes(key))p[key]=defaults[key]});p.opened='';}else if(k!=='mode')p.mode='EIGENE AUSWAHL';p.selected=-1;p.last=k+' → '+v;persist();draw()});
+root.querySelectorAll('[data-ps-key]').forEach(b=>b.onclick=()=>{const k=b.dataset.psKey,v=b.dataset.psVal;p[k]=v;if(k==='group'){p.location='Automatisch';p.area311='Automatisch'}if(k==='location')p.area311='Automatisch';if(k==='carrier')p.mount311='Automatisch';reconcile311();if(k==='mode'&&v==='SMART MIX'){Object.keys(defaults).forEach(key=>{if(!['mode','opened','round','selected','last'].includes(key))p[key]=defaults[key]});p.opened='';}else if(k!=='mode')p.mode='EIGENE AUSWAHL';p.selected=-1;p.last=k+' → '+v;persist();draw()});
 const update361=root.querySelector('[data-ps-update361]');if(update361)update361.onclick=()=>{const y=window.scrollY;save();render();window.scrollTo(0,y);};
 const copy361=root.querySelector('[data-ps-copy361]');if(copy361)copy361.onclick=async()=>{const prompt=buildPrompt();let copied=false;try{await navigator.clipboard.writeText(prompt);copied=true}catch(e){const tmp=document.createElement('textarea');tmp.value=prompt;tmp.style.position='fixed';tmp.style.opacity='0';document.body.appendChild(tmp);tmp.focus();tmp.select();try{copied=document.execCommand('copy')}catch(e){}tmp.remove()}const status=document.querySelector('[data-ps-copy-status361]');if(status)status.textContent=copied?'✓ Master-Prompt kopiert':'Kopieren fehlgeschlagen – bitte im Prompt-Tab kopieren';};
 let jump361=document.getElementById('psJump361');if(!jump361){jump361=document.createElement('button');jump361.id='psJump361';jump361.type='button';jump361.textContent='↓';jump361.setAttribute('aria-label','Direkt zu den Premium-Empfehlungen springen');jump361.style.cssText='position:fixed;right:15px;bottom:calc(85px + env(safe-area-inset-bottom));z-index:30;width:54px;height:54px;border-radius:50%;border:3px solid #fc4c02;background:#18202a;color:white;font-size:37px;font-weight:900;box-shadow:0 3px 12px #0009;cursor:pointer';document.body.appendChild(jump361)}jump361.textContent='↓';jump361.setAttribute('aria-label','Direkt zu den Premium-Empfehlungen springen');jump361.onclick=()=>document.getElementById('psPremiumRecommendations391')?.scrollIntoView({behavior:'smooth',block:'start'});
@@ -1006,7 +1049,7 @@ const bakery=root.querySelector('[data-ps-bakery]');if(bakery)bakery.onchange=()
 root.querySelectorAll('[data-ps-pencil393]').forEach(el=>el.onclick=()=>{const n=+el.dataset.psPencil393,k=el.dataset.key393,id=sceneKey390(n)+'/'+k;editing393[id]=!editing393[id];const y=scrollY;draw();scrollTo(0,y);if(editing393[id])root.querySelector('[data-ps-input393="'+n+'"][data-key393="'+k+'"]')?.focus({preventScroll:true});});
 root.querySelectorAll('[data-ps-check393]').forEach(el=>el.onclick=()=>{const n=+el.dataset.psCheck393,k=el.dataset.key393,id=sceneKey390(n)+'/'+k,input=root.querySelector('[data-ps-input393="'+n+'"][data-key393="'+k+'"]');if(!input?.value.trim()){if(input)input.style.borderColor='red';return;}const e=entry390(n);e.confirmed393=e.confirmed393||{};e.confirmed393[k]=input.value.trim();if(e.values)delete e.values[k];syncActive390(n);persist();delete editing393[id];const y=scrollY;draw();scrollTo(0,y);});
 root.querySelectorAll('[data-ps-x393]').forEach(el=>el.onclick=()=>{const n=+el.dataset.psX393,k=el.dataset.key393,e=entry390(n);if(e.confirmed393)delete e.confirmed393[k];if(e.values)delete e.values[k];delete editing393[sceneKey390(n)+'/'+k];syncActive390(n);persist();const y=scrollY;draw();scrollTo(0,y);});
-root.querySelectorAll('[data-ps-scene]').forEach(b=>b.onclick=()=>{p.selected=Number(b.dataset.psScene);const c=effective390(p.selected);p.last='Premium '+String(p.selected+1+p.round*10).padStart(3,'0')+' übernommen';state.sign258=state.sign258||{};const q=state.sign258.premium270=state.sign258.premium270||{};q.scene=null;q.title=c.title;q.location=c.place;q.poster=c.carrier+' · '+c.format;q.prop=c.prop;q.holding=c.hold;q.position=c.pose;q.expression=c.action;q.audience=c.audience;q.reaction=c.action;q.camera=c.cam;q.frame=c.frame;q.ambience=c.ambience;q.cast=c.cast;q.companion=c.companion;q.positionOnBalcony=c.position;q.description='SELECTED PREMIUM STUDIO SCENE: '+c.title+'. LOCATION: '+c.place+'. PROP: '+c.prop+'. POSTER: '+q.poster+'. HOLDING: '+c.hold+'. RUNNER POSE: '+c.pose+'. COMPANIONS: '+c.companion+'. AUDIENCE: '+c.audience+'. CAMERA: '+c.cam+', '+c.frame+'. BALCONY POSITION: '+c.position+'.';state.sign258.activeSceneSource267='premium';syncActive390(p.selected);syncCamera354();persist();draw()});
+root.querySelectorAll('[data-ps-scene]').forEach(b=>b.onclick=()=>{p.selected=Number(b.dataset.psScene);const c=effective390(p.selected);p.last='Premium '+String(p.selected+1+p.round*10).padStart(3,'0')+' übernommen';state.sign258=state.sign258||{};const q=state.sign258.premium270=state.sign258.premium270||{};q.scene=null;q.area311=c.area;q.seat311=c.seat;q.cameraHeight311=c.cameraHeight311;q.title=c.title;q.location=c.place;q.poster=c.carrier+' · '+c.format;q.prop=c.prop;q.holding=c.hold;q.position=c.pose;q.expression=c.action;q.audience=c.audience;q.reaction=c.action;q.camera=c.cam;q.frame=c.frame;q.ambience=c.ambience;q.cast=c.cast;q.companion=c.companion;q.positionOnBalcony=c.position;q.description='SELECTED PREMIUM STUDIO SCENE: '+c.title+'. LOCATION: '+c.place+'. PROP: '+c.prop+'. POSTER: '+q.poster+'. HOLDING: '+c.hold+'. RUNNER POSE: '+c.pose+'. COMPANIONS: '+c.companion+'. AUDIENCE: '+c.audience+'. CAMERA: '+c.cam+', '+c.frame+'. BALCONY POSITION: '+c.position+'.';state.sign258.activeSceneSource267='premium';syncActive390(p.selected);syncCamera354();persist();draw()});
 root.querySelector('[data-ps-next]').onclick=()=>{p.round++;p.selected=-1;p.last='10 weitere Empfehlungen';persist();draw()};
 root.querySelector('[data-ps-reset]').onclick=()=>{if(!confirm('Nur Premium-Filter zurücksetzen?'))return;p={...defaults,manualCamera:p.manualCamera,manualLens:p.manualLens,manualDistance:p.manualDistance,manualFormat:p.manualFormat,sceneFormat:p.sceneFormat,cameraMemory354:true};syncCamera354();persist();draw()};
 }
@@ -1258,7 +1301,7 @@ function resolved(){
  // V3.9.2: the visually selected Premium card is the source of truth.
  // Keep legacy fallback only when no selected Premium card is available.
  const selected=Number.isInteger(p.selected)&&p.selected>=0&&!!edit&&!!edit.effective;
- if(selected){const x=edit.effective;q.title=edit.original.title;q.location=x.place;q.poster=x.carrier+' · '+x.format;q.holding=x.hold;q.position=x.pose;q.audience=x.audience;q.cast=x.cast;q.companion=x.cast;q.expression=x.action;q.camera=x.cam;q.frame=x.frame;q.prop=x.prop;q.positionOnBalcony=x.position;q.manualScene390=edit.manual;}
+ if(selected){const x=edit.effective;q.title=edit.original.title;q.area311=x.area;q.seat311=x.seat;q.cameraHeight311=x.cameraHeight311;q.location=x.place;q.poster=x.carrier+' · '+x.format;q.holding=x.hold;q.position=x.pose;q.audience=x.audience;q.cast=x.cast;q.companion=x.cast;q.expression=x.action;q.camera=x.cam;q.frame=x.frame;q.prop=x.prop;q.positionOnBalcony=x.position;q.manualScene390=edit.manual;}
  const location=selected?val(q.location):m.heightOn&&active(m.height)?m.height:val(s.locationMode,'Realistic outdoor setting');
  const hold=selected?val(q.holding,'Automatic realistic support'):val(s.signMount,'Natural support');
  const carrier=selected?val(q.poster,'Black sign'):m.mediaOn&&active(m.media)?m.media:val(m.media,'Black sign');
@@ -1278,7 +1321,7 @@ function premiumEnglish392(value,kind){
  'Stehen':'standing naturally','Sitzen':'sitting naturally',
  'Rückwärts sitzen':'sitting backwards on a chair',
  'Rückwärts auf Stuhl, Unterarme auf Lehne':'sitting backwards on a chair with both forearms resting separately on its backrest',
- 'Stuhl':'a real chair','Gemischt':'a mixed group of people',
+ 'Sicherer Betonblock':'a safe stable concrete block','Wartebank':'a real waiting bench','Café-Stuhl':'a real café chair','Außentreppe':'real exterior steps','Tribünensitz':'a real stadium seat','LED-Werbefläche':'a real architectural LED advertising display','Digitale Anzeigetafel':'a real electronic scoreboard','Bauzaunbanner':'a printed banner securely fastened to the construction fence','Schaufensterbeschriftung':'lettering directly applied to a storefront window','Wandbeschriftung':'lettering painted directly onto an existing wall','Rolltorbeschriftung':'lettering applied directly to a real metal roller shutter','Kreidetafel':'a real chalkboard','Auf Botschaft zeigen':'pointing naturally at the message','Botschaft betrachten':'looking at the displayed message','Über Botschaft lachen':'laughing about the message','Stuhl':'a real chair','Gemischt':'a mixed group of people',
  'Keine':'none','Dokumentarisch':'documentary viewpoint','Mittel':'medium framing',
  'Spezialträger':'specialized physical sign or banner carrier',
  'XXL-Quer':'extra-large landscape format',
@@ -1307,7 +1350,7 @@ function premiumContract392(r){
  const q=r.q,edit=window.stravaEffectiveScene390?window.stravaEffectiveScene390():null;
  const x=edit&&edit.effective?edit.effective:null;
  const pairs=[
- ['Location','place',r.location],['Carrier','carrier',x?x.carrier:r.carrier],
+ ['Location','place',r.location],['Specific area','area',x?x.area:q.area311],['Physical seating surface','seat',x?x.seat:q.seat311],['Camera sensor height (m)','height',x?x.cameraHeight311:q.cameraHeight311],['Carrier','carrier',x?x.carrier:r.carrier],
  ['Sign size / orientation','format',x?x.format:''],['Mounting','hold',r.hold],
  ['Runner pose','pose',q.position],['Physical prop','prop',q.prop],
  ['Cast','cast',q.cast],['Audience count','audience',r.audience],
@@ -1360,7 +1403,7 @@ buildPrompt=function(){
  const font=val(p.posterFont,s.font||'Anton');
  const action=r.selected?val(q.expression):val(s.mainAction);
  const out=[
- 'STRAVA RUN V3.9.2 — BLACK SIGN · PREMIUM SCENE FIDELITY',
+ 'STRAVA RUN V3.11.0 — BLACK SIGN · SMART SCENE FIDELITY',
  'OUTPUT: Exactly ONE native '+r.format+' ultra-photorealistic documentary photograph. Real anatomy, light, shadows and materials; no CGI.',
  '',
  '01 / REFERENCE IDENTITY',
