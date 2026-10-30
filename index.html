@@ -1177,6 +1177,7 @@ function remapWordColors3172(oldText,newText,oldColors){
  for(const [word,oldList] of leftoverOld){const newList=leftoverNew.get(word)||[];if(oldList.length===1&&newList.length===1&&oldColors[oldList[0].i])mapped[newList[0].i]=oldColors[oldList[0].i]}
  return mapped;
 }
+window.stravaRemapWordColors318=remapWordColors3172;
 edit.oninput=()=>{const previousText=state.sign.signText,previousColors=state.sign.wordColors||{};state.sign.signText=edit.value;state.sign.wordColors=remapWordColors3172(previousText,edit.value,previousColors);selected.clear();p.last='Plakattext geändert';save();refreshPoster()};
 poster.querySelectorAll('[data-ps-color]').forEach(b=>b.onclick=()=>{if(!selected.size)return;for(const i of selected)state.sign.wordColors[i]=b.dataset.psColor;p.last='Wortfarben geändert';save();refreshPoster()});
 poster.querySelector('[data-ps-clear]').onclick=()=>{selected.clear();refreshPoster()};
@@ -1749,6 +1750,7 @@ return out;
 // V3.18 developer-only regression diagnostics. No changes to user settings.
 window.stravaRegression318=function(){
  const failures=[],assert=(condition,label)=>{if(!condition)failures.push(label)};
+ if(typeof window.stravaRemapWordColors318!=='function')failures.push('word color remapper unavailable');
  const samples=[
   {signText:'ROT WEISS\nNEU',wordColors:{0:'#FF3434',2:'#FFFFFF',4:'#00AAFF'}},
   {signText:'A\n\nB',wordColors:{0:'#FF3434',2:'#FF3434'}},
@@ -1762,9 +1764,9 @@ window.stravaRegression318=function(){
   assert(window.stravaColorAudit318(x).pass,'hex audit '+k);
   for(const w of v.words)assert(w.color===String(x.wordColors[w.index]||'#FFFFFF').toUpperCase(),'word color '+k+'/'+w.index);
  }
- if(typeof remapWordColors3172==='function'){
+ if(typeof window.stravaRemapWordColors318==='function'){
   const oldText='ROT WEISS BLAU',newText='BLAU ROT WEISS';
-  const mapped=remapWordColors3172(oldText,newText,{0:'#FF3434',2:'#00FF00',4:'#0000FF'});
+  const mapped=window.stravaRemapWordColors318(oldText,newText,{0:'#FF3434',2:'#00FF00',4:'#0000FF'});
   const parts=newText.split(/(\s+)/);
   assert(parts.map((x,i)=>mapped[i]||'#FFFFFF').filter((x,i)=>i%2===0).join(',')==='#0000FF,#FF3434,#00FF00','move word colors');
  }
