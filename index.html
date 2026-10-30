@@ -1583,7 +1583,7 @@ btn.addEventListener('click',async function(){
  function syncPoster407(){
   const legacy=document.getElementById('legacySignPreview');
   if(legacy&&typeof posterPreview355==='function'){
-   const signature=JSON.stringify([state.sign.signText,state.sign.wordColors,typeof p!=='undefined'?p.posterFont:null,typeof p!=='undefined'?p.posterAlign396:null]);
+   const signature=JSON.stringify([state.sign.signText,state.sign.wordColors,state.common.format,typeof p!=='undefined'?p.posterFont:null,typeof p!=='undefined'?p.posterAlign396:null]);
    if(legacy.dataset.posterSignature!==signature){
     legacy.innerHTML=posterPreview355();
     legacy.dataset.posterSignature=signature;
@@ -1591,8 +1591,9 @@ btn.addEventListener('click',async function(){
    }
   }
   const premium=document.getElementById('psPreviewHost355');
-  if(premium&&typeof posterPreview355==='function'&&!premium.querySelector('.ps-poster-fit')){
+  if(premium&&typeof posterPreview355==='function'&&premium.dataset.posterSignature!==JSON.stringify([state.sign.signText,state.sign.wordColors,state.common.format,p.posterFont,p.posterAlign396])){
     premium.innerHTML=posterPreview355();
+    premium.dataset.posterSignature=JSON.stringify([state.sign.signText,state.sign.wordColors,state.common.format,p.posterFont,p.posterAlign396]);
     requestAnimationFrame(()=>fitPoster357(premium));
   }
  }
