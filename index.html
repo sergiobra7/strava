@@ -1166,11 +1166,15 @@ function remapWordColors3172(oldText,newText,oldColors){
  if(n*m>250000)return {};
  const dp=Array.from({length:n+1},()=>new Uint16Array(m+1));
  for(let i=n-1;i>=0;i--)for(let j=m-1;j>=0;j--)dp[i][j]=aw[i].t===bw[j].t?dp[i+1][j+1]+1:Math.max(dp[i+1][j],dp[i][j+1]);
- const mapped={};let i=0,j=0;
+ const mapped={};const matchedOld=new Set(),matchedNew=new Set();let i=0,j=0;
  while(i<n&&j<m){
-  if(aw[i].t===bw[j].t){if(oldColors[aw[i].i])mapped[bw[j].i]=oldColors[aw[i].i];i++;j++;}
+  if(aw[i].t===bw[j].t){if(oldColors[aw[i].i])mapped[bw[j].i]=oldColors[aw[i].i];matchedOld.add(i);matchedNew.add(j);i++;j++;}
   else if(dp[i+1][j]>=dp[i][j+1])i++;else j++;
  }
+ const leftoverOld=new Map(),leftoverNew=new Map();
+ aw.forEach((x,k)=>{if(!matchedOld.has(k)){const v=leftoverOld.get(x.t)||[];v.push(x);leftoverOld.set(x.t,v)}});
+ bw.forEach((x,k)=>{if(!matchedNew.has(k)){const v=leftoverNew.get(x.t)||[];v.push(x);leftoverNew.set(x.t,v)}});
+ for(const [word,oldList] of leftoverOld){const newList=leftoverNew.get(word)||[];if(oldList.length===1&&newList.length===1&&oldColors[oldList[0].i])mapped[newList[0].i]=oldColors[oldList[0].i]}
  return mapped;
 }
 edit.oninput=()=>{const previousText=state.sign.signText,previousColors=state.sign.wordColors||{};state.sign.signText=edit.value;state.sign.wordColors=remapWordColors3172(previousText,edit.value,previousColors);selected.clear();p.last='Plakattext geändert';save();refreshPoster()};
