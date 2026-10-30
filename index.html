@@ -1773,4 +1773,61 @@ window.stravaRegression318=function(){
  return {pass:failures.length===0,checks:4*samples.length+1,failures};
 };
 </script>
+<script>
+/* V3.19: BLACK SIGN poster retired. Keep legacy saved data untouched for rollback. */
+(function(){
+ const originalTabs=tabs;
+ tabs=function(){
+  return originalTabs().filter(name=>!['Plakat & Text','Wand / Plakat','Auto-Wand'].includes(name));
+ };
+ const retiredTabs=new Set(['Plakat & Text','Wand / Plakat','Auto-Wand']);
+ if(retiredTabs.has(state.tab)){state.tab='Hauptfigur';save();}
+ const originalRender=render;
+ render=function(){
+  if(retiredTabs.has(state.tab))state.tab='Hauptfigur';
+  return originalRender();
+ };
+ buildPrompt=function(){
+  const c=state.common||{},s=state.sign||{},p=typeof readPremium==='function'?readPremium():{};
+  const scene=window.stravaEffectiveScene390?window.stravaEffectiveScene390():null;
+  const e=scene&&scene.effective||{};
+  const value=x=>String(x==null?'':x);
+  const lines=[
+   'STRAVA RUN V3.19.0 — RUNNER DOCUMENTARY · NO SIGN',
+   'OUTPUT: Exactly ONE native '+value(c.format||'9:16')+' ultra-photorealistic documentary photograph. Real anatomy, natural light, shadows, materials and perspective; no CGI.',
+   '',
+   '01 / REFERENCE IDENTITY',
+   'Use the separately attached PERSON PHOTO to preserve facial identity, age, proportions, beard and natural skin texture. No beautification or invented facial details.',
+   'Use the separately attached SHOE PHOTO as the sole authority for the exact shoes on BOTH feet. No shoe substitution.',
+   'If a LOCATION PHOTO is attached, preserve its real architecture and perspective.',
+   '',
+   '02 / SCENE AND CAMERA',
+   'Location: '+value(e.place||p.location||s.locationMode||'Authentic public outdoor location')+'.',
+   'Selected scene: '+value(e.title||'Natural runner documentary')+'.',
+   'Specific area: '+value(e.area||'Natural public space')+'.',
+   'Camera: '+value(c.cameraLens||24)+' mm full-frame equivalent, '+value(c.personDistance||20)+' m from runner; '+value(c.format||'9:16')+' native frame. Do not zoom or crop to enlarge the runner.',
+   'Viewpoint: '+value(e.cam||'Natural documentary angle')+'. Framing: '+value(e.frame||'Wide documentary shot')+'.',
+   '',
+   '03 / RUNNER',
+   'Pose: '+value(e.pose||s.pose||'Natural relaxed running-related pose')+'.',
+   'Gaze: '+value(s.gaze||'Directly toward camera')+'.',
+   'Outfit brand: '+value(c.brand||s.brand||'PUMA')+'. Preserve the selected outfit, fabric and colors from the active clothing settings and reference images.',
+   'All arms, hands, fingers and limbs must be physically correct and separate.',
+   '',
+   '04 / OTHER PEOPLE',
+   'Cast: '+value(e.cast||'Only selected accompanying figures')+'.',
+   'Audience: '+value(e.audience||'Natural location-appropriate crowd')+'.',
+   'Action: '+value(e.action||'Naturally observing')+'. Keep people and faces photorealistic.',
+   '',
+   '05 / ABSOLUTE EXCLUSION',
+   'NO poster, NO sign, NO placard, NO banner, NO wall writing, NO LED advertising screen, NO printed message, NO handheld board, NO typographic installation. Remove all former BLACK SIGN equipment from the composition.',
+   'Do not introduce any text or physical sign from old presets, saved settings, scene recommendations or archived prompts.',
+   'No flags, religious symbols or identifiable commercial advertising.',
+   'Photograph the runner and selected people in a physically coherent real environment.'
+  ];
+  return lines.join('\n');
+ };
+ window.stravaPosterRemoved319=true;
+})();
+</script>
 </body></html>
