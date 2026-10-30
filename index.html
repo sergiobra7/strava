@@ -847,7 +847,7 @@ function setFilter311(k,v){
 function quick311(){const loc=p.location,car=p.carrier;const steps=[
  ['group','① 📍 ORTSGRUPPE',groups.place],['location','② 🏪 KONKRETER ORT',['Automatisch',...locationPool()]],
  ['area311','③ BEREICH',['Automatisch',...choices311('area311',loc)]],
- ['carrier','④ 🪧 BOTSCHAFT',['Automatisch',...choices311('carrier',loc)]],
+ ['carrier','④ 🪧 SZENENMEDIUM (PLAKAT ORIGINAL IM REITER PLAKAT)',['Automatisch',...choices311('carrier',loc)]],
  ['mount311','⑤ ↔️ BEFESTIGUNG',['Automatisch',...choices311('mount311',loc,car)]],
  ['pose','⑥ 🪑 POSE',groups.pose],
  ['seat311','SITZFLÄCHE',['Automatisch',...choices311('seat311',loc)]],
@@ -982,6 +982,13 @@ function effective390(n){
  }
  if(p.cameraMix311&&p.cameraMix311!=='SMART CINEMATIC MIX')delete overrides.cam;
  const x={...c,...overrides};
+ // V3.13.2: Plakat & Text is the sole authority for the physical sign.
+ // Smart Director supplies the scene, never a competing sign or mount.
+ const original=state.sign||{};
+ x.carrier='Plakat';
+ x.format='XXL-Hoch';
+ x.hold=String(original.signType||'').includes('Holzstuhl')?'Am umgedrehten Holzstuhl befestigt bis Boden':'Freistehend mit sicherem Standfuß';
+ x.position=original.signPosition||'Rechts';
  x.companion=x.cast==='Alleine'?'Keine':x.cast==='Opa & Teyze'?'Opa und Teyze':x.cast;
  x.title=x.place+' · '+(x.cast==='Alleine'?'Solo':x.cast)+' · '+x.action;
  return x;
@@ -1396,7 +1403,7 @@ function premiumContract392(r){
  const x=edit&&edit.effective?edit.effective:null;
  const pairs=[
  ['Location','place',r.location],['Specific area','area',x?x.area:q.area311],['Physical seating surface','seat',x?x.seat:q.seat311],['Camera sensor height (m)','height',x?x.cameraHeight311:q.cameraHeight311],['Carrier','carrier',x?x.carrier:r.carrier],
- ['Sign size / orientation','format',x?x.format:''],['Mounting','hold',r.hold],
+ ['Sign size / orientation','format',x?x.format:''],['Mounting','hold',x?x.hold:r.hold],
  ['Runner pose','pose',q.position],['Physical prop','prop',q.prop],
  ['Cast','cast',q.cast],['Audience count','audience',r.audience],
  ['Audience action','action',q.expression],['Camera viewpoint','cam',q.camera],
@@ -1407,6 +1414,7 @@ function premiumContract392(r){
  ...pairs.map(([label,kind,raw])=>label+': '+premiumEnglish392(raw,kind)+' [original displayed value: '+String(raw||'—')+'].'),
  'The English meaning of every field above is authoritative. Preserve each source value exactly in substance; do not swap in legacy location, carrier, pose, mount, cast or crowd presets. A free-text German value is authoritative even when no fixed translation exists.',
  'Audience COUNT and audience PLACEMENT are independent. Never replace the specified count with a placement description.',
+ 'ORIGINAL PLAKAT AUTHORITY: Physical sign type = '+String(state.sign.signType||'')+'; sign placement = '+String(state.sign.signPosition||'')+'. These settings are defined exclusively in Plakat & Text and override any older Premium carrier or mounting proposal.',
  'Camera lens, sensor distance, image aspect ratio, exact sign text, word colors, identity photos and outfit remain controlled by their dedicated active settings.',
  'SCENE CONSISTENCY: the display medium must match its mounting. For architectural or digital media, do not add a handheld poster. A seated person needs the specified physical seat. All faces, the complete message and required footwear must remain visible.',
  'CAMERA CONSISTENCY: preserve selected focal length, camera distance and sensor height. If a source LOCATION PHOTO is locked, preserve its existing viewpoint.',
