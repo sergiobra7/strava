@@ -272,11 +272,11 @@ function download(name,body,type){const blob=new Blob([body],{type});const u=URL
 (function(){
 'use strict';
 const C={
-media:['Bestehendes XXL-Plakat','XXL-Protestschild','Freistehende XXL-Tafel','Bodenplakat','Holzrahmen-Plakat','Kundenstopper','Roll-up-Banner','Mobiles LED-Display','Bauzaunbanner','Werbeanhaenger','Einkaufswagen-Plakat','Lastenrad-Werbetafel','Marktstand-Werbefront','Schaufensterbanner','Rednerpult-Tafel','Litfasssaeule','Mobile Werbetafel','Panorama-Banner','XXL-Schwenkfahne','Rechteckige Bannerfahne','Querbanner mit zwei Stangen','Beachflag XXL','Balkonfahne','Dachterrassenfahne','Fahnenrucksack','Doppelfahne','Grosse Haengefahne','Auslegerfahne'],
+media:['Keine','Keine','Freistehende XXL-Tafel','Keine','Keine','Kundenstopper','Roll-up-Banner','Mobiles LED-Display','Bauzaunbanner','Werbeanhaenger','Keine','Lastenrad-Werbetafel','Marktstand-Werbefront','Schaufensterbanner','Rednerpult-Tafel','Litfasssaeule','Mobile Werbetafel','Panorama-Banner','XXL-Schwenkfahne','Rechteckige Bannerfahne','Querbanner mit zwei Stangen','Beachflag XXL','Balkonfahne','Dachterrassenfahne','Fahnenrucksack','Doppelfahne','Grosse Haengefahne','Auslegerfahne'],
 prop:['Keine Zusatzrequisite','Alter Holzstuhl','Stabiler Holzhocker','Barhocker','Alter Sessel','Breite Holzkiste','Niedriges Holzpodest','Kleines Rednerpodest','Breite Treppenstufe','Parkbank','Niedrige Steinplattform','Breiter Betonblock','Stabile Holzplattform','Einkaufswagen','Marktstand','Reisekoffer','Altes Moped','Fahrrad','Lastenrad','Kleine Buehnenplattform','Einzelner alter Holzbalken','Zwei gestapelte Holzbalken','Massiver Baumstamm','Verwitterter Balkenstapel','Rustikale Balkenbank','Alte Holzbohlen','Zwei senkrechte Holzbalken','Balken vor alter Scheune','Alter Holzbalken im Dorfhof','Verwitterter Holzrahmen'],
 height:['Kein erhoehter Standort','Balkon 1. Stock','Balkon 2. Stock','Balkon 3. Stock','Alter Wohnhausbalkon','Traditioneller Holzbalkon','Grosse Dachterrasse','Dachterrasse mit Stadtpanorama','Dachterrasse eines Cafes','Parkhaus-Oberdeck','Buerogebaeude-Terrasse','Wohnblock-Innenhofbalkon','Aussengang eines Wohnhauses','Bahnhofsgalerie','Einkaufspassage obere Galerie','Breite Gebaeudetreppe','Erhoehter Treppenabsatz','Aussichtsterrasse','Terrasse ueber einem Laden','Hotelbalkon','Innenhof mit mehreren Balkonen'],
 market:['Neutraler Supermarktparkplatz','Neutraler Supermarkteingang','Neutrale Einkaufswagenzone','Parkplatzmitte','Parkplatzrand','Parkplatz am Abend','Parkplatz bei Regen','Parkplatz am Morgen','Neutrale breite Glasfront','Neutrale Filiale mit Aussentreppe'],
-pose:['Automatisch passend','Stehend, Plakat ueber Kopf','Stehend, Plakat vor Brust','Stehend, auf Botschaft zeigen','Sitzend, Plakat bodengestuetzt','Rueckwaerts auf Stuhl sitzend','Sitzend auf Holzbalken','Hinter Werbemittel stehend','Neben Werbemittel stehend','Beide Haende an Fahnenstange','Hinter Balkongelaender stehend','Auf stabilem Podest stehend'],
+pose:['Automatisch passend','Keine','Keine','Stehend, auf Botschaft zeigen','Keine','Rueckwaerts auf Stuhl sitzend','Sitzend auf Holzbalken','Hinter Werbemittel stehend','Neben Werbemittel stehend','Beide Haende an Fahnenstange','Hinter Balkongelaender stehend','Auf stabilem Podest stehend'],
 mount:['Automatisch physikalisch passend','Beide Haende','Bodenstuetze','Stabiler Standfuss','Beschwerter Standfuss','Mast mit Querarm','Geländerbefestigung','Tragfaehiger Holzrahmen','Wagenbefestigung','Zwei Haltestangen'],
 wind:['Windstill','Leichter Wind','Maessiger Wind'],fabric:['Glatt gespannt','Leicht gespannt','Locker fallend'],
 weathering:['Leicht gealtert','Stark verwittert','Jahrzehnte im Freien','Extrem rissig und vermoost'],
@@ -329,7 +329,7 @@ const prevPrompt=buildPrompt;buildPrompt=function(){
  if(c.heightOn&&c.height!==C.height[0]){
   priority.push('MASTER LOCATION OVERRIDES PREMIUM LOCATION: '+c.height);
  }
- if(c.mediaOn&&activePremium)priority.push('MASTER CARRIER OVERRIDES PREMIUM POSTER: '+c.media);
+ if(c.mediaOn&&activePremium)priority.push('MASTER PROP OVERRIDES: '+c.media);
  if(c.propOn&&activePremium)priority.push('MASTER PROP OVERRIDES PREMIUM PROP: '+c.prop);
  if(manual.manualSignPose284&&c.poseOn)priority.push('MANUAL SIGN POSE OVERRIDES MASTER BODY POSE.');
  if((manual.manualCrowd290||manual.forceAudience277)&&c.crowdOn)priority.push('MANUAL AUDIENCE OVERRIDES MASTER CROWD.');
@@ -521,48 +521,6 @@ draw();
  schedule();
 })();
 </script><script>
-/* V3.3.7: effective master instructions replace conflicting premium scene directives. */
-(function(){
- const previous=buildPrompt;
- buildPrompt=function(){
-  let p=previous();
-  if(state.world!=='sign')return p;
-  const z=state.sign258||{},m=z.master320||{};
-  const elevated=!!m.heightOn&&!!m.height&&m.height!=='Keine erhoehte Position';
-  const carrier=!!m.mediaOn&&!!m.media&&m.media!=='Bestehendes XXL-Plakat';
-  const pose=!!m.poseOn&&!z.manualSignPose284;
-  const prop=!!m.propOn;
-  if(!(elevated||carrier||pose||prop))return p;
-  // Premium scene lock is only authoritative for fields not manually overridden.
-  p=p.replace(/=== AUTHORITATIVE V2\.9\.0 SCENE LOCK ===[\s\S]*?=== END AUTHORITATIVE SCENE LOCK ===/g,
-   '=== PREMIUM SCENE FALLBACK ===\\nPremium scene details apply only to fields not explicitly activated in MASTER-REGIE.\\n=== END PREMIUM SCENE FALLBACK ===');
-  if(elevated){
-   p=p.replace(/^\[REG-02\] LOCATION \/ ORT:.*$/m,'[REG-02] LOCATION / ORT: '+m.height+' — MASTER PRIORITY');
-   p=p.replace(/^\[REG-01\] SCENE:.*$/m,'[REG-01] SCENE: Master location '+m.height);
-   p=p.replace(/^\[BS-SD\] Selected creative concept:.*$/m,'[BS-SD] MASTER LOCATION: '+m.height+'. Do not relocate runner to the old premium venue.');
-   p=p.replace(/^\[BS-ORT\].*$/m,'[BS-ORT] Master location: '+m.height);
-  }
-  if(carrier){
-   p=p.replace(/^\[REG-09\] SIGN MOUNT \/ PLAKAT:.*$/m,'[REG-09] SIGN MOUNT / PLAKAT: '+m.media+' — MASTER PRIORITY');
-   p=p.replace(/^\[BS-PL\].*$/m,'[BS-PL] MASTER PHYSICAL MESSAGE CARRIER: '+m.media+'. Match mounting to this carrier; no handheld overhead board unless explicitly compatible.');
-   p=p.replace(/^\[BS-SD-POSE\].*$/m,'[BS-SD-POSE] Respect selected MASTER carrier '+m.media+'; do not force an overhead handheld sign.');
-  }
-  if(pose){
-   p=p.replace(/^\[REG-03\] MAIN RUNNER \/ POSE:.*$/m,'[REG-03] MAIN RUNNER / POSE: '+m.pose+' — MASTER PRIORITY');
-   p=p.replace(/^\[HF-PO\].*$/m,'[HF-PO] MASTER BODY POSE: '+m.pose+'. Preserve manual gaze separately.');
-   if(!carrier)p=p.replace(/^\[BS-SD-POSE\].*$/m,'[BS-SD-POSE] MASTER BODY POSE: '+m.pose+'. Use physically compatible sign support.');
-  }
-  if(prop)p=p.replace(/^\[REG-09\] SIGN MOUNT \/ PLAKAT:(.*)$/m,(full)=>full);
-  p+='\\n\\n=== FINAL ACTIVE MASTER CONFLICT RESOLUTION ===\\n'+
-   (elevated?'ONLY ACTIVE LOCATION: '+m.height+'. No supermarket entrance or parking-lot ground-level runner.\\n':'')+
-   (carrier?'ONLY ACTIVE SIGN CARRIER: '+m.media+'. Do not depict a handheld overhead rectangle instead.\\n':'')+
-   (pose?'ACTIVE BODY POSE: '+m.pose+'. Do not depict standing overhead if incompatible.\\n':'')+
-   (prop?'ACTIVE PROP: '+m.prop+'.\\n':'')+
-   'Preserve exact text, word colors, person/shoe references, selected camera distance and lens, and independent manual gaze/audience settings. Incompatible automatic premium instructions are superseded.\\n=== END FINAL MASTER RESOLUTION ===';
-  return p;
- };
-})();
-</script><script>
 /* V3.4.0: five categorized premium filters, all original controls retained. */
 (function(){
  let busy=false;
@@ -661,50 +619,6 @@ draw();
  schedule();
 })();
 </script><script>
-/* V3.4.3 final premium scene contract */
-(function(){
- const old=buildPrompt;
- buildPrompt=function(){
-  let p=old();
-  if(state.world!=='sign')return p;
-  const z=state.sign258||{},q=z.premium270||{},m=z.master320||{},cast=z.premiumCast342||{};
-  if(z.activeSceneSource267!=='premium'||!Number.isInteger(q.scene))return p;
-  const strip=['AUTHORITATIVE V2.9.0 SCENE LOCK','ACTIVE PREMIUM SCENE','PREMIUM SCENE FALLBACK','FINAL ACTIVE MASTER CONFLICT RESOLUTION'];
-  for(const label of strip){
-   const start=p.indexOf('=== '+label+' ===');
-   if(start<0)continue;
-   const next=p.indexOf('\n\n===',start+8);
-   p=p.slice(0,start)+(next<0?'':p.slice(next));
-  }
-  const loc=m.heightOn&&m.height&&m.height!=='Keine erhoehte Position'?m.height+(m.marketOn&&m.market?' · '+m.market:''):q.location||'';
-  const poster=m.mediaOn&&m.media&&m.media!=='Bestehendes XXL-Plakat'?m.media:q.poster||'';
-  const prop=m.propOn&&m.prop?m.prop:q.prop||'';
-  const pose=z.manualSignPose284?'Use the selected manual sign pose':m.poseOn&&m.pose?m.pose:q.position||'';
-  const crowd=cast.audience&&cast.audience!=='Automatisch'?cast.audience:q.audience||'';
-  const person=cast.person&&cast.person!=='Automatisch'?cast.person:'As selected in the premium scene';
-  const none=crowd==='Keine'||crowd.indexOf('Keine weiteren')===0;
-  const only=person==='Alleine'||person==='Hauptfigur ohne Begleitfigur';
-  const parts=[
-   '=== V3.4.3 FINAL PREMIUM SCENE CONTRACT — HIGHEST PRIORITY ===',
-   'Exactly one coherent documentary photograph. This block overrides incompatible earlier scene instructions.',
-   'SELECTED SCENE: '+(q.title||'Premium scene'),
-   'ONLY VENUE: '+loc,
-   'MESSAGE CARRIER: '+poster,
-   'PROP: '+prop,
-   'RUNNER BODY POSE: '+pose,
-   'FEATURED PEOPLE: '+(only?'Runner only, no companion characters':person),
-   'ADDITIONAL AUDIENCE: '+(none?'No spectators, no crowd, no background people':crowd),
-   'AUDIENCE REACTION: '+(none?'None':q.reaction||'Natural'),
-   'CAMERA: '+(z.manualCamera267?'Respect manual camera':m.cameraOn&&m.camera?m.camera:'Respect the selected camera'),
-   'No additional people if the audience is set to none. Companion figures, if chosen, are distinct from spectators.',
-   'Use physically safe, plausible supports and coherent mounting. Preserve exact lettering, word colors, outfit, face, cap and shoe reference.',
-   'Ignore incompatible earlier location, crowd, cast, pose, poster or venue descriptions.',
-   '=== END FINAL PREMIUM SCENE CONTRACT ==='
-  ];
-  return p+'\n\n'+parts.join('\n');
- };
-})();
-</script><script>
 /* V3.6.1: requested empty Smart Director / Premium tab. */
 (function(){
  const previous=render;
@@ -728,7 +642,7 @@ const groups={
 place:['Automatisch','Stadt & Straße','Gebäude & Außenbereich','Balkone & Terrassen','Fassaden & Gebäude','Öffentliche Außenbereiche','Einkaufen','Verkehr','Park & Freizeit','Gastronomie','Events','Besondere Kulissen','Baustellen & Industrie','Sport & Events'],
 location:['Automatisch'],
 ambience:['Automatisch','Ruhig','Belebt','Sehr belebt'],
-carrier:['Automatisch','Plakat','Banner','Beachflag','Holzschild','Spezialträger','XXL-Werbetafel','Bauzaunbanner','Schaufensterbeschriftung','Wandbeschriftung','Rolltorbeschriftung','LED-Werbefläche','Digitale Anzeigetafel','Leuchtkasten','Leuchtschrift','Lichtprojektion','Kreidetafel','Bodenbeschriftung','Buchstabeninstallation','Fahrzeugbeschriftung','Werbeanhänger'],
+carrier:['Automatisch','Keine','Banner','Beachflag','Holzschild','Spezialträger','XXL-Werbetafel','Bauzaunbanner','Schaufensterbeschriftung','Wandbeschriftung','Rolltorbeschriftung','LED-Werbefläche','Digitale Anzeigetafel','Leuchtkasten','Leuchtschrift','Lichtprojektion','Kreidetafel','Bodenbeschriftung','Buchstabeninstallation','Fahrzeugbeschriftung','Werbeanhänger'],
 format:['Automatisch','Hochformat','Querformat','XXL-Quer','XXL-Hoch'],
 pose:['Automatisch','Stehen','Sitzen','Rückwärts sitzen','Lehnen','Bewegung','Gestikulieren','Interaktion'],
 prop:['Automatisch','Keine','Stuhl','Fahrrad','Einkaufswagen','Altes Holz'],
@@ -880,7 +794,7 @@ function effective390(n){
  const x={...c,...overrides};if(p.frame&&p.frame!=='Automatisch'&&!Object.prototype.hasOwnProperty.call(overrides,'frame'))x.frame=p.frame;if(p.camera&&p.camera!=='Automatisch'&&!Object.prototype.hasOwnProperty.call(overrides,'cam'))x.cam=p.camera;if(p.location&&p.location!=='Automatisch'&&!Object.prototype.hasOwnProperty.call(overrides,'place')){x.loc=p.location;x.place=c.place}if(p.crowd316&&p.crowd316!=='Automatisch')x.audience=p.crowd316==='Keine'?'Keine':p.crowd316+' Personen';x.crowdLayout316=p.crowdLayout316||'Natürlich verteilt';x.display316=p.display316||'BLACK SIGN';
  if(x.cast==='Alleine'&&x.action==='Mit Begleitperson sprechen')x.action='Auf Botschaft zeigen';
  if((x.pose==='Sitzen'||x.pose==='Rückwärts sitzen')&&(!x.seat||x.seat==='Keine'))x.seat='Stuhl';
- // V3.13.2: Plakat & Text is the sole authority for the physical sign.
+ // V3.13.2: Runner scene controls are authoritative.
  // Smart Director supplies the scene, never a competing sign or mount.
  const original=state.sign||{};
  x.carrier='Keine';
@@ -903,7 +817,7 @@ function editor390(n){
 function syncActive390(n){
  if(p.selected!==n)return;
  const c=effective390(n);state.sign258=state.sign258||{};const q=state.sign258.premium270=state.sign258.premium270||{};
- q.title=c.title;q.display316=c.display316;q.crowdLayout316=c.crowdLayout316;q.area311=c.area;q.seat311=c.seat;q.cameraHeight311=c.cameraHeight311;q.location=c.place;q.poster=c.carrier+' · '+c.format;q.holding=c.hold;q.position=c.pose;q.prop=c.prop;q.cast=c.cast;q.companion=c.cast;q.audience=c.audience;q.expression=c.action;q.reaction=c.action;q.camera=c.cam;q.frame=c.frame;q.positionOnBalcony=c.position;q.manualScene390=entry390(n).enabled||!!Object.keys(entry390(n).confirmed393||{}).length;
+ q.title=c.title;q.display316=c.display316;q.crowdLayout316=c.crowdLayout316;q.area311=c.area;q.seat311=c.seat;q.cameraHeight311=c.cameraHeight311;q.location=c.place;q.sceneObject=c.carrier+' · '+c.format;q.holding=c.hold;q.position=c.pose;q.prop=c.prop;q.cast=c.cast;q.companion=c.cast;q.audience=c.audience;q.expression=c.action;q.reaction=c.action;q.camera=c.cam;q.frame=c.frame;q.positionOnBalcony=c.position;q.manualScene390=entry390(n).enabled||!!Object.keys(entry390(n).confirmed393||{}).length;
  state.sign258.activeSceneSource267='premium';
  try{save()}catch(e){}
 }
@@ -911,7 +825,7 @@ window.stravaDisplay316=function(){return {type:p.display316||'BLACK SIGN',camer
 window.stravaEffectiveScene390=function(){if(p.selected<0)return null;return {id:sceneKey390(p.selected),original:scene(p.selected),effective:effective390(p.selected),manual:entry390(p.selected).enabled||!!Object.keys(entry390(p.selected).confirmed393||{}).length};};
 function explainScene381(c,n){
  const audience={'Keine':'Keine gezielt versammelten Zuschauer.','Klein (3–8)':'3 bis 8 deutlich sichtbare Zuschauer.','Mittel (10–25)':'10 bis 25 Zuschauer, sichtbar im Bild verteilt.','Groß (30–60)':'30 bis 60 sichtbare Zuschauer als größere Gruppe.','XXL (60–100)':'60 bis 100 sichtbare Zuschauer; eine große Menschenmenge, nicht nur einzelne Passanten.'};
- const carriers={'Plakat':'Starre bedruckte Werbefläche mit glaubwürdiger Halterung.','Banner':'Flexibles bedrucktes Banner, je nach Haltung befestigt oder gespannt.','Beachflag':'Stofffahne an gebogenem Mast mit eigenem Standfuß.','Fahne':'Beweglicher Stoff an geeigneter Stange oder Halterung.','Holzschild':'Massives Schild mit sichtbarer Holzstruktur und realistischem Gewicht.','Spezialträger':'Besonders großer Träger, dessen Befestigung zur ausgewählten Haltung passen muss.'};
+ const carriers={'Keine':'Starre bedruckte Werbefläche mit glaubwürdiger Halterung.','Banner':'Flexibles bedrucktes Banner, je nach Haltung befestigt oder gespannt.','Beachflag':'Stofffahne an gebogenem Mast mit eigenem Standfuß.','Fahne':'Beweglicher Stoff an geeigneter Stange oder Halterung.','Holzschild':'Massives Schild mit sichtbarer Holzstruktur und realistischem Gewicht.','Spezialträger':'Besonders großer Träger, dessen Befestigung zur ausgewählten Haltung passen muss.'};
  const holds={'Am Geländer befestigt':'Fest am Geländer montiert; keine freistehende Beachflag.','Über Kopf · beide Arme':'Beide Arme halten den Träger über dem Kopf; Hände und Handgelenke sichtbar.','Vor Körper · beide Hände':'Beide Hände halten den Träger vor dem Körper; realistische Griffpunkte.','Seitlich':'Werbefläche seitlich neben der Figur, mit physikalisch sinnvoller Halterung.'};
  const poses={'Stehen':'Hauptfigur steht mit natürlicher Gewichtsverteilung.','Sitzen':'Hauptfigur sitzt auf einer passenden Sitzfläche.','Rückwärts sitzen':'Hauptfigur sitzt verkehrt herum; Unterarme versetzt auf der Stuhllehne, beide Hände sichtbar.','Lehnen':'Hauptfigur lehnt sich mit glaubwürdigen Kontaktpunkten an.','Bewegung':'Natürliche Bewegung ohne anatomische Verzerrung.','Gestikulieren':'Sichtbare, anatomisch korrekte Handbewegung.','Interaktion':'Hauptfigur reagiert erkennbar auf andere Personen oder Gegenstände.'};
  const cams={'Frontal':'Kamera blickt gerade auf das Hauptmotiv.','Seitlich':'Seitlicher Kamerastandpunkt; das Hauptmotiv bleibt sichtbar.','Untersicht':'Kamera blickt leicht von unten.','Weitwinkel':'Weites Blickfeld mit viel Umgebung.','Dokumentarisch':'Uninszenierte, realistische Fotoperspektive.'};
@@ -1001,7 +915,7 @@ const bakery=root.querySelector('[data-ps-bakery]');if(bakery)bakery.onchange=()
 root.querySelectorAll('[data-ps-pencil393]').forEach(el=>el.onclick=()=>{const n=+el.dataset.psPencil393,k=el.dataset.key393,id=sceneKey390(n)+'/'+k;editing393[id]=!editing393[id];const y=scrollY;draw();scrollTo(0,y);if(editing393[id])root.querySelector('[data-ps-input393="'+n+'"][data-key393="'+k+'"]')?.focus({preventScroll:true});});
 root.querySelectorAll('[data-ps-check393]').forEach(el=>el.onclick=()=>{const n=+el.dataset.psCheck393,k=el.dataset.key393,id=sceneKey390(n)+'/'+k,input=root.querySelector('[data-ps-input393="'+n+'"][data-key393="'+k+'"]');if(!input?.value.trim()){if(input)input.style.borderColor='red';return;}const e=entry390(n);e.confirmed393=e.confirmed393||{};e.confirmed393[k]=input.value.trim();if(e.values)delete e.values[k];syncActive390(n);persist();delete editing393[id];const y=scrollY;draw();scrollTo(0,y);});
 root.querySelectorAll('[data-ps-x393]').forEach(el=>el.onclick=()=>{const n=+el.dataset.psX393,k=el.dataset.key393,e=entry390(n);if(e.confirmed393)delete e.confirmed393[k];if(e.values)delete e.values[k];delete editing393[sceneKey390(n)+'/'+k];syncActive390(n);persist();const y=scrollY;draw();scrollTo(0,y);});
-root.querySelectorAll('[data-ps-scene]').forEach(b=>b.onclick=()=>{p.selected=Number(b.dataset.psScene);const c=effective390(p.selected);p.last='Premium '+String(p.selected+1+p.round*10).padStart(3,'0')+' übernommen';state.sign258=state.sign258||{};const q=state.sign258.premium270=state.sign258.premium270||{};q.scene=null;q.area311=c.area;q.seat311=c.seat;q.cameraHeight311=c.cameraHeight311;q.title=c.title;q.location=c.place;q.poster=c.carrier+' · '+c.format;q.prop=c.prop;q.holding=c.hold;q.position=c.pose;q.expression=c.action;q.audience=c.audience;q.reaction=c.action;q.camera=c.cam;q.frame=c.frame;q.ambience=c.ambience;q.cast=c.cast;q.companion=c.companion;q.positionOnBalcony=c.position;q.description='SELECTED PREMIUM STUDIO SCENE: '+c.title+'. LOCATION: '+c.place+'. PROP: '+c.prop+'. POSTER: '+q.poster+'. HOLDING: '+c.hold+'. RUNNER POSE: '+c.pose+'. COMPANIONS: '+c.companion+'. AUDIENCE: '+c.audience+'. CAMERA: '+c.cam+', '+c.frame+'. BALCONY POSITION: '+c.position+'.';state.sign258.activeSceneSource267='premium';syncActive390(p.selected);syncCamera354();persist();draw()});
+root.querySelectorAll('[data-ps-scene]').forEach(b=>b.onclick=()=>{p.selected=Number(b.dataset.psScene);const c=effective390(p.selected);p.last='Premium '+String(p.selected+1+p.round*10).padStart(3,'0')+' übernommen';state.sign258=state.sign258||{};const q=state.sign258.premium270=state.sign258.premium270||{};q.scene=null;q.area311=c.area;q.seat311=c.seat;q.cameraHeight311=c.cameraHeight311;q.title=c.title;q.location=c.place;q.sceneObject=c.carrier+' · '+c.format;q.prop=c.prop;q.holding=c.hold;q.position=c.pose;q.expression=c.action;q.audience=c.audience;q.reaction=c.action;q.camera=c.cam;q.frame=c.frame;q.ambience=c.ambience;q.cast=c.cast;q.companion=c.companion;q.positionOnBalcony=c.position;q.description='SELECTED PREMIUM STUDIO SCENE: '+c.title+'. LOCATION: '+c.place+'. PROP: '+c.prop+'. SCENE OBJECT: '+q.sceneObject+'. HOLDING: '+c.hold+'. RUNNER POSE: '+c.pose+'. COMPANIONS: '+c.companion+'. AUDIENCE: '+c.audience+'. CAMERA: '+c.cam+', '+c.frame+'. BALCONY POSITION: '+c.position+'.';state.sign258.activeSceneSource267='premium';syncActive390(p.selected);syncCamera354();persist();draw()});
 root.querySelector('[data-ps-next]').onclick=()=>{p.round++;p.selected=-1;p.last='10 weitere Empfehlungen';persist();draw()};
 root.querySelector('[data-ps-reset]').onclick=()=>{if(!confirm('Nur Premium-Filter zurücksetzen?'))return;p={...defaults,manualCamera:p.manualCamera,manualLens:p.manualLens,manualDistance:p.manualDistance,manualFormat:p.manualFormat,sceneFormat:p.sceneFormat,cameraMemory354:true};syncCamera354();persist();draw()};
 }
@@ -1236,9 +1150,9 @@ function archiveBind413(){gallery413();let file=document.getElementById('a413fil
 })();
 </script>
 <script>
-/* V3.19: BLACK SIGN poster retired. Keep legacy saved data untouched for rollback. */
+/* V3.19: BLACK SIGN sceneObject retired. Keep legacy saved data untouched for rollback. */
 (function(){
- // Poster tabs are removed from the primary tabs() definition.
+ // SceneObject tabs are removed from the primary tabs() definition.
  const retiredTabs=new Set([]);
  if(retiredTabs.has(state.tab)){state.tab='Hauptfigur';save();}
  const originalRender=render;
@@ -1279,14 +1193,14 @@ function archiveBind413(){gallery413();let file=document.getElementById('a413fil
    'Action: '+value(e.action||'Naturally observing')+'. Keep people and faces photorealistic.',
    '',
    '05 / ABSOLUTE EXCLUSION',
-   'NO poster, NO sign, NO placard, NO banner, NO wall writing, NO LED advertising screen, NO printed message, NO handheld board, NO typographic installation. Remove all former BLACK SIGN equipment from the composition.',
+   'NO sceneObject, NO sign, NO placard, NO banner, NO wall writing, NO LED advertising screen, NO printed message, NO handheld board, NO typographic installation. Remove all former BLACK SIGN equipment from the composition.',
    'Do not introduce any text or physical sign from old presets, saved settings, scene recommendations or archived prompts.',
    'No flags, religious symbols or identifiable commercial advertising.',
    'Photograph the runner and selected people in a physically coherent real environment.'
   ];
   return lines.join('\n');
  };
- window.stravaPosterRemoved319=true;
+ window.stravaSceneObjectRemoved319=true;
 })();
 </script>
 
