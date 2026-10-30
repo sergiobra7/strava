@@ -14,31 +14,7 @@
 #premiumPanel270 > #premiumCards270{display:block!important}
 #premiumPanel270 > #refreshPremium270{display:block!important;margin:14px 0}
 #premiumPanel270 #allSettings339,#premiumPanel270 #master320,#premiumPanel270 #premiumEditor270,#premiumPanel270 #premiumCast311,#premiumPanel270 #manualRegie328,#premiumPanel270 #premiumActiveFilters340{display:none!important}
-</style><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Anton&family=Archivo+Black&family=Barlow+Condensed:wght@900&family=Bebas+Neue&family=Oswald:wght@700&family=Roboto+Condensed:wght@900&family=Teko:wght@700&display=swap" rel="stylesheet"></head><body><header><div><h1>STRAVA RUN <span class="mark">V3.20.0</span></h1><small>RUNNER PHOTO + STRAVA WALL · GITHUB EDITION</small><div id="onlineBuild414" style="font-size:12px;color:#a8c6b8;margin-top:5px;font-weight:700" aria-label="Online-Version">ONLINE · V3.20.0 · Commit wird geprüft …</div></div><div style="display:flex;align-items:center;gap:9px;flex-wrap:wrap;justify-content:flex-end"><span id="saveStatus" class="status">Lokal gespeichert</span><button id="stravaRefresh401" type="button" title="Neueste GitHub-Version laden" style="background:#2cbd79;color:#101510;border:0;border-radius:9px;padding:10px 13px;font-weight:800;cursor:pointer">🔄 Aktualisieren</button></div></header><main><div class="worlds"><button class="world active" data-world="wall">🧱 STRAVA WALL</button><button class="world" data-world="sign">⬛ BLACK SIGN / PLAKAT</button></div><div style="display:flex;align-items:center;justify-content:space-between;gap:10px;margin:9px 0"><button id="presetShortcut403" type="button" style="background:#f2bd49;color:#151515;border:2px solid #f8d57b;border-radius:10px;padding:12px 16px;font-size:15px;font-weight:900;cursor:pointer;flex:1">⭐ MEINE PRESETS · GALERIE ÖFFNEN</button></div><section id="presetDirect404" hidden style="margin:14px 0;padding:14px;border:2px solid #f2bd49;border-radius:14px;background:#151a21"></section><nav class="tabs" id="tabs"></nav><div id="view"></div><div class="footer">Lokale Offline-Web-App · Keine Bilder werden an einen Server gesendet · Prompt zum Kopieren für ChatGPT/Bildgenerierung</div></main><script>
-/* V3.18 stabilization: one color serializer shared by prompt sections. */
-window.stravaSignColorMap318=function(sign){
- const source=sign||{},raw=String(source.signText||''),colors=source.wordColors||{};
- const tokens=raw.split(/(\s+)/),rows=[''],words=[];
- let count=0;
- tokens.forEach((token,index)=>{
-  if(!token)return;
-  if(/^\s+$/.test(token)){
-   for(const char of token)if(char==='\n')rows.push('');
-  }else{
-   const color=String(colors[index]||'#FFFFFF').toUpperCase();
-   const entry='['+(++count)+'|'+token+'|'+color+']';
-   rows[rows.length-1]+=(rows[rows.length-1]?' ':'')+entry;
-   words.push({index,word:token,color});
-  }
- });
- return {lines:rows.map((line,i)=>'LINE '+(i+1)+': '+(line||'[EMPTY]')).join('\n'),words};
-};
-window.stravaColorAudit318=function(sign){
- const data=window.stravaSignColorMap318(sign);
- const invalid=data.words.filter(x=>!/^#[0-9A-F]{6}$/.test(x.color));
- return {pass:invalid.length===0,wordCount:data.words.length,lineCount:data.lines.split('\n').length,invalid};
-};
-</script>
+</style><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Anton&family=Archivo+Black&family=Barlow+Condensed:wght@900&family=Bebas+Neue&family=Oswald:wght@700&family=Roboto+Condensed:wght@900&family=Teko:wght@700&display=swap" rel="stylesheet"></head><body><header><div><h1>STRAVA RUN <span class="mark">V3.21.0</span></h1><small>RUNNER PHOTO + STRAVA WALL · GITHUB EDITION</small><div id="onlineBuild414" style="font-size:12px;color:#a8c6b8;margin-top:5px;font-weight:700" aria-label="Online-Version">ONLINE · V3.21.0 · Commit wird geprüft …</div></div><div style="display:flex;align-items:center;gap:9px;flex-wrap:wrap;justify-content:flex-end"><span id="saveStatus" class="status">Lokal gespeichert</span><button id="stravaRefresh401" type="button" title="Neueste GitHub-Version laden" style="background:#2cbd79;color:#101510;border:0;border-radius:9px;padding:10px 13px;font-weight:800;cursor:pointer">🔄 Aktualisieren</button></div></header><main><div class="worlds"><button class="world active" data-world="wall">🧱 STRAVA WALL</button><button class="world" data-world="sign">⬛ BLACK SIGN / PLAKAT</button></div><div style="display:flex;align-items:center;justify-content:space-between;gap:10px;margin:9px 0"><button id="presetShortcut403" type="button" style="background:#f2bd49;color:#151515;border:2px solid #f8d57b;border-radius:10px;padding:12px 16px;font-size:15px;font-weight:900;cursor:pointer;flex:1">⭐ MEINE PRESETS · GALERIE ÖFFNEN</button></div><section id="presetDirect404" hidden style="margin:14px 0;padding:14px;border:2px solid #f2bd49;border-radius:14px;background:#151a21"></section><nav class="tabs" id="tabs"></nav><div id="view"></div><div class="footer">Lokale Offline-Web-App · Keine Bilder werden an einen Server gesendet · Prompt zum Kopieren für ChatGPT/Bildgenerierung</div></main>
 <script>
 'use strict';
 const poses=['STAIR CHILL PRO — auf vorhandener Treppe, Unterarme locker auf Knien, natürliche Sitzhaltung','WALL LEAN PRO — Schulter an vorhandener Wand, Arme verschränkt, Beine locker gekreuzt','REVERSE CHAIR PRO — rückwärts auf vorhandenem Stuhl, getrennte Unterarme auf Lehne','An STRAVA-Wand angelehnt, Schulterkontakt, Arme verschränkt, Beine gekreuzt','Rückwärts auf Holzstuhl, Unterarme getrennt auf Lehne','Auf Treppe sitzend, entspannt','Auf Bank sitzend, Beine locker nach vorne','Auf niedriger Mauer sitzend','Selbstbewusst stehend, Hände an Hüften','Ein Fuß auf Treppenstufe, offene Hand zur Wand','Gehend, spontaner Blick zur Statistik','Seitlich stehend, eine Hand in Tasche','An Geländer gelehnt','Auf umgedrehtem Stuhl, seitlicher Blick','Auf Holzstuhl vor der Wand, Oberkörper vorgebeugt','Auf Kante sitzend, Arme locker','Nach dem Lauf, Hände auf Oberschenkeln','Sportflasche in einer Hand, entspannt','Beide Arme locker seitlich, Blick zur Kamera','Auf Treppe mit Kollege diskutierend','Auf Bank zurückgelehnt, Beine ausgestreckt','Neben Wand hockend, ohne verdeckte Schuhe','Mit offenen Händen erklärend','Mit Kollege Schulter an Schulter','Im Schritt stehen geblieben','Seitlich zur Wand, Kopf zur ersten Statistikzeile','Sitzend, Ellbogen auf getrennten Knien','Auf Stuhl sitzend, Beine überschlagen','An Pfosten locker angelehnt (nur wenn vorhanden)','Mit verschränkten Armen, frontaler Blick','Locker an Wand, eine Hand an Hüfte','Auf Bordsteinkante sitzend (wenn vorhanden)','Mit einer Hand auf Stuhllehne','Leicht nach vorn gebeugt, erstaunt','Stehend, provokant grinsend','Auf Bank mit Opa, Gespräch','Auf Stufe sitzend, Kollege daneben','Ruhig sitzend, Hände ineinander','Lässiger Schritt von der Wand weg','Leicht zur Wand gedreht, Kopf zur Kamera','Nach dem Lauf auf Stuhl ausruhend','Locker mit Rücken zur Wand, Kopf seitlich','Offene Hand zur Statistik, andere am Körper','Auf Stuhl quer sitzend','An Treppenwange angelehnt (wenn vorhanden)','Auf Mauer, beide Füße am Boden','Mit Sportflasche an Bank','Kollege etwas erklärend','Opa aufmerksam zuhörend','Sitzend, provokanter Blick','Stehend, breiter sicherer Stand','Lässig neben Wand, Hände in Jackentaschen','An Wand, Kopf leicht zum Opa','Individuelle Pose (Textfeld)'];
@@ -1054,7 +1030,7 @@ function explainScene381(c,n){
  }).join('')+'<div style="font-size:12px;color:#aebccc;margin-top:10px">🔭 '+esc(opticalNow.lens)+' mm · 📏 '+esc(opticalNow.distance)+' m · 🖼️ '+esc(opticalNow.format)+' (Kameraeinstellungen)</div></div>';
 }
 const cardsHtml=cards.map((original,n)=>{const c=effective390(n),selected=p.selected===n,a=mountingAudit417(c);return '<div class="ps-card '+(selected?'on':'')+'" style="text-align:left;padding:12px;margin:9px 0"><button type="button" data-ps-scene="'+n+'" style="display:block;width:100%;border:0;background:transparent;color:inherit;text-align:left;padding:0;cursor:pointer"><strong>PREMIUM '+String(n+1+p.round*10).padStart(3,'0')+' · '+esc(c.title)+'</strong><small style="display:block;line-height:1.55;margin-top:7px">🪧 Anzeige: '+esc(c.display316)+'<br>📍 Ort: '+esc(c.place)+'<br>🏪 Bereich: '+esc(c.area)+'<br>🪑 Sitzfläche: '+esc(c.seat)+'<br>🔩 Befestigung: '+esc(mounting416())+'<br>🧍 Pose: '+esc(c.pose)+'<br>🪑 Requisite: '+esc(c.prop)+'<br>👴 Figuren: '+esc(c.companion)+'<br>👥 Publikum: '+esc(c.audience)+' · '+esc(c.crowdLayout316)+'<br>🎭 Aktion: '+esc(c.action)+'<br>📷 Kamera: '+esc(c.cam)+' · '+esc(c.frame)+' · Höhe '+esc(c.cameraHeight311)+' m<br>🔭 Brennweite: '+esc(optical(n).lens)+' mm · Entfernung: '+esc(optical(n).distance)+' m<br>🖼️ Bildformat: '+esc(optical(n).format)+(c.loc.includes('Balkon')?'<br>🏠 Balkonposition: '+esc(c.position):'')+'</small><div style="margin-top:8px;font-weight:800;color:#ff8753">'+(selected?'✓ AUSGEWÄHLT':'✓ SZENE ÜBERNEHMEN')+'</div></button>'+editor390(n)+(a.problems.length?'<div style="margin-top:7px;font-size:12px;color:#ffb99c">⚠ '+a.problems.map(esc).join(' · ')+'</div>':'')+explainScene381(c,n)+'</div>'}).join('');
-root.innerHTML='<div id="ps350"><div class="ps-title">🎬 PREMIUM STUDIO · V3.20.0</div><div class="ps-panel"><div class="ps-title">🎛️ EINE FILTERÜBERSICHT · DIREKT ANKLICKBAR</div>'+tiles+(p.opened?'<div style="margin-top:12px">'+body+'</div>':'')+'</div>'+summary+quickActions361+'<div id="psPremiumRecommendations391" class="ps-title">🎲 10 PREMIUM-EMPFEHLUNGEN</div>'+cardsHtml+'<button class="ps-action" data-ps-next>🔄 10 WEITERE EMPFEHLUNGEN</button><button class="ps-action" style="background:#303845;border:1px solid #677181" data-ps-reset>↺ PREMIUM-FILTER ZURÜCKSETZEN</button></div>';
+root.innerHTML='<div id="ps350"><div class="ps-title">🎬 PREMIUM STUDIO · V3.21.0</div><div class="ps-panel"><div class="ps-title">🎛️ EINE FILTERÜBERSICHT · DIREKT ANKLICKBAR</div>'+tiles+(p.opened?'<div style="margin-top:12px">'+body+'</div>':'')+'</div>'+summary+quickActions361+'<div id="psPremiumRecommendations391" class="ps-title">🎲 10 PREMIUM-EMPFEHLUNGEN</div>'+cardsHtml+'<button class="ps-action" data-ps-next>🔄 10 WEITERE EMPFEHLUNGEN</button><button class="ps-action" style="background:#303845;border:1px solid #677181" data-ps-reset>↺ PREMIUM-FILTER ZURÜCKSETZEN</button></div>';
 root.querySelectorAll('[data-ps-manual390]').forEach(el=>el.onchange=()=>{const n=Number(el.dataset.psManual390),e=entry390(n);e.enabled=el.checked;e.values=e.values||{};persist();draw()});
 root.querySelectorAll('[data-ps-reset390]').forEach(el=>el.onclick=()=>{const n=Number(el.dataset.psReset390);p.sceneEdits390=p.sceneEdits390||{};delete p.sceneEdits390[sceneKey390(n)];if(p.selected===n)syncActive390(n);persist();draw()});
 root.querySelectorAll('[data-ps-edit390]').forEach(el=>{const update=()=>{const n=Number(el.dataset.psEdit390),key=el.dataset.psEditKey390,e=entry390(n);e.values=e.values||{};e.enabled=true;const v=el.value.trim();if(v)e.values[key]=v;else delete e.values[key];if(p.selected===n)syncActive390(n);persist();const live=root.querySelector('[data-ps-live390="'+n+'"]');if(live){const c=effective390(n);live.textContent='Wirksam: '+c.place+' · '+c.pose+' · '+c.audience+' · '+c.action}};el.addEventListener('input',update);el.addEventListener('change',update)});
@@ -1278,283 +1254,8 @@ try{render()}catch(e){console.warn('Premium Studio initial render',e)}
  render=function(){old();syncStudio();requestAnimationFrame(syncStudio);};
  syncStudio();
 })();
-</script><script>
-/* V3.6.2 — centralized non-destructive final prompt consistency layer. */
-(function(){
- 'use strict';
- const previous=buildPrompt;
- function stripBlock(s,label){
-   const start='=== '+label+' ===',a=s.indexOf(start);
-   if(a<0)return s;
-   const end=s.indexOf('\n\n===',a+start.length);
-   return s.slice(0,a)+(end<0?'':s.slice(end));
- }
- buildPrompt=function(){
-   let out=previous();
-   if(state.world!=='sign')return out;
-   const z=state.sign258||{},m=z.master320||{};
-   // Remove superseded explanatory sections, not identity, footwear, outfit or text locks.
-   for(const label of ['USER PRIORITIES','RESOLVED USER PRIORITIES','PREMIUM SCENE FALLBACK','FINAL ACTIVE MASTER CONFLICT RESOLUTION']){
-     out=stripBlock(out,label);
-   }
-   out=out.replace(/no pointing index fingers\.?/gi,'No arbitrary pointing gestures.');
-   // Remove superseded generic scene contracts; active selections are resolved below.
-   for(const label of ['V3.2.0 MASTER PRESENTATION DIRECTOR — FINAL SCENE PRIORITY','V3.4.3 FINAL PREMIUM SCENE CONTRACT — HIGHEST PRIORITY']){
-     out=stripBlock(out,label);
-   }
-   // Remove repeated end-stage copies of the same source text and outdated presentation metadata.
-   const oldHeaders=['V3.1.0 AUTHORITATIVE CAST AND BACKGROUND OVERRIDE','V3.2.0 MASTER PRESENTATION DIRECTOR — FINAL SCENE PRIORITY'];
-   for(const heading of oldHeaders)out=stripBlock(out,heading);
-   // The chosen premium scene is informative, but its raw JSON may contain
-   // unselected fallback locations/poses. Keep only its active nonconflicting summary.
-   const premiumStart=out.indexOf('=== PREMIUM STUDIO V3.6.1 · AUSGEWÄHLTE SZENE ===');
-   if(premiumStart>=0){
-     const premiumEnd=out.indexOf('\\n\\n===',premiumStart+8);
-     out=out.slice(0,premiumStart)+(premiumEnd<0?'':out.slice(premiumEnd));
-   }
-   // Inactive venue-specific scene instructions are superseded by the active master location.
-   if(m.heightOn&&m.height&&m.height!=='Keine erhoehte Position'){
-     out=out.replace(/^ANONYMOUS GERMAN GROCERY STORE BACKGROUND:.*$/gm,'');
-   }
-   // Remove redundant inherited final resolution blocks when present.
-   out=out.replace(/\\n{3,}/g,'\\n\\n');
-   // Old venue labels in inactive scenes are explicitly non-authoritative.
-   const manualPlace=m.heightOn&&m.height&&m.height!=='Keine erhoehte Position'?m.height:null;
-   const carrier=m.mediaOn&&m.media&&m.media!=='Bestehendes XXL-Plakat'?m.media:null;
-   const bodyPose=m.poseOn&&!z.manualSignPose284?m.pose:null;
-   const currentFont=(()=>{try{const p=JSON.parse(localStorage.getItem('strava-premium-studio-350')||'{}');return p.posterFont||'Anton'}catch(e){return 'Anton'}})();
-   // Eliminate contradictory legacy DIN-only instructions when a live font choice exists.
-   out=out.replace(/Font:\s*DIN Condensed Bold\./gi,'Font: '+currentFont+'.');
-   // Build a lossless, position-based color contract from the same token indices as the UI.
-   const sign=state.sign||{},tokens=String(sign.signText||'').split(/(\s+)/);
-   const colors=sign.wordColors||{};
-   const rows=[[]];let wordNumber=0,redCount=0,invalid=0;
-   tokens.forEach((token,i)=>{
-     if(!token)return;
-     if(/^\s+$/.test(token)){
-       for(const part of token.split(/(\n)/)){
-         if(part==='\n')rows.push([]);
-       }
-       return;
-     }
-     const raw=String(colors[i]||'#ffffff');
-     const valid=/^#[0-9a-f]{6}$/i.test(raw);
-     if(!valid)invalid++;
-     const color=valid?raw.toUpperCase():'#FFFFFF';
-     if(color!=='#FFFFFF')redCount++;
-     wordNumber++;
-     rows[rows.length-1].push({word:token,color:color,position:wordNumber,tokenIndex:i});
-   });
-   const colorLegend=rows.map((row,i)=>{
-     if(!row.length)return 'LINE '+(i+1)+': [EMPTY LINE]';
-     return 'LINE '+(i+1)+': '+row.map(w=>'['+w.position+'|'+w.word+'|'+w.color+']').join(' ');
-   });
-   const wordColorContract=[
-     '=== V3.6.5 EXACT SIGN TEXT AND WORD-COLOR MAP — NON-NEGOTIABLE ===',
-     'Print EXACTLY the sign text already provided, preserving every line break, space, quotation mark and punctuation mark. The following color map is POSITIONAL, not a search-and-replace list. Each bracket identifies one specific word occurrence, even when words repeat.',
-     'The text color of EVERY word is explicitly specified below. #FFFFFF means pure WHITE; #FF3434 means bright RED. For any other hexadecimal color, reproduce that exact color. NEVER default a colored word to white. Never recolor adjacent words.',
-     'READ THE FULL MAP before generating the photograph. The map applies to the printed lettering on the actual physical sign, not to a caption or a separate overlay.',
-     'WORD COLOR MAP ('+wordNumber+' words, '+redCount+' nonwhite, '+rows.length+' lines):',
-     ...colorLegend,
-     invalid?'WARNING: '+invalid+' invalid color value(s) were safely interpreted as white.':'COLOR VALIDATION: all active color values are valid hexadecimal colors.',
-     'FINAL CHECK: verify the text line by line against this map; every red/nonwhite word MUST remain nonwhite and every white word MUST remain white. Do not omit, substitute or shift word colors.',
-     '=== END V3.6.5 WORD-COLOR MAP ==='
-   ];
-   // Suppress stale gesture prose from inherited prompt sections without altering saved pose data.
-   // The final contract below is the single authority for whether pointing is permitted.
-   out=out.replace(/^.*(?:point(?:ing|s)? (?:at|to|toward)|zeigefinger|index finger|finger pointing|point directly|zeigt? (?:auf|zum) plakat).*$/gim,function(line){
-     if(/(?:exact sign text|word.color|poster text color)/i.test(line))return line;
-     return '[LEGACY POINTING INSTRUCTION REMOVED — follow FINAL FINGER GESTURE contract]';
-   });
-   const rules=[
-     '=== V3.6.4 CLEAN ACTIVE SCENE & GESTURE CONTRACT ===',
-     'Only currently selected controls are authoritative. Ignore older inactive premium scene names, old audience-placement presets and generic crowd venues when they contradict active controls.',
-     'ACTIVE POSTER FONT: '+currentFont+'. Use this font appearance for the printed sign lettering, while retaining all exact authored words, line breaks and selected word colors.',
-     manualPlace?'ACTIVE LOCATION (MASTER): '+manualPlace+'. Do not move the runner to a legacy market hall or parking lot.':'Use the currently active selected location; do not revive inactive location presets.',
-     carrier?'ACTIVE PHYSICAL CARRIER (MASTER): '+carrier+'. Respect realistic supports and mounting.':'Use the currently active selected physical message carrier.',
-     bodyPose?'ACTIVE RUNNER POSE (MASTER): '+bodyPose+'. Maintain anatomically plausible hands, chair and supports.':'Maintain the active selected body pose and manually chosen gaze.',
-     'FINGER GESTURE — FINAL ANATOMICAL SAFETY LOCK: Default is NO POINTING: all fingers relaxed and naturally resting on chair, thighs, railing or securely holding the selected object. A pointing index finger is permitted ONLY when the active Premium pose explicitly calls for pointing. Generic inherited pointing instructions, reaction presets and legacy figure poses DO NOT authorize pointing.',
-     'IF PREMIUM EXPLICITLY REQUESTS POINTING: the fingertip, extended index-finger axis, wrist, forearm, elbow and shoulder must form one anatomically credible 3D gesture directed to a specific, visibly printed word on the ACTUAL physical sign. The fingertip direction must intersect the printed lettering, not the camera, audience, blank wall, sky, ground, empty side space or a hypothetical off-frame sign. Keep the printed letters unobstructed.',
-     'GEOMETRY FAILSAFE: if the selected runner position, seated-backwards chair pose, sign location, hand reach, camera angle or occlusion makes this pointing alignment implausible or ambiguous, DO NOT extend the index finger; use two relaxed hands on the chair back or another stable natural hand position. Never invent a floating or disconnected pointing arm. Apply this to featured side characters too unless their active Premium pose explicitly specifies a physically valid sign-pointing gesture.',
-     'AUDIENCE: spectators selected as reacting must face the runner or the actual front of the sign, with matching head, neck and torso orientation. Some may naturally turn to companions to discuss the writing. Do not mistake incidental background passersby for the reacting audience. Manual audience settings override generic crowd templates.',
-     'PHYSICAL GEOMETRY: honor the active camera focal length and sensor-to-runner distance even if the poster text becomes difficult to resolve. Never fake closer camera geometry.',
-     'Do not add a second featured side character solely because an older generic character preset names one. Preserve explicitly enabled named side characters.',
-     '=== END V3.6.4 CLEAN CONTRACT ==='
-   ];
-   return out.trimEnd()+'\n\n'+rules.join('\n')+'\n\n'+wordColorContract.join('\n');
- };
-})();
 </script>
 <script>
-/* V3.8.0: One authoritative BLACK SIGN prompt; legacy generators remain intact for STRAVA WALL. */
-(function(){
-'use strict';
-const previousBuild=buildPrompt;
-const val=(v,d='')=>v===undefined||v===null||v===''?d:String(v);
-const active=(v)=>v!==undefined&&v!==null&&v!==''&&v!=='Automatisch';
-const clean=(v)=>val(v).replace(/\s+/g,' ').trim();
-const readPremium=()=>{try{return JSON.parse(localStorage.getItem('strava-premium-studio-350')||'{}')}catch(e){return {}}};
-function resolved(){
- const p=readPremium(),s=state.sign258||{},q=s.premium270||{},m=s.master320||{},c=state.common||{},z=state.sign||{};
- const edit=window.stravaEffectiveScene390?window.stravaEffectiveScene390():null;
- // V3.9.2: the visually selected Premium card is the source of truth.
- // Keep legacy fallback only when no selected Premium card is available.
- const selected=Number.isInteger(p.selected)&&p.selected>=0&&!!edit&&!!edit.effective;
- if(selected){const x=edit.effective;q.title=x.title;q.area311=x.area;q.seat311=x.seat;q.cameraHeight311=x.cameraHeight311;q.location=x.place;q.poster=x.carrier+' · '+x.format;q.holding=x.hold;q.position=x.pose;q.audience=x.audience;q.cast=x.cast;q.companion=x.cast;q.expression=x.action;q.camera=x.cam;q.frame=x.frame;q.prop=x.prop;q.positionOnBalcony=x.position;q.manualScene390=edit.manual;}
- const location=selected?val(q.location):m.heightOn&&active(m.height)?m.height:val(s.locationMode,'Realistic outdoor setting');
- const hold=selected?val(q.holding,'Automatic realistic support'):val(s.signMount,'Natural support');
- const carrier=selected?val(q.poster,'Black sign'):m.mediaOn&&active(m.media)?m.media:val(m.media,'Black sign');
- const audience=selected?val(q.audience,'Keine'):m.crowdOn?val(m.crowd,'Keine'):'Keine';
- const lens=val(c.cameraLens,p.manualLens||'24'),distance=val(c.personDistance,p.manualDistance||'15'),format='9:16';
- return {p,s,q,m,c,z,selected,location,hold,carrier,audience,lens,distance,format};
-}
-/* V3.9.2: deterministic, offline Premium vocabulary; retain German source for arbitrary free text. */
-function premiumEnglish392(value,kind){
- const raw=String(value==null?'':value).trim();
- const dict={
- 'Balkon 1. Stock':'first-floor balcony','Balkon 2. Stock':'second-floor balcony',
- 'Am Geländer befestigt':'securely fixed to the existing balcony railing; no freestanding base',
- 'Über Kopf · beide Arme':'held overhead with both arms and visible hands',
- 'Vor Körper · beide Hände':'held in front of the body with both hands',
- 'Seitlich':'to the side','Lehnen':'leaning naturally with realistic body support',
- 'Stehen':'standing naturally','Sitzen':'sitting naturally',
- 'Rückwärts sitzen':'sitting backwards on a chair',
- 'Rückwärts auf Stuhl, Unterarme auf Lehne':'sitting backwards on a chair with both forearms resting separately on its backrest',
- 'Sicherer Betonblock':'a safe stable concrete block','Wartebank':'a real waiting bench','Café-Stuhl':'a real café chair','Außentreppe':'real exterior steps','Tribünensitz':'a real stadium seat','LED-Werbefläche':'a real architectural LED advertising display','Digitale Anzeigetafel':'a real electronic scoreboard','Bauzaunbanner':'a printed banner securely fastened to the construction fence','Schaufensterbeschriftung':'lettering directly applied to a storefront window','Wandbeschriftung':'lettering painted directly onto an existing wall','Rolltorbeschriftung':'lettering applied directly to a real metal roller shutter','Kreidetafel':'a real chalkboard','Auf Botschaft zeigen':'pointing naturally at the message','Botschaft betrachten':'looking at the displayed message','Über Botschaft lachen':'laughing about the message','Stuhl':'a real chair','Gemischt':'a mixed group of people',
- 'Keine':'none','Dokumentarisch':'documentary viewpoint','Mittel':'medium framing',
- 'Parkbank':'a real park bench','Niedrige Mauer':'a safe low wall suitable for sitting','Supermarkt':'supermarket','Supermarkteingang':'supermarket entrance','Baustelle':'construction site','Bäckerei':'bakery','Parkhaus':'parking garage','Waschsalon':'laundromat','Stadion':'stadium','Werkstatt':'workshop','Bahnhofseingang':'railway station entrance','Tankstelle':'gas station','Einkaufszentrum':'shopping mall','Balkon':'balcony',
- 'Hauptbereich':'main area','Seitenbereich':'side area','Platzrand':'edge of the public square','Eingang':'entrance','Einkaufswagenunterstand':'shopping cart shelter','Parkplatz':'parking lot','Regalgang':'supermarket aisle','Bauzaun':'construction fence','Rohbau':'building under construction','Baustellenzufahrt':'construction site access','Außentrepppe':'exterior steps','Terrasse':'terrace','Rolltor':'roller shutter','Tribüne':'stadium grandstand','Vorplatz':'forecourt','Wartebereich':'waiting area','Schaufenster':'shopfront window','Geländer':'railing','Balkonfront':'balcony front','Sitzbereich':'seating area',
- 'An Fassade montiert':'securely mounted to the building facade','Freistehend mit sicherem Standfuß':'freestanding with a physically stable base','Fest montiert':'securely fixed in place','Direkt auf Glas':'applied directly to the glass','Direkt auf Wand':'applied directly to the wall','Direkt auf Rolltor':'applied directly to the roller shutter','Am Bauzaun befestigt':'securely fastened to the construction fence','An vorhandenen Pfosten gespannt':'tensioned between existing structural posts','Freistehend auf Staffelei':'freestanding on a stable easel','An Wand befestigt':'attached to an existing wall','Direkt auf Boden':'lettering applied directly to the ground','Direkt auf Fahrzeug':'lettering applied directly to the vehicle','Auf geeignetem Anhänger montiert':'mounted on a stable suitable trailer','Auf ebene Wand projiziert':'projected onto a flat existing wall',
- 'Mit Begleitperson sprechen':'talking naturally with a companion','Überrascht reagieren':'reacting with natural surprise','Ruhig beobachten':'observing calmly','Hero Low Angle':'low-angle cinematic wide shot','Symmetrical Wide':'symmetrical frontal wide shot','Cinematic Three-Quarter':'cinematic three-quarter angle','Foreground Depth':'cinematic depth with unobstructed foreground framing','Long Shot':'cinematic long establishing shot','Medium Full Shot':'medium full-body cinematic shot','Over-the-Shoulder':'unobstructed over-the-shoulder cinematic view','Elevated Cinematic':'slightly elevated cinematic viewpoint','Long-Lens Cinematic':'long-lens cinematic compressed perspective','Frame Within Frame':'natural architectural frame within the frame','Diagonal Depth':'cinematic diagonal depth composition','Cinematic Group Tableau':'cinematic group tableau with all faces visible',
-
- 'Spezialträger':'specialized physical sign or banner carrier',
- 'XXL-Quer':'extra-large landscape format',
- 'schaut neugierig zu':'watching curiously',
- 'Klein (3–8)':'3 to 8 spectators','Mittel (10–25)':'10 to 25 spectators',
- 'Groß (30–60)':'30 to 60 spectators','XXL (60–100)':'60 to 100 spectators'
- };
- const exact=dict[raw];if(exact)return exact;
- if(kind==='place'){
-  const balcony=raw.match(/^Balkon\\s*[·,-]\\s*(\\d+)\\.?\\s*Stock/i);
-  if(balcony)return 'balcony on floor '+balcony[1]+' (German floor numbering)';
- }
- if(kind==='audience'){
-  const m=raw.match(/(\\d+)\\s*[–-]\\s*(\\d+)/);
-  if(m)return m[1]+' to '+m[2]+' spectators';
-  const n=raw.match(/^(\\d+)\\s*(?:Personen|Zuschauer)/i);
-  if(n)return n[1]+' spectators';
- }
- if(kind==='carrier'){
-  return raw.replace(/Spezialträger/gi,'specialized physical sign carrier').replace(/XXL-Quer/gi,'extra-large landscape format').replace(/Beachflag/gi,'fabric beachflag');
- }
- return raw;
-}
-function premiumContract392(r){
- if(!r.selected)return [];
- const q=r.q,edit=window.stravaEffectiveScene390?window.stravaEffectiveScene390():null;
- const x=edit&&edit.effective?edit.effective:null;
- const pairs=[
- ['Location','place',r.location],['Specific area','area',x?x.area:q.area311],['Physical seating surface','seat',x?x.seat:q.seat311],['Camera sensor height (m)','height',x?x.cameraHeight311:q.cameraHeight311],
- ['Runner pose','pose',q.position],['Physical prop','prop',q.prop],
- ['Cast','cast',q.cast],['Audience count','audience',r.audience],
- ['Audience action','action',q.expression],['Camera viewpoint','cam',q.camera],
- ['Framing','frame',q.frame],['Balcony position','position',q.positionOnBalcony]
- ];
- return ['','02A / SELECTED PREMIUM SCENE — AUTHORITATIVE FIELD-BY-FIELD CONTRACT',
- 'Premium scene '+String(r.p.selected+1+(r.p.round||0)*10).padStart(3,'0')+'; '+(edit&&edit.manual?'MANUAL OVERRIDES ACTIVE':'ORIGINAL VALUES ACTIVE')+'.',
- ...pairs.map(([label,kind,raw])=>label+': '+premiumEnglish392(raw,kind)+' [original displayed value: '+String(raw||'—')+'].'),
- 'The English meaning of every field above is authoritative. Preserve each source value exactly in substance; do not swap in legacy location, carrier, pose, mount, cast or crowd presets. A free-text German value is authoritative even when no fixed translation exists.',
- 'Audience COUNT and audience PLACEMENT are independent. Never replace the specified count with a placement description.',
- 'SINGLE SIGN AUTHORITY: Only Plakat & Text controls the physical sign. Sign type: '+String(state.sign.signType||'')+'; placement: '+String(state.sign.signPosition||'')+'; additional mounting details: '+String(window.stravaMounting416?window.stravaMounting416():state.sign.signMountDetail||state.sign.signType||'')+'. No alternative carrier or mount from Smart Director may override these values.',
- 'Camera lens, sensor distance, image aspect ratio, exact sign text, word colors, identity photos and outfit remain controlled by their dedicated active settings.',
- 'SCENE CONSISTENCY: the display medium must match the original Plakat & Text sign type and mounting. For architectural or digital media, do not add a handheld poster. A seated person needs the specified physical seat. All faces, the complete message and required footwear must remain visible.',
- 'CAMERA CONSISTENCY: preserve selected focal length, camera distance and sensor height. If a source LOCATION PHOTO is locked, preserve its existing viewpoint.',
- 'SIDE-CHARACTER CONSISTENCY: use exactly the selected cast. Do not add named companions when the selected cast is Alleine.'];
-}
-function validate(r){
- const errors=[];
- if(!r.location)errors.push('Standort fehlt');if(r.selected&&(!r.q||!r.q.location))errors.push('Premium-Szene nicht synchronisiert');
- if(!r.carrier)errors.push('Plakatträger fehlt');
- if(!(Number(r.lens)>0&&Number(r.distance)>0))errors.push('Ungültige Kamerawerte');
- if(r.format!=='9:16')errors.push('Bildformat muss 9:16 sein');
- if(String(r.hold).includes('Geländer')&&/Beachflag/i.test(r.carrier))errors.push('Beachflag und Geländerbefestigung widersprechen sich');
- if(!val(r.z.signText).trim())errors.push('Plakattext fehlt');
- return errors;
-}
-function wordMap(z){return window.stravaSignColorMap318(state.sign||z).lines;}
-
-buildPrompt=function(){
- if(state.world!=='sign')return previousBuild();
- const r=resolved(),{c,z,s,q,p,m}=r;
- const issues=validate(r);
- const shoes='Use the separately attached SHOE PHOTO as the sole authority for the exact shoes on BOTH feet: brand, model, silhouette, colors, seams, logos, laces, midsole and outsole. Never substitute shoes from PERSON PHOTO or outfit brand.';
- const face='Use the separately attached PERSON PHOTO for exact facial identity and anatomy: face proportions, eyes, brows, nose, lips, beard, pores, age, skin texture and natural asymmetry. Preserve genuine available detail; no beautification, synthetic skin, invented pores or artificial sharpening.';
- const outfit=['Brand '+val(c.brand,'Neutral'),'collection '+val(c.collection),'top '+val(c.top),'top color '+val(c.topColorName272,c.topColor)+' '+val(c.topColorHex272,c.topColorHex),'pants '+val(c.pants)+' '+val(c.pantsColorName272,c.pantsColor)+' '+val(c.pantsColorHex272),'cap '+val(c.cap),'socks '+val(c.socks),'watch '+val(c.watch),'top logo '+(c.topLogoVisible314===false?'OFF':val(c.topLogoColor314,'original brand color')),'pants logo '+(c.pantsLogoVisible270===false?'OFF':val(c.pantsLogoColor270,'original brand color')),'sleeves '+val(c.topDetails)].filter(Boolean).join('; ');
- const sides=((state.director||{}).sides||[]).filter(x=>x.enabled).map(x=>[x.type,x.outfit,x.clothing,x.pose,x.reaction,x.target,x.gesture,x.notes].filter(Boolean).join(' / '));
- const crowdOff=/^(Keine|OFF|None|0)$/i.test(r.audience);
- const locationPhoto=c.backgroundLock?'If a LOCATION PHOTO is attached, preserve its architecture, perspective, lighting and all existing details.':'Use the selected realistic location.';
- const rail=/Geländer/i.test(r.hold);
- const material=rail?'Use a securely attached textile banner or physically compatible railing-mounted rigid sign, fixed to the existing railing with believable fasteners; NO freestanding base, pole or beachflag.':/Beachflag/i.test(r.carrier)?'Use a real fabric beachflag on a flexible curved mast with a stable base; never depict a foam-board sign.':'Use a real physical sign with mounting appropriate to the selected carrier, location and gravity.';
- const pose=r.selected?val(q.position,'Natural standing pose'):val(z.runnerPose,'Natural standing pose');
- const gaze=val(s.mainGaze,'Natural gaze consistent with the scene');
- const font=val(p.posterFont,s.font||'Anton');
- const action=r.selected?val(q.expression):val(s.mainAction);
- const out=[
- 'STRAVA RUN V3.12.0 — BLACK SIGN · SMART SCENE FIDELITY',
- 'OUTPUT: Exactly ONE native '+r.format+' ultra-photorealistic documentary photograph. Real anatomy, light, shadows and materials; no CGI.',
- '',
- '01 / REFERENCE IDENTITY',
- face,
- shoes,
- locationPhoto,
- '',
- '02 / LOCATION AND CAMERA',
- 'Location: '+r.location+'.'+(r.selected&&clean(r.location)===clean(q.location)?' Selected Premium scene: '+val(q.title)+'.':''),
- 'Camera: '+r.lens+' mm full-frame equivalent; camera sensor exactly '+r.distance+' m from the runner; native '+r.format+'. Maintain physical angular scale. Do not zoom, crop, move closer or enlarge subjects to rescue lettering. At long distances show proportionally more surroundings.',
- 'Viewpoint: '+val(r.selected?premiumEnglish392(q.camera,'cam'):s.camera,'Natural documentary viewpoint')+'.',
- ...premiumContract392(r),
- '',
- '03 / RUNNER AND OUTFIT',
- 'Pose: '+(r.selected?premiumEnglish392(pose,'pose'):pose)+'. Gaze: '+gaze+'. Expression/action: '+val(r.selected?premiumEnglish392(action,'action'):action,'natural')+'.',
- 'Outfit: '+outfit+'. Use only authentic correctly placed logos, no invented sleeve stripes.',
- 'Gesture: no index-finger pointing by default. Point ONLY if explicitly selected in an active Premium pose, with fingertip and arm anatomically directed to actual visible sign lettering. Otherwise relaxed hands, especially on the chair back when seated backwards.',
- 'ANATOMY LOCK — ALL FIGURES: every arm, elbow, forearm, wrist, hand and finger must have a continuous anatomically correct path with distinct contours. Never fuse sleeves, skin, arms or hands. Both hands must exist and remain visibly identifiable wherever pose and framing allow. Sleeves terminate at clearly identifiable wrists; no hidden missing hands, extra fingers, duplicated joints, melted fabric or merged limbs.',
- 'CROSSED ARMS / CHAIR BACK: when the runner sits backwards and rests forearms on a chair back, offset the forearms slightly instead of stacking them completely. Place both hands in clear view on top or beside the backrest with natural fingers, separate wrists and distinct sleeve cuffs. Use realistic contact shadows and no arm-to-arm fusion. If crossing would conceal a hand, use parallel or lightly staggered resting forearms while preserving the selected pose.',
- 'SIDE CHARACTER ANATOMY: apply the same hand, wrist, sleeve, forearm and finger separation rules to every visible side character and spectator.',
- '',
- '04 / PHYSICAL SIGN AND PRINT',
- 'ORIGINAL SIGN TYPE: '+val(z.signType)+'. ORIGINAL SIGN POSITION: '+val(z.signPosition)+'. ORIGINAL MOUNTING DETAILS: '+val(window.stravaMounting416?window.stravaMounting416():z.signMountDetail||z.signType)+'. These are the only physical sign installation instructions.',
- material,
- 'PHYSICAL ANCHOR LOCK: Every banner, facade-mounted sign, railing banner or advertising display must be securely anchored to the real architecture with physically visible brackets, bolts, straps, tensioning or suitable fixings. Respect gravity, wind load and structural attachment. No floating or unsupported displays. Do not invent a freestanding stand unless explicitly selected in Plakat & Text.',
- 'Text alignment: '+({left:'LEFT-ALIGNED',center:'CENTERED',right:'RIGHT-ALIGNED'}[p.posterAlign396]||'CENTERED')+'. Align all sign text lines accordingly, preserving line breaks and word colors.',
- 'Font: '+font+'. Real printed text on the sign, front readable to camera; balanced 5% minimum clear edge margin. Preserve authored line breaks, empty lines, punctuation and capitalization. No text substitutions.',
- 'EXACT SIGN TEXT:',
- '<<< SIGN TEXT START >>>',
- val(z.signText).replace(/\n+$/,''),
- '<<< SIGN TEXT END >>>',
- 'EXACT PER-WORD COLOR MAP (position and line are authoritative; white #FFFFFF, red #FF3434):',
- wordMap(z),
- '',
- '05 / PEOPLE AND BACKGROUND',
- 'Audience: '+(r.selected?premiumEnglish392(r.audience,'audience'):r.audience)+'. '+(crowdOff?'No intentionally gathered audience. Natural incidental passersby only if appropriate.':'Depict the specified audience count, realistically distributed across visible foreground, midground and background, facing the runner or readable sign. Do not silently omit the crowd.'),
- 'Premium scene cast: '+(r.selected?premiumEnglish392(val(q.cast,'Automatic'),'cast'):'No Premium cast override')+'. A selected Opa/Teyze or mixed cast is additional to the audience count, not a replacement for it.',
- 'Premium-selected figure appearance (never adds figures): '+(r.selected?appearancePrompt396(q.cast).join(' | ')||'No appearance override':'No Premium appearance override')+'. Apply only to the figures explicitly present in the Premium cast.',
- 'Legacy side-character details: '+(r.selected?'Premium cast exclusively controls figure presence':sides.length?sides.join(' | '):'None')+'. Do not add figures based on appearance descriptions.',
- 'Background ambience: '+val(r.selected?q.ambience:p.ambience,'Natural')+'.',
- 'VENUE NEUTRALITY LOCK: Use fictional, unbranded, generic venues only. No real company names, commercial logos, store chains, identifiable business signage or advertising. Generic bakery, station, market hall, supermarket and workshop architecture must look physically authentic.',
- '',
- '06 / FINAL CONSISTENCY CHECK',
- 'LANGUAGE: User-authored German scene descriptions are authoritative. Interpret their meaning faithfully when composing the English-directed photograph; do not treat German text as visible sign lettering unless it is inside the EXACT SIGN TEXT block. Do not invent an English translation or silently discard German details.',
- 'Follow ONLY the values in this prompt. Do not replace railing mounts with freestanding signs, alter crowd count, recolor mapped words, change shoes, move the camera or add unsupported pointing gestures.',
- 'Attach PERSON PHOTO and SHOE PHOTO separately when generating. Browser previews are not embedded.'
- ];
- if(issues.length)out.unshift('CONFIGURATION WARNINGS: '+issues.join(' | '));
- window.__stravaPromptAudit380={resolved:{location:r.location,carrier:r.carrier,hold:r.hold,audience:r.audience,lens:r.lens,distance:r.distance,format:r.format,scene:r.selected?q.title:null},errors:issues,wordLines:wordMap(z).split('\n').length};
- return out.join('\n');
-};
-window.stravaAudit380=function(){const r=resolved();return {version:'3.9.2',current:window.__stravaPromptAudit380||null,errors:validate(r),premiumSceneActive:r.selected,filters:Object.keys(r.p||{}),note:'All currently selected values are checked at prompt construction; visual generation is not metrically certifiable.'};};
-})();
-</script><script>
 /* V3.10.1: resilient tab click delegation for mobile Safari and dynamically rendered tabs. */
 document.addEventListener('click',function(event){
  const button=event.target.closest&&event.target.closest('#tabs [data-tab]');
@@ -1621,35 +1322,6 @@ btn.addEventListener('click',async function(){
  },true);
 })();
 </script><script>
-/* V3.10.7: single canonical poster renderer in both tabs. */
-(function(){
- function syncPoster407(){
-  const legacy=document.getElementById('legacySignPreview');
-  if(legacy&&typeof posterPreview355==='function'){
-   const signature=JSON.stringify([state.sign.signText,state.sign.wordColors,state.common.format,typeof p!=='undefined'?p.posterFont:null,typeof p!=='undefined'?p.posterAlign396:null]);
-   if(legacy.dataset.posterSignature!==signature){
-    legacy.innerHTML=posterPreview355();
-    legacy.dataset.posterSignature=signature;
-    requestAnimationFrame(()=>{if(legacy.isConnected&&typeof fitPoster357==='function')fitPoster357(legacy)});
-   }
-  }
-  const premium=document.getElementById('psPreviewHost355');
-  if(premium&&typeof posterPreview355==='function'&&premium.dataset.posterSignature!==JSON.stringify([state.sign.signText,state.sign.wordColors,state.common.format,p.posterFont,p.posterAlign396])){
-    premium.innerHTML=posterPreview355();
-    premium.dataset.posterSignature=JSON.stringify([state.sign.signText,state.sign.wordColors,state.common.format,p.posterFont,p.posterAlign396]);
-    requestAnimationFrame(()=>fitPoster357(premium));
-  }
- }
- document.addEventListener('input',()=>setTimeout(syncPoster407,0),true);
- document.addEventListener('change',()=>setTimeout(syncPoster407,0),true);
- document.addEventListener('click',()=>setTimeout(syncPoster407,0),true);
- const observer=new MutationObserver(()=>{if(!document.getElementById('legacySignPreview'))return;syncPoster407()});
- const view=document.getElementById('view');if(view)observer.observe(view,{childList:true,subtree:false});
- setInterval(syncPoster407,350);
- document.addEventListener('DOMContentLoaded',syncPoster407);
- syncPoster407();
-})();
-</script><script>
 const A413='strava-run-image-archive-v313',F413='strava-run-archive',E413=x=>String(x||'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 let imported413=null,cover413=null;
 function db413(){return new Promise((ok,no)=>{let r=indexedDB.open(A413,1);r.onupgradeneeded=()=>r.result.createObjectStore('items',{keyPath:'id'});r.onsuccess=()=>ok(r.result);r.onerror=()=>no(r.error)})}
@@ -1674,7 +1346,7 @@ function archiveBind413(){gallery413();let file=document.getElementById('a413fil
 /* V3.13.8: public GitHub Pages deployment identity, independent of local settings. */
 (function(){
  const el=document.getElementById('onlineBuild414');if(!el)return;
- const version='V3.20.0';
+ const version='V3.21.0';
  const fallback='ONLINE · '+version+' · Commit: nicht abrufbar';
  const url='https://api.github.com/repos/sergiobra7/strava/commits/main';
  const controller=new AbortController();
@@ -1685,50 +1357,6 @@ function archiveBind413(){gallery413();let file=document.getElementById('a413fil
  .catch(()=>{el.textContent=fallback;})
  .finally(()=>clearTimeout(timer));
 })();
-</script><script>
-(function(){
-const previous316=buildPrompt;
-buildPrompt=function(){
-let out=String(previous316());
-const d=window.stravaDisplay316&&window.stravaDisplay316();
-if(!d||d.type==='BLACK SIGN')return out;
-const cams={'STREET XXL · 35 mm · 30 m':[35,30],'MONUMENTAL WALL · 50 mm · 40 m':[50,40],'FLOATING LED · 35 mm · 25 m':[35,25],'ROOFTOP · 50 mm · 60 m':[50,60],'BALCONY · 28 mm · 20 m':[28,20]};
-const cam=cams[d.camera];
-out+='\n\nXXL DISPLAY PRIMARY DIRECTIVE: Display type '+d.type+' governs the image together with the camera perspective, not the venue. This XXL advertising carrier overrides earlier contradictory handheld sign descriptions, but EXACT text, word colors and typography remain governed by Plakat & Text. Monumental real-world advertising installation, plausible visible structural supports and anchors, complete legibility. Display height target '+d.size+' of native 9:16 composition. Documentary realism, enough surroundings for scale.';
-out+='\nCAMERA: '+(cam?cam[0]+' mm full-frame equivalent, '+cam[1]+' meters from display (not runner)':'Use manual camera settings')+'. Near-frontal view; whole display visible.';
-out+='\nRUNNER: '+d.runner+', naturally scaled and facing camera. CROWD: '+(d.crowd==='Automatisch'?'Natural location-appropriate quantity':d.crowd==='Keine'?'No assembled crowd':d.crowd+' people')+', arrangement '+d.layout+'. Keep people clear of the text. If site space is insufficient, use a realistic smaller group. Preserve existing location selection.';
-const audit318=window.stravaColorAudit318(state.sign||{});if(!audit318.pass)throw new Error('Ungültige Plakat-Wortfarbe: '+audit318.invalid.map(x=>x.word+'='+x.color).join(', '));const exact318=window.stravaSignColorMap318(state.sign||{}).lines;
-out+='\n\nFINAL ABSOLUTE WORD-COLOR CONTRACT: The REAL XXL sign must use exactly the following per-word colors, never an all-white or all-red approximation. Preserve line breaks and word boundaries. COLORED TEXT BY LINE: '+exact318+'\nFINAL QA: Verify every printed word color against this map; correct any mismatches before finalizing.';
-return out;
-};
-})();
-</script><script>
-
-// V3.18 developer-only regression diagnostics. No changes to user settings.
-window.stravaRegression318=function(){
- const failures=[],assert=(condition,label)=>{if(!condition)failures.push(label)};
- if(typeof window.stravaRemapWordColors318!=='function')failures.push('word color remapper unavailable');
- const samples=[
-  {signText:'ROT WEISS\nNEU',wordColors:{0:'#FF3434',2:'#FFFFFF',4:'#00AAFF'}},
-  {signText:'A\n\nB',wordColors:{0:'#FF3434',2:'#FF3434'}},
-  {signText:'',wordColors:{}},
-  {signText:'EINS ZWEI DREI',wordColors:{0:'#FF3434',2:'#00FF00',4:'#FFFFFF'}}
- ];
- for(let k=0;k<samples.length;k++){
-  const x=samples[k],v=window.stravaSignColorMap318(x),tokens=x.signText.split(/(\s+)/);
-  assert(v.words.length===tokens.filter(t=>t&&!/^\s+$/.test(t)).length,'word count '+k);
-  assert(v.lines.split('\n').length===x.signText.split('\n').length,'line count '+k);
-  assert(window.stravaColorAudit318(x).pass,'hex audit '+k);
-  for(const w of v.words)assert(w.color===String(x.wordColors[w.index]||'#FFFFFF').toUpperCase(),'word color '+k+'/'+w.index);
- }
- if(typeof window.stravaRemapWordColors318==='function'){
-  const oldText='ROT WEISS BLAU',newText='BLAU ROT WEISS';
-  const mapped=window.stravaRemapWordColors318(oldText,newText,{0:'#FF3434',2:'#00FF00',4:'#0000FF'});
-  const parts=newText.split(/(\s+)/);
-  assert(parts.map((x,i)=>mapped[i]||'#FFFFFF').filter((x,i)=>i%2===0).join(',')==='#0000FF,#FF3434,#00FF00','move word colors');
- }
- return {pass:failures.length===0,checks:4*samples.length+1,failures};
-};
 </script>
 <script>
 /* V3.19: BLACK SIGN poster retired. Keep legacy saved data untouched for rollback. */
@@ -1788,64 +1416,9 @@ window.stravaRegression318=function(){
 #tabs [data-tab="Plakat & Text"],#tabs [data-tab="Wand / Plakat"],#tabs [data-tab="Auto-Wand"],
 [data-tab="Plakat & Text"],[data-tab="Wand / Plakat"],[data-tab="Auto-Wand"]{display:none!important}
 </style>
-<script>
-/* V3.20.0: remove retired tab nodes even if legacy modules recreate them. */
-(function(){
- const retired=new Set(['Plakat & Text','Wand / Plakat','Auto-Wand']);
- let busy=false;
- function removeRetiredTabs(){
-  if(busy)return;busy=true;
-  try{
-   document.querySelectorAll('[data-tab]').forEach(node=>{
-    if(retired.has(String(node.getAttribute('data-tab')||'').trim()))node.remove();
-   });
-  }finally{busy=false}
- }
- removeRetiredTabs();
- const host=document.getElementById('tabs');
- if(host){const observer=new MutationObserver(removeRetiredTabs);observer.observe(host,{childList:true,subtree:true,attributes:true,attributeFilter:['data-tab']});}
- document.addEventListener('click',function(event){
-  const target=event.target.closest&&event.target.closest('[data-tab]');
-  if(target&&retired.has(String(target.getAttribute('data-tab')||'').trim())){
-   event.preventDefault();event.stopImmediatePropagation();
-  }
- },true);
- window.stravaRetiredTabAudit3192=function(){
-  removeRetiredTabs();
-  return {pass:!Array.from(document.querySelectorAll('[data-tab]')).some(el=>retired.has(String(el.getAttribute('data-tab')||'').trim())),retired:[...retired]};
- };
-})();
-</script>
+
 <style id="poster-removal-3193">
 #psPosterPanel355,#legacySignPreview,#psPreviewHost355,.ps-poster-fit,[data-ps-text],[data-ps-color],[data-ps-resetcolors],[data-ps-clear],#words,#wordColor{display:none!important}
 </style>
-<script>
-/* V3.20.0: remove the poster editor itself, not merely its navigation. */
-(function(){
- const retired=new Set(['Plakat & Text','Wand / Plakat','Auto-Wand']);
- let processing=false;
- function purge(){
-  if(processing)return;
-  processing=true;
-  try{
-   document.querySelectorAll('[data-tab]').forEach(el=>{if(retired.has((el.getAttribute('data-tab')||'').trim()))el.remove()});
-   document.querySelectorAll('#psPosterPanel355,#legacySignPreview,#psPreviewHost355,.ps-poster-fit,[data-ps-text],[data-ps-color],[data-ps-resetcolors],[data-ps-clear],#words,#wordColor').forEach(el=>{
-    const panel=el.closest('#psPosterPanel355');
-    (panel||el).remove();
-   });
-   document.querySelectorAll('textarea').forEach(el=>{
-    const label=el.previousElementSibling;
-    if(label&&/Deutscher Plakattext/i.test(label.textContent||'')){
-      const wrap=el.closest('.field');
-      (wrap||el).remove();
-    }
-   });
-  }finally{processing=false}
- }
- purge();
- const view=document.getElementById('view');
- if(view)new MutationObserver(purge).observe(view,{childList:true,subtree:true});
- window.stravaPosterEditorAudit3193=()=>({pass:!document.querySelector('#psPosterPanel355,#legacySignPreview,#psPreviewHost355,.ps-poster-fit,[data-ps-text]'),remaining:document.querySelectorAll('#psPosterPanel355,#legacySignPreview,#psPreviewHost355,.ps-poster-fit,[data-ps-text]').length});
-})();
-</script>
+
 </body></html>
