@@ -978,9 +978,9 @@ function effective390(n){
  const authoritative={place:'location',carrier:'carrier',format:'format',pose:'pose',cast:'cast',audience:'audience',cam:'camera',frame:'frame',hold:'mount311',area:'area311',seat:'seat311',action:'action311',prop:'prop'};
  for(const [key,filter] of Object.entries(authoritative)){
   const selected=p[filter];
-  if(selected!==undefined&&selected!=='Automatisch'&&selected!=='SMART CINEMATIC MIX')delete overrides[key];
+  if(selected!==undefined&&selected!=='Automatisch'&&selected!=='SMART CINEMATIC MIX'&&!Object.prototype.hasOwnProperty.call(e.confirmed393||{},key)&&!(e.enabled&&Object.prototype.hasOwnProperty.call(e.values||{},key)))delete overrides[key];
  }
- if(p.cameraMix311&&p.cameraMix311!=='SMART CINEMATIC MIX')delete overrides.cam;
+ if(p.cameraMix311&&p.cameraMix311!=='SMART CINEMATIC MIX'&&!Object.prototype.hasOwnProperty.call(e.confirmed393||{},'cam')&&!(e.enabled&&Object.prototype.hasOwnProperty.call(e.values||{},'cam')))delete overrides.cam;
  const x={...c,...overrides};
  // V3.13.2: Plakat & Text is the sole authority for the physical sign.
  // Smart Director supplies the scene, never a competing sign or mount.
@@ -1037,7 +1037,7 @@ function explainScene381(c,n){
  const e=entry390(n),base=scene(n);
  return '<div style="margin-top:10px;padding:10px;border:1px solid #526070;border-radius:9px;background:#131b25;text-align:left"><b style="color:#ffb077">📖 BEDEUTUNG DER AKTIVEN SZENENWERTE</b><div style="font-size:12px;color:#b5c3d2">✏️ bearbeiten · ✓ speichern · ✕ Original</div>'+
  lines.map(row=>{
-  const k=row[0],manual=Object.hasOwn(e.confirmed393||{},k)||(e.enabled&&Object.hasOwn(e.values||{},k));
+  const k=row[0],manual=(Object.hasOwn(e.confirmed393||{},k)||(e.enabled&&Object.hasOwn(e.values||{},k)))&&((k==='hold'&&String(state.sign.signNote||'').trim()===String(row[2]||'').trim())||(k!=='hold'&&k!=='carrier'&&k!=='format'));
   const open=!!editing393[sceneKey390(n)+'/'+k];
   return '<div style="margin-top:9px;padding:9px;border:1px solid '+(manual?'#fc4c02':'#415361')+';border-radius:8px"><div style="display:flex;justify-content:space-between;gap:5px"><b style="overflow-wrap:anywhere">'+esc(row[1])+': '+esc(row[2])+' <span style="font-size:11px;color:'+(manual?'#ff985c':'#86d59a')+'">'+(manual?'🟠 Manuell':'🟢 Original')+'</span></b><span style="flex-shrink:0"><button type="button" data-ps-pencil393="'+n+'" data-key393="'+k+'" style="padding:6px;background:#26313e;color:white;border:1px solid #667;border-radius:6px">✏️</button> '+(manual||open?'<button type="button" data-ps-x393="'+n+'" data-key393="'+k+'" style="padding:6px;background:#392b2b;color:#ffac9d;border:1px solid #8a5656;border-radius:6px">✕</button>':'')+'</span></div>'+
   (open?'<textarea data-ps-input393="'+n+'" data-key393="'+k+'" rows="2" style="box-sizing:border-box;width:100%;margin-top:8px;padding:8px;border:1px solid #718095;border-radius:7px;background:#1b2531;color:white;font-size:15px">'+esc(row[2])+'</textarea><button type="button" data-ps-check393="'+n+'" data-key393="'+k+'" style="margin-top:5px;padding:8px;background:#176e47;color:white;border:1px solid #51ad78;border-radius:7px">✓ Übernehmen</button><div style="font-size:11px;color:#aebccc">Original: '+esc(base[k]||'—')+'</div>':'')+
