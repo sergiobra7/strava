@@ -1739,9 +1739,36 @@ const cam=cams[d.camera];
 out+='\n\nXXL DISPLAY PRIMARY DIRECTIVE: Display type '+d.type+' governs the image together with the camera perspective, not the venue. This XXL advertising carrier overrides earlier contradictory handheld sign descriptions, but EXACT text, word colors and typography remain governed by Plakat & Text. Monumental real-world advertising installation, plausible visible structural supports and anchors, complete legibility. Display height target '+d.size+' of native 9:16 composition. Documentary realism, enough surroundings for scale.';
 out+='\nCAMERA: '+(cam?cam[0]+' mm full-frame equivalent, '+cam[1]+' meters from display (not runner)':'Use manual camera settings')+'. Near-frontal view; whole display visible.';
 out+='\nRUNNER: '+d.runner+', naturally scaled and facing camera. CROWD: '+(d.crowd==='Automatisch'?'Natural location-appropriate quantity':d.crowd==='Keine'?'No assembled crowd':d.crowd+' people')+', arrangement '+d.layout+'. Keep people clear of the text. If site space is insufficient, use a realistic smaller group. Preserve existing location selection.';
-const exact318=window.stravaSignColorMap318(state.sign||{}).lines;
+const audit318=window.stravaColorAudit318(state.sign||{});if(!audit318.pass)throw new Error('Ungültige Plakat-Wortfarbe: '+audit318.invalid.map(x=>x.word+'='+x.color).join(', '));const exact318=window.stravaSignColorMap318(state.sign||{}).lines;
 out+='\n\nFINAL ABSOLUTE WORD-COLOR CONTRACT: The REAL XXL sign must use exactly the following per-word colors, never an all-white or all-red approximation. Preserve line breaks and word boundaries. COLORED TEXT BY LINE: '+exact318+'\nFINAL QA: Verify every printed word color against this map; correct any mismatches before finalizing.';
 return out;
 };
 })();
-</script></body></html>
+</script><script>
+
+// V3.18 developer-only regression diagnostics. No changes to user settings.
+window.stravaRegression318=function(){
+ const failures=[],assert=(condition,label)=>{if(!condition)failures.push(label)};
+ const samples=[
+  {signText:'ROT WEISS\nNEU',wordColors:{0:'#FF3434',2:'#FFFFFF',4:'#00AAFF'}},
+  {signText:'A\n\nB',wordColors:{0:'#FF3434',2:'#FF3434'}},
+  {signText:'',wordColors:{}},
+  {signText:'EINS ZWEI DREI',wordColors:{0:'#FF3434',2:'#00FF00',4:'#FFFFFF'}}
+ ];
+ for(let k=0;k<samples.length;k++){
+  const x=samples[k],v=window.stravaSignColorMap318(x),tokens=x.signText.split(/(\\s+)/);
+  assert(v.words.length===tokens.filter(t=>t&&!/^\\s+$/.test(t)).length,'word count '+k);
+  assert(v.lines.split('\n').length===x.signText.split('\n').length,'line count '+k);
+  assert(window.stravaColorAudit318(x).pass,'hex audit '+k);
+  for(const w of v.words)assert(w.color===String(x.wordColors[w.index]||'#FFFFFF').toUpperCase(),'word color '+k+'/'+w.index);
+ }
+ if(typeof remapWordColors3172==='function'){
+  const oldText='ROT WEISS BLAU',newText='BLAU ROT WEISS';
+  const mapped=remapWordColors3172(oldText,newText,{0:'#FF3434',2:'#00FF00',4:'#0000FF'});
+  const parts=newText.split(/(\\s+)/);
+  assert(parts.map((x,i)=>mapped[i]||'#FFFFFF').filter((x,i)=>i%2===0).join(',')==='#0000FF,#FF3434,#00FF00','move word colors');
+ }
+ return {pass:failures.length===0,checks:4*samples.length+1,failures};
+};
+</script>
+</body></html>
