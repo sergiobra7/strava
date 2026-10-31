@@ -1587,9 +1587,9 @@ function premiumContract392(r){
  ...pairs.map(([label,kind,raw])=>label+': '+premiumEnglish392(raw,kind)+' [original displayed value: '+String(raw||'—')+'].'),
  'The English meaning of every field above is authoritative. Preserve each source value exactly in substance; do not swap in legacy location, carrier, pose, mount, cast or crowd presets. A free-text German value is authoritative even when no fixed translation exists.',
  'Audience COUNT and audience PLACEMENT are independent. Never replace the specified count with a placement description.',
- 'SINGLE SIGN AUTHORITY: Only Plakat & Text controls the physical sign. Sign type: '+String(state.sign.signType||'')+'; placement: '+String(state.sign.signPosition||'')+'; additional mounting details: '+String(window.stravaMounting416?window.stravaMounting416():state.sign.signMountDetail||state.sign.signType||'')+'. No alternative carrier or mount from Smart Director may override these values.',
+ 'SINGLE DISPLAY AUTHORITY: Smart Director Premium exclusively controls physical display type, location, size and mounting. Plakat exclusively controls lettering, typography and word colors. Ignore old physical sign fields.',
  'Camera lens, sensor distance, image aspect ratio, exact sign text, word colors, identity photos and outfit remain controlled by their dedicated active settings.',
- 'SCENE CONSISTENCY: the display medium must match the original Plakat & Text sign type and mounting. For architectural or digital media, do not add a handheld poster. A seated person needs the specified physical seat. All faces, the complete message and required footwear must remain visible.',
+ 'SCENE CONSISTENCY: the display medium must match the Premium display type and mounting. For architectural or digital media, do not add a handheld poster. A seated person needs the specified physical seat. All faces, the complete message and required footwear must remain visible.',
  'CAMERA CONSISTENCY: preserve selected focal length, camera distance and sensor height. If a source LOCATION PHOTO is locked, preserve its existing viewpoint.',
  'SIDE-CHARACTER CONSISTENCY: use exactly the selected cast. Do not add named companions when the selected cast is Alleine.'];
 }
