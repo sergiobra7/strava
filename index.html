@@ -14,7 +14,7 @@
 #premiumPanel270 > #premiumCards270{display:block!important}
 #premiumPanel270 > #refreshPremium270{display:block!important;margin:14px 0}
 #premiumPanel270 #allSettings339,#premiumPanel270 #master320,#premiumPanel270 #premiumEditor270,#premiumPanel270 #premiumCast311,#premiumPanel270 #manualRegie328,#premiumPanel270 #premiumActiveFilters340{display:none!important}
-</style><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Anton&family=Archivo+Black&family=Archivo+Narrow:wght@900&family=Barlow+Condensed:wght@800;900&family=Bebas+Neue&family=League+Gothic&family=Oswald:wght@700&family=Roboto+Condensed:wght@900&family=Teko:wght@700&display=swap" rel="stylesheet"></head><body><header><div><h1>STRAVA RUN <span class="mark">V4.1.1</span></h1><small>RUNNER PHOTO + STRAVA WALL · GITHUB EDITION</small><div id="onlineBuild414" style="font-size:12px;color:#a8c6b8;margin-top:5px;font-weight:700" aria-label="Online-Version">ONLINE · V4.1.1 · Commit wird geprüft …</div></div><div style="display:flex;align-items:center;gap:9px;flex-wrap:wrap;justify-content:flex-end"><span id="saveStatus" class="status">Lokal gespeichert</span><button id="stravaRefresh401" type="button" title="Neueste GitHub-Version laden" style="background:#2cbd79;color:#101510;border:0;border-radius:9px;padding:10px 13px;font-weight:800;cursor:pointer">🔄 Aktualisieren</button></div></header><main><div class="worlds"><button class="world active" data-world="wall">🧱 STRAVA WALL</button><button class="world" data-world="sign">⬛ BLACK SIGN / PLAKAT</button></div><div style="display:flex;align-items:center;justify-content:space-between;gap:10px;margin:9px 0"><button id="presetShortcut403" type="button" style="background:#f2bd49;color:#151515;border:2px solid #f8d57b;border-radius:10px;padding:12px 16px;font-size:15px;font-weight:900;cursor:pointer;flex:1">⭐ MEINE PRESETS · GALERIE ÖFFNEN</button></div><section id="presetDirect404" hidden style="margin:14px 0;padding:14px;border:2px solid #f2bd49;border-radius:14px;background:#151a21"></section><nav class="tabs" id="tabs"></nav><div id="view"></div><div class="footer">Lokale Offline-Web-App · Keine Bilder werden an einen Server gesendet · Prompt zum Kopieren für ChatGPT/Bildgenerierung</div></main><script>
+</style><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Anton&family=Archivo+Black&family=Archivo+Narrow:wght@900&family=Barlow+Condensed:wght@800;900&family=Bebas+Neue&family=League+Gothic&family=Oswald:wght@700&family=Roboto+Condensed:wght@900&family=Teko:wght@700&display=swap" rel="stylesheet"></head><body><header><div><h1>STRAVA RUN <span class="mark">V4.1.2</span></h1><small>RUNNER PHOTO + STRAVA WALL · GITHUB EDITION</small><div id="onlineBuild414" style="font-size:12px;color:#a8c6b8;margin-top:5px;font-weight:700" aria-label="Online-Version">ONLINE · V4.1.2 · Commit wird geprüft …</div></div><div style="display:flex;align-items:center;gap:9px;flex-wrap:wrap;justify-content:flex-end"><span id="saveStatus" class="status">Lokal gespeichert</span><button id="stravaRefresh401" type="button" title="Neueste GitHub-Version laden" style="background:#2cbd79;color:#101510;border:0;border-radius:9px;padding:10px 13px;font-weight:800;cursor:pointer">🔄 Aktualisieren</button></div></header><main><div class="worlds"><button class="world active" data-world="wall">🧱 STRAVA WALL</button><button class="world" data-world="sign">⬛ BLACK SIGN / PLAKAT</button></div><div style="display:flex;align-items:center;justify-content:space-between;gap:10px;margin:9px 0"><button id="presetShortcut403" type="button" style="background:#f2bd49;color:#151515;border:2px solid #f8d57b;border-radius:10px;padding:12px 16px;font-size:15px;font-weight:900;cursor:pointer;flex:1">⭐ MEINE PRESETS · GALERIE ÖFFNEN</button></div><section id="presetDirect404" hidden style="margin:14px 0;padding:14px;border:2px solid #f2bd49;border-radius:14px;background:#151a21"></section><nav class="tabs" id="tabs"></nav><div id="view"></div><div class="footer">Lokale Offline-Web-App · Keine Bilder werden an einen Server gesendet · Prompt zum Kopieren für ChatGPT/Bildgenerierung</div></main><script>
 /* V3.18 stabilization: one color serializer shared by prompt sections. */
 window.stravaSignColorMap318=function(sign){
  const source=sign||{},raw=String(source.signText||''),colors=source.wordColors||{},base=String(source.signColor||'#FFFFFF').toUpperCase();
@@ -103,7 +103,7 @@ function appearancePrompt396(cast){
  return out;
 }
 
-/* V4.1.1: Full independent BLACK SIGN poster editor, no dependency on retired modules. */
+/* V4.1.2: Full independent BLACK SIGN poster editor, no dependency on retired modules. */
 function fullPosterView321(){
  const v=state.sign||{},p=JSON.parse(localStorage.getItem('stravaPoster321')||'{}');
  const font=Number(p.size)||56,align=p.align||'center';
@@ -155,7 +155,7 @@ function bindFullPoster321(){
  const keep=el('posterKeepColors421'),store=el('posterStoreColors421');keep.checked=localStorage.getItem('strava-colors-persist-421')==='on';store.disabled=!keep.checked;keep.onchange=()=>{localStorage.setItem('strava-colors-persist-421',keep.checked?'on':'off');store.disabled=!keep.checked;save();el('posterStatus321').textContent=keep.checked?'✓ Dauerhafte Farbspeicherung aktiviert.':'Farbspeicherung deaktiviert: Aktuelle Farben bleiben bis zum Neuladen sichtbar.'};store.onclick=()=>{if(!keep.checked)return;save();el('posterStatus321').textContent='✓ Aktuelle Wortfarben dauerhaft gespeichert.'};
  el('posterSave321').onclick=()=>{persist();el('posterStatus321').textContent='✓ Plakattext, Schrift und Layout übernommen. Farbwahl nur mit aktivem Haken dauerhaft gespeichert.'};
 
- /* V4.1.1 text favorites use independent browser storage: explicit favorite saves always
+ /* V4.1.2 text favorites use independent browser storage: explicit favorite saves always
     include word colors, even if the editor's ordinary color-persistence toggle is OFF. */
  const FAVORITES430='strava-text-favorites-430';
  const favSelect=el('favSelect430'),favStatus=el('favStatus430');
@@ -220,7 +220,7 @@ function bindFullPoster321(){
 }
 
 
-/* V4.1.1: Make the large live preview the color authority at prompt generation. */
+/* V4.1.2: Make the large live preview the color authority at prompt generation. */
 function syncPosterPreviewColors321(){
  const smart=document.getElementById('psPreviewHost355');
  if(smart&&state.world==='sign'){
@@ -264,7 +264,7 @@ function syncPosterPreviewColors321(){
  if(mapped.words.some(x=>colors[x.index]!==x.color))throw Error('Plakat-Farbprüfung fehlgeschlagen.');
  save();
 }
-/* V4.1.1: Restore missing core prompt and view entry points before extension scripts load. */
+/* V4.1.2: Restore missing core prompt and view entry points before extension scripts load. */
 function buildPrompt(){
  const c=state.common||{},w=state.wall||{},z=state.sign||{};
  const lines=['STRAVA RUN — '+(state.world==='sign'?'BLACK SIGN / PLAKAT':'STRAVA WALL'),
@@ -1038,7 +1038,7 @@ function fixed311(k){return !!(p.locks311&&p.locks311[k])}
 function setFilter311(k,v){
  const before={...p,locks311:{...(p.locks311||{})}},locks=p.locks311||{};
  const impacted=k==='group'?['location','area311','carrier','mount311','seat311']:k==='location'?['area311','carrier','mount311','seat311']:k==='carrier'?['mount311']:k==='pose'?['seat311']:[];
- p[k]=v;if(k==='group'){p.location='Automatisch';p.area311='Automatisch'}if(k==='location')p.area311='Automatisch';if(k==='carrier')p.mount311='Automatisch';
+ p[k]=v;if(k==='premiumFont316'){p.posterFont=v;try{const pp=JSON.parse(localStorage.getItem('stravaPoster321')||'{}');pp.font=v;localStorage.setItem('stravaPoster321',JSON.stringify(pp))}catch(e){console.warn('font sync',e)}}if(k==='group'){p.location='Automatisch';p.area311='Automatisch'}if(k==='location')p.area311='Automatisch';if(k==='carrier')p.mount311='Automatisch';
  reconcile311();
  const changed=impacted.filter(x=>locks[x]&&before[x]!=='Automatisch'&&p[x]!==before[x]);if(locks[k]&&before[k]!==v)changed.unshift(k);
  if(changed.length){Object.assign(p,before);p.last='🔒 Konflikt: '+changed.join(', ')+' ist fixiert. Zuerst entsperren.';persist();draw();return}
@@ -1140,10 +1140,10 @@ function draw(){
 if(state.world!=='sign'||state.tab!=='Smart Director'){const jump=document.getElementById('psJump361');if(jump)jump.remove();const up=document.getElementById('psCameraJump394');if(up)up.remove();return;}
 const root=document.getElementById('view');if(!root)return;
 const groupsOpen=[['ort','📍 Ortsgruppe & Standort'],['bereich','🏗️ Bereich'],['befestigung','🔩 Befestigung'],['display','🪧 Anzeigemittel'],['pose','🧍 Pose'],['requisiten','🪑 Requisiten'],['figuren','👴 Nebenfiguren'],['publikum','👥 Publikum'],['handlung','🎭 Handlung'],['kamera','📷 Kamera']];
-const tiles='<div class="ps-grid" style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px">'+groupsOpen.map(x=>'<button type="button" class="ps-tile '+(p.opened===x[0]?'on':'')+'" data-ps-open="'+x[0]+'" style="min-height:48px;font-size:13px">'+x[1]+'</button>').join('')+'</div>';
+const tiles='<div style="margin:12px 0;padding:12px;border:1px solid #fc4c02;border-radius:10px;background:#231c19"><b>NEUER FARBE­DITOR · SCHRIFTARTEN · TEXT-FAVORITEN</b><p class="ps-muted">Alle 7 Schriftarten, automatisches Textfeld und gespeicherte Texte findest du im Reiter Plakat.</p><button type="button" class="btn" id="psGoPoster412">Zum neuen Farbeditor / Meine Texte</button></div><div class="ps-grid" style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px">'+groupsOpen.map(x=>'<button type="button" class="ps-tile '+(p.opened===x[0]?'on':'')+'" data-ps-open="'+x[0]+'" style="min-height:48px;font-size:13px">'+x[1]+'</button>').join('')+'</div>';
 let body='';
 if(!groupsOpen.some(x=>x[0]===p.opened))p.opened='ort';
-if(p.opened==='display')body=field('display316','Anzeigenart',['BLACK SIGN','XXL-Straßenbanner','Horizontale LED-Wand','Auskragende XXL-LED','Vertikale LED-Wand','Dachwerbetafel XXL','Freistehende XXL-Werbetafel','Dachwerbung über Geschäft','Werbetafel auf Stahlstütze','Verkehrsknoten-Werbetafel','Balkonbanner XXL','Werkstatttor-Banner','Bäckerei-Banner'])+field('displayCam316','Kamerapreset',['STREET XXL · 35 mm · 30 m','MONUMENTAL WALL · 50 mm · 40 m','FLOATING LED · 35 mm · 25 m','ROOFTOP · 50 mm · 60 m','BALCONY · 28 mm · 20 m','Manuell'])+field('displayPosition316','Anzeigenposition im Bild',['Automatisch','Mitte','Links','Rechts'])+field('displaySize316','Anzeigenhöhe',['20 %','25 %','30 %','35 %','40 %','45 %','50 %','55 %','60 %','65 %','70 %','75 %','80 %','85 %','90 %'])+field('displayWidth316','Anzeigenbreite',['Automatisch','30 %','35 %','40 %','45 %','50 %','55 %','60 %','65 %','70 %','75 %','80 %','85 %','90 %'])+field('displayMount316','Befestigung',['Automatisch passend zur Anzeigenart','An Fassade mit sichtbaren Haltewinkeln','Auf stabilem Stahlrahmen','Freistehend mit sicherem Standfuß','An Geländer befestigt','An vorhandener Werbekonstruktion'])+field('premiumFont316','Schriftfamilie',['DIN Condensed Bold','Monumental Condensed Bold','Industrial Block Heavy','Modern Sans Bold','Urban Stencil','Editorial Serif Bold'])+field('premiumFit316','Textflächen-Ausnutzung',['Maximale Dominanz','Ausgewogen','Manuell'])+field('runnerPosition316','Läuferposition',['Direkt unter der Anzeige','Im Vordergrund','Zwischen Passanten','Seitlich unter der Anzeige','Gegenüberliegender Gehweg']);
+if(p.opened==='display')body=field('display316','Anzeigenart',['BLACK SIGN','XXL-Straßenbanner','Horizontale LED-Wand','Auskragende XXL-LED','Vertikale LED-Wand','Dachwerbetafel XXL','Freistehende XXL-Werbetafel','Dachwerbung über Geschäft','Werbetafel auf Stahlstütze','Verkehrsknoten-Werbetafel','Balkonbanner XXL','Werkstatttor-Banner','Bäckerei-Banner'])+field('displayCam316','Kamerapreset',['STREET XXL · 35 mm · 30 m','MONUMENTAL WALL · 50 mm · 40 m','FLOATING LED · 35 mm · 25 m','ROOFTOP · 50 mm · 60 m','BALCONY · 28 mm · 20 m','Manuell'])+field('displayPosition316','Anzeigenposition im Bild',['Automatisch','Mitte','Links','Rechts'])+field('displaySize316','Anzeigenhöhe',['20 %','25 %','30 %','35 %','40 %','45 %','50 %','55 %','60 %','65 %','70 %','75 %','80 %','85 %','90 %'])+field('displayWidth316','Anzeigenbreite',['Automatisch','30 %','35 %','40 %','45 %','50 %','55 %','60 %','65 %','70 %','75 %','80 %','85 %','90 %'])+field('displayMount316','Befestigung',['Automatisch passend zur Anzeigenart','An Fassade mit sichtbaren Haltewinkeln','Auf stabilem Stahlrahmen','Freistehend mit sicherem Standfuß','An Geländer befestigt','An vorhandener Werbekonstruktion'])+field('premiumFont316','Schriftfamilie · 7 Plakatfonts',['Anton','Bebas Neue','Oswald','League Gothic','Archivo Narrow','Barlow Condensed','Impact'])+field('premiumFit316','Textflächen-Ausnutzung',['Maximale Dominanz','Ausgewogen','Manuell'])+field('runnerPosition316','Läuferposition',['Direkt unter der Anzeige','Im Vordergrund','Zwischen Passanten','Seitlich unter der Anzeige','Gegenüberliegender Gehweg']);
 if(p.opened==='ort')body=field('group','Ortsgruppe',groups.place)+field('location','Konkreter Standort',['Automatisch',...locationPool()])+venueOverview415()+(p.location==='Balkon'?field('floor','Etage')+field('balcony','Position'):'')+(p.location==='Bäckerei'?'<label>Bäckereiname (optional)</label><input data-ps-bakery maxlength="90" value="'+esc(p.bakery)+'">':'');
 if(p.opened==='bereich')body=field('area311','Bereich',['Automatisch',...choices311('area311',p.location)])+field('ambience','Umgebung');
 if(p.opened==='befestigung')body='<div class="ps-muted">Verbindliche Auswahl aus Plakat & Text · eine gemeinsame Einstellung.</div><label>Plakattyp</label><div class="ps-chips">'+['Freistehendes XXL-Plakat bis Boden','An Fassade verankertes XXL-Banner'].concat([]).filter(v=>v===(state.sign.signType||'')).map(v=>'<span class="ps-chip on">'+esc(v)+'</span>').join('')+'</div><label>Montageart</label><div class="ps-chips">'+mountOptions416.map(v=>'<button type="button" class="ps-chip '+((state.sign.signMountChoice||mountOptions416[0])===v?'on':'')+'" data-ps-signmount="'+esc(v)+'">'+esc(v)+'</button>').join('')+'</div><label>Eigene Montagedetails</label><textarea data-ps-signmount-detail style="width:100%;min-height:72px;background:#111b24;color:white;border:1px solid #657386;border-radius:8px;padding:10px">'+esc(state.sign.signMountDetail||'')+'</textarea>';
@@ -1206,7 +1206,7 @@ function syncActive390(n){
  state.sign258.activeSceneSource267='premium';
  try{save()}catch(e){}
 }
-window.stravaDisplay316=function(){return {type:p.display316||'BLACK SIGN',camera:p.displayCam316||'STREET XXL · 35 mm · 30 m',size:p.displaySize316||'55 %',position:p.displayPosition316||'Automatisch',width:p.displayWidth316||'Automatisch',mount:p.displayMount316||'Automatisch passend zur Anzeigenart',font:p.premiumFont316||'DIN Condensed Bold',fit:p.premiumFit316||'Maximale Dominanz',crowd:p.crowd316||'Automatisch',layout:p.crowdLayout316||'Natürlich verteilt',runner:p.runnerPosition316||'Direkt unter der Anzeige'};};
+window.stravaDisplay316=function(){return {type:p.display316||'BLACK SIGN',camera:p.displayCam316||'STREET XXL · 35 mm · 30 m',size:p.displaySize316||'55 %',position:p.displayPosition316||'Automatisch',width:p.displayWidth316||'Automatisch',mount:p.displayMount316||'Automatisch passend zur Anzeigenart',font:p.posterFont||p.premiumFont316||'Anton',fit:p.premiumFit316||'Maximale Dominanz',crowd:p.crowd316||'Automatisch',layout:p.crowdLayout316||'Natürlich verteilt',runner:p.runnerPosition316||'Direkt unter der Anzeige'};};
 window.stravaEffectiveScene390=function(){if(p.selected<0)return null;return {id:sceneKey390(p.selected),original:scene(p.selected),effective:effective390(p.selected),manual:entry390(p.selected).enabled||!!Object.keys(entry390(p.selected).confirmed393||{}).length};};
 function explainScene381(c,n){
  const audience={'Keine':'Keine gezielt versammelten Zuschauer.','Klein (3–8)':'3 bis 8 deutlich sichtbare Zuschauer.','Mittel (10–25)':'10 bis 25 Zuschauer, sichtbar im Bild verteilt.','Groß (30–60)':'30 bis 60 sichtbare Zuschauer als größere Gruppe.','XXL (60–100)':'60 bis 100 sichtbare Zuschauer; eine große Menschenmenge, nicht nur einzelne Passanten.'};
@@ -1240,7 +1240,7 @@ function explainScene381(c,n){
  }).join('')+'<div style="font-size:12px;color:#aebccc;margin-top:10px">🔭 '+esc(opticalNow.lens)+' mm · 📏 '+esc(opticalNow.distance)+' m · 🖼️ '+esc(opticalNow.format)+' (Kameraeinstellungen)</div></div>';
 }
 const cardsHtml=cards.map((original,n)=>{const c=effective390(n),selected=p.selected===n,a=mountingAudit417(c);return '<div class="ps-card '+(selected?'on':'')+'" style="text-align:left;padding:12px;margin:9px 0"><button type="button" data-ps-scene="'+n+'" style="display:block;width:100%;border:0;background:transparent;color:inherit;text-align:left;padding:0;cursor:pointer"><strong>PREMIUM '+String(n+1+p.round*10).padStart(3,'0')+' · '+esc(c.title)+'</strong><small style="display:block;line-height:1.55;margin-top:7px">🪧 Anzeige: '+esc(c.display316)+'<br>📍 Ort: '+esc(c.place)+'<br>🏪 Bereich: '+esc(c.area)+'<br>🪑 Sitzfläche: '+esc(c.seat)+'<br>🔩 Befestigung: '+esc(mounting416())+'<br>🧍 Pose: '+esc(c.pose)+'<br>🪑 Requisite: '+esc(c.prop)+'<br>👴 Figuren: '+esc(c.companion)+'<br>👥 Publikum: '+esc(c.audience)+' · '+esc(c.crowdLayout316)+'<br>🎭 Aktion: '+esc(c.action)+'<br>📷 Kamera: '+esc(c.cam)+' · '+esc(c.frame)+' · Höhe '+esc(c.cameraHeight311)+' m<br>🔭 Brennweite: '+esc(optical(n).lens)+' mm · Entfernung: '+esc(optical(n).distance)+' m<br>🖼️ Bildformat: '+esc(optical(n).format)+(c.loc.includes('Balkon')?'<br>🏠 Balkonposition: '+esc(c.position):'')+'</small><div style="margin-top:8px;font-weight:800;color:#ff8753">'+(selected?'✓ AUSGEWÄHLT':'✓ SZENE ÜBERNEHMEN')+'</div></button>'+editor390(n)+(a.problems.length?'<div style="margin-top:7px;font-size:12px;color:#ffb99c">⚠ '+a.problems.map(esc).join(' · ')+'</div>':'')+explainScene381(c,n)+'</div>'}).join('');
-root.innerHTML='<div id="ps350"><div class="ps-title">🎬 PREMIUM STUDIO · V4.1.1</div><div class="ps-panel"><div class="ps-title">🎛️ EINE FILTERÜBERSICHT · DIREKT ANKLICKBAR</div>'+tiles+(p.opened?'<div style="margin-top:12px">'+body+'</div>':'')+'</div>'+summary+quickActions361+'<div id="psPremiumRecommendations391" class="ps-title">🎲 10 PREMIUM-EMPFEHLUNGEN</div>'+cardsHtml+'<button class="ps-action" data-ps-next>🔄 10 WEITERE EMPFEHLUNGEN</button><button class="ps-action" style="background:#303845;border:1px solid #677181" data-ps-reset>↺ PREMIUM-FILTER ZURÜCKSETZEN</button></div>';
+root.innerHTML='<div id="ps350"><div class="ps-title">🎬 PREMIUM STUDIO · V4.1.2</div><div class="ps-panel"><div class="ps-title">🎛️ EINE FILTERÜBERSICHT · DIREKT ANKLICKBAR</div>'+tiles+(p.opened?'<div style="margin-top:12px">'+body+'</div>':'')+'</div>'+summary+quickActions361+'<div id="psPremiumRecommendations391" class="ps-title">🎲 10 PREMIUM-EMPFEHLUNGEN</div>'+cardsHtml+'<button class="ps-action" data-ps-next>🔄 10 WEITERE EMPFEHLUNGEN</button><button class="ps-action" style="background:#303845;border:1px solid #677181" data-ps-reset>↺ PREMIUM-FILTER ZURÜCKSETZEN</button></div>';
 root.querySelectorAll('[data-ps-gaze321]').forEach(el=>el.onchange=()=>{const v=looks396();v.gaze=v.gaze||{};v.gaze[el.dataset.psGaze321]=el.value;localStorage.setItem(APPEARANCE396,JSON.stringify(v));p.last='Blickrichtung '+el.dataset.psGaze321+' → '+el.value;persist();});
 root.querySelectorAll('[data-ps-manual390]').forEach(el=>el.onchange=()=>{const n=Number(el.dataset.psManual390),e=entry390(n);e.enabled=el.checked;e.values=e.values||{};persist();draw()});
 root.querySelectorAll('[data-ps-reset390]').forEach(el=>el.onclick=()=>{const n=Number(el.dataset.psReset390);p.sceneEdits390=p.sceneEdits390||{};delete p.sceneEdits390[sceneKey390(n)];if(p.selected===n)syncActive390(n);persist();draw()});
@@ -1249,7 +1249,7 @@ root.querySelectorAll('[data-ps-signmount]').forEach(b=>b.onclick=()=>{state.sig
 const mountDetail=root.querySelector('[data-ps-signmount-detail]');if(mountDetail)mountDetail.onchange=()=>{state.sign.signMountDetail=mountDetail.value;save();persist();draw()};
 root.querySelectorAll('[data-ps-venue415]').forEach(b=>b.onclick=()=>{const loc=b.dataset.psVenue415;const group=Object.keys(places).find(g=>places[g].includes(loc))||'Gebäude & Außenbereich';const previous=p.group;p.group=group;setFilter311('location',loc);if(p.location!==loc){p.group=previous;persist();draw()}});
 root.querySelectorAll('[data-ps-lock311]').forEach(b=>b.onclick=()=>{p.locks311=p.locks311||{};const k=b.dataset.psLock311;p.locks311[k]=!p.locks311[k];if(p.locks311[k]&&(p[k]==='Automatisch'||p[k]==='SMART CINEMATIC MIX')){p.locks311[k]=false;p.last='Erst einen konkreten Wert auswählen, dann fixieren.'}persist();draw()});
-root.querySelectorAll('[data-ps-open]').forEach(b=>b.onclick=()=>{p.opened=b.dataset.psOpen;persist();draw()});
+root.querySelectorAll('[data-ps-open]').forEach(b=>b.onclick=()=>{p.opened=b.dataset.psOpen;persist();draw()});const posterJump412=root.querySelector('#psGoPoster412');if(posterJump412)posterJump412.onclick=()=>{state.tab='Plakat';save();render();window.scrollTo({top:0,behavior:'instant'})};
 root.querySelectorAll('[data-ps-key]').forEach(b=>b.onclick=()=>{const k=b.dataset.psKey,v=b.dataset.psVal;setFilter311(k,v)});
 const update361=root.querySelector('[data-ps-update361]');if(update361)update361.onclick=()=>{const y=window.scrollY;save();render();window.scrollTo(0,y);};
 const copy361=root.querySelector('[data-ps-copy361]');
@@ -1684,7 +1684,7 @@ buildPrompt=function(){
  const material=rail?'Use a securely attached textile banner or physically compatible railing-mounted rigid sign, fixed to the existing railing with believable fasteners; NO freestanding base, pole or beachflag.':/Beachflag/i.test(r.carrier)?'Use a real fabric beachflag on a flexible curved mast with a stable base; never depict a foam-board sign.':'Use a real physical sign with mounting appropriate to the selected carrier, location and gravity.';
  const pose=r.selected?val(q.position,'Natural standing pose'):val(z.runnerPose,'Natural standing pose');
  const gaze=val(s.mainGaze,'Natural gaze consistent with the scene');
- const font=val(p.posterFont,s.font||'Anton');
+ const font=val(p.posterFont||p.premiumFont316,s.font||'Anton');
  const action=r.selected?val(q.expression):val(s.mainAction);
  const out=[
  'STRAVA RUN V3.12.0 — BLACK SIGN · SMART SCENE FIDELITY',
@@ -1861,7 +1861,7 @@ function archiveBind413(){gallery413();let file=document.getElementById('a413fil
 /* V3.13.8: public GitHub Pages deployment identity, independent of local settings. */
 (function(){
  const el=document.getElementById('onlineBuild414');if(!el)return;
- const version='V4.1.1';
+ const version='V4.1.2';
  const fallback='ONLINE · '+version+' · Commit: nicht abrufbar';
  const url='https://api.github.com/repos/sergiobra7/strava/commits/main';
  const controller=new AbortController();
@@ -1890,7 +1890,7 @@ return out;
 };
 })();
 </script><script>
-/* V4.1.1: Put a single authoritative camera trio at the very start of every prompt. */
+/* V4.1.2: Put a single authoritative camera trio at the very start of every prompt. */
 (function(){
  const previous=buildPrompt;
  buildPrompt=function(){
@@ -1941,7 +1941,7 @@ window.stravaRegression318=function(){
 
 
 <script id="strava-recovery-3202">
-/* V4.1.1: recover blank views without resetting local data. */
+/* V4.1.2: recover blank views without resetting local data. */
 (function(){
  const aliases={'Schnellwahl':'Smart Director','Erweitert':'Hauptfigur','Meine Bilder':'⭐ Meine Presets','Szenen':'Szenen ⭐','Kamera & Ort':'Kamera','Wand / Plakat':'Plakat','Plakat & Text':'Plakat','Auto-Wand':'Plakat'};
  const allowed=['Smart Director','Plakat','Hauptfigur','Kamera','Szenen ⭐','⭐ Meine Presets','Nebenfiguren','Prompt','Projekt'];
