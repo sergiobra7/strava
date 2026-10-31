@@ -1858,7 +1858,7 @@ window.stravaRegression318=function(){
 #signStudio h2{margin:0 0 4px;font-size:20px;letter-spacing:.4px}
 #signStudio .sub{color:#aab4c3;font-size:12px;margin:0 0 12px}
 #signStudio textarea{display:block;width:100%;background:#0c1119;border:1px solid #475569;border-radius:10px;color:white;font-size:16px;padding:12px;resize:vertical}
-#signStudio .poster{background:#000;border:9px solid #333;margin:16px 0 10px;padding:24px 12px;min-height:320px;display:flex;flex-direction:column;justify-content:center;gap:3px;overflow:hidden}
+#signStudio .poster{background:#000;border:9px solid #333;margin:16px 0 10px;padding:5% 5%;min-height:320px;display:flex;flex-direction:column;justify-content:center;gap:3px;overflow:hidden}
 #signStudio .posterLine{font-family:Impact,'Arial Narrow',sans-serif;font-stretch:condensed;font-weight:900;font-size:clamp(16px,5.3vw,45px);line-height:1.04;overflow-wrap:anywhere}
 #signStudio .posterWord{background:none;border:2px solid transparent;border-radius:3px;padding:0 1px;cursor:pointer;font:inherit;line-height:inherit}
 #signStudio .posterWord[aria-pressed=true]{border-color:#ff7418;background:#71300b}
@@ -1900,6 +1900,7 @@ const id=index++,color=String((state.sign.wordColors||{})[id]||state.sign.signCo
 const make=(cls)=>{const b=document.createElement('button');b.type='button';b.className=cls;b.textContent=word;b.style.color=color;b.dataset.token=String(id);b.setAttribute('aria-pressed',String(selected.has(id)));b.onclick=()=>toggle(id);return b};
 row.append(make('posterWord'));list.append(make('wordChip'))}
 poster.append(row);index++}
+requestAnimationFrame(()=>{const rows=[...poster.querySelectorAll('.posterLine')];if(!rows.length)return;const available=poster.clientWidth-24;let size=Math.min(80,Math.max(18,poster.clientWidth*.13));for(let n=0;n<24;n++){rows.forEach(row=>row.style.fontSize=size+'px');const widest=Math.max(...rows.map(row=>row.scrollWidth));if(widest<=available)break;size*=.91}rows.forEach(row=>row.style.fontSize=size+'px')});
 status.textContent=selected.size+' Wörter ausgewählt · '+entries().length+' Wörter insgesamt';
 }
 field.oninput=()=>{const old=state.sign.signText||'';state.sign.signText=field.value;state.sign.wordColors=typeof window.stravaRemapWordColors318==='function'?window.stravaRemapWordColors318(old,field.value,state.sign.wordColors||{}):{};selected.clear();persist();paint()};
