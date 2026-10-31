@@ -95,7 +95,7 @@ test('Prompt tab displays current colors and copy control',async({page})=>{
  await page.locator('#studioColors [data-color="#FF0000"]').click();
  await page.locator('#tabs [data-tab="Prompt"]').click();
  await expect(page.locator('#restoredPromptText')).toBeVisible();
- await expect(page.locator('#restoredPromptText')).toHaveValue(/\\[1\\|SCHNELL\\|#FF0000\\]/);
+ await expect(page.locator('#restoredPromptText')).toHaveValue(/\[1\|SCHNELL\|#FF0000\]/);
  await expect(page.locator('#restoredPromptCopy')).toBeVisible();
  expect(errors).toEqual([]);
 });
