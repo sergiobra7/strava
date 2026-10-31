@@ -2088,6 +2088,10 @@ function physicalWarnings422(v){
  if(v.mount==='Freistehende Werbetafel'&&v.ground==='Keine Bodenstützen')add('Freistehende Werbetafel benötigt Bodenstützen.');
  if(!poseCompatible424(v.pose,v.venue))add('Pose passt nicht zur vorhandenen Architektur oder Sitzfläche: '+v.pose+'.');
  if(!positionCompatible425(v.runnerPosition,v.venue,v.pose))add('Position des Läufers passt nicht zur aktiven Pose oder vorhandenen Architektur: '+v.runnerPosition+'.');
+ const position=positionByName425.get(v.runnerPosition);
+ if(position&&position.zone==='front'&&['Hinterer Mittelgrund','Hintergrund'].includes(v.runnerDepth))add('Vordergrundposition widerspricht hinterer manueller Tiefenebene.');
+ if(position&&position.zone==='rear'&&['Vordergrund','Vorderer Mittelgrund'].includes(v.runnerDepth))add('Hintere Läuferposition widerspricht vorderer manueller Tiefenebene.');
+ if(position&&['Links','Rechts'].includes(position.side)&&['Links','Rechts'].includes(v.runnerSide)&&position.side!==v.runnerSide)add('Gewählte Läuferseite widerspricht der ausdrücklich links/rechts benannten Position.');
  if(['800–1500','1500+'].includes(v.count)&&!has('X')&&!v.venue.includes('Dachterrasse')&&!v.venue.includes('Promenade'))add('Große Menschenmengen benötigen einen ausreichend großen angrenzenden öffentlichen Platz.');
  if(v.dynamics==='Ruhig geordnet'&&v.gestures==='Lebendige Demonstrationsgestik')add('Ruhige Menge widerspricht Demonstrationsgestik.');
  if(v.irregularity==='Geordnet'&&v.dynamics==='Spontaner Auflauf / organisches Chaos')add('Geordnete Menge widerspricht organischem Chaos.');
@@ -2110,6 +2114,7 @@ function matrixAudit422(){
 
 const defaults={enabled:true,values:{},locks:{},notes:{},selectedScene:-1,compositionIndex:0};
 for(const [g,def] of Object.entries(groups))for(const [k,opts] of Object.entries(def.fields))defaults.values[k]=opts[0];
+defaults.values.runnerPosition='Im Mittelgrund integriert'; // Existing saved V4.2.4 users retain integrated placement rather than unexpected foreground.
 let data;try{data=Object.assign({},defaults,JSON.parse(localStorage.getItem(KEY)||'{}'));}catch{data={...defaults}}data.values={...defaults.values,...data.values};data.locks=data.locks||{};data.notes=data.notes||{};
 const escapeHtml=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const persist=()=>{try{localStorage.setItem(KEY,JSON.stringify(data))}catch(e){console.warn('Signature save failed',e)}};
