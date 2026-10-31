@@ -4,6 +4,7 @@ async function openStudio(page){
  const errors=[];page.on('pageerror',e=>errors.push(e.message));
  await page.goto('http://127.0.0.1:8765/test/index.html?v=ci',{waitUntil:'domcontentloaded'});
  await page.locator('[data-world="sign"]').click();
+ console.log('NAV DIAG',await page.evaluate(()=>({world:state.world,tab:state.tab,tabs:document.querySelector('#tabs')?.innerText,view:document.querySelector('#view')?.innerText.slice(0,250)})),errors.slice(0,5));
  await page.locator('#tabs [data-tab="Plakat"]').click({timeout:3000});
  await expect(page.locator('#signStudio')).toBeVisible();
  return errors;
