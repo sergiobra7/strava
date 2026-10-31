@@ -176,7 +176,7 @@ controls+=accordion('NF-OUT · Fertige Looks und individuelle Kleidung',`<div cl
 
 h+=accordion(`${premium?'★ PREMIUM · ':''}${esc(f.type)} · ${esc(f.uid||'NF-'+(i+1))} ${f.enabled?'✓':'(aus)'}`,controls+`<button class="btn ghost" data-remove258="${i}">Figur entfernen</button>`,i===0)});return h}
 /* Canonical indices: identical to stravaSignColorMap318 (whitespace tokens included). */
-function words258(){const t=state.sign.signText||'',parts=String(t).split(/(\\s+)/);let pos=0,arr=[];parts.forEach((word,idx)=>{if(word&&!/^\\s+$/.test(word))arr.push({word,idx,pos});pos+=word.length});return arr}
+function words258(){const t=state.sign.signText||'',parts=String(t).split(/(\s+)/);let pos=0,arr=[];parts.forEach((word,idx)=>{if(word&&!/^\s+$/.test(word))arr.push({word,idx,pos});pos+=word.length});return arr}
 function migrateWordColors258(){
  const sign=state.sign||{},key='strava-word-index-v3227',signature=String(sign.signText||'');
  let marker;try{marker=JSON.parse(localStorage.getItem(key)||'null')}catch{}
