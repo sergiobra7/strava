@@ -17,4 +17,5 @@ const poster=document.getElementById('studioPoster');const observer=new Mutation
 const original=window.stravaMountStudio400;window.stravaMountStudio400=function(){original?.();requestAnimationFrame(mount)};
 const base=buildPrompt;buildPrompt=function(){const p=base();if(state.world!=='sign')return p;const c=get();return p+'\n\nSIGN READABILITY LAYOUT: Preserve the exact manual line breaks, word colors and reading order. No clipping or tiny letters. Relative line sizes: '+lines().map((line,i)=>'LINE '+(i+1)+' '+Math.round((Number(c.sizes?.[i])||1)*100)+'% maximum fit').join('; ')+'. The punchline must be visually strong and the text readable at a distance.'};
 window.stravaLayoutAuditV1=()=>({mounted:!!document.getElementById('layoutPanelV1'),lines:lines().length,prompt:buildPrompt().includes('SIGN READABILITY LAYOUT')});requestAnimationFrame(mount);
+let checks=0;const timer=setInterval(()=>{if(++checks>120){clearInterval(timer);return}try{mount()}catch(err){console.error('Layout mount:',err)}},500);
 })();
