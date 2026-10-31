@@ -1930,4 +1930,10 @@ window.stravaSignStudioAudit=()=>({visible:!!document.getElementById('signStudio
 requestAnimationFrame(mountStudio);
 })();
 </script>
+<script id="restored-prompt-bind">
+(function(){
+const prev=render;
+render=function(){const value=prev();if(state.tab==='Prompt')requestAnimationFrame(()=>{const area=document.getElementById('restoredPromptText'),copy=document.getElementById('restoredPromptCopy');if(!area||!copy)return;try{area.value=buildPrompt()}catch(e){area.value='Promptfehler: '+e.message}copy.onclick=async()=>{area.value=buildPrompt();try{await navigator.clipboard.writeText(area.value)}catch(e){area.select();document.execCommand('copy')}copy.textContent='KOPIERT'}});return value};
+})();
+</script>
 </body></html>
