@@ -1936,4 +1936,28 @@ const prev=render;
 render=function(){const value=prev();if(state.tab==='Prompt')requestAnimationFrame(()=>{const area=document.getElementById('restoredPromptText'),copy=document.getElementById('restoredPromptCopy');if(!area||!copy)return;try{area.value=buildPrompt()}catch(e){area.value='Promptfehler: '+e.message}copy.onclick=async()=>{area.value=buildPrompt();try{await navigator.clipboard.writeText(area.value)}catch(e){area.select();document.execCommand('copy')}copy.textContent='KOPIERT'}});return value};
 })();
 </script>
+<script id="sign-studio-navigation-fix">
+(function(){
+const original=render;
+const signOrder=['Smart Director','Plakat','Hauptfigur','Kamera & Ort','Prompt','Nebenfiguren','Szenen','Schnellwahl','⭐ Meine Presets','Projekt','Meine Bilder'];
+const alias={'Kamera & Ort':'Ort & Kamera','Projekt':'Prompt & Projekt'};
+render=function(){
+if(state.world!=='sign')return original();
+const wanted=state.tab;
+if(alias[wanted])state.tab=alias[wanted];
+original();
+state.tab=wanted;
+if(wanted==='Prompt'){
+ const v=document.getElementById('view');if(v)v.innerHTML=promptView();
+ requestAnimationFrame(()=>{const a=document.getElementById('restoredPromptText'),b=document.getElementById('restoredPromptCopy');if(!a||!b)return;a.value=buildPrompt();b.onclick=async()=>{a.value=buildPrompt();try{await navigator.clipboard.writeText(a.value)}catch(e){a.select();document.execCommand('copy')}b.textContent='KOPIERT'}});
+}
+const tabs=document.getElementById('tabs');
+if(tabs){
+ tabs.innerHTML=signOrder.map(t=>'<button class="tab '+(wanted===t?'active':'')+'" data-tab="'+t+'">'+t+'</button>').join('');
+ tabs.querySelectorAll('[data-tab]').forEach(btn=>btn.onclick=()=>{state.tab=btn.dataset.tab;save();render()});
+}
+};
+render();
+})();
+</script>
 </body></html>
