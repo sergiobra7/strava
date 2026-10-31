@@ -104,10 +104,10 @@ test('Turkish letters preserve word identity, colors, and reload export',async({
  const errors=await openStudio(page);
  await page.locator('#studioText').fill('İĞÜŞÖÇ ıgüşöç\nÇAĞRI TÜRKİYE');
  await page.locator('#studioWords [data-token="0"]').click();
- await page.locator('#studioWords [data-token="6"]').click();
+ await page.locator('#studioWords [data-token="4"]').click();
  await page.locator('#studioColors [data-color="#FF0000"]').click();
  await expect(page.locator('#studioPoster [data-token="0"]')).toHaveText('İĞÜŞÖÇ');
- await expect(page.locator('#studioPoster [data-token="6"]')).toHaveCSS('color','rgb(255, 0, 0)');
+ await expect(page.locator('#studioPoster [data-token="4"]')).toHaveCSS('color','rgb(255, 0, 0)');
  await page.reload();
  await page.locator('#tabs [data-tab="Plakat"]').click();
  await expect(page.locator('#studioText')).toHaveValue('İĞÜŞÖÇ ıgüşöç\nÇAĞRI TÜRKİYE');
