@@ -4,7 +4,8 @@ async function openStudio(page){
  const errors=[];page.on('pageerror',e=>errors.push(e.message));
  await page.goto('http://127.0.0.1:8765/test/index.html?v=ci',{waitUntil:'domcontentloaded'});
  await page.locator('[data-world="sign"]').click();
- await page.locator('#tabs [data-tab="Plakat"]').click();
+ console.log('AFTER WORLD',await page.evaluate(()=>({world:state.world,tab:state.tab,tabs:document.getElementById('tabs')?.innerText,view:document.getElementById('view')?.innerText.slice(0,300)})),errors);
+ await page.locator('#tabs [data-tab="Plakat"]').click({timeout:3000});
  await expect(page.locator('#signStudio')).toBeVisible();
  return errors;
 }
