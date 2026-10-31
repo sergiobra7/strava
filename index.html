@@ -14,7 +14,7 @@
 #premiumPanel270 > #premiumCards270{display:block!important}
 #premiumPanel270 > #refreshPremium270{display:block!important;margin:14px 0}
 #premiumPanel270 #allSettings339,#premiumPanel270 #master320,#premiumPanel270 #premiumEditor270,#premiumPanel270 #premiumCast311,#premiumPanel270 #manualRegie328,#premiumPanel270 #premiumActiveFilters340{display:none!important}
-</style><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Anton&family=Archivo+Black&family=Archivo+Narrow:wght@900&family=Barlow+Condensed:wght@800;900&family=Bebas+Neue&family=League+Gothic&family=Oswald:wght@700&family=Roboto+Condensed:wght@900&family=Teko:wght@700&display=swap" rel="stylesheet"></head><body><header><div><h1>STRAVA RUN <span class="mark">V4.2.2</span></h1><small>RUNNER PHOTO + STRAVA WALL · GITHUB EDITION</small><div id="onlineBuild414" style="font-size:12px;color:#a8c6b8;margin-top:5px;font-weight:700" aria-label="Online-Version">ONLINE · V4.2.2 · Commit wird geprüft …</div></div><div style="display:flex;align-items:center;gap:9px;flex-wrap:wrap;justify-content:flex-end"><span id="saveStatus" class="status">Lokal gespeichert</span><button id="stravaRefresh401" type="button" title="Neueste GitHub-Version laden" style="background:#2cbd79;color:#101510;border:0;border-radius:9px;padding:10px 13px;font-weight:800;cursor:pointer">🔄 Aktualisieren</button></div></header><main><div class="worlds"><button class="world active" data-world="wall">🧱 STRAVA WALL</button><button class="world" data-world="sign">⬛ BLACK SIGN / PLAKAT</button></div><div style="display:flex;align-items:center;justify-content:space-between;gap:10px;margin:9px 0"><button id="presetShortcut403" type="button" style="background:#f2bd49;color:#151515;border:2px solid #f8d57b;border-radius:10px;padding:12px 16px;font-size:15px;font-weight:900;cursor:pointer;flex:1">⭐ MEINE PRESETS · GALERIE ÖFFNEN</button></div><section id="presetDirect404" hidden style="margin:14px 0;padding:14px;border:2px solid #f2bd49;border-radius:14px;background:#151a21"></section><nav class="tabs" id="tabs"></nav><div id="view"></div><div class="footer">Lokale Offline-Web-App · Keine Bilder werden an einen Server gesendet · Prompt zum Kopieren für ChatGPT/Bildgenerierung</div></main><script>
+</style><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Anton&family=Archivo+Black&family=Archivo+Narrow:wght@900&family=Barlow+Condensed:wght@800;900&family=Bebas+Neue&family=League+Gothic&family=Oswald:wght@700&family=Roboto+Condensed:wght@900&family=Teko:wght@700&display=swap" rel="stylesheet"></head><body><header><div><h1>STRAVA RUN <span class="mark">V4.2.3</span></h1><small>RUNNER PHOTO + STRAVA WALL · GITHUB EDITION</small><div id="onlineBuild414" style="font-size:12px;color:#a8c6b8;margin-top:5px;font-weight:700" aria-label="Online-Version">ONLINE · V4.2.3 · Commit wird geprüft …</div></div><div style="display:flex;align-items:center;gap:9px;flex-wrap:wrap;justify-content:flex-end"><span id="saveStatus" class="status">Lokal gespeichert</span><button id="stravaRefresh401" type="button" title="Neueste GitHub-Version laden" style="background:#2cbd79;color:#101510;border:0;border-radius:9px;padding:10px 13px;font-weight:800;cursor:pointer">🔄 Aktualisieren</button></div></header><main><div class="worlds"><button class="world active" data-world="wall">🧱 STRAVA WALL</button><button class="world" data-world="sign">⬛ BLACK SIGN / PLAKAT</button></div><div style="display:flex;align-items:center;justify-content:space-between;gap:10px;margin:9px 0"><button id="presetShortcut403" type="button" style="background:#f2bd49;color:#151515;border:2px solid #f8d57b;border-radius:10px;padding:12px 16px;font-size:15px;font-weight:900;cursor:pointer;flex:1">⭐ MEINE PRESETS · GALERIE ÖFFNEN</button></div><section id="presetDirect404" hidden style="margin:14px 0;padding:14px;border:2px solid #f2bd49;border-radius:14px;background:#151a21"></section><nav class="tabs" id="tabs"></nav><div id="view"></div><div class="footer">Lokale Offline-Web-App · Keine Bilder werden an einen Server gesendet · Prompt zum Kopieren für ChatGPT/Bildgenerierung</div></main><script>
 /* V3.18 stabilization: one color serializer shared by prompt sections. */
 window.stravaSignColorMap318=function(sign){
  const source=sign||{},raw=String(source.signText||''),colors=source.wordColors||{},base=String(source.signColor||'#FFFFFF').toUpperCase();
@@ -103,12 +103,12 @@ function appearancePrompt396(cast){
  return out;
 }
 
-/* V4.2.2: Full independent BLACK SIGN poster editor, no dependency on retired modules. */
+/* V4.2.3: Full independent BLACK SIGN poster editor, no dependency on retired modules. */
 function fullPosterView321(){
  const v=state.sign||{},p=(()=>{try{return JSON.parse(localStorage.getItem('stravaPoster321')||'{}')||{}}catch(e){return {}}})();
  const font=Number(p.size)||56,align=p.align||'center';
  return '<section class="panel" id="poster321"><h2>⬛ PLAKAT · VOLLSTÄNDIGER EDITOR</h2>'+
- '<div style="padding:10px 12px;border:2px solid #69cf9b;border-radius:9px;margin-bottom:14px"><b>NEUER FARBEDITOR · V4.2.2</b><div style="font-size:12px">7 Schriftarten · automatische Textfeldhöhe · Meine Texte/Favoriten · Farbspeicherung</div></div>'+ 
+ '<div style="padding:10px 12px;border:2px solid #69cf9b;border-radius:9px;margin-bottom:14px"><b>NEUER FARBEDITOR · V4.2.3</b><div style="font-size:12px">7 Schriftarten · automatische Textfeldhöhe · Meine Texte/Favoriten · Farbspeicherung</div></div>'+ 
  '<label>Plakattext · Zeilenumbrüche exakt übernehmen</label><textarea id="posterText321" rows="11" style="width:100%;font-size:18px;line-height:1.5;resize:none;overflow-y:hidden;min-height:220px" aria-label="Plakattext vollständig sichtbar"></textarea>'+
  '<div class="grid"><div class="field"><label>Schriftgröße (12–120)</label><input id="posterSize321" type="range" min="12" max="120" value="'+font+'"><input id="posterSizeNumber321" type="number" min="12" max="120" value="'+font+'"></div>'+
  '<div class="field"><label>Schriftart</label><select id="posterFont321"><option value="Anton">Anton · Standard</option><option value="Bebas Neue">Bebas Neue</option><option value="Oswald">Oswald Bold</option><option value="League Gothic">League Gothic</option><option value="Archivo Narrow">Archivo Narrow Black</option><option value="Barlow Condensed">Barlow Condensed ExtraBold</option><option value="Impact">Impact · Klassiker</option></select></div>'+
@@ -156,7 +156,7 @@ function bindFullPoster321(){
  const keep=el('posterKeepColors421'),store=el('posterStoreColors421');keep.checked=localStorage.getItem('strava-colors-persist-421')==='on';store.disabled=!keep.checked;keep.onchange=()=>{localStorage.setItem('strava-colors-persist-421',keep.checked?'on':'off');store.disabled=!keep.checked;save();el('posterStatus321').textContent=keep.checked?'✓ Dauerhafte Farbspeicherung aktiviert.':'Farbspeicherung deaktiviert: Aktuelle Farben bleiben bis zum Neuladen sichtbar.'};store.onclick=()=>{if(!keep.checked)return;save();el('posterStatus321').textContent='✓ Aktuelle Wortfarben dauerhaft gespeichert.'};
  el('posterSave321').onclick=()=>{persist();el('posterStatus321').textContent='✓ Plakattext, Schrift und Layout übernommen. Farbwahl nur mit aktivem Haken dauerhaft gespeichert.'};
 
- /* V4.2.2 text favorites use independent browser storage: explicit favorite saves always
+ /* V4.2.3 text favorites use independent browser storage: explicit favorite saves always
     include word colors, even if the editor's ordinary color-persistence toggle is OFF. */
  const FAVORITES430='strava-text-favorites-430';
  const favSelect=el('favSelect430'),favStatus=el('favStatus430');
@@ -221,7 +221,7 @@ function bindFullPoster321(){
 }
 
 
-/* V4.2.2: Make the large live preview the color authority at prompt generation. */
+/* V4.2.3: Make the large live preview the color authority at prompt generation. */
 function syncPosterPreviewColors321(){
  const smart=document.getElementById('psPreviewHost355');
  if(smart&&state.world==='sign'){
@@ -265,7 +265,7 @@ function syncPosterPreviewColors321(){
  if(mapped.words.some(x=>colors[x.index]!==x.color))throw Error('Plakat-Farbprüfung fehlgeschlagen.');
  save();
 }
-/* V4.2.2: Restore missing core prompt and view entry points before extension scripts load. */
+/* V4.2.3: Restore missing core prompt and view entry points before extension scripts load. */
 function buildPrompt(){
  const c=state.common||{},w=state.wall||{},z=state.sign||{};
  const lines=['STRAVA RUN — '+(state.world==='sign'?'BLACK SIGN / PLAKAT':'STRAVA WALL'),
@@ -1241,7 +1241,7 @@ function explainScene381(c,n){
  }).join('')+'<div style="font-size:12px;color:#aebccc;margin-top:10px">🔭 '+esc(opticalNow.lens)+' mm · 📏 '+esc(opticalNow.distance)+' m · 🖼️ '+esc(opticalNow.format)+' (Kameraeinstellungen)</div></div>';
 }
 const cardsHtml=cards.map((original,n)=>{const c=effective390(n),selected=p.selected===n,a=mountingAudit417(c);return '<div class="ps-card '+(selected?'on':'')+'" style="text-align:left;padding:12px;margin:9px 0"><button type="button" data-ps-scene="'+n+'" style="display:block;width:100%;border:0;background:transparent;color:inherit;text-align:left;padding:0;cursor:pointer"><strong>PREMIUM '+String(n+1+p.round*10).padStart(3,'0')+' · '+esc(c.title)+'</strong><small style="display:block;line-height:1.55;margin-top:7px">🪧 Anzeige: '+esc(c.display316)+'<br>📍 Ort: '+esc(c.place)+'<br>🏪 Bereich: '+esc(c.area)+'<br>🪑 Sitzfläche: '+esc(c.seat)+'<br>🔩 Befestigung: '+esc(mounting416())+'<br>🧍 Pose: '+esc(c.pose)+'<br>🪑 Requisite: '+esc(c.prop)+'<br>👴 Figuren: '+esc(c.companion)+'<br>👥 Publikum: '+esc(c.audience)+' · '+esc(c.crowdLayout316)+'<br>🎭 Aktion: '+esc(c.action)+'<br>📷 Kamera: '+esc(c.cam)+' · '+esc(c.frame)+' · Höhe '+esc(c.cameraHeight311)+' m<br>🔭 Brennweite: '+esc(optical(n).lens)+' mm · Entfernung: '+esc(optical(n).distance)+' m<br>🖼️ Bildformat: '+esc(optical(n).format)+(c.loc.includes('Balkon')?'<br>🏠 Balkonposition: '+esc(c.position):'')+'</small><div style="margin-top:8px;font-weight:800;color:#ff8753">'+(selected?'✓ AUSGEWÄHLT':'✓ SZENE ÜBERNEHMEN')+'</div></button>'+editor390(n)+(a.problems.length?'<div style="margin-top:7px;font-size:12px;color:#ffb99c">⚠ '+a.problems.map(esc).join(' · ')+'</div>':'')+explainScene381(c,n)+'</div>'}).join('');
-root.innerHTML='<div id="ps350"><div class="ps-title">🎬 PREMIUM STUDIO · V4.2.2</div><div class="ps-panel"><div class="ps-title">🎛️ EINE FILTERÜBERSICHT · DIREKT ANKLICKBAR</div>'+tiles+(p.opened?'<div style="margin-top:12px">'+body+'</div>':'')+'</div>'+summary+quickActions361+'<div id="psPremiumRecommendations391" class="ps-title">🎲 10 PREMIUM-EMPFEHLUNGEN</div>'+cardsHtml+'<button class="ps-action" data-ps-next>🔄 10 WEITERE EMPFEHLUNGEN</button><button class="ps-action" style="background:#303845;border:1px solid #677181" data-ps-reset>↺ PREMIUM-FILTER ZURÜCKSETZEN</button></div>';
+root.innerHTML='<div id="ps350"><div class="ps-title">🎬 PREMIUM STUDIO · V4.2.3</div><div class="ps-panel"><div class="ps-title">🎛️ EINE FILTERÜBERSICHT · DIREKT ANKLICKBAR</div>'+tiles+(p.opened?'<div style="margin-top:12px">'+body+'</div>':'')+'</div>'+summary+quickActions361+'<div id="psPremiumRecommendations391" class="ps-title">🎲 10 PREMIUM-EMPFEHLUNGEN</div>'+cardsHtml+'<button class="ps-action" data-ps-next>🔄 10 WEITERE EMPFEHLUNGEN</button><button class="ps-action" style="background:#303845;border:1px solid #677181" data-ps-reset>↺ PREMIUM-FILTER ZURÜCKSETZEN</button></div>';
 root.querySelectorAll('[data-ps-gaze321]').forEach(el=>el.onchange=()=>{const v=looks396();v.gaze=v.gaze||{};v.gaze[el.dataset.psGaze321]=el.value;localStorage.setItem(APPEARANCE396,JSON.stringify(v));p.last='Blickrichtung '+el.dataset.psGaze321+' → '+el.value;persist();});
 root.querySelectorAll('[data-ps-manual390]').forEach(el=>el.onchange=()=>{const n=Number(el.dataset.psManual390),e=entry390(n);e.enabled=el.checked;e.values=e.values||{};persist();draw()});
 root.querySelectorAll('[data-ps-reset390]').forEach(el=>el.onclick=()=>{const n=Number(el.dataset.psReset390);p.sceneEdits390=p.sceneEdits390||{};delete p.sceneEdits390[sceneKey390(n)];if(p.selected===n)syncActive390(n);persist();draw()});
@@ -1862,7 +1862,7 @@ function archiveBind413(){gallery413();let file=document.getElementById('a413fil
 /* V3.13.8: public GitHub Pages deployment identity, independent of local settings. */
 (function(){
  const el=document.getElementById('onlineBuild414');if(!el)return;
- const version='V4.2.2';
+ const version='V4.2.3';
  const fallback='ONLINE · '+version+' · Commit: nicht abrufbar';
  const url='https://api.github.com/repos/sergiobra7/strava/commits/main';
  const controller=new AbortController();
@@ -1891,7 +1891,7 @@ return out;
 };
 })();
 </script><script>
-/* V4.2.2: Put a single authoritative camera trio at the very start of every prompt. */
+/* V4.2.3: Put a single authoritative camera trio at the very start of every prompt. */
 (function(){
  const previous=buildPrompt;
  buildPrompt=function(){
@@ -1942,7 +1942,7 @@ window.stravaRegression318=function(){
 
 
 <script id="strava-recovery-3202">
-/* V4.2.2: recover blank views without resetting local data. */
+/* V4.2.3: recover blank views without resetting local data. */
 (function(){
  const aliases={'Schnellwahl':'Smart Director','Erweitert':'Hauptfigur','Meine Bilder':'⭐ Meine Presets','Szenen':'Szenen ⭐','Kamera & Ort':'Kamera','Wand / Plakat':'Plakat','Plakat & Text':'Plakat','Auto-Wand':'Plakat'};
  const allowed=['Smart Director','Plakat','Hauptfigur','Kamera','Szenen ⭐','⭐ Meine Presets','Nebenfiguren','Prompt','Projekt'];
@@ -1975,6 +1975,20 @@ window.stravaRegression318=function(){
 (function(){
 'use strict';
 const KEY='strava-signature-xxl-v400';
+const venueCatalog423=[["Breite Einkaufsstraße","City","BFSWX"],["Großer Marktplatz","City","FSWPX"],["Bahnhofsvorplatz","Verkehr","FSWPX"],["Bäckerei an breiter Straße","City","BFSWX"],["Markthalle mit Vorplatz","City","FSWPX"],["Einkaufspark-Promenade","Shopping","FSWPX"],["Dachterrasse über Fußgängerzone","Höhe","BFSWP"],["Industriefassade an Platz","Industrial","FSWPX"],["Stadionvorplatz mit Tribünenaufgang","Sport & Events","FSWPX"],["Arena-Eingang mit LED-Fassade","Sport & Events","FSWPX"],["Fußballstadion-Promenade","Sport & Events","FSWPX"],["Messezentrum Glasfassade","Sport & Events","FSWPX"],["Konzertarena-Freitreppe","Sport & Events","FSWPX"],["Open-Air-Bühnenvorplatz","Sport & Events","WPX"],["Sportplatz-Tribünenzugang","Sport & Events","FSWPX"],["Großparkplatz vor Supermarkt","Shopping","FPX"],["Parkhaus-Auffahrt und Vorplatz","Shopping","FSWPX"],["Shopping-Center Haupteingang","Shopping","BFSWPX"],["Baumarkt-Vorplatz","Shopping","FPX"],["Autokino-Parkplatz","Shopping","FPX"],["Einkaufsarkade mit Galerie","Shopping","BFSW"],["Straßenbahn-Knotenpunkt","Verkehr","FSWX"],["Busbahnhof mit Überdachung","Verkehr","FSWPX"],["U-Bahn-Ausgang mit Freitreppe","Verkehr","FSW"],["Flughafen-Terminalvorplatz","Verkehr","FSWPX"],["Fährterminal-Promenade","Verkehr","FSWPX"],["Altstadt-Torplatz","Architektur","FSWPX"],["Rathaus-Freitreppe","Architektur","FSWPX"],["Brutalistische Betonterrassen","Architektur","BFSWPX"],["Hochhaus-Plaza mit Glasfassade","Architektur","FSWPX"],["Innenstadt-Unterführung","Architektur","FSW"],["Brückenplatz mit Betonpfeilern","Architektur","FSWPX"],["Universitätscampus mit Freitreppe","Campus & Kultur","FSWPX"],["Bibliotheks-Vorplatz","Campus & Kultur","FSWPX"],["Kongresszentrum-Freitreppe","Campus & Kultur","FSWPX"],["Kulturzentrum mit Arkaden","Campus & Kultur","BFSWPX"],["Kino-Premierenplatz","Freizeit","FSWPX"],["Freiluft-Amphitheater","Freizeit","SWP"],["Volksfest-Eingangsplatz","Freizeit","FWPX"],["Freizeitpark-Eingangsallee","Freizeit","BFSWPX"],["City-Skatepark mit Betonstufen","Freizeit","SWP"],["Hafenpromenade mit Lagerhaus","Wasser & Promenade","FSWPX"],["Rheinpromenade mit Treppenstufen","Wasser & Promenade","SWPX"],["Strandpromenade mit Hotelbalkonen","Wasser & Promenade","BFSWPX"],["Marina-Vorplatz mit Promenadentreppe","Wasser & Promenade","FSWPX"],["Baustellenzaun am Stadtplatz","Industrial","FSWPX"],["Containerterminal-Vorplatz","Industrial","FSWPX"],["Backsteinfabrik mit Hof","Industrial","BFSWPX"],["Logistikzentrum-Eingangsplatz","Industrial","FSWPX"]].map(([name,category,features])=>({name,category,features}));
+const venueByName423=new Map(venueCatalog423.map(x=>[x.name,x]));
+function venueCategories423(){return [...new Set(venueCatalog423.map(x=>x.category))]}
+function locationDirection423(name){
+ const p=venueByName423.get(name);if(!p)return 'Preserve real architecture; do not invent supports or accessible space.';
+ const notes=[];
+ if(p.features.includes('B'))notes.push('a real safe balcony or gallery may be used when the chosen pose requires one');
+ if(p.features.includes('F'))notes.push('real facade mounting is feasible');
+ if(p.features.includes('S'))notes.push('real stairs may support a seated step pose');
+ if(p.features.includes('W'))notes.push('a wide real wall may support a wall sitting pose');
+ if(p.features.includes('P'))notes.push('a real safe platform may be used');
+ if(p.features.includes('X'))notes.push('an expansive outdoor public area can hold a large audience');
+ return 'VENUE GEOMETRY LOCK: '+name+'. Architecturally plausible setting: '+notes.join('; ')+'. Respect the exact selected mount and pose; never fabricate missing balcony, staircase, wall or stand. '+(name.includes('Dachterrasse')?'Show a genuinely elevated terrace; the mass of spectators stays on the street below, not packed onto the rooftop.':'Make spectator positions follow the available public-space depth.')+' Use neutral fictional signage, no actual company marks. Camera and text remain unchanged.';
+}
 const groups={
  message:{label:'01 · MEINE XXL-BOTSCHAFT',fields:{
   dominance:['SIGNATURE TEXT FIRST','Monumental','XXL','Groß','Normal'],
@@ -1994,7 +2008,7 @@ const groups={
   reaction:['Schock + Verwirrung + Überraschung','Ungläubiges Staunen','Empört + diskutierend','Neugierig + verwirrt','Ungläubig lachend','Gemischte Reaktionen'],dynamics:['Demonstrativ dynamisch','Spontaner Auflauf / organisches Chaos','Leicht unruhig','Natürlich belebt','Ruhig geordnet'],gestures:['Sichtbare natürliche Gestik','Lebendige Demonstrationsgestik','Leichte Gestik','Kaum Gestik'],irregularity:['Organisch chaotisch','Locker verdichtet','Natürlich gemischt','Geordnet'],overlap:['Mittel bis hoch','Hoch','Mittel','Gering'],interactions:['Natürlich vorhanden','Etwas','Wenig','Keine']
  }},
  setting:{label:'04 · ORT & ARCHITEKTUR',fields:{
-  venue:['Breite Einkaufsstraße','Großer Marktplatz','Bahnhofsvorplatz','Bäckerei an breiter Straße','Markthalle mit Vorplatz','Einkaufspark-Promenade','Dachterrasse über Fußgängerzone','Industriefassade an Platz']
+  venue:venueCatalog423.map(x=>x.name)
  }}
 };
 const labels={dominance:'Textdominanz',mount:'Befestigung / Anzeigemittel',relation:'Position zur Botschaft',ground:'Bodenstützen',pose:'Körperhaltung / Pose',expression:'Mimik',gaze:'Blickrichtung',count:'Menschenanzahl',density:'Menschendichte',attention:'Aufmerksamkeit auf Botschaft und Demonstrant',reaction:'Publikumsreaktion',dynamics:'Publikumsdynamik',gestures:'Gestik-Level',irregularity:'Crowd-Unordnung',overlap:'Körperüberlappung',interactions:'Nebeninteraktionen',venue:'Ort'};
@@ -2017,26 +2031,31 @@ function buildRecommendation422(p,variant){
  if(variant===2){Object.assign(v,{dynamics:'Demonstrativ dynamisch',expression:i%2?'Herausfordernd':'Provokantes Grinsen',gaze:'Direkt in die Kamera',reaction:'Empört + diskutierend',gestures:'Lebendige Demonstrationsgestik',irregularity:'Organisch chaotisch',overlap:'Mittel bis hoch',interactions:'Natürlich vorhanden'});}
  if(i===3&&variant===2){v.mount='XXL-LED-Wand';v.relation='Seitlich erhöht';}
  if(i===7&&variant===2){v.mount='Freistehende Werbetafel';v.ground='Bodenstützen zulassen';v.relation='Seitlich erhöht';}
+ if([11,19].includes(i))v.ground='Bodenstützen zulassen';
  return {title:p.title+[' · Original',' · Publikumsfokus',' · Provokanter Auftritt'][variant],values:v,compositionIndex:(i*2+variant)%6};
 }
+const additionalProfiles423=[["Stadion-Massenprotest","Mehrgeschossiges Fassadenbanner","Unterhalb","Auf Treppenabsatz sitzend","Stadionvorplatz mit Tribünenaufgang","Herausfordernd","Zur Menschenmenge","800–1500","Massenauflauf","90 %","Empört + diskutierend"],["Messe-Glasfront XXL","XXL-LED-Wand","Seitlich erhöht","Breitbeinig stehend","Messezentrum Glasfassade","Eiskalt ernst","Direkt in die Kamera","800–1500","Sehr dicht","85 %","Gemischte Reaktionen"],["Parkhaus-Konfrontation","Abgehängtes XXL-Plakat","Oberhalb","Lässig auf breiter Mauer sitzend","Parkhaus-Auffahrt und Vorplatz","Provokantes Grinsen","Zur Menschenmenge","500–800","Sehr dicht","85 %","Empört + diskutierend"],["Supermarkt-Parkplatz XXL","Freistehende Werbetafel","Seitlich erhöht","Breitbeinig stehend","Großparkplatz vor Supermarkt","Provokantes Grinsen","Direkt in die Kamera","250–500","Dicht","85 %","Ungläubiges Staunen"],["Terminal-Protest","Mehrgeschossiges Fassadenbanner","Unterhalb","Auf Treppenabsatz sitzend","Flughafen-Terminalvorplatz","Gelassen","Zur Menschenmenge","800–1500","Massenauflauf","90 %","Gemischte Reaktionen"],["Rathaus-Freitreppe","Abgehängtes XXL-Plakat","Oberhalb","Auf Treppenabsatz sitzend","Rathaus-Freitreppe","Herausfordernd","Direkt in die Kamera","800–1500","Sehr dicht","85 %","Empört + diskutierend"],["Campus-Aufruhr","Auslegerbanner","Seitlich erhöht","Lässig auf breiter Mauer sitzend","Universitätscampus mit Freitreppe","Überlegenes Schmunzeln","Zur Menschenmenge","250–500","Dicht","85 %","Gemischte Reaktionen"],["Brutalismus XXL","Mehrgeschossiges Fassadenbanner","Oberhalb","Lässig auf breiter Mauer sitzend","Brutalistische Betonterrassen","Eiskalt ernst","Direkt in die Kamera","500–800","Sehr dicht","90 %","Empört + diskutierend"],["Hafen-Spektakel","Vertikale XXL-Fassadenflagge","Seitlich erhöht","Auf Treppenabsatz sitzend","Hafenpromenade mit Lagerhaus","Gelassen","Zur Menschenmenge","500–800","Dicht","85 %","Neugierig + verwirrt"],["Kino-Premiere Provokation","Abgehängtes XXL-Plakat","Oberhalb","Breitbeinig stehend","Kino-Premierenplatz","Provokantes Grinsen","Direkt in die Kamera","250–500","Sehr dicht","85 %","Ungläubig lachend"],["Arena-Eingang XXL","XXL-LED-Wand","Oberhalb","Auf Treppenabsatz sitzend","Arena-Eingang mit LED-Fassade","Herausfordernd","Direkt in die Kamera","800–1500","Massenauflauf","90 %","Empört + diskutierend"],["Rheinpromenade-Treppen","Freistehende Werbetafel","Seitlich erhöht","Auf Treppenabsatz sitzend","Rheinpromenade mit Treppenstufen","Überlegenes Schmunzeln","Zur Menschenmenge","250–500","Dicht","85 %","Gemischte Reaktionen"]];
+sceneProfiles422.push(...additionalProfiles423.map((r,i)=>({family:8+i,title:r[0],mount:r[1],relation:r[2],pose:r[3],venue:r[4],expression:r[5],gaze:r[6],count:r[7],density:r[8],attention:r[9],reaction:r[10]})));
 const scenes=sceneProfiles422.flatMap(p=>[0,1,2].map(j=>buildRecommendation422(p,j)));
 function physicalWarnings422(v){
- const warnings=[],warn=(m)=>{if(!warnings.includes(m))warnings.push(m)};
- const balcony=/Bäckerei|Einkaufsstraße|Dachterrasse/.test(v.venue);
- const wall=/Einkaufsstraße|Marktplatz|Bahnhofsvorplatz|Bäckerei|Markthalle|Promenade|Industriefassade|Dachterrasse/.test(v.venue);
- if(v.mount==='XXL-Balkonhänger'&&!balcony)warn('Balkonhänger benötigt einen vorhandenen Balkon und ein tragfähiges Geländer.');
- if(v.mount==='Straßenüberspannung'&&!/Einkaufsstraße|Bahnhofsvorplatz|Bäckerei|Promenade/.test(v.venue))warn('Straßenüberspannung benötigt zwei gegenüberliegende tragfähige Ankerpunkte.');
- if(['Mehrgeschossiges Fassadenbanner','Abgehängtes XXL-Plakat','Vertikale XXL-Fassadenflagge','Auslegerbanner','XXL-LED-Wand'].includes(v.mount)&&!wall)warn('Die gewählte Anzeige benötigt eine tragfähige Gebäudefassade.');
- if(v.mount==='Freistehende Werbetafel'&&v.ground==='Keine Bodenstützen')warn('Freistehende Werbetafel benötigt zulässige Bodenstützen.');
- if(v.pose==='Auf Balkon zurückgelehnt'&&!balcony)warn('Balkonpose erfordert einen tatsächlich vorhandenen sicheren Balkon.');
- if(v.pose==='Auf sicherer Plattform liegend'&&!/Dachterrasse|Marktplatz|Bahnhofsvorplatz|Promenade|Vorplatz/.test(v.venue))warn('Liegende Pose erfordert eine breite tragfähige Plattform.');
- if(v.pose==='Lässig auf breiter Mauer sitzend'&&!/Einkaufsstraße|Marktplatz|Vorplatz|Promenade|Dachterrasse|Industriefassade/.test(v.venue))warn('Sitzpose erfordert eine ausreichend breite stabile Mauer.');
- if(v.pose==='Auf Treppenabsatz sitzend'&&!/Marktplatz|Bahnhofsvorplatz|Vorplatz|Promenade|Dachterrasse|Industriefassade/.test(v.venue))warn('Treppenpose benötigt eine baulich vorhandene Treppe.');
- if(v.dynamics==='Ruhig geordnet'&&v.gestures==='Lebendige Demonstrationsgestik')warn('Ruhige Menge und demonstrative Gesten sind widersprüchlich.');
- if(v.irregularity==='Geordnet'&&v.dynamics==='Spontaner Auflauf / organisches Chaos')warn('Geordnete Reihen sind nicht mit organischem Chaos vereinbar.');
- if(v.interactions==='Keine'&&v.reaction==='Empört + diskutierend')warn('Diskutierende Menge braucht Nebeninteraktionen.');
- if(v.gestures==='Kaum Gestik'&&v.reaction==='Empört + diskutierend'&&v.dynamics==='Demonstrativ dynamisch')warn('Dynamisch diskutierende Menge ohne Gestik ist widersprüchlich.');
- return warnings;
+ const w=[],add=t=>{if(!w.includes(t))w.push(t)},p=venueByName423.get(v.venue);
+ if(!p){add('Unbekannter Ort ohne geprüftes Architekturprofil.');return w}
+ const has=k=>p.features.includes(k);
+ if(v.mount==='XXL-Balkonhänger'&&!has('B'))add('Balkonhänger benötigt einen echten tragfähigen Balkon.');
+ if(v.mount==='Straßenüberspannung'&&!has('X'))add('Straßenüberspannung benötigt eine breite Passage mit gegenüberliegenden sicheren Ankerpunkten.');
+ if(['Mehrgeschossiges Fassadenbanner','Abgehängtes XXL-Plakat','Vertikale XXL-Fassadenflagge','Auslegerbanner','XXL-LED-Wand'].includes(v.mount)&&!has('F'))add('Diese Plakatart benötigt eine tragfähige echte Fassade.');
+ if(v.mount==='Freistehende Werbetafel'&&v.ground==='Keine Bodenstützen')add('Freistehende Werbetafel benötigt Bodenstützen.');
+ if(v.pose==='Auf Balkon zurückgelehnt'&&!has('B'))add('Balkonpose benötigt eine reale sichere Balkonfläche.');
+ if(v.pose==='Lässig auf breiter Mauer sitzend'&&!has('W'))add('Mauerpose benötigt eine breite reale Sitzmauer.');
+ if(v.pose==='Auf Treppenabsatz sitzend'&&!has('S'))add('Treppenpose benötigt eine reale Treppe.');
+ if(v.pose==='Auf sicherer Plattform liegend'&&!has('P'))add('Liegende Pose benötigt eine reale sichere Plattform.');
+ if(v.pose==='Beine ausgestreckt'&&!has('P')&&!has('S')&&!has('W'))add('Ausgestreckte Beine benötigen eine passende reale Sitzfläche.');
+ if(['800–1500','1500+'].includes(v.count)&&!has('X')&&!v.venue.includes('Dachterrasse')&&!v.venue.includes('Promenade'))add('Große Menschenmengen benötigen einen ausreichend großen angrenzenden öffentlichen Platz.');
+ if(v.dynamics==='Ruhig geordnet'&&v.gestures==='Lebendige Demonstrationsgestik')add('Ruhige Menge widerspricht Demonstrationsgestik.');
+ if(v.irregularity==='Geordnet'&&v.dynamics==='Spontaner Auflauf / organisches Chaos')add('Geordnete Menge widerspricht organischem Chaos.');
+ if(v.interactions==='Keine'&&v.reaction==='Empört + diskutierend')add('Diskutierende Menge benötigt Nebeninteraktionen.');
+ if(v.gestures==='Kaum Gestik'&&v.reaction==='Empört + diskutierend'&&v.dynamics==='Demonstrativ dynamisch')add('Dynamische Diskussion ohne Gestik wirkt widersprüchlich.');
+ return w;
 }
 function evaluateScene(scene){
  const v={...data.values};
@@ -2062,14 +2081,14 @@ function noteMarkup(g){
  return '<details style="margin-top:10px"><summary>✎ Individuell verfeinern · '+notes.filter(n=>n.active).length+' aktiv / '+notes.length+' gespeichert</summary><div style="padding:8px 0">'+notes.map(n=>'<div style="padding:8px;border:1px solid #485665;border-radius:8px;margin:6px 0"><label style="display:flex;gap:8px;align-items:center"><input type="checkbox" data-sx-note="'+g+'" data-sx-id="'+escapeHtml(n.id)+'" '+(n.active?'checked':'')+'> Aktiv · '+escapeHtml(n.title)+'</label><textarea data-sx-edit="'+g+'" data-sx-id="'+escapeHtml(n.id)+'" style="width:100%;min-height:60px">'+escapeHtml(n.text)+'</textarea><button type="button" data-sx-save="'+g+'" data-sx-id="'+escapeHtml(n.id)+'">Änderung speichern</button> <button type="button" data-sx-delete="'+g+'" data-sx-id="'+escapeHtml(n.id)+'">Löschen</button></div>').join('')+'<input data-sx-title="'+g+'" placeholder="Name der Anweisung" style="width:100%"><textarea data-sx-new="'+g+'" placeholder="Deine individuelle Regieanweisung ..." style="width:100%;min-height:70px"></textarea><button type="button" data-sx-add="'+g+'">+ Deaktiviert speichern</button></div></details>';
 }
 function panel(){
- let html='<section id="signatureXXL400" class="panel" style="margin:12px 0;border:2px solid #fc4c02;padding:14px"><h2>SIGNATURE PROTEST XXL · V4.2.2</h2><p>1. Botschaft → 2. Dein Auftritt → 3. Menschenmeer. Alle anderen Filter bleiben verfügbar.</p><label><input type="checkbox" id="sx-enabled" '+(data.enabled?'checked':'')+'> Signature-Inszenierung im Prompt aktiv</label>';
+ let html='<section id="signatureXXL400" class="panel" style="margin:12px 0;border:2px solid #fc4c02;padding:14px"><h2>SIGNATURE PROTEST XXL · V4.2.3</h2><p>1. Botschaft → 2. Dein Auftritt → 3. Menschenmeer. Alle anderen Filter bleiben verfügbar.</p><label><input type="checkbox" id="sx-enabled" '+(data.enabled?'checked':'')+'> Signature-Inszenierung im Prompt aktiv</label>';
  for(const [g,def] of Object.entries(groups)){
  html+='<details '+(['message','runner','crowd'].includes(g)?'open':'')+' style="border-top:1px solid #485665;margin-top:12px;padding-top:10px"><summary style="font-weight:800">'+def.label+'</summary>';
- for(const [k,opts] of Object.entries(def.fields))html+='<div style="margin:9px 0"><label>'+labels[k]+' <input type="checkbox" data-sx-lock="'+k+'" '+(data.locks[k]?'checked':'')+'> 🔒 Sperren</label><select data-sx-field="'+k+'" style="width:100%">'+opts.map(o=>'<option '+(data.values[k]===o?'selected':'')+'>'+escapeHtml(o)+'</option>').join('')+'</select></div>';
+ for(const [k,opts] of Object.entries(def.fields))html+='<div style="margin:9px 0"><label>'+labels[k]+' <input type="checkbox" data-sx-lock="'+k+'" '+(data.locks[k]?'checked':'')+'> 🔒 Sperren</label><select data-sx-field="'+k+'" style="width:100%">'+(k==='venue'?venueCategories423().map(cat=>'<optgroup label="'+escapeHtml(cat)+'">'+venueCatalog423.filter(p=>p.category===cat).map(p=>'<option '+(data.values[k]===p.name?'selected':'')+'>'+escapeHtml(p.name)+'</option>').join('')+'</optgroup>').join(''):opts.map(o=>'<option '+(data.values[k]===o?'selected':'')+'>'+escapeHtml(o)+'</option>').join(''))+'</select>'+(k==='venue'?'<p style="font-size:12px;color:#cbd5e1">'+escapeHtml(locationDirection423(data.values[k]))+'</p>':'')+'</div>';
  html+=noteMarkup(g)+'</details>';
  }
  html+='<details style="border-top:1px solid #485665;margin-top:12px;padding-top:10px"><summary style="font-weight:800">05 · GESAMTE SZENE VERFEINERN</summary>'+noteMarkup('overall')+'</details>';
- html+='<details style="border-top:1px solid #485665;margin-top:12px;padding-top:10px"><summary style="font-weight:800">06 · PREMIUM-MATRIX · 24 ABGESTIMMTE SZENEN</summary><p>Empfehlungen übernehmen nur nicht gesperrte Einstellungen. Kamera und Wortfarben bleiben unverändert.</p>'+scenes.map((scene,i)=>'<button type="button" data-sx-scene="'+i+'" style="display:block;width:100%;text-align:left;margin:6px 0;padding:12px;border-radius:8px;border:1px solid #6a7889;background:'+(data.selectedScene===i?'#94400c':'#172331')+';color:white">'+escapeHtml((i+1)+'. '+scene.title+' · '+scene.values.mount+' · '+scene.values.pose+' · '+scene.values.count+' Personen')+(evaluateScene(scene).warnings.length?'<br><small>Konflikt: '+escapeHtml(evaluateScene(scene).warnings.join(' '))+'</small>':'')+'</button><details style="padding:4px 9px 12px;border-bottom:1px solid #485665"><summary style="cursor:pointer">17 Filter & Komposition prüfen</summary><div style="padding:8px 0">'+Object.entries(evaluateScene(scene).values).map(([k,val])=>'<div style="padding:3px 0"><b>'+escapeHtml(labels[k]||k)+':</b> '+escapeHtml(val)+(data.locks[k]?' 🔒':'')+'</div>').join('')+'<div style="padding:6px 0"><b>Komposition:</b> '+escapeHtml(compositionVariants421[evaluateScene(scene).compositionIndex]?.title||'Automatisch')+'</div></div></details>').join('')+'</details>';
+ html+='<details style="border-top:1px solid #485665;margin-top:12px;padding-top:10px"><summary style="font-weight:800">06 · PREMIUM-MATRIX · 60 ABGESTIMMTE SZENEN</summary><p>Empfehlungen übernehmen nur nicht gesperrte Einstellungen. Kamera und Wortfarben bleiben unverändert.</p>'+scenes.map((scene,i)=>'<button type="button" data-sx-scene="'+i+'" style="display:block;width:100%;text-align:left;margin:6px 0;padding:12px;border-radius:8px;border:1px solid #6a7889;background:'+(data.selectedScene===i?'#94400c':'#172331')+';color:white">'+escapeHtml((i+1)+'. '+scene.title+' · '+scene.values.mount+' · '+scene.values.pose+' · '+scene.values.count+' Personen')+(evaluateScene(scene).warnings.length?'<br><small>Konflikt: '+escapeHtml(evaluateScene(scene).warnings.join(' '))+'</small>':'')+'</button><details style="padding:4px 9px 12px;border-bottom:1px solid #485665"><summary style="cursor:pointer">17 Filter & Komposition prüfen</summary><div style="padding:8px 0">'+Object.entries(evaluateScene(scene).values).map(([k,val])=>'<div style="padding:3px 0"><b>'+escapeHtml(labels[k]||k)+':</b> '+escapeHtml(val)+(data.locks[k]?' 🔒':'')+'</div>').join('')+'<div style="padding:6px 0"><b>Komposition:</b> '+escapeHtml(compositionVariants421[evaluateScene(scene).compositionIndex]?.title||'Automatisch')+'</div></div></details>').join('')+'</details>';
  html+='<div style="margin-top:14px;padding:12px;border:1px solid #647688;border-radius:10px"><b>↔ VARIABLE KOMPOSITION</b><p style="margin:7px 0">Aktuell: <strong id="sx-composition-label421">'+escapeHtml(compositionVariants421[compositionIndex421()].title)+'</strong> · Kamera, Pose und Plakat bleiben unverändert.</p><button type="button" id="sx-next-composition421" style="padding:12px;background:#324152;color:#fff;border:1px solid #718197;border-radius:8px">↻ Andere Komposition wählen</button></div>';
  html+='<p id="sx-summary" style="margin-top:12px">Aktive Zusatzanweisungen: '+allNotes().filter(n=>n.active).length+'</p><button type="button" id="sx-disable-notes">Alle Zusatzanweisungen deaktivieren</button>';
  html+='<div id="sxQuickActions405" style="display:grid;gap:10px;margin-top:18px;padding-top:16px;border-top:1px solid #485665"><button type="button" id="sx-update405" style="width:100%;padding:15px;border:0;border-radius:10px;background:#354251;color:#fff;font-size:17px;font-weight:800">↻ Werte aktualisieren</button><button type="button" id="sx-audit420" style="width:100%;padding:13px;border:1px solid #74cda0;border-radius:9px;background:#19362a;color:#e3ffed;font-size:15px;font-weight:800">✓ ASF-Prompt prüfen</button><button type="button" id="sx-copy405" style="width:100%;padding:15px;border:0;border-radius:10px;background:#fc4c02;color:white;font-size:17px;font-weight:800">▣ Master-Prompt kopieren</button><div id="sx-status405" aria-live="polite" style="font-size:13px;color:#99e3b7;min-height:18px"></div></div></section>';
@@ -2105,6 +2124,7 @@ function signaturePrompt(){
  if(!data.enabled)return '';
  let out=['SIGNATURE PROTEST XXL — AUTHORITATIVE SCENE COMPOSITION: The oversized legible sign message is visual priority ONE; the visibly expressive demonstrator is priority TWO; the massive reacting audience is priority THREE. Respect exact sign text, manual line breaks and all per-word colors without alteration. Keep the demonstrator recognizable and do not obscure the sign text.'];
  for(const [g,def] of Object.entries(groups)){out.push(def.label+':');for(const k of Object.keys(def.fields))out.push(labels[k]+': '+data.values[k]+'.');}
+ out.push(locationDirection423(data.values.venue));
  out.push(compositionText421());
  out.push('AUDIENCE ATTENTION AND REACTION — MANDATORY: Approximately '+data.values.attention+' of the spectators genuinely face and visibly look at the runner OR read the sign, with head direction, eyes and torso consistent. Opa, Teyze, children and nearby key figures must direct their attention to the sign or runner, not stare into the distance or randomly at the camera. Remaining spectators may react to each other while staying part of the same event. Realistic restrained expressions: disbelief, curiosity, frowning, skeptical glances, quiet laughter or brief surprise; avoid exaggerated open mouths, theatrical acting, synchronized cloned faces and unrelated passersby. Crowd must feel like one connected reaction to the message.');
  out.push('ORGANIC CROWD DYNAMICS: energy '+data.values.dynamics+'; gestures '+data.values.gestures+'; irregularity '+data.values.irregularity+'; body overlap '+data.values.overlap+'; natural side conversations '+data.values.interactions+'. Preserve the selected '+data.values.attention+' attention to the runner or readable sign, but make it natural rather than synchronized. No neat rows, equal gaps, cloned poses or aligned shoulders. Use varied body angles, staggered distances, natural crowd overlap, head turns, discreet open-hand gestures, shrugs, hands briefly near chin or mouth, and small conversations about the message. People spontaneously react, switch their gaze between runner and sign, and display diverse restrained expressions. Avoid theatrical screaming, uniformly open mouths and unrelated background traffic. Maintain clean sightlines to the runner face, exact selected pose, shoes and every letter of the sign without putting the runner at the front of the crowd.');
@@ -2113,7 +2133,7 @@ function signaturePrompt(){
  for(const [g,items] of Object.entries(data.notes))for(const n of items)if(n.active&&n.text.trim())out.push('ACTIVE CUSTOM DIRECTION ['+g+' / '+n.title+']: '+n.text.trim());
  return '\n\n'+out.join('\n');
 }
-function matrixSelfTest(){const backup=JSON.stringify(data),checks=[];const ok=(label,value)=>checks.push({label,pass:!!value});try{ok('24 scenes',scenes.length===24);ok('17 filters per scene',scenes.every(x=>sceneKeys.every(k=>k in x.values)));ok('matrix architecture valid',matrixAudit422().results.every(x=>!x.missing.length&&!x.invalid.length&&!x.warnings.length));ok('six compositions in matrix',new Set(scenes.map(x=>x.compositionIndex)).size===6);ok('valid options',scenes.every(x=>sceneKeys.every(k=>Object.values(groups).some(g=>g.fields[k]&&g.fields[k].includes(x.values[k])))));data.locks={};data.values={...defaults.values};const x=evaluateScene(scenes[0]);ok('coherent first scene',!x.warnings.length);ok('crowd transferred',x.values.count===scenes[0].values.count);data.locks={pose:true,venue:true};data.values.pose='Arme verschränkt';data.values.venue='Großer Marktplatz';const y=evaluateScene(scenes[0]);ok('locks respected',y.values.pose==='Arme verschränkt'&&y.values.venue==='Großer Marktplatz');ok('conflict detected',y.warnings.length>0);data.locks={};data.values={...defaults.values};ok('no ground support conflict',evaluateScene({values:{mount:'Freistehende Werbetafel'}}).warnings.length>0);data.enabled=true;data.notes={overall:[{id:'selftest',title:'Selftest',text:'SXTOKEN',active:false}]};ok('inactive note excluded',!signaturePrompt().includes('SXTOKEN'));data.notes.overall[0].active=true;ok('active note included',signaturePrompt().includes('SXTOKEN'));ok('camera preserved',signaturePrompt().includes('Preserve the exact user-selected focal length'));ok('dynamic composition active',signaturePrompt().includes('DYNAMIC COMPOSITION — CONSTANT PRINCIPLES, VARIABLE GEOMETRY:'));
+function matrixSelfTest(){const backup=JSON.stringify(data),checks=[];const ok=(label,value)=>checks.push({label,pass:!!value});try{ok('60 scenes',scenes.length===60);ok('49 venues',venueCatalog423.length===49);ok('17 filters per scene',scenes.every(x=>sceneKeys.every(k=>k in x.values)));ok('matrix architecture valid',matrixAudit422().results.every(x=>!x.missing.length&&!x.invalid.length&&!x.warnings.length));ok('six compositions in matrix',new Set(scenes.map(x=>x.compositionIndex)).size===6);ok('valid options',scenes.every(x=>sceneKeys.every(k=>Object.values(groups).some(g=>g.fields[k]&&g.fields[k].includes(x.values[k])))));data.locks={};data.values={...defaults.values};const x=evaluateScene(scenes[0]);ok('coherent first scene',!x.warnings.length);ok('crowd transferred',x.values.count===scenes[0].values.count);data.locks={pose:true,venue:true};data.values.pose='Arme verschränkt';data.values.venue='Großer Marktplatz';const y=evaluateScene(scenes[0]);ok('locks respected',y.values.pose==='Arme verschränkt'&&y.values.venue==='Großer Marktplatz');ok('conflict detected',y.warnings.length>0);data.locks={};data.values={...defaults.values};ok('no ground support conflict',evaluateScene({values:{mount:'Freistehende Werbetafel'}}).warnings.length>0);data.enabled=true;data.notes={overall:[{id:'selftest',title:'Selftest',text:'SXTOKEN',active:false}]};ok('inactive note excluded',!signaturePrompt().includes('SXTOKEN'));data.notes.overall[0].active=true;ok('active note included',signaturePrompt().includes('SXTOKEN'));ok('camera preserved',signaturePrompt().includes('Preserve the exact user-selected focal length'));ok('dynamic composition active',signaturePrompt().includes('DYNAMIC COMPOSITION — CONSTANT PRINCIPLES, VARIABLE GEOMETRY:'));
 ok('no rigid runner foreground',!signaturePrompt().includes('CAMERA → RUNNER + XXL SIGN IN CLEAR FOREGROUND → AUDIENCE'));ok('runner visibility mandated',signaturePrompt().includes('face, shoes, defining pose or text'));ok('key figures face message',signaturePrompt().includes('Opa, Teyze'));ok('organic crowd direction',signaturePrompt().includes('ORGANIC CROWD DYNAMICS'));ok('open hand gesture',signaturePrompt().includes('open-hand gestures'));
 }finally{Object.assign(data,JSON.parse(backup))}return {pass:checks.every(x=>x.pass),checks}}
 
@@ -2179,7 +2199,7 @@ window.stravaSignature400={get:()=>JSON.parse(JSON.stringify(data)),restore:payl
 })();
 </script>
 <script>
-/* V4.2.2 last-resort tab reconciliation; guarded to avoid interfering with normal rendering. */
+/* V4.2.3 last-resort tab reconciliation; guarded to avoid interfering with normal rendering. */
 (function(){
  'use strict';
  let scheduled=false;
@@ -2194,7 +2214,7 @@ window.stravaSignature400={get:()=>JSON.parse(JSON.stringify(data)),restore:payl
   }catch(e){
    const view=document.getElementById('view');
    if(view&&!view.querySelector('#poster321')){const n=document.createElement('div');n.className='notice';n.textContent='Plakat-Editor Ladefehler: '+String(e.message||e);view.prepend(n)}
-   console.error('V4.2.2 poster recovery',e);
+   console.error('V4.2.3 poster recovery',e);
   }
  }
  function schedule(){if(scheduled)return;scheduled=true;requestAnimationFrame(ensurePoster)}
@@ -2202,7 +2222,7 @@ window.stravaSignature400={get:()=>JSON.parse(JSON.stringify(data)),restore:payl
  if(view)new MutationObserver(()=>{if(typeof state!=='undefined'&&state.tab==='Plakat'&&!document.getElementById('poster321'))schedule()}).observe(view,{childList:true});
  document.addEventListener('click',e=>{if(e.target.closest('[data-tab="Plakat"],#psGoPoster412'))schedule()},false);
  schedule();
- window.stravaPosterDiagnostic413=()=>({version:'V4.2.2',tab:state.tab,editor:!!document.getElementById('poster321'),fonts:!!document.getElementById('posterFont321'),favorites:!!document.getElementById('posterFavorites430'),colors:!!document.getElementById('posterKeepColors421')});
+ window.stravaPosterDiagnostic413=()=>({version:'V4.2.3',tab:state.tab,editor:!!document.getElementById('poster321'),fonts:!!document.getElementById('posterFont321'),favorites:!!document.getElementById('posterFavorites430'),colors:!!document.getElementById('posterKeepColors421')});
 })();
 </script>
 </body></html>
