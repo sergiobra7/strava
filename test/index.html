@@ -1851,29 +1851,72 @@ window.stravaRegression318=function(){
 })();
 </script>
 
-<script id="plakat-colors-recovery-321">
-/* Isolated recovery: preserve existing modules, restore the word-color editor and authoritative sign prompt. */
+<style id="sign-studio-style">
+#signStudio{color:#f8fafc;background:#171c25;border:1px solid #374151;border-radius:16px;padding:14px;margin:8px 0 24px;font-family:system-ui,sans-serif}
+#signStudio *{box-sizing:border-box}
+#signStudio h2{margin:0 0 4px;font-size:20px;letter-spacing:.4px}
+#signStudio .sub{color:#aab4c3;font-size:12px;margin:0 0 12px}
+#signStudio textarea{display:block;width:100%;background:#0c1119;border:1px solid #475569;border-radius:10px;color:white;font-size:16px;padding:12px;resize:vertical}
+#signStudio .poster{background:#000;border:9px solid #333;margin:16px 0 10px;padding:24px 12px;min-height:320px;display:flex;flex-direction:column;justify-content:center;gap:18px;overflow:hidden}
+#signStudio .posterLine{font-family:Impact,'Arial Narrow',sans-serif;font-stretch:condensed;font-weight:900;font-size:clamp(16px,5.3vw,45px);line-height:1.13;overflow-wrap:anywhere}
+#signStudio .posterWord{background:none;border:2px solid transparent;border-radius:3px;padding:0 1px;cursor:pointer;font:inherit;line-height:inherit}
+#signStudio .posterWord[aria-pressed=true]{border-color:#ff7418;background:#71300b}
+#signStudio .wordList{display:flex;flex-wrap:wrap;gap:7px;padding:12px 0}
+#signStudio .wordChip{border:1px solid #475569;border-radius:9px;background:#273140;padding:9px 10px;font-size:14px;font-weight:700}
+#signStudio .wordChip[aria-pressed=true]{outline:3px solid #fb923c;background:#633014}
+#signStudio .toolbar{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0}
+#signStudio .toolbar button,#signStudio .toolbar select{border:1px solid #657184;border-radius:9px;padding:10px 12px;font-size:14px;font-weight:700;background:#252f3d;color:white;min-height:44px}
+#signStudio .colors{position:sticky;bottom:8px;z-index:5;padding:9px;background:#111827;border:1px solid #475569;border-radius:12px;display:flex;gap:7px;align-items:center;flex-wrap:wrap}
+#signStudio .colors button{border:2px solid #64748b;border-radius:9px;padding:9px 12px;min-height:44px;font-weight:800}
+#signStudio .colors input{width:48px;height:44px}
+#signStudio .status{color:#fbbf24;font-size:13px;margin:10px 0}
+</style>
+<script id="sign-studio-400">
 (function(){
 'use strict';
 const TOKEN=/(\s+)/;
-function entries(){const z=state.sign||{},tokens=String(z.signText||'').split(TOKEN);return tokens.map((word,index)=>({word,index,color:String((z.wordColors||{})[index]||z.signColor||'#FFFFFF').toUpperCase()})).filter(x=>x.word&&!/^\s+$/.test(x.word));}
-function persist(){try{save()}catch(e){localStorage.setItem('stravaV25',JSON.stringify(state))}}
-function remap(oldText,newText,colors){return typeof window.stravaRemapWordColors318==='function'?window.stravaRemapWordColors318(oldText,newText,colors):{}}
 const originalRender=render;
-render=function(){const result=originalRender();if(state.world==='sign'&&(state.tab==='Plakat'))requestAnimationFrame(mount);return result;};
-function mount(){const host=document.getElementById('view');if(!host||state.world!=='sign'||state.tab!=='Plakat'||document.getElementById('plakatColorEditor321'))return;
-const panel=document.createElement('section');panel.id='plakatColorEditor321';panel.style.cssText='margin:16px 0;padding:16px;background:#171d27;border:2px solid #fb923c;border-radius:12px;color:#fff';
-panel.innerHTML='<h3 style="margin:0 0 12px">PLAKAT & WORTFARBEN</h3><label for="plakatText321">Plakattext</label><textarea id="plakatText321" rows="8" style="width:100%;box-sizing:border-box;background:#0c1119;color:white;border:1px solid #687282;border-radius:6px;padding:10px"></textarea><p>Wörter antippen, danach Farbe wählen. Mehrfachauswahl möglich.</p><div id="plakatWords321" style="white-space:pre-wrap;line-height:2.6;padding:10px;background:#080b10;border-radius:8px"></div><div style="display:flex;gap:8px;flex-wrap:wrap;margin:12px 0"><button type="button" data-pcolor="#FF0000" style="background:#FF0000;color:white">ROT</button><button type="button" data-pcolor="#FFFFFF" style="background:white;color:black">WEISS</button><button type="button" data-pcolor="#FFFF00" style="background:#FFFF00;color:black">GELB</button><button type="button" data-pcolor="#00FF00" style="background:#00FF00;color:black">GRÜN</button><button type="button" data-pcolor="#00AAFF" style="background:#00AAFF;color:black">BLAU</button><input id="plakatCustomColor321" type="color" value="#ff0000" aria-label="Eigene Wortfarbe"></div><div style="display:flex;gap:8px;flex-wrap:wrap;margin:12px 0"><button type="button" id="plakatClearSelection321">MARKIERUNG AUFHEBEN</button><button type="button" id="plakatResetSelected321">AUSWAHL AUF STANDARD</button><button type="button" id="plakatResetAll321">ALLE FARBEN AUF STANDARD</button></div><p id="plakatColorStatus321" aria-live="polite"></p>';
-host.prepend(panel);const field=panel.querySelector('#plakatText321'),words=panel.querySelector('#plakatWords321'),status=panel.querySelector('#plakatColorStatus321');const selected=new Set();field.value=state.sign.signText||'';
-function paint(){words.replaceChildren();const tokens=field.value.split(TOKEN);tokens.forEach((word,index)=>{if(!word)return;if(/^\s+$/.test(word)){words.append(document.createTextNode(word));return}const b=document.createElement('button');b.type='button';b.textContent=word;b.dataset.token=String(index);b.style.cssText='margin:2px;padding:4px 6px;border-radius:4px;background:#303946;color:'+String((state.sign.wordColors||{})[index]||state.sign.signColor||'#FFFFFF')+';border:2px solid '+(selected.has(index)?'#fb923c':'transparent');b.setAttribute('aria-pressed',String(selected.has(index)));b.onclick=()=>{selected.has(index)?selected.delete(index):selected.add(index);paint()};words.append(b)});status.textContent=selected.size+' Wörter ausgewählt · '+entries().filter(e=>e.color==='#FF0000').length+' Wörter reinrot';}
-field.oninput=()=>{const old=state.sign.signText||'',colors=state.sign.wordColors||{};state.sign.signText=field.value;state.sign.wordColors=remap(old,field.value,colors);selected.clear();persist();paint()};
-function apply(color){if(!selected.size){status.textContent='Zuerst Wörter auswählen';return}state.sign.wordColors=state.sign.wordColors||{};for(const index of selected)state.sign.wordColors[index]=color.toUpperCase();persist();paint();}
-panel.querySelector('#plakatClearSelection321').onclick=()=>{selected.clear();paint()};panel.querySelector('#plakatResetSelected321').onclick=()=>{state.sign.wordColors=state.sign.wordColors||{};for(const i of selected)delete state.sign.wordColors[i];persist();paint()};panel.querySelector('#plakatResetAll321').onclick=()=>{state.sign.wordColors={};selected.clear();persist();paint()};panel.querySelectorAll('[data-pcolor]').forEach(b=>b.onclick=()=>apply(b.dataset.pcolor));panel.querySelector('#plakatCustomColor321').oninput=e=>apply(e.target.value);paint();}
+render=function(){const result=originalRender();if(state.world==='sign'&&state.tab==='Plakat')requestAnimationFrame(mountStudio);return result};
+function persist(){save()}
+function tokens(){return String(state.sign.signText||'').split(TOKEN)}
+function entries(){const z=state.sign||{};return tokens().map((word,index)=>({word,index,color:String((z.wordColors||{})[index]||z.signColor||'#FFFFFF').toUpperCase()})).filter(x=>x.word&&!/^\s+$/.test(x.word))}
+function mountStudio(){
+if(state.world!=='sign'||state.tab!=='Plakat')return;
+const host=document.getElementById('view');if(!host||document.getElementById('signStudio'))return;
+const root=document.createElement('section');root.id='signStudio';
+root.innerHTML='<h2>STRAVA SIGN STUDIO</h2><p class="sub">Live-Plakat · direkte Wortauswahl · Mehrfachauswahl</p><label for="studioText">PLAKATTEXT</label><textarea id="studioText" rows="7"></textarea><div class="toolbar"><label>TEXTAUSRICHTUNG <select id="studioAlign"><option value="center">Zentriert</option><option value="left">Links</option><option value="right">Rechts</option></select></label></div><div class="poster" id="studioPoster" aria-label="Interaktive Live-Plakatvorschau"></div><div class="status" id="studioStatus"></div><strong>WÖRTER MARKIEREN</strong><div class="wordList" id="studioWords"></div><div class="colors" id="studioColors"><button data-color="#FF0000" style="background:#f33;color:white">ROT</button><button data-color="#FFFFFF" style="background:white;color:black">WEISS</button><button data-color="#FFFF00" style="background:#ff0;color:black">GELB</button><button data-color="#00FF00" style="background:#0f0;color:black">GRÜN</button><button data-color="#00AAFF" style="background:#0af;color:black">BLAU</button><input id="studioCustom" type="color" value="#ff0000" aria-label="Eigene Farbe"></div><div class="toolbar"><button id="studioClear">MARKIERUNG AUFHEBEN</button><button id="studioResetSelected">AUSWAHL AUF STANDARD</button><button id="studioResetAll">ALLE FARBEN AUF STANDARD</button></div>';
+host.prepend(root);
+const field=root.querySelector('#studioText'),poster=root.querySelector('#studioPoster'),list=root.querySelector('#studioWords'),status=root.querySelector('#studioStatus'),align=root.querySelector('#studioAlign');
+const selected=new Set();field.value=state.sign.signText||'';align.value=state.sign.signAlign||'center';
+function toggle(i){selected.has(i)?selected.delete(i):selected.add(i);paint()}
+function paint(){
+poster.replaceChildren();list.replaceChildren();
+const lines=String(state.sign.signText||'').split('\n');
+let index=0;
+for(const line of lines){const row=document.createElement('div');row.className='posterLine';row.style.textAlign=align.value;
+for(const word of line.split(TOKEN)){if(!word)continue;if(/^\s+$/.test(word)){row.append(document.createTextNode(word));index++;continue}
+const id=index++,color=String((state.sign.wordColors||{})[id]||state.sign.signColor||'#FFFFFF').toUpperCase();
+const make=(cls)=>{const b=document.createElement('button');b.type='button';b.className=cls;b.textContent=word;b.style.color=color;b.dataset.token=String(id);b.setAttribute('aria-pressed',String(selected.has(id)));b.onclick=()=>toggle(id);return b};
+row.append(make('posterWord'));list.append(make('wordChip'))}
+poster.append(row);index++}
+status.textContent=selected.size+' Wörter ausgewählt · '+entries().length+' Wörter insgesamt';
+}
+field.oninput=()=>{const old=state.sign.signText||'';state.sign.signText=field.value;state.sign.wordColors=typeof window.stravaRemapWordColors318==='function'?window.stravaRemapWordColors318(old,field.value,state.sign.wordColors||{}):{};selected.clear();persist();paint()};
+align.onchange=()=>{state.sign.signAlign=align.value;persist();paint()};
+function apply(color){if(!selected.size){status.textContent='Bitte zuerst Wörter markieren';return}state.sign.wordColors=state.sign.wordColors||{};for(const i of selected)state.sign.wordColors[i]=color.toUpperCase();persist();paint()}
+root.querySelectorAll('[data-color]').forEach(b=>b.onclick=()=>apply(b.dataset.color));
+root.querySelector('#studioCustom').oninput=e=>apply(e.target.value);
+root.querySelector('#studioClear').onclick=()=>{selected.clear();paint()};
+root.querySelector('#studioResetSelected').onclick=()=>{for(const i of selected)delete(state.sign.wordColors||{})[i];persist();paint()};
+root.querySelector('#studioResetAll').onclick=()=>{state.sign.wordColors={};selected.clear();persist();paint()};
+paint();
+}
 const previousBuild=buildPrompt;
 buildPrompt=function(){if(state.world!=='sign')return previousBuild();const c=state.common||{},z=state.sign||{},p=previousBuild();const map=window.stravaSignColorMap318(z);const raw=String(z.signText||'');const colorRows=map.lines;const colors=entries();const problems=colors.filter(x=>!/^#[0-9A-F]{6}$/.test(x.color));if(problems.length)throw Error('Ungültige Wortfarbe: '+problems.map(x=>x.word).join(', '));
 return 'STRAVA RUN — BLACK SIGN · EXACT WORD COLOR LOCK\nOUTPUT: ONE native 9:16 photorealistic documentary photograph.\n\nPERSON PHOTO: Preserve exact facial identity. SHOE PHOTO: exact shoes on both feet. Preserve the selected location, camera, runner, pose, clothing and audience settings.\n\nSCENE CONFIGURATION:\n'+p.replace(/05 \/ ABSOLUTE EXCLUSION[\s\\S]*/,'').replace(/RUNNER DOCUMENTARY · NO SIGN/g,'BLACK SIGN · EXACT COLORS')+'\n\nPHYSICAL SIGN: A real matte black sign with precise large legible uppercase text. The sign MUST exist in the photograph. Do not use a no-sign instruction.\n\nEXACT SIGN TEXT (preserve line breaks):\n'+raw+'\n\nABSOLUTE PER-WORD COLOR CONTRACT (token indices are exact):\n'+colorRows+'\n\nEXACT COLOR QA: '+colors.map(x=>'token '+x.index+' '+JSON.stringify(x.word)+' = '+x.color).join('; ')+'\nEvery word MUST be printed using its specified HEX color. RED #FF0000 words MUST appear RED, never white. White words MUST remain white. Never override or normalize per-word colors. Check each line against the map before finalizing. No flags or religious symbols.';};
-window.stravaColorRecovery321=()=>{const z=state.sign||{},map=window.stravaSignColorMap318(z),prompt=buildPrompt();return {pass:prompt.includes(map.lines)&&prompt.includes('BLACK SIGN')&&!!document.getElementById('plakatColorEditor321'),wordCount:map.words.length,redWords:map.words.filter(w=>w.color==='#FF0000').length,promptContainsMap:prompt.includes(map.lines),editorVisible:!!document.getElementById('plakatColorEditor321')}};
-requestAnimationFrame(mount);
+
+window.stravaSignStudioAudit=()=>({visible:!!document.getElementById('signStudio'),wordCount:entries().length,promptContainsColors:buildPrompt().includes(window.stravaSignColorMap318(state.sign).lines)});
+requestAnimationFrame(mountStudio);
 })();
 </script>
 </body></html>
