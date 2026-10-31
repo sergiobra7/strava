@@ -1852,6 +1852,7 @@ window.stravaRegression318=function(){
 </script>
 
 <style id="sign-studio-style">
+@import url("https://fonts.googleapis.com/css2?family=Anton&family=Bebas+Neue&family=Oswald:wght@700&display=swap");
 #signStudio{color:#f8fafc;background:#171c25;border:1px solid #374151;border-radius:16px;padding:14px;margin:8px 0 24px;font-family:system-ui,sans-serif}
 #signStudio *{box-sizing:border-box}
 #signStudio h2{margin:0 0 4px;font-size:20px;letter-spacing:.4px}
@@ -1884,16 +1885,16 @@ function mountStudio(){
 if(state.world!=='sign'||state.tab!=='Plakat')return;
 const host=document.getElementById('view');if(!host||document.getElementById('signStudio'))return;
 const root=document.createElement('section');root.id='signStudio';
-root.innerHTML='<h2>STRAVA SIGN STUDIO</h2><p class="sub">Live-Plakat · direkte Wortauswahl · Mehrfachauswahl</p><label for="studioText">PLAKATTEXT</label><textarea id="studioText" rows="7"></textarea><div class="toolbar"><label>TEXTAUSRICHTUNG <select id="studioAlign"><option value="center">Zentriert</option><option value="left">Links</option><option value="right">Rechts</option></select></label></div><div class="poster" id="studioPoster" aria-label="Interaktive Live-Plakatvorschau"></div><div class="status" id="studioStatus"></div><strong>WÖRTER MARKIEREN</strong><div class="wordList" id="studioWords"></div><div class="colors" id="studioColors"><button data-color="#FF0000" style="background:#f33;color:white">ROT</button><button data-color="#FFFFFF" style="background:white;color:black">WEISS</button><button data-color="#FFFF00" style="background:#ff0;color:black">GELB</button><button data-color="#00FF00" style="background:#0f0;color:black">GRÜN</button><button data-color="#00AAFF" style="background:#0af;color:black">BLAU</button><input id="studioCustom" type="color" value="#ff0000" aria-label="Eigene Farbe"></div><div class="toolbar"><button id="studioClear">MARKIERUNG AUFHEBEN</button><button id="studioResetSelected">AUSWAHL AUF STANDARD</button><button id="studioResetAll">ALLE FARBEN AUF STANDARD</button></div>';
+root.innerHTML='<h2>STRAVA SIGN STUDIO</h2><p class="sub">Live-Plakat · direkte Wortauswahl · Mehrfachauswahl</p><label for="studioText">PLAKATTEXT</label><textarea id="studioText" rows="7"></textarea><div class="toolbar"><label>SCHRIFTART <select id="studioFont"><option value="impact">Impact · XXL</option><option value="anton">Anton · Breit</option><option value="bebas">Bebas Neue · Schmal</option><option value="oswald">Oswald · Condensed</option><option value="arial">Arial Black · Klassisch</option></select></label><label>TEXTAUSRICHTUNG <select id="studioAlign"><option value="center">Zentriert</option><option value="left">Links</option><option value="right">Rechts</option></select></label></div><div class="poster" id="studioPoster" aria-label="Interaktive Live-Plakatvorschau"></div><div class="status" id="studioStatus"></div><strong>WÖRTER MARKIEREN</strong><div class="wordList" id="studioWords"></div><div class="colors" id="studioColors"><button data-color="#FF0000" style="background:#f33;color:white">ROT</button><button data-color="#FFFFFF" style="background:white;color:black">WEISS</button><button data-color="#FFFF00" style="background:#ff0;color:black">GELB</button><button data-color="#00FF00" style="background:#0f0;color:black">GRÜN</button><button data-color="#00AAFF" style="background:#0af;color:black">BLAU</button><input id="studioCustom" type="color" value="#ff0000" aria-label="Eigene Farbe"></div><div class="toolbar"><button id="studioClear">MARKIERUNG AUFHEBEN</button><button id="studioResetSelected">AUSWAHL AUF STANDARD</button><button id="studioResetAll">ALLE FARBEN AUF STANDARD</button></div>';
 host.prepend(root);
-const field=root.querySelector('#studioText'),poster=root.querySelector('#studioPoster'),list=root.querySelector('#studioWords'),status=root.querySelector('#studioStatus'),align=root.querySelector('#studioAlign');
-const selected=new Set();field.value=state.sign.signText||'';align.value=state.sign.signAlign||'center';
+const field=root.querySelector('#studioText'),poster=root.querySelector('#studioPoster'),list=root.querySelector('#studioWords'),status=root.querySelector('#studioStatus'),align=root.querySelector('#studioAlign'),font=root.querySelector('#studioFont');
+const selected=new Set();field.value=state.sign.signText||'';align.value=state.sign.signAlign||'center';font.value=state.sign.studioFont||'impact';
 function toggle(i){selected.has(i)?selected.delete(i):selected.add(i);paint()}
 function paint(){
 poster.replaceChildren();list.replaceChildren();
 const lines=String(state.sign.signText||'').split('\n');
 let index=0;
-for(const line of lines){const row=document.createElement('div');row.className='posterLine';row.style.textAlign=align.value;
+for(const line of lines){const row=document.createElement('div');row.className='posterLine';row.style.textAlign=align.value;row.style.fontFamily=({impact:'Impact,Arial Narrow,sans-serif',anton:'Anton,Impact,sans-serif',bebas:'Bebas Neue,Impact,sans-serif',oswald:'Oswald,Arial Narrow,sans-serif',arial:'Arial Black,Arial,sans-serif'})[font.value];
 for(const word of line.split(TOKEN)){if(!word)continue;if(/^\s+$/.test(word)){row.append(document.createTextNode(word));index++;continue}
 const id=index++,color=String((state.sign.wordColors||{})[id]||state.sign.signColor||'#FFFFFF').toUpperCase();
 const make=(cls)=>{const b=document.createElement('button');b.type='button';b.className=cls;b.textContent=word;b.style.color=color;b.dataset.token=String(id);b.setAttribute('aria-pressed',String(selected.has(id)));b.onclick=()=>toggle(id);return b};
@@ -1902,7 +1903,7 @@ poster.append(row);index++}
 status.textContent=selected.size+' Wörter ausgewählt · '+entries().length+' Wörter insgesamt';
 }
 field.oninput=()=>{const old=state.sign.signText||'';state.sign.signText=field.value;state.sign.wordColors=typeof window.stravaRemapWordColors318==='function'?window.stravaRemapWordColors318(old,field.value,state.sign.wordColors||{}):{};selected.clear();persist();paint()};
-align.onchange=()=>{state.sign.signAlign=align.value;persist();paint()};
+font.onchange=()=>{state.sign.studioFont=font.value;persist();paint()};align.onchange=()=>{state.sign.signAlign=align.value;persist();paint()};
 function apply(color){if(!selected.size){status.textContent='Bitte zuerst Wörter markieren';return}state.sign.wordColors=state.sign.wordColors||{};for(const i of selected)state.sign.wordColors[i]=color.toUpperCase();persist();paint()}
 root.querySelectorAll('[data-color]').forEach(b=>b.onclick=()=>apply(b.dataset.color));
 root.querySelector('#studioCustom').oninput=e=>apply(e.target.value);
