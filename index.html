@@ -14,7 +14,7 @@
 #premiumPanel270 > #premiumCards270{display:block!important}
 #premiumPanel270 > #refreshPremium270{display:block!important;margin:14px 0}
 #premiumPanel270 #allSettings339,#premiumPanel270 #master320,#premiumPanel270 #premiumEditor270,#premiumPanel270 #premiumCast311,#premiumPanel270 #manualRegie328,#premiumPanel270 #premiumActiveFilters340{display:none!important}
-</style><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Anton&family=Archivo+Black&family=Barlow+Condensed:wght@900&family=Bebas+Neue&family=Oswald:wght@700&family=Roboto+Condensed:wght@900&family=Teko:wght@700&display=swap" rel="stylesheet"></head><body><header><div><h1>STRAVA RUN <span class="mark">V3.21.5</span></h1><small>RUNNER PHOTO + STRAVA WALL · GITHUB EDITION</small><div id="onlineBuild414" style="font-size:12px;color:#a8c6b8;margin-top:5px;font-weight:700" aria-label="Online-Version">ONLINE · V3.21.5 · Commit wird geprüft …</div></div><div style="display:flex;align-items:center;gap:9px;flex-wrap:wrap;justify-content:flex-end"><span id="saveStatus" class="status">Lokal gespeichert</span><button id="stravaRefresh401" type="button" title="Neueste GitHub-Version laden" style="background:#2cbd79;color:#101510;border:0;border-radius:9px;padding:10px 13px;font-weight:800;cursor:pointer">🔄 Aktualisieren</button></div></header><main><div class="worlds"><button class="world active" data-world="wall">🧱 STRAVA WALL</button><button class="world" data-world="sign">⬛ BLACK SIGN / PLAKAT</button></div><div style="display:flex;align-items:center;justify-content:space-between;gap:10px;margin:9px 0"><button id="presetShortcut403" type="button" style="background:#f2bd49;color:#151515;border:2px solid #f8d57b;border-radius:10px;padding:12px 16px;font-size:15px;font-weight:900;cursor:pointer;flex:1">⭐ MEINE PRESETS · GALERIE ÖFFNEN</button></div><section id="presetDirect404" hidden style="margin:14px 0;padding:14px;border:2px solid #f2bd49;border-radius:14px;background:#151a21"></section><nav class="tabs" id="tabs"></nav><div id="view"></div><div class="footer">Lokale Offline-Web-App · Keine Bilder werden an einen Server gesendet · Prompt zum Kopieren für ChatGPT/Bildgenerierung</div></main><script>
+</style><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Anton&family=Archivo+Black&family=Barlow+Condensed:wght@900&family=Bebas+Neue&family=Oswald:wght@700&family=Roboto+Condensed:wght@900&family=Teko:wght@700&display=swap" rel="stylesheet"></head><body><header><div><h1>STRAVA RUN <span class="mark">V3.21.6</span></h1><small>RUNNER PHOTO + STRAVA WALL · GITHUB EDITION</small><div id="onlineBuild414" style="font-size:12px;color:#a8c6b8;margin-top:5px;font-weight:700" aria-label="Online-Version">ONLINE · V3.21.6 · Commit wird geprüft …</div></div><div style="display:flex;align-items:center;gap:9px;flex-wrap:wrap;justify-content:flex-end"><span id="saveStatus" class="status">Lokal gespeichert</span><button id="stravaRefresh401" type="button" title="Neueste GitHub-Version laden" style="background:#2cbd79;color:#101510;border:0;border-radius:9px;padding:10px 13px;font-weight:800;cursor:pointer">🔄 Aktualisieren</button></div></header><main><div class="worlds"><button class="world active" data-world="wall">🧱 STRAVA WALL</button><button class="world" data-world="sign">⬛ BLACK SIGN / PLAKAT</button></div><div style="display:flex;align-items:center;justify-content:space-between;gap:10px;margin:9px 0"><button id="presetShortcut403" type="button" style="background:#f2bd49;color:#151515;border:2px solid #f8d57b;border-radius:10px;padding:12px 16px;font-size:15px;font-weight:900;cursor:pointer;flex:1">⭐ MEINE PRESETS · GALERIE ÖFFNEN</button></div><section id="presetDirect404" hidden style="margin:14px 0;padding:14px;border:2px solid #f2bd49;border-radius:14px;background:#151a21"></section><nav class="tabs" id="tabs"></nav><div id="view"></div><div class="footer">Lokale Offline-Web-App · Keine Bilder werden an einen Server gesendet · Prompt zum Kopieren für ChatGPT/Bildgenerierung</div></main><script>
 /* V3.18 stabilization: one color serializer shared by prompt sections. */
 window.stravaSignColorMap318=function(sign){
  const source=sign||{},raw=String(source.signText||''),colors=source.wordColors||{};
@@ -103,7 +103,7 @@ function appearancePrompt396(cast){
  return out;
 }
 
-/* V3.21.5: Full independent BLACK SIGN poster editor, no dependency on retired modules. */
+/* V3.21.6: Full independent BLACK SIGN poster editor, no dependency on retired modules. */
 function fullPosterView321(){
  const v=state.sign||{},p=JSON.parse(localStorage.getItem('stravaPoster321')||'{}');
  const font=Number(p.size)||56,align=p.align||'center';
@@ -138,23 +138,23 @@ function bindFullPoster321(){
   preview.style.background=p.bg||'#000000';preview.style.color=p.color||'#ffffff';
   preview.style.fontFamily=p.font||'Impact,Arial Narrow,sans-serif';
   preview.style.fontSize=(Number(p.size)||56)+'px';preview.style.textAlign=p.align||'center';
-  const ts=tokens();ts.forEach((word,i)=>{const span=document.createElement('span');span.textContent=word;if(!/^\s+$/.test(word))span.style.color=(state.sign.wordColors||{})[i]||p.color||'#ffffff';preview.appendChild(span)});
+  const ts=tokens();ts.forEach((word,i)=>{const span=document.createElement('span');span.textContent=word;if(!/^\s+$/.test(word)){span.style.color=(state.sign.wordColors||{})[i]||p.color||'#ffffff';span.style.cursor='pointer';span.style.borderRadius='3px';span.style.outline=selected.has(i)?'2px solid #fc4c02':'none';span.title='Wort auswählen: '+word;span.setAttribute('role','button');span.tabIndex=0;const toggle=()=>{selected.has(i)?selected.delete(i):selected.add(i);renderPreview()};span.onclick=toggle;span.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();toggle()}}}preview.appendChild(span)});
   const words=el('posterWords321');words.replaceChildren();
   ts.forEach((word,i)=>{if(/^\s+$/.test(word))return;const btn=document.createElement('button');btn.type='button';btn.textContent=word;btn.style.cssText='padding:7px 9px;border-radius:6px;border:2px solid '+(selected.has(i)?'#fc4c02':'#586374')+';background:#252d38;color:'+((state.sign.wordColors||{})[i]||'#ffffff');btn.onclick=()=>{selected.has(i)?selected.delete(i):selected.add(i);renderPreview()};words.appendChild(btn)});
  }
- t.oninput=()=>{state.sign.wordColors={};selected.clear();persist();renderPreview()};
+ let previousTokens=tokens();t.oninput=()=>{const next=tokens(),oldColors=state.sign.wordColors||{},newColors={};let a=0,b=next.length;while(a<previousTokens.length&&a<b&&previousTokens[a]===next[a]){if(oldColors[a])newColors[a]=oldColors[a];a++}let oi=previousTokens.length-1,ni=b-1;while(oi>=a&&ni>=a&&previousTokens[oi]===next[ni]){if(oldColors[oi])newColors[ni]=oldColors[oi];oi--;ni--}state.sign.wordColors=newColors;previousTokens=next;selected.clear();persist();renderPreview()};
  const size=el('posterSize321'),number=el('posterSizeNumber321');
  function setSize(x){p.size=Math.min(120,Math.max(12,Number(x)||56));size.value=number.value=p.size;persist();renderPreview()}
  size.oninput=()=>setSize(size.value);number.oninput=()=>setSize(number.value);
  for(const [id,key] of [['posterFont321','font'],['posterAlign321','align'],['posterColor321','color'],['posterBg321','bg']])el(id).onchange=e=>{p[key]=e.target.value;persist();renderPreview()};
- el('posterApplyColor321').onclick=()=>{state.sign.wordColors=state.sign.wordColors||{};selected.forEach(i=>state.sign.wordColors[i]=el('posterWordColor321').value);persist();renderPreview()};
+ el('posterApplyColor321').onclick=()=>{state.sign.wordColors=state.sign.wordColors||{};selected.forEach(i=>state.sign.wordColors[i]=el('posterWordColor321').value.toUpperCase());persist();renderPreview();el('posterStatus321').textContent='✓ '+selected.size+' Wortfarben gespeichert und mit dem Prompt synchronisiert.'};
  el('posterResetColors321').onclick=()=>{state.sign.wordColors={};selected.clear();persist();renderPreview()};
  el('posterSave321').onclick=()=>{persist();el('posterStatus321').textContent='✓ Plakattext, Farben, Schrift und Layout gespeichert.'};
  renderPreview();
 }
 
 
-/* V3.21.5: Restore missing core prompt and view entry points before extension scripts load. */
+/* V3.21.6: Restore missing core prompt and view entry points before extension scripts load. */
 function buildPrompt(){
  const c=state.common||{},w=state.wall||{},z=state.sign||{};
  const lines=['STRAVA RUN — '+(state.world==='sign'?'BLACK SIGN / PLAKAT':'STRAVA WALL'),
@@ -1130,7 +1130,7 @@ function explainScene381(c,n){
  }).join('')+'<div style="font-size:12px;color:#aebccc;margin-top:10px">🔭 '+esc(opticalNow.lens)+' mm · 📏 '+esc(opticalNow.distance)+' m · 🖼️ '+esc(opticalNow.format)+' (Kameraeinstellungen)</div></div>';
 }
 const cardsHtml=cards.map((original,n)=>{const c=effective390(n),selected=p.selected===n,a=mountingAudit417(c);return '<div class="ps-card '+(selected?'on':'')+'" style="text-align:left;padding:12px;margin:9px 0"><button type="button" data-ps-scene="'+n+'" style="display:block;width:100%;border:0;background:transparent;color:inherit;text-align:left;padding:0;cursor:pointer"><strong>PREMIUM '+String(n+1+p.round*10).padStart(3,'0')+' · '+esc(c.title)+'</strong><small style="display:block;line-height:1.55;margin-top:7px">🪧 Anzeige: '+esc(c.display316)+'<br>📍 Ort: '+esc(c.place)+'<br>🏪 Bereich: '+esc(c.area)+'<br>🪑 Sitzfläche: '+esc(c.seat)+'<br>🔩 Befestigung: '+esc(mounting416())+'<br>🧍 Pose: '+esc(c.pose)+'<br>🪑 Requisite: '+esc(c.prop)+'<br>👴 Figuren: '+esc(c.companion)+'<br>👥 Publikum: '+esc(c.audience)+' · '+esc(c.crowdLayout316)+'<br>🎭 Aktion: '+esc(c.action)+'<br>📷 Kamera: '+esc(c.cam)+' · '+esc(c.frame)+' · Höhe '+esc(c.cameraHeight311)+' m<br>🔭 Brennweite: '+esc(optical(n).lens)+' mm · Entfernung: '+esc(optical(n).distance)+' m<br>🖼️ Bildformat: '+esc(optical(n).format)+(c.loc.includes('Balkon')?'<br>🏠 Balkonposition: '+esc(c.position):'')+'</small><div style="margin-top:8px;font-weight:800;color:#ff8753">'+(selected?'✓ AUSGEWÄHLT':'✓ SZENE ÜBERNEHMEN')+'</div></button>'+editor390(n)+(a.problems.length?'<div style="margin-top:7px;font-size:12px;color:#ffb99c">⚠ '+a.problems.map(esc).join(' · ')+'</div>':'')+explainScene381(c,n)+'</div>'}).join('');
-root.innerHTML='<div id="ps350"><div class="ps-title">🎬 PREMIUM STUDIO · V3.21.5</div><div class="ps-panel"><div class="ps-title">🎛️ EINE FILTERÜBERSICHT · DIREKT ANKLICKBAR</div>'+tiles+(p.opened?'<div style="margin-top:12px">'+body+'</div>':'')+'</div>'+summary+quickActions361+'<div id="psPremiumRecommendations391" class="ps-title">🎲 10 PREMIUM-EMPFEHLUNGEN</div>'+cardsHtml+'<button class="ps-action" data-ps-next>🔄 10 WEITERE EMPFEHLUNGEN</button><button class="ps-action" style="background:#303845;border:1px solid #677181" data-ps-reset>↺ PREMIUM-FILTER ZURÜCKSETZEN</button></div>';
+root.innerHTML='<div id="ps350"><div class="ps-title">🎬 PREMIUM STUDIO · V3.21.6</div><div class="ps-panel"><div class="ps-title">🎛️ EINE FILTERÜBERSICHT · DIREKT ANKLICKBAR</div>'+tiles+(p.opened?'<div style="margin-top:12px">'+body+'</div>':'')+'</div>'+summary+quickActions361+'<div id="psPremiumRecommendations391" class="ps-title">🎲 10 PREMIUM-EMPFEHLUNGEN</div>'+cardsHtml+'<button class="ps-action" data-ps-next>🔄 10 WEITERE EMPFEHLUNGEN</button><button class="ps-action" style="background:#303845;border:1px solid #677181" data-ps-reset>↺ PREMIUM-FILTER ZURÜCKSETZEN</button></div>';
 root.querySelectorAll('[data-ps-gaze321]').forEach(el=>el.onchange=()=>{const v=looks396();v.gaze=v.gaze||{};v.gaze[el.dataset.psGaze321]=el.value;localStorage.setItem(APPEARANCE396,JSON.stringify(v));p.last='Blickrichtung '+el.dataset.psGaze321+' → '+el.value;persist();});
 root.querySelectorAll('[data-ps-manual390]').forEach(el=>el.onchange=()=>{const n=Number(el.dataset.psManual390),e=entry390(n);e.enabled=el.checked;e.values=e.values||{};persist();draw()});
 root.querySelectorAll('[data-ps-reset390]').forEach(el=>el.onclick=()=>{const n=Number(el.dataset.psReset390);p.sceneEdits390=p.sceneEdits390||{};delete p.sceneEdits390[sceneKey390(n)];if(p.selected===n)syncActive390(n);persist();draw()});
@@ -1751,7 +1751,7 @@ function archiveBind413(){gallery413();let file=document.getElementById('a413fil
 /* V3.13.8: public GitHub Pages deployment identity, independent of local settings. */
 (function(){
  const el=document.getElementById('onlineBuild414');if(!el)return;
- const version='V3.21.5';
+ const version='V3.21.6';
  const fallback='ONLINE · '+version+' · Commit: nicht abrufbar';
  const url='https://api.github.com/repos/sergiobra7/strava/commits/main';
  const controller=new AbortController();
@@ -1813,7 +1813,7 @@ window.stravaRegression318=function(){
 
 
 <script id="strava-recovery-3202">
-/* V3.21.5: recover blank views without resetting local data. */
+/* V3.21.6: recover blank views without resetting local data. */
 (function(){
  const aliases={'Schnellwahl':'Smart Director','Erweitert':'Hauptfigur','Meine Bilder':'⭐ Meine Presets','Szenen':'Szenen ⭐','Kamera & Ort':'Kamera','Wand / Plakat':'Plakat','Plakat & Text':'Plakat','Auto-Wand':'Plakat'};
  const allowed=['Smart Director','Plakat','Hauptfigur','Kamera','Szenen ⭐','⭐ Meine Presets','Nebenfiguren','Prompt','Projekt'];
