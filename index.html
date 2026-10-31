@@ -1932,16 +1932,10 @@ const groups={
  }}
 };
 const labels={dominance:'Textdominanz',mount:'Befestigung / Anzeigemittel',relation:'Position zur Botschaft',ground:'Bodenstützen',pose:'Körperhaltung / Pose',expression:'Mimik',gaze:'Blickrichtung',count:'Menschenanzahl',density:'Menschendichte',attention:'Aufmerksamkeit auf Botschaft und Demonstrant',reaction:'Publikumsreaktion',venue:'Ort'};
-const scenes=[
- ['Balkon-Protest XXL','XXL-Balkonhänger','Oberhalb','Rückwärts auf Stuhl, Unterarme auf Lehne','Breite Einkaufsstraße'],
- ['Fassaden-Protest','Mehrgeschossiges Fassadenbanner','Unterhalb','Lässig auf breiter Mauer sitzend','Großer Marktplatz'],
- ['Ausleger & Menschenmeer','Auslegerbanner','Seitlich erhöht','Auf Balkon zurückgelehnt','Breite Einkaufsstraße'],
- ['Straßenbanner XXL','Straßenüberspannung','Unterhalb','Breitbeinig stehend','Bahnhofsvorplatz'],
- ['Bäckerei-Aufruhr','XXL-Balkonhänger','Oberhalb','Auf Balkon zurückgelehnt','Bäckerei an breiter Straße'],
- ['Monumentale Fassade','Abgehängtes XXL-Plakat','Unterhalb','Auf Treppenabsatz sitzend','Großer Marktplatz'],
- ['Vertikale Flagge','Vertikale XXL-Fassadenflagge','Seitlich erhöht','Arme verschränkt','Einkaufspark-Promenade'],
- ['Markthallen-Protest','Mehrgeschossiges Fassadenbanner','Unterhalb','Lässig auf breiter Mauer sitzend','Markthalle mit Vorplatz']
-];
+const sceneTemplates=[["Balkon-Protest XXL","XXL-Balkonhänger","Oberhalb","Rückwärts auf Stuhl, Unterarme auf Lehne","Breite Einkaufsstraße","Provokantes Grinsen","Direkt in die Kamera","800–1500","Extrem dicht","90 %","Schock + Verwirrung + Überraschung"],["Fassaden-Protest","Mehrgeschossiges Fassadenbanner","Unterhalb","Lässig auf breiter Mauer sitzend","Großer Marktplatz","Eiskalt ernst","Direkt in die Kamera","800–1500","Massenauflauf","85 %","Empört + diskutierend"],["Ausleger & Menschenmeer","Auslegerbanner","Seitlich erhöht","Auf Balkon zurückgelehnt","Breite Einkaufsstraße","Überlegenes Schmunzeln","Direkt in die Kamera","500–800","Sehr dicht","85 %","Ungläubiges Staunen"],["Straßenbanner XXL","Straßenüberspannung","Unterhalb","Breitbeinig stehend","Bahnhofsvorplatz","Herausfordernd","Zur Menschenmenge","800–1500","Massenauflauf","90 %","Neugierig + verwirrt"],["Bäckerei-Aufruhr","XXL-Balkonhänger","Oberhalb","Auf Balkon zurückgelehnt","Bäckerei an breiter Straße","Provokantes Grinsen","Direkt in die Kamera","250–500","Sehr dicht","85 %","Ungläubig lachend"],["Monumentale Fassade","Abgehängtes XXL-Plakat","Unterhalb","Auf Treppenabsatz sitzend","Großer Marktplatz","Eiskalt ernst","Direkt in die Kamera","800–1500","Extrem dicht","85 %","Schock + Verwirrung + Überraschung"],["Vertikale Flagge","Vertikale XXL-Fassadenflagge","Seitlich erhöht","Arme verschränkt","Einkaufspark-Promenade","Herausfordernd","Direkt in die Kamera","500–800","Sehr dicht","85 %","Empört + diskutierend"],["Markthallen-Protest","Mehrgeschossiges Fassadenbanner","Unterhalb","Lässig auf breiter Mauer sitzend","Markthalle mit Vorplatz","Ungläubig lachend","Zur Menschenmenge","500–800","Extrem dicht","85 %","Gemischte Reaktionen"]];
+const sceneKeys=["mount","relation","pose","venue","expression","gaze","count","density","attention","reaction"];
+const scenes=sceneTemplates.map(s=>({title:s[0],values:Object.fromEntries(sceneKeys.map((k,i)=>[k,s[i+1]]))}));
+function evaluateScene(scene){const v={...data.values};for(const [k,val] of Object.entries(scene.values))if(!data.locks[k])v[k]=val;const warnings=[];if(v.mount==='XXL-Balkonhänger'&&!/Bäckerei|Einkaufsstraße|Dachterrasse/.test(v.venue))warnings.push('Balkonbanner benötigt Balkon oder Geländer.');if(v.mount==='Straßenüberspannung'&&!/Einkaufsstraße|Bahnhofsvorplatz|Marktplatz|Promenade/.test(v.venue))warnings.push('Straßenüberspannung benötigt geeignete Befestigungspunkte.');if(v.pose.includes('Balkon')&&!/Balkon|Dachterrasse|Einkaufsstraße|Bäckerei/.test(v.mount+' '+v.venue))warnings.push('Balkonpose benötigt einen Balkon.');if(parseInt(v.count,10)>=800&&/Bäckerei|Markthalle/.test(v.venue))warnings.push('800+ Personen benötigen einen großen Außenbereich.');if(v.ground==='Keine Bodenstützen'&&v.mount==='Freistehende Werbetafel')warnings.push('Freistehende Werbetafel widerspricht Bodenstützen-Verbot.');return {values:v,warnings}}
 const defaults={enabled:true,values:{},locks:{},notes:{},selectedScene:-1};
 for(const [g,def] of Object.entries(groups))for(const [k,opts] of Object.entries(def.fields))defaults.values[k]=opts[0];
 let data;try{data=Object.assign({},defaults,JSON.parse(localStorage.getItem(KEY)||'{}'));}catch{data={...defaults}}data.values={...defaults.values,...data.values};data.locks=data.locks||{};data.notes=data.notes||{};
@@ -1960,7 +1954,7 @@ function panel(){
  html+=noteMarkup(g)+'</details>';
  }
  html+='<details style="border-top:1px solid #485665;margin-top:12px;padding-top:10px"><summary style="font-weight:800">05 · GESAMTE SZENE VERFEINERN</summary>'+noteMarkup('overall')+'</details>';
- html+='<details style="border-top:1px solid #485665;margin-top:12px;padding-top:10px"><summary style="font-weight:800">06 · PREMIUM-MATRIX · 8 KOMPLETTE SZENEN</summary><p>Empfehlungen übernehmen nur nicht gesperrte Einstellungen. Kamera und Wortfarben bleiben unverändert.</p>'+scenes.map((s,i)=>'<button type="button" data-sx-scene="'+i+'" style="display:block;width:100%;text-align:left;margin:6px 0;padding:12px;border-radius:8px;border:1px solid #6a7889;background:'+(data.selectedScene===i?'#94400c':'#172331')+';color:white">'+escapeHtml((i+1)+'. '+s[0]+' · '+s[1]+' · '+s[2]+' · '+s[3])+'</button>').join('')+'</details>';
+ html+='<details style="border-top:1px solid #485665;margin-top:12px;padding-top:10px"><summary style="font-weight:800">06 · PREMIUM-MATRIX · 8 KOMPLETTE SZENEN</summary><p>Empfehlungen übernehmen nur nicht gesperrte Einstellungen. Kamera und Wortfarben bleiben unverändert.</p>'+scenes.map((scene,i)=>'<button type="button" data-sx-scene="'+i+'" style="display:block;width:100%;text-align:left;margin:6px 0;padding:12px;border-radius:8px;border:1px solid #6a7889;background:'+(data.selectedScene===i?'#94400c':'#172331')+';color:white">'+escapeHtml((i+1)+'. '+scene.title+' · '+scene.values.mount+' · '+scene.values.pose+' · '+scene.values.count+' Personen')+(evaluateScene(scene).warnings.length?'<br><small>Konflikt: '+escapeHtml(evaluateScene(scene).warnings.join(' '))+'</small>':'')+'</button>').join('')+'</details>';
  html+='<p id="sx-summary" style="margin-top:12px">Aktive Zusatzanweisungen: '+allNotes().filter(n=>n.active).length+'</p><button type="button" id="sx-disable-notes">Alle Zusatzanweisungen deaktivieren</button></section>';
  return html;
 }
@@ -1977,7 +1971,7 @@ document.addEventListener('click',e=>{
  if(t.dataset.sxAdd){let g=t.dataset.sxAdd,p=t.closest('details'),title=p.querySelector('[data-sx-title]')?.value.trim(),body=p.querySelector('[data-sx-new]')?.value.trim();if(!body)return alert('Bitte zuerst eine Anweisung eingeben.');(data.notes[g]||(data.notes[g]=[])).push({id:String(Date.now())+Math.random().toString(36).slice(2,7),title:title||'Eigene Regie',text:body,active:false});persist();refresh();return}
  if(t.dataset.sxSave){let n=(data.notes[t.dataset.sxSave]||[]).find(x=>x.id===t.dataset.sxId);if(n){n.text=t.parentElement.querySelector('textarea')?.value||'';persist();refresh()}return}
  if(t.dataset.sxDelete){if(!confirm('Gespeicherte Anweisung wirklich löschen?'))return;data.notes[t.dataset.sxDelete]=(data.notes[t.dataset.sxDelete]||[]).filter(n=>n.id!==t.dataset.sxId);persist();refresh();return}
- if(t.dataset.sxScene!==undefined){let i=Number(t.dataset.sxScene),s=scenes[i];if(!s)return;let updates={mount:s[1],relation:s[2],pose:s[3],venue:s[4]};for(const [k,v] of Object.entries(updates))if(!data.locks[k])data.values[k]=v;data.selectedScene=i;persist();refresh();return}
+ if(t.dataset.sxScene!==undefined){const i=Number(t.dataset.sxScene),scene=scenes[i];if(!scene)return;const result=evaluateScene(scene);if(result.warnings.length){alert('Filterkonflikt: '+result.warnings.join(' | '));return}data.values=result.values;data.selectedScene=i;persist();refresh();return}
  if(t.id==='sx-disable-notes'){for(const n of allNotes())n.active=false;persist();refresh()}
 });
 function signaturePrompt(){
@@ -1992,7 +1986,7 @@ function signaturePrompt(){
 function installPrompt(){if(typeof buildPrompt!=='function'||buildPrompt.__sx400)return;const previous=buildPrompt;const wrapped=function(){return previous.apply(this,arguments)+(typeof state!=='undefined'&&state.world==='sign'?signaturePrompt():'')};wrapped.__sx400=true;buildPrompt=wrapped;}
 function boot(){installPrompt();mountPanel()}
 const obs=new MutationObserver(()=>{if(!document.getElementById('signatureXXL400'))mountPanel()});if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',()=>{boot();const v=document.getElementById('view');if(v)obs.observe(v,{childList:true})});else{boot();const v=document.getElementById('view');if(v)obs.observe(v,{childList:true})}
-window.stravaSignature400={get:()=>JSON.parse(JSON.stringify(data)),prompt:signaturePrompt,scenes};
+window.stravaSignature400={get:()=>JSON.parse(JSON.stringify(data)),prompt:signaturePrompt,scenes,audit:()=>scenes.map(scene=>({name:scene.title,...evaluateScene(scene)}))};
 })();
 </script>
 </body></html>
