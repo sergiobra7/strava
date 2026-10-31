@@ -1927,6 +1927,7 @@ buildPrompt=function(){if(state.world!=='sign')return previousBuild();const c=st
 return 'STRAVA RUN — BLACK SIGN · EXACT WORD COLOR LOCK\nOUTPUT: ONE native 9:16 photorealistic documentary photograph.\n\nPERSON PHOTO: Preserve exact facial identity. SHOE PHOTO: exact shoes on both feet. Preserve the selected location, camera, runner, pose, clothing and audience settings.\n\nSCENE CONFIGURATION:\n'+p.replace(/05 \/ ABSOLUTE EXCLUSION[\s\S]*/,'').replace(/RUNNER DOCUMENTARY · NO SIGN/g,'BLACK SIGN · EXACT COLORS').replace(/\bNO SIGN\b/gi,'PHYSICAL BLACK SIGN')+'\n\nTYPOGRAPHY LOCK: Typeface '+({impact:'Impact',anton:'Anton',bebas:'Bebas Neue',oswald:'Oswald Condensed',arial:'Arial Black'}[z.studioFont]||'Impact')+'. Text alignment '+({left:'LEFT',center:'CENTER',right:'RIGHT'}[z.signAlign]||'CENTER')+'. Large individually fitted uppercase lines with 5 percent safe margins.\n\nPHYSICAL SIGN: A real matte black sign with precise large legible uppercase text. The sign MUST exist in the photograph. Do not use a no-sign instruction.\n\nEXACT SIGN TEXT (preserve line breaks):\n'+raw+'\n\nABSOLUTE PER-WORD COLOR CONTRACT (token indices are exact):\n'+colorRows+'\n\nEXACT COLOR QA: '+colors.map(x=>'token '+x.index+' '+JSON.stringify(x.word)+' = '+x.color).join('; ')+'\nEvery word MUST be printed using its specified HEX color. RED #FF0000 words MUST appear RED, never white. White words MUST remain white. Never override or normalize per-word colors. Check each line against the map before finalizing. No flags or religious symbols.';};
 
 window.stravaSignStudioAudit=()=>({visible:!!document.getElementById('signStudio'),wordCount:entries().length,promptContainsColors:buildPrompt().includes(window.stravaSignColorMap318(state.sign).lines)});
+window.stravaMountStudio400=mountStudio;
 requestAnimationFrame(mountStudio);
 })();
 </script>
@@ -1947,6 +1948,7 @@ const wanted=state.tab;
 if(alias[wanted])state.tab=alias[wanted];
 original();
 state.tab=wanted;
+if(wanted==='Plakat'){const v=document.getElementById('view');if(v)v.innerHTML='';requestAnimationFrame(()=>window.stravaMountStudio400?.());}
 if(wanted==='Prompt'){
  const v=document.getElementById('view');if(v)v.innerHTML=promptView();
  requestAnimationFrame(()=>{const a=document.getElementById('restoredPromptText'),b=document.getElementById('restoredPromptCopy');if(!a||!b)return;a.value=buildPrompt();b.onclick=async()=>{a.value=buildPrompt();try{await navigator.clipboard.writeText(a.value)}catch(e){a.select();document.execCommand('copy')}b.textContent='KOPIERT'}});
