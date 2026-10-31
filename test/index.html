@@ -1892,15 +1892,19 @@ const selected=new Set();field.value=state.sign.signText||'';align.value=state.s
 function toggle(i){selected.has(i)?selected.delete(i):selected.add(i);paint()}
 function paint(){
 poster.replaceChildren();list.replaceChildren();
-const lines=String(state.sign.signText||'').split('\n');
-let index=0;
-for(const line of lines){const row=document.createElement('div');row.className='posterLine';row.style.textAlign=align.value;row.style.fontFamily=({impact:'Impact,Arial Narrow,sans-serif',anton:'Anton,Impact,sans-serif',bebas:'Bebas Neue,Impact,sans-serif',oswald:'Oswald,Arial Narrow,sans-serif',arial:'Arial Black,Arial,sans-serif'})[font.value];
-for(const word of line.split(TOKEN)){if(!word)continue;if(/^\s+$/.test(word)){row.append(document.createTextNode(word));index++;continue}
-const id=index++,color=String((state.sign.wordColors||{})[id]||'#FFFFFF').toUpperCase();
-const make=(cls)=>{const b=document.createElement('button');b.type='button';b.className=cls;b.textContent=word;b.style.color=color;b.dataset.token=String(id);b.setAttribute('aria-pressed',String(selected.has(id)));b.onclick=()=>toggle(id);return b};
-row.append(make('posterWord'));list.append(make('wordChip'))}
-poster.append(row);index++}
-requestAnimationFrame(()=>{const rows=[...poster.querySelectorAll('.posterLine')];if(!rows.length)return;const maxWidth=poster.clientWidth-20;const targetHeight=Math.max(260,poster.clientWidth*1.12);let maxLineSizes=[];for(const row of rows){let low=12,high=170;for(let j=0;j<15;j++){const mid=(low+high)/2;row.style.fontSize=mid+'px';if(row.scrollWidth<=maxWidth)low=mid;else high=mid}maxLineSizes.push(low)}const total=maxLineSizes.reduce((sum,n)=>sum+n*1.07,0)+Math.max(0,rows.length-1)*3;const factor=Math.min(1,targetHeight/Math.max(1,total));rows.forEach((row,i)=>row.style.fontSize=Math.max(10,maxLineSizes[i]*factor)+'px');poster.style.minHeight=Math.ceil(Math.max(320,total*factor+poster.clientWidth*.10))+'px'});
+const parts=tokens();let row=document.createElement('div');row.className='posterLine';row.style.textAlign=align.value;
+const fontStack=({impact:'Impact,Arial Narrow,sans-serif',anton:'Anton,Impact,sans-serif',bebas:'Bebas Neue,Impact,sans-serif',oswald:'Oswald,Arial Narrow,sans-serif',arial:'Arial Black,Arial,sans-serif'})[font.value];
+row.style.fontFamily=fontStack;
+const addRow=()=>{poster.append(row);row=document.createElement('div');row.className='posterLine';row.style.textAlign=align.value;row.style.fontFamily=fontStack};
+for(let index=0;index<parts.length;index++){
+const word=parts[index];if(!word)continue;
+if(/^\s+$/.test(word)){const pieces=word.split('\n');for(let j=0;j<pieces.length;j++){if(j)addRow();if(pieces[j])row.append(document.createTextNode(pieces[j]))}continue}
+const color=String((state.sign.wordColors||{})[index]||'#FFFFFF').toUpperCase();
+const make=(cls)=>{const btn=document.createElement('button');btn.type='button';btn.className=cls;btn.textContent=word;btn.style.color=color;btn.dataset.token=String(index);btn.setAttribute('aria-pressed',String(selected.has(index)));btn.onclick=()=>toggle(index);return btn};
+row.append(make('posterWord'));list.append(make('wordChip'));
+}
+poster.append(row);
+requestAnimationFrame(()=>{const rows=[...poster.querySelectorAll('.posterLine')];if(!rows.length)return;const maxWidth=poster.clientWidth-30;const targetHeight=Math.max(260,poster.clientWidth*1.12);let maxLineSizes=[];for(const row of rows){let low=12,high=170;for(let j=0;j<15;j++){const mid=(low+high)/2;row.style.fontSize=mid+'px';if(row.scrollWidth<=maxWidth)low=mid;else high=mid}maxLineSizes.push(low)}const total=maxLineSizes.reduce((sum,n)=>sum+n*1.07,0)+Math.max(0,rows.length-1)*3;const factor=Math.min(1,targetHeight/Math.max(1,total));rows.forEach((row,i)=>row.style.fontSize=Math.max(10,maxLineSizes[i]*factor)+'px');poster.style.minHeight=Math.ceil(Math.max(320,total*factor+poster.clientWidth*.10))+'px'});
 status.textContent=selected.size+' Wörter ausgewählt · '+entries().length+' Wörter insgesamt';
 }
 field.oninput=()=>{const old=state.sign.signText||'';state.sign.signText=field.value;state.sign.wordColors=typeof window.stravaRemapWordColors318==='function'?window.stravaRemapWordColors318(old,field.value,state.sign.wordColors||{}):{};selected.clear();persist();paint()};
@@ -1915,7 +1919,7 @@ paint();
 }
 const previousBuild=buildPrompt;
 buildPrompt=function(){if(state.world!=='sign')return previousBuild();const c=state.common||{},z=state.sign||{},p=previousBuild();const map=window.stravaSignColorMap318(z);const raw=String(z.signText||'');const colorRows=map.lines;const colors=entries();const problems=colors.filter(x=>!/^#[0-9A-F]{6}$/.test(x.color));if(problems.length)throw Error('Ungültige Wortfarbe: '+problems.map(x=>x.word).join(', '));
-return 'STRAVA RUN — BLACK SIGN · EXACT WORD COLOR LOCK\nOUTPUT: ONE native 9:16 photorealistic documentary photograph.\n\nPERSON PHOTO: Preserve exact facial identity. SHOE PHOTO: exact shoes on both feet. Preserve the selected location, camera, runner, pose, clothing and audience settings.\n\nSCENE CONFIGURATION:\n'+p.replace(/05 \/ ABSOLUTE EXCLUSION[\s\\S]*/,'').replace(/RUNNER DOCUMENTARY · NO SIGN/g,'BLACK SIGN · EXACT COLORS')+'\n\nPHYSICAL SIGN: A real matte black sign with precise large legible uppercase text. The sign MUST exist in the photograph. Do not use a no-sign instruction.\n\nEXACT SIGN TEXT (preserve line breaks):\n'+raw+'\n\nABSOLUTE PER-WORD COLOR CONTRACT (token indices are exact):\n'+colorRows+'\n\nEXACT COLOR QA: '+colors.map(x=>'token '+x.index+' '+JSON.stringify(x.word)+' = '+x.color).join('; ')+'\nEvery word MUST be printed using its specified HEX color. RED #FF0000 words MUST appear RED, never white. White words MUST remain white. Never override or normalize per-word colors. Check each line against the map before finalizing. No flags or religious symbols.';};
+return 'STRAVA RUN — BLACK SIGN · EXACT WORD COLOR LOCK\nOUTPUT: ONE native 9:16 photorealistic documentary photograph.\n\nPERSON PHOTO: Preserve exact facial identity. SHOE PHOTO: exact shoes on both feet. Preserve the selected location, camera, runner, pose, clothing and audience settings.\n\nSCENE CONFIGURATION:\n'+p.replace(/05 \/ ABSOLUTE EXCLUSION[\s\\S]*/,'').replace(/RUNNER DOCUMENTARY · NO SIGN/g,'BLACK SIGN · EXACT COLORS')+'\n\nTYPOGRAPHY LOCK: Typeface '+({impact:'Impact',anton:'Anton',bebas:'Bebas Neue',oswald:'Oswald Condensed',arial:'Arial Black'}[z.studioFont]||'Impact')+'. Text alignment '+({left:'LEFT',center:'CENTER',right:'RIGHT'}[z.signAlign]||'CENTER')+'. Large individually fitted uppercase lines with 5 percent safe margins.\n\nPHYSICAL SIGN: A real matte black sign with precise large legible uppercase text. The sign MUST exist in the photograph. Do not use a no-sign instruction.\n\nEXACT SIGN TEXT (preserve line breaks):\n'+raw+'\n\nABSOLUTE PER-WORD COLOR CONTRACT (token indices are exact):\n'+colorRows+'\n\nEXACT COLOR QA: '+colors.map(x=>'token '+x.index+' '+JSON.stringify(x.word)+' = '+x.color).join('; ')+'\nEvery word MUST be printed using its specified HEX color. RED #FF0000 words MUST appear RED, never white. White words MUST remain white. Never override or normalize per-word colors. Check each line against the map before finalizing. No flags or religious symbols.';};
 
 window.stravaSignStudioAudit=()=>({visible:!!document.getElementById('signStudio'),wordCount:entries().length,promptContainsColors:buildPrompt().includes(window.stravaSignColorMap318(state.sign).lines)});
 requestAnimationFrame(mountStudio);
