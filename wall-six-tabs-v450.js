@@ -1,4 +1,4 @@
-/* STRAVA WALL V4.5.3 — neon PUMA photo-default and original Strava pixel/typeface lock, wall-only */
+/* STRAVA WALL V4.5.4 — BPM layout and named preview preset export; BLACK SIGN untouched */
 (function(){
 "use strict";
 if(typeof state==="undefined"||typeof render!=="function"||typeof buildPrompt!=="function")return;
@@ -42,7 +42,7 @@ function toggle(k,label){return '<label class="check"><input type="checkbox" dat
 function group(label,body,opened){return '<details class="panel" '+(opened?"open":"")+' style="margin-bottom:10px"><summary style="cursor:pointer;font-size:15px;font-weight:800">'+label+'</summary><div style="padding-top:14px">'+body+'</div></details>'}
 function content(){
 switch(active){
-case "Presets":return '<section class="panel"><h2>Meine Presets · mit echter Bildvorschau</h2><div id="w450gallery" class="grid"></div><div class="field"><label>Presetname</label><input id="w450presetName" placeholder="Meine Inszenierung"></div><div class="field"><label>Ergebnisbild für die Vorschau</label><input id="w450presetImage" type="file" accept="image/*"><p class="hint">Optional: echtes fertiges Bild auswählen. Lokal gespeichert.</p></div><div class="actions"><button id="w450savePreset" class="btn">Preset speichern</button><button id="w450reset" class="btn secondary">Auf Standard zurücksetzen</button><button id="w450exportPresets" class="btn secondary">Presets sichern</button></div><div class="field" style="margin-top:12px"><label>Preset-Sicherung importieren</label><input id="w450importPresets" type="file" accept=".json,application/json"></div><div id="w450status" class="hint"></div></section>';
+case "Presets":return '<section class="panel"><h2>Meine Presets · mit echter Bildvorschau</h2><div id="w450gallery" class="grid"></div><div class="field"><label>Presetname</label><input id="w450presetName" placeholder="Meine Inszenierung"></div><div class="field"><label>Ergebnisbild für die Vorschau</label><input id="w450presetImage" type="file" accept="image/*"><p class="hint">Für die echte Vorschau das fertige Ergebnisfoto auswählen. Beim iPhone-Teilen wird es zusätzlich als JPG bereitgestellt; JSON selbst hat keine Fotovorschau.</p></div><div class="actions"><button id="w450savePreset" class="btn">Preset speichern</button><button id="w450reset" class="btn secondary">Auf Standard zurücksetzen</button><button id="w450shareAllPresets" class="btn secondary">Alle Presets teilen</button><button id="w450exportPresets" class="btn secondary">Alle Presets herunterladen</button></div><div class="field" style="margin-top:12px"><label>Preset-Sicherung importieren</label><input id="w450importPresets" type="file" accept=".json,application/json"></div><div id="w450status" class="hint"></div></section>';
 case "Statistikmodus":return '<section class="panel"><h2>Statistikmodus</h2><label class="check"><input type="radio" name="w450mode" value="bpm" '+(cfg.mode==="bpm"?"checked":"")+'> A · Statistik + BPM + Karte</label><label class="check"><input type="radio" name="w450mode" value="only" '+(cfg.mode==="only"?"checked":"")+'> B · Nur Statistik</label><div class="notice" style="margin-top:16px" id="w450modeInfo">'+(cfg.mode==="bpm"?"In ChatGPT: normale Strava-Statistik und BPM-Screenshot anhängen. Die Karte wird aus den vorhandenen Referenzen übernommen.":"In ChatGPT: nur den normalen Strava-Statistik-Screenshot anhängen.")+'</div><p class="hint">Keine Uploads im Generator. Die Auswahl steuert den Bildprompt.</p></section>';
 case "Szene & Kamera":
 var locations=["Breite Einkaufsstraße","Großer Marktplatz","Bahnhofsvorplatz","Bäckerei an breiter Straße","Markthalle mit Vorplatz","Einkaufspark-Promenade","Supermarkt-Eingang","Balkon 1. Stock","Balkon 2. Stock","Baustelle","Busbahnhof","Industriefassade an Platz","Dachterrasse","Freie Szene (Zusatzanweisung)"];
@@ -63,7 +63,7 @@ case "Prompt & Export":return '<section class="panel"><h2>Prompt & Export</h2><d
 }
 function wallPrompt(){
 var lines=[
-"STRAVA WALL V4.5.3 — EIGHT TAB MASTER PROMPT",
+"STRAVA WALL V4.5.4 — EIGHT TAB MASTER PROMPT",
 "CAMERA SETTINGS — SINGLE AUTHORITATIVE SOURCE",
 "FOCAL LENGTH: "+cfg.lens+" mm full-frame equivalent",
 "CAMERA DISTANCE: "+cfg.distance+" m from runner",
@@ -74,6 +74,7 @@ var lines=[
 "STATISTICS MODE: "+(cfg.mode==="bpm"?"WITH BPM + MAP. Expect TWO Strava screenshots attached in ChatGPT: regular run statistics and BPM statistics. Preserve available GPS map from supplied reference.":"STATISTICS ONLY. Expect ONE normal Strava statistics screenshot attached in ChatGPT. No BPM chart and no separate GPS map."),
 "STRAVA ORIGINAL TYPEFACE & SOURCE-PIXEL LOCK — ABSOLUTE PRIORITY: Transfer the screenshot’s EXACT original typographic glyphs, font shapes, weight, kerning, line spacing, numerals, decimal separators, units, labels, STRAVA branding, chart traces, GPS topology, orange route, colors and visible source layout. NO OCR transcription, no reconstructed font, no retypesetting, no translation, no rounding, no replacement of metrics or logo. Crop and arrange only existing screenshot pixels; uniform scaling and realistic perspective-warp of whole source regions are permitted. Reproduce no statistic absent from the original screenshots.",
 "ORIGINAL SCREENSHOT COMPOSITING: If available, use the existing STRAVA WALL source-pixel overlay exported from the original screenshots. Keep all typography, statistics, chart and GPS-route as actual source image pixels in that overlay, mask away only the near-black screenshot backdrop, then perspective-composite those pixels onto the physical BLACK BRICK wall. If the image-generation process cannot physically composite unchanged source pixels, the prompt alone CANNOT guarantee exact font or data. Perform final pixel overlay compositing after generation rather than repainting or hallucinating any character.",
+cfg.mode==="bpm"?"BPM LAYOUT ABSOLUTE LOCK: The STRAVA wordmark AND the STRAVA shoe emblem are BOTH exactly STRAVA ORANGE #FC4C02 (not white), and they are both aligned to the SAME LEFT EDGE as the left-aligned statistics block. They must never be centered independently. Keep the ORIGINAL GPS route horizontally CENTERED in its dedicated GPS display area of the wall; never left-align it merely because the text and icons are left-aligned. Do NOT modify the route geometry or color. Only permitted source-pixel translation, uniform resizing and perspective warp.":"STATISTICS ONLY: preserve screenshot source alignment and do not add BPM.",
 "SCENE: "+cfg.location+". Natural real-world location with visible context.",
 "ORIGINAL SCENE SET: "+(typeof sceneData!=="undefined"&&sceneData[parseInt(cfg.scenario,10)]?sceneData[parseInt(cfg.scenario,10)][0]+" — "+sceneData[parseInt(cfg.scenario,10)][1]:"No scene preset")+".",
 "RUNNER: "+cfg.pose+"; gaze "+cfg.gaze+"; expression "+cfg.mood+".",
@@ -83,7 +84,7 @@ var lines=[
 "BLACK FACADE ABSOLUTE LOCK: Entire statistics wall is deep matte BLACK BRICK with BLACK mortar joints. NO red, brown, terracotta, beige, grey, or white wall; black texture visible under realistic light.",
 "FACADE: "+cfg.height+", "+cfg.width+" m wide; wall on image "+cfg.side+"; "+cfg.angle+"; BLACK brick surface; foreground space "+cfg.space+".",
 "WALL STATISTICS: position "+cfg.placement+"; size "+cfg.statsSize+"% of usable wall; "+cfg.projection+"; spacing "+cfg.spacing+".",
-cfg.mode==="bpm"?"GPS MAP SCALE: "+cfg.gpsSize+"% of planned GPS region.":"GPS MAP: not applicable.",
+cfg.mode==="bpm"?"GPS MAP SCALE: "+cfg.gpsSize+"% of planned GPS region; GPS route remains CENTERED.":"GPS MAP: not applicable.",
 "Perspective-correct statistics on a physically coherent wall. Keep all readable statistics visible.",
 "No flags, religious symbols/buildings, fake logos, extra text or invented measurements.",
 cfg.extra?"USER ADDITIONAL INSTRUCTIONS (cannot override identity, camera or statistics locks): "+cfg.extra:""
@@ -114,26 +115,135 @@ function downloadText(name,content,type){var u=URL.createObjectURL(new Blob([con
 var PRESETKEY="strava-wall-presets-v450";
 function getPresets(){try{return JSON.parse(localStorage.getItem(PRESETKEY)||"[]")}catch(e){return []}}
 function setPresets(items){localStorage.setItem(PRESETKEY,JSON.stringify(items))}
-function initPresets(){
-var status=document.getElementById("w450status");
-function report(s){status.textContent=s}
-function redraw(){var root=document.getElementById("w450gallery");root.innerHTML=getPresets().map(function(p){return '<div class="panel" style="padding:10px">'+(p.image?'<img src="'+esc(p.image)+'" style="width:100%;aspect-ratio:4/5;object-fit:cover;border-radius:8px">':'<div style="aspect-ratio:4/5;background:#242c36;border-radius:8px;display:grid;place-items:center;color:#a7b0bc">Kein Ergebnisbild</div>')+'<b>'+esc(p.name)+'</b><div class="actions"><button class="btn secondary" data-preset-load="'+esc(p.id)+'">Laden</button><button class="btn secondary" data-preset-update="'+esc(p.id)+'">Aktualisieren</button><button class="btn ghost" data-preset-delete="'+esc(p.id)+'">Löschen</button></div></div>'}).join("")||'<p class="hint">Noch keine Presets gespeichert.</p>';
-root.querySelectorAll("[data-preset-load]").forEach(function(b){b.onclick=function(){var p=getPresets().find(function(p){return p.id===b.dataset.presetLoad});if(p){cfg=Object.assign({},fullDefaults,p.settings);cfg.surface="Schwarzer Backstein";persist();render()}}});
-root.querySelectorAll("[data-preset-update]").forEach(function(b){b.onclick=function(){var all=getPresets(),p=all.find(function(p){return p.id===b.dataset.presetUpdate});if(p){p.settings=Object.assign({},cfg);var name=document.getElementById("w450presetName").value.trim();if(name)p.name=name;setPresets(all);redraw();report("Preset-Einstellungen aktualisiert")}}});
-root.querySelectorAll("[data-preset-delete]").forEach(function(b){b.onclick=function(){if(confirm("Preset wirklich löschen?")){setPresets(getPresets().filter(function(p){return p.id!==b.dataset.presetDelete}));redraw()}}});
+
+function safePresetName(name){
+ return String(name||"Strava-Wall").trim().replace(/[\\/:*?"<>|\x00-\x1F]/g,"").replace(/\s+/g,"-").replace(/\.+$/g,"").slice(0,90)||"Strava-Wall";
 }
-redraw();
-document.getElementById("w450savePreset").onclick=async function(){
-var file=document.getElementById("w450presetImage").files[0],name=document.getElementById("w450presetName").value.trim()||"Preset "+(getPresets().length+1),image="";
-if(file){try{image=await thumbnail(file)}catch(e){report("Vorschaubild konnte nicht verarbeitet werden");return}}
-var all=getPresets();all.push({id:String(Date.now())+Math.random().toString(36).slice(2),name:name,image:image,settings:Object.assign({},cfg)});
-try{setPresets(all);redraw();report("Preset mit Einstellungen gespeichert")}catch(e){report("Speicher voll. Presets bitte sichern und alte Bilder entfernen.")}
-};
-document.getElementById("w450reset").onclick=function(){if(confirm("Einstellungen auf Standard zurücksetzen? Presets bleiben erhalten.")){cfg=Object.assign({},fullDefaults);persist();render()}};
-document.getElementById("w450exportPresets").onclick=function(){downloadText("strava-wall-presets-v450.json",JSON.stringify(getPresets()),"application/json")};
-document.getElementById("w450importPresets").onchange=async function(){try{var data=JSON.parse(await this.files[0].text());if(!Array.isArray(data)||data.some(function(p){return !p||typeof p.name!=="string"||!p.settings}))throw Error("Ungültiges Format");setPresets(data);redraw();report("Presets importiert")}catch(e){report("Importfehler: "+e.message)}};
+function previewFile(p){
+ if(!p.image||!p.image.startsWith("data:image/jpeg;base64,"))return null;
+ try{
+  var raw=atob(p.image.split(",")[1]),bytes=new Uint8Array(raw.length);
+  for(var i=0;i<raw.length;i++)bytes[i]=raw.charCodeAt(i);
+  return new File([bytes],safePresetName(p.name)+".jpg",{type:"image/jpeg"});
+ }catch(e){return null}
+}
+function individualBackup(p){return {format:"strava-wall-single-preset",version:1,preset:p}}
+function presetShareFiles(p){
+ var name=safePresetName(p.name);
+ var json=new File([JSON.stringify(individualBackup(p),null,2)],name+".json",{type:"application/json"});
+ var jpg=previewFile(p);
+ return jpg?[json,jpg]:[json];
+}
+function downloadFile(file){
+ var url=URL.createObjectURL(file),anchor=document.createElement("a");
+ anchor.href=url;anchor.download=file.name;anchor.click();
+ setTimeout(function(){URL.revokeObjectURL(url)},1500);
+}
+function downloadPreset(p){
+ presetShareFiles(p).forEach(downloadFile);
+}
+function sharePreset(p,report){
+ var files=presetShareFiles(p);
+ if(typeof navigator.share!=="function"||(typeof navigator.canShare==="function"&&!navigator.canShare({files:files}))){
+  report("Datei-Teilen nicht unterstützt. Bitte im Safari öffnen oder die separate Download-Funktion benutzen.");
+  return;
+ }
+ // Execute navigator.share synchronously on the click activation (no await before it).
+ try{
+  Promise.resolve(navigator.share({files:files,title:p.name})).then(
+   function(){report("Teilen abgeschlossen")},
+   function(e){report(e&&e.name==="AbortError"?"Teilen abgebrochen":"Teilen fehlgeschlagen: "+(e&&e.message||"Unbekannter Fehler"))}
+  );
+ }catch(e){report("Teilen nicht möglich: "+e.message)}
+}
+function initPresets(){
+ var status=document.getElementById("w450status");
+ function report(msg){status.textContent=msg}
+ function redraw(){
+  var root=document.getElementById("w450gallery");
+  root.innerHTML=getPresets().map(function(p){
+   return '<div class="panel" style="padding:10px">'+
+    (p.image?'<img src="'+esc(p.image)+'" alt="Gespeichertes STRAVA-WALL-Ergebnisbild" style="width:100%;aspect-ratio:4/5;object-fit:cover;border-radius:8px">':
+    '<div style="aspect-ratio:4/5;background:#242c36;border-radius:8px;display:grid;place-items:center;color:#a7b0bc">Ergebnisbild fehlt – bitte ergänzen</div>')+
+    '<b>'+esc(p.name)+'</b><div class="actions">'+
+    '<button class="btn secondary" data-preset-load="'+esc(p.id)+'">Laden</button>'+
+    '<button class="btn secondary" data-preset-share="'+esc(p.id)+'">iPhone-Teilen</button>'+
+    '<button class="btn secondary" data-preset-download="'+esc(p.id)+'">Herunterladen</button>'+
+    '<button class="btn secondary" data-preset-update="'+esc(p.id)+'">Aktualisieren</button>'+
+    '<button class="btn ghost" data-preset-delete="'+esc(p.id)+'">Löschen</button></div></div>';
+  }).join("")||'<p class="hint">Noch keine Presets gespeichert.</p>';
+  root.querySelectorAll("[data-preset-load]").forEach(function(b){b.onclick=function(){
+   var p=getPresets().find(function(p){return p.id===b.dataset.presetLoad});
+   if(p){cfg=Object.assign({},fullDefaults,p.settings);cfg.surface="Schwarzer Backstein";persist();render()}
+  }});
+  root.querySelectorAll("[data-preset-share]").forEach(function(b){b.onclick=function(){
+   var p=getPresets().find(function(p){return p.id===b.dataset.presetShare});
+   if(p)sharePreset(p,report);
+  }});
+  root.querySelectorAll("[data-preset-download]").forEach(function(b){b.onclick=function(){
+   var p=getPresets().find(function(p){return p.id===b.dataset.presetDownload});
+   if(p){downloadPreset(p);report("Dateien für "+p.name+" heruntergeladen")}
+  }});
+  root.querySelectorAll("[data-preset-update]").forEach(function(b){b.onclick=async function(){
+   var all=getPresets(),p=all.find(function(p){return p.id===b.dataset.presetUpdate});if(!p)return;
+   var name=document.getElementById("w450presetName").value.trim();
+   var file=document.getElementById("w450presetImage").files[0];
+   if(file){try{p.image=await thumbnail(file)}catch(e){report("Vorschaufoto konnte nicht geladen werden");return}}
+   if(name)p.name=name;
+   p.settings=Object.assign({},cfg);
+   try{setPresets(all);redraw();report("Preset aktualisiert"+(file?" – mit neuem Bild":""))}
+   catch(e){report("Speicher voll; bitte Presets sichern und aufräumen")}
+  }});
+  root.querySelectorAll("[data-preset-delete]").forEach(function(b){b.onclick=function(){
+   if(confirm("Preset wirklich löschen?")){setPresets(getPresets().filter(function(p){return p.id!==b.dataset.presetDelete}));redraw()}
+  }});
+ }
+ redraw();
+ document.getElementById("w450savePreset").onclick=async function(){
+  var file=document.getElementById("w450presetImage").files[0];
+  var name=document.getElementById("w450presetName").value.trim()||"Preset "+(getPresets().length+1);
+  if(!file){report("Bitte das fertige Ergebnisfoto auswählen, damit eine echte Bildvorschau gespeichert wird.");return}
+  var image;try{image=await thumbnail(file)}catch(e){report("Vorschaufoto konnte nicht geladen werden");return}
+  var all=getPresets();all.push({id:String(Date.now())+Math.random().toString(36).slice(2),name:name,image:image,settings:Object.assign({},cfg)});
+  try{setPresets(all);redraw();report("Preset mit echter Bildvorschau gespeichert. Zum Teilen im Preset 'iPhone-Teilen' auswählen.")}
+  catch(e){report("Speicher voll; bitte alte Presets sichern oder entfernen")}
+ };
+ document.getElementById("w450reset").onclick=function(){
+  if(confirm("Einstellungen auf Standard zurücksetzen? Presets bleiben erhalten.")){cfg=Object.assign({},fullDefaults);persist();render()}
+ };
+ document.getElementById("w450shareAllPresets").onclick=function(){
+  var title=document.getElementById("w450presetName").value.trim();
+  var name=title?safePresetName(title)+"-Sicherung.json":"Strava-Wall-Alle-Presets.json";
+  var json=new File([JSON.stringify(getPresets())],name,{type:"application/json"});
+  if(typeof navigator.share!=="function"||(typeof navigator.canShare==="function"&&!navigator.canShare({files:[json]}))){
+   report("Native Datei-Freigabe nicht verfügbar. Benutze 'Herunterladen' oder öffne den Generator in Safari.");return;
+  }
+  try{Promise.resolve(navigator.share({files:[json],title:title||"STRAVA WALL Presets"})).then(
+   function(){report("Sicherung geteilt")},
+   function(e){report(e&&e.name==="AbortError"?"Teilen abgebrochen":"Teilen nicht möglich: "+(e&&e.message||"Fehler"))}
+  )}catch(e){report("Teilen nicht möglich: "+e.message)}
+ };
+ document.getElementById("w450exportPresets").onclick=function(){
+  var title=document.getElementById("w450presetName").value.trim();
+  var name=title?safePresetName(title)+"-Sicherung.json":"Strava-Wall-Alle-Presets.json";
+  downloadText(name,JSON.stringify(getPresets()),"application/json");
+  report("JSON-Backup gespeichert. Für natives Teilen bitte beim gewünschten Preset 'iPhone-Teilen' auswählen.");
+ };
+ document.getElementById("w450importPresets").onchange=async function(){
+  try{
+   var data=JSON.parse(await this.files[0].text());
+   if(!Array.isArray(data)){
+    if(data&&data.format==="strava-wall-single-preset"&&data.preset)data=[data.preset];
+    else throw Error("Unbekanntes Sicherungsformat");
+   }
+   if(data.some(function(p){return !p||typeof p.name!=="string"||!p.settings}))throw Error("Ungültiges Preset");
+   var merged=getPresets();
+   data.forEach(function(p){var i=merged.findIndex(function(old){return old.id===p.id});if(i>=0)merged[i]=p;else merged.push(p)});
+   setPresets(merged);redraw();report("Presets importiert");
+  }catch(e){report("Importfehler: "+e.message)}
+ };
 }
 function thumbnail(file){return new Promise(function(resolve,reject){var img=new Image(),url=URL.createObjectURL(file);img.onload=function(){try{var c=document.createElement("canvas"),w=320,h=400;c.width=w;c.height=h;var scale=Math.max(w/img.width,h/img.height),sw=w/scale,sh=h/scale;c.getContext("2d").drawImage(img,(img.width-sw)/2,(img.height-sh)/2,sw,sh,0,0,w,h);resolve(c.toDataURL("image/jpeg",.72))}catch(e){reject(e)}finally{URL.revokeObjectURL(url)}};img.onerror=reject;img.src=url})}
 if(state.world==="wall"){active=NAMES.includes(state.tab)?state.tab:"Presets";render()}
-window.stravaWall450={tabs:NAMES.slice(),get:function(){return Object.assign({},cfg)},prompt:wallPrompt,version:"V4.5.3"};
+window.stravaWall450={tabs:NAMES.slice(),get:function(){return Object.assign({},cfg)},prompt:wallPrompt,version:"V4.5.4"};
 })();
