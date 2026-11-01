@@ -115,24 +115,121 @@ function downloadText(name,content,type){var u=URL.createObjectURL(new Blob([con
 var PRESETKEY="strava-wall-presets-v450";
 function getPresets(){try{return JSON.parse(localStorage.getItem(PRESETKEY)||"[]")}catch(e){return []}}
 function setPresets(items){localStorage.setItem(PRESETKEY,JSON.stringify(items))}
-function initPresets(){
-var status=document.getElementById("w450status");
-function report(s){status.textContent=s}
-function redraw(){var root=document.getElementById("w450gallery");root.innerHTML=getPresets().map(function(p){return '<div class="panel" style="padding:10px">'+(p.image?'<img src="'+esc(p.image)+'" style="width:100%;aspect-ratio:4/5;object-fit:cover;border-radius:8px">':'<div style="aspect-ratio:4/5;background:#242c36;border-radius:8px;display:grid;place-items:center;color:#a7b0bc">Kein Ergebnisbild</div>')+'<b>'+esc(p.name)+'</b><div class="actions"><button class="btn secondary" data-preset-load="'+esc(p.id)+'">Laden</button><button class="btn secondary" data-preset-update="'+esc(p.id)+'">Aktualisieren</button><button class="btn ghost" data-preset-delete="'+esc(p.id)+'">Löschen</button></div></div>'}).join("")||'<p class="hint">Noch keine Presets gespeichert.</p>';
-root.querySelectorAll("[data-preset-load]").forEach(function(b){b.onclick=function(){var p=getPresets().find(function(p){return p.id===b.dataset.presetLoad});if(p){cfg=Object.assign({},fullDefaults,p.settings);cfg.surface="Schwarzer Backstein";persist();render()}}});
-root.querySelectorAll("[data-preset-update]").forEach(function(b){b.onclick=function(){var all=getPresets(),p=all.find(function(p){return p.id===b.dataset.presetUpdate});if(p){p.settings=Object.assign({},cfg);var name=document.getElementById("w450presetName").value.trim();if(name)p.name=name;setPresets(all);redraw();report("Preset-Einstellungen aktualisiert")}}});
-root.querySelectorAll("[data-preset-delete]").forEach(function(b){b.onclick=function(){if(confirm("Preset wirklich löschen?")){setPresets(getPresets().filter(function(p){return p.id!==b.dataset.presetDelete}));redraw()}}});
+
+function safePresetName(name){
+ return String(name||"Strava-Wall").trim().replace(/[\\/:*?"<>|\x00-\x1F]/g,"").replace(/\s+/g,"-").replace(/\.+$/g,"").slice(0,90)||"Strava-Wall";
 }
-redraw();
-document.getElementById("w450savePreset").onclick=async function(){
-var file=document.getElementById("w450presetImage").files[0],name=document.getElementById("w450presetName").value.trim()||"Preset "+(getPresets().length+1),image="";
-if(file){try{image=await thumbnail(file)}catch(e){report("Vorschaubild konnte nicht verarbeitet werden");return}}
-var all=getPresets();all.push({id:String(Date.now())+Math.random().toString(36).slice(2),name:name,image:image,settings:Object.assign({},cfg)});
-try{setPresets(all);redraw();report("Preset mit Einstellungen gespeichert")}catch(e){report("Speicher voll. Presets bitte sichern und alte Bilder entfernen.")}
-};
-document.getElementById("w450reset").onclick=function(){if(confirm("Einstellungen auf Standard zurücksetzen? Presets bleiben erhalten.")){cfg=Object.assign({},fullDefaults);persist();render()}};
-document.getElementById("w450exportPresets").onclick=function(){downloadText("strava-wall-presets-v450.json",JSON.stringify(getPresets()),"application/json")};
-document.getElementById("w450importPresets").onchange=async function(){try{var data=JSON.parse(await this.files[0].text());if(!Array.isArray(data)||data.some(function(p){return !p||typeof p.name!=="string"||!p.settings}))throw Error("Ungültiges Format");setPresets(data);redraw();report("Presets importiert")}catch(e){report("Importfehler: "+e.message)}};
+function previewFile(p){
+ if(!p.image||!p.image.startsWith("data:image/jpeg;base64,"))return null;
+ try{
+  var raw=atob(p.image.split(",")[1]),bytes=new Uint8Array(raw.length);
+  for(var i=0;i<raw.length;i++)bytes[i]=raw.charCodeAt(i);
+  return new File([bytes],safePresetName(p.name)+".jpg",{type:"image/jpeg"});
+ }catch(e){return null}
+}
+function individualBackup(p){return {format:"strava-wall-single-preset",version:1,preset:p}}
+function presetShareFiles(p){
+ var name=safePresetName(p.name);
+ var json=new File([JSON.stringify(individualBackup(p),null,2)],name+".json",{type:"application/json"});
+ var jpg=previewFile(p);
+ return jpg?[json,jpg]:[json];
+}
+function downloadFile(file){
+ var url=URL.createObjectURL(file),anchor=document.createElement("a");
+ anchor.href=url;anchor.download=file.name;anchor.click();
+ setTimeout(function(){URL.revokeObjectURL(url)},1500);
+}
+function downloadPreset(p){
+ presetShareFiles(p).forEach(downloadFile);
+}
+function sharePreset(p,report){
+ var files=presetShareFiles(p);
+ if(typeof navigator.share!=="function"||(typeof navigator.canShare==="function"&&!navigator.canShare({files:files}))){
+  report("Datei-Teilen nicht unterstützt. Bitte im Safari öffnen oder die separate Download-Funktion benutzen.");
+  return;
+ }
+ // Execute navigator.share synchronously on the click activation (no await before it).
+ try{
+  Promise.resolve(navigator.share({files:files,title:p.name})).then(
+   function(){report("Teilen abgeschlossen")},
+   function(e){report(e&&e.name==="AbortError"?"Teilen abgebrochen":"Teilen fehlgeschlagen: "+(e&&e.message||"Unbekannter Fehler"))}
+  );
+ }catch(e){report("Teilen nicht möglich: "+e.message)}
+}
+function initPresets(){
+ var status=document.getElementById("w450status");
+ function report(msg){status.textContent=msg}
+ function redraw(){
+  var root=document.getElementById("w450gallery");
+  root.innerHTML=getPresets().map(function(p){
+   return '<div class="panel" style="padding:10px">'+
+    (p.image?'<img src="'+esc(p.image)+'" alt="Gespeichertes STRAVA-WALL-Ergebnisbild" style="width:100%;aspect-ratio:4/5;object-fit:cover;border-radius:8px">':
+    '<div style="aspect-ratio:4/5;background:#242c36;border-radius:8px;display:grid;place-items:center;color:#a7b0bc">Ergebnisbild fehlt – bitte ergänzen</div>')+
+    '<b>'+esc(p.name)+'</b><div class="actions">'+
+    '<button class="btn secondary" data-preset-load="'+esc(p.id)+'">Laden</button>'+
+    '<button class="btn secondary" data-preset-share="'+esc(p.id)+'">iPhone-Teilen</button>'+
+    '<button class="btn secondary" data-preset-download="'+esc(p.id)+'">Herunterladen</button>'+
+    '<button class="btn secondary" data-preset-update="'+esc(p.id)+'">Aktualisieren</button>'+
+    '<button class="btn ghost" data-preset-delete="'+esc(p.id)+'">Löschen</button></div></div>';
+  }).join("")||'<p class="hint">Noch keine Presets gespeichert.</p>';
+  root.querySelectorAll("[data-preset-load]").forEach(function(b){b.onclick=function(){
+   var p=getPresets().find(function(p){return p.id===b.dataset.presetLoad});
+   if(p){cfg=Object.assign({},fullDefaults,p.settings);cfg.surface="Schwarzer Backstein";persist();render()}
+  }});
+  root.querySelectorAll("[data-preset-share]").forEach(function(b){b.onclick=function(){
+   var p=getPresets().find(function(p){return p.id===b.dataset.presetShare});
+   if(p)sharePreset(p,report);
+  }});
+  root.querySelectorAll("[data-preset-download]").forEach(function(b){b.onclick=function(){
+   var p=getPresets().find(function(p){return p.id===b.dataset.presetDownload});
+   if(p){downloadPreset(p);report("Dateien für "+p.name+" heruntergeladen")}
+  }});
+  root.querySelectorAll("[data-preset-update]").forEach(function(b){b.onclick=async function(){
+   var all=getPresets(),p=all.find(function(p){return p.id===b.dataset.presetUpdate});if(!p)return;
+   var name=document.getElementById("w450presetName").value.trim();
+   var file=document.getElementById("w450presetImage").files[0];
+   if(file){try{p.image=await thumbnail(file)}catch(e){report("Vorschaufoto konnte nicht geladen werden");return}}
+   if(name)p.name=name;
+   p.settings=Object.assign({},cfg);
+   try{setPresets(all);redraw();report("Preset aktualisiert"+(file?" – mit neuem Bild":""))}
+   catch(e){report("Speicher voll; bitte Presets sichern und aufräumen")}
+  }});
+  root.querySelectorAll("[data-preset-delete]").forEach(function(b){b.onclick=function(){
+   if(confirm("Preset wirklich löschen?")){setPresets(getPresets().filter(function(p){return p.id!==b.dataset.presetDelete}));redraw()}
+  }});
+ }
+ redraw();
+ document.getElementById("w450savePreset").onclick=async function(){
+  var file=document.getElementById("w450presetImage").files[0];
+  var name=document.getElementById("w450presetName").value.trim()||"Preset "+(getPresets().length+1);
+  if(!file){report("Bitte das fertige Ergebnisfoto auswählen, damit eine echte Bildvorschau gespeichert wird.");return}
+  var image;try{image=await thumbnail(file)}catch(e){report("Vorschaufoto konnte nicht geladen werden");return}
+  var all=getPresets();all.push({id:String(Date.now())+Math.random().toString(36).slice(2),name:name,image:image,settings:Object.assign({},cfg)});
+  try{setPresets(all);redraw();report("Preset mit echter Bildvorschau gespeichert. Zum Teilen im Preset 'iPhone-Teilen' auswählen.")}
+  catch(e){report("Speicher voll; bitte alte Presets sichern oder entfernen")}
+ };
+ document.getElementById("w450reset").onclick=function(){
+  if(confirm("Einstellungen auf Standard zurücksetzen? Presets bleiben erhalten.")){cfg=Object.assign({},fullDefaults);persist();render()}
+ };
+ document.getElementById("w450exportPresets").onclick=function(){
+  var title=document.getElementById("w450presetName").value.trim();
+  var name=title?safePresetName(title)+"-Sicherung.json":"Strava-Wall-Alle-Presets.json";
+  downloadText(name,JSON.stringify(getPresets()),"application/json");
+  report("JSON-Backup gespeichert. Für natives Teilen bitte beim gewünschten Preset 'iPhone-Teilen' auswählen.");
+ };
+ document.getElementById("w450importPresets").onchange=async function(){
+  try{
+   var data=JSON.parse(await this.files[0].text());
+   if(!Array.isArray(data)){
+    if(data&&data.format==="strava-wall-single-preset"&&data.preset)data=[data.preset];
+    else throw Error("Unbekanntes Sicherungsformat");
+   }
+   if(data.some(function(p){return !p||typeof p.name!=="string"||!p.settings}))throw Error("Ungültiges Preset");
+   var merged=getPresets();
+   data.forEach(function(p){var i=merged.findIndex(function(old){return old.id===p.id});if(i>=0)merged[i]=p;else merged.push(p)});
+   setPresets(merged);redraw();report("Presets importiert");
+  }catch(e){report("Importfehler: "+e.message)}
+ };
 }
 function thumbnail(file){return new Promise(function(resolve,reject){var img=new Image(),url=URL.createObjectURL(file);img.onload=function(){try{var c=document.createElement("canvas"),w=320,h=400;c.width=w;c.height=h;var scale=Math.max(w/img.width,h/img.height),sw=w/scale,sh=h/scale;c.getContext("2d").drawImage(img,(img.width-sw)/2,(img.height-sh)/2,sw,sh,0,0,w,h);resolve(c.toDataURL("image/jpeg",.72))}catch(e){reject(e)}finally{URL.revokeObjectURL(url)}};img.onerror=reject;img.src=url})}
 if(state.world==="wall"){active=NAMES.includes(state.tab)?state.tab:"Presets";render()}
