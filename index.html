@@ -2147,7 +2147,7 @@ document.addEventListener('change',e=>{
  if(t.matches('[data-sx-lock]')){data.locks[t.dataset.sxLock]=t.checked;persist();return}
  if(t.matches('[data-sx-note]')){let n=(data.notes[t.dataset.sxNote]||[]).find(x=>x.id===t.dataset.sxId);if(n){n.active=t.checked;persist();refresh()}return}
 });
-function refresh(){const p=document.getElementById('signatureXXL400');if(p)p.outerHTML=panel();}
+function refresh(){const p=document.getElementById('signatureXXL400');if(!p)return;const open=[...p.querySelectorAll('details')].map((d,i)=>d.open?i:-1).filter(i=>i>=0),y=window.scrollY;p.outerHTML=panel();const next=document.getElementById('signatureXXL400');if(next)[...next.querySelectorAll('details')].forEach((d,i)=>{d.open=open.includes(i)});window.scrollTo(0,y);}
 document.addEventListener('click',e=>{
  const t=e.target.closest('button');if(!t)return;
  if(t.id==='sx-next-composition421'){data.compositionIndex=(compositionIndex421()+1)%compositionVariants421.length;persist();const label=document.getElementById('sx-composition-label421');if(label)label.textContent=compositionVariants421[compositionIndex421()].title;const st=document.getElementById('sx-status405');if(st)st.textContent='✓ Komposition gewählt: '+compositionVariants421[compositionIndex421()].title+'. Kamera, Pose und Schild unverändert.';return}
