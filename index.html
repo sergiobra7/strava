@@ -197,7 +197,16 @@ function bindFullPoster321(){
  function setSize(x){p.size=Math.min(120,Math.max(12,Number(x)||56));size.value=number.value=p.size;persist();renderPreview()}
  size.oninput=()=>setSize(size.value);number.oninput=()=>setSize(number.value);
  for(const [id,key] of [['posterFont321','font'],['posterAlign321','align'],['posterColor321','color'],['posterBg321','bg']])el(id).oninput=e=>{p[key]=e.target.value;if(key==='font'){try{const k='strava-premium-studio-350',q=JSON.parse(localStorage.getItem(k)||'{}');q.posterFont=p.font;localStorage.setItem(k,JSON.stringify(q));}catch(e){console.warn('Font sync',e)} }persist();renderPreview();if(key==='font'&&document.fonts)document.fonts.load('900 30px "'+p.font+'"').then(renderPreview).catch(()=>{})};
- el('posterApplyColor321').onclick=()=>{state.sign.wordColors=state.sign.wordColors||{};selected.forEach(i=>state.sign.wordColors[i]=el('posterWordColor321').value.toUpperCase());persist();renderPreview();el('posterStatus321').textContent='✓ '+selected.size+' Wortfarben gespeichert. Farbprüfung unten aktualisiert.'};
+ function applySelectedColor4511(){
+  if(!selected.size)return;
+  state.sign.wordColors=state.sign.wordColors||{};
+  const color=el('posterWordColor321').value.toUpperCase();
+  selected.forEach(i=>state.sign.wordColors[i]=color);
+  persist();renderPreview();
+  el('posterStatus321').textContent='✓ '+selected.size+' Wortfarben in Echtzeit aktualisiert.';
+ }
+ el('posterWordColor321').oninput=applySelectedColor4511;
+ el('posterApplyColor321').onclick=applySelectedColor4511;
  el('posterResetColors321').onclick=()=>{state.sign.wordColors={};selected.clear();persist();renderPreview()};
  const keep=el('posterKeepColors421'),store=el('posterStoreColors421');keep.checked=localStorage.getItem('strava-colors-persist-421')==='on';store.disabled=!keep.checked;keep.onchange=()=>{localStorage.setItem('strava-colors-persist-421',keep.checked?'on':'off');store.disabled=!keep.checked;save();el('posterStatus321').textContent=keep.checked?'✓ Dauerhafte Farbspeicherung aktiviert.':'Farbspeicherung deaktiviert: Aktuelle Farben bleiben bis zum Neuladen sichtbar.'};store.onclick=()=>{if(!keep.checked)return;save();el('posterStatus321').textContent='✓ Aktuelle Wortfarben dauerhaft gespeichert.'};
  el('posterSave321').onclick=()=>{persist();el('posterStatus321').textContent='✓ Plakattext, Schrift und Layout übernommen. Farbwahl nur mit aktivem Haken dauerhaft gespeichert.'};
