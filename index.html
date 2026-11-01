@@ -293,22 +293,21 @@ function syncPosterPreviewColors321(){
  if(!root||!preview||state.world!=='sign')return;
  const editor=document.getElementById('posterText321');
  if(!editor)return;
- const tokens=editor.value.match(/\S+|\s+/g)||[];
- const nodes=[...preview.querySelectorAll('[data-poster-word-index]')];
- const expected=tokens.filter(w=>!/^\s+$/.test(w));
- if(nodes.length!==expected.length)throw Error('Plakat-Vorschau nicht synchron: Wortanzahl stimmt nicht.');
- const colors={};
- for(const node of nodes){
+ // Canvas is the visual authority. Transparent hit targets contain no text or color;
+ // never read their CSS to rewrite a saved per-word color map.
+ if(!window.stravaTypography430)throw Error('Typography Engine nicht geladen');
+ if(String(state.sign.signText||'')!==editor.value)state.sign.signText=editor.value;
+ const engine=window.stravaTypography430;
+ const layout=engine.layout(engine.options()),audit=engine.audit(layout);
+ if(!audit.pass)throw Error('Plakat-Layout ungültig: '+audit.errors.join(' | '));
+ const tokens=editor.value.match(/\\S+|\\s+/g)||[];
+ const expected=tokens.filter(w=>!/^\\s+$/.test(w)).length;
+ const hitTargets=[...preview.querySelectorAll('[data-poster-word-index]')];
+ if(layout.lines.reduce((n,row)=>n+row.words.length,0)!==expected||hitTargets.length!==expected)throw Error('Plakat-Wortzuordnung nicht synchron.');
+ for(const node of hitTargets){
   const i=Number(node.dataset.posterWordIndex);
-  if(!Number.isInteger(i)||!tokens[i]||tokens[i]!==node.textContent)throw Error('Plakat-Vorschau nicht synchron: Wortposition stimmt nicht.');
-  const css=node.style.color;const rgb=css.match(/^rgba?\(\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+)/i);const hex=/^#[0-9a-f]{6}$/i.test(css)?css.toUpperCase():rgb?[rgb[1],rgb[2],rgb[3]].map(n=>Number(n).toString(16).padStart(2,'0')).join('').toUpperCase().padStart(7,'#'):null;
-  if(!hex)throw Error('Plakat-Vorschau: ungültiger Farbwert '+css);
-  colors[i]=hex;
+  if(!Number.isInteger(i)||!tokens[i]||/^\\s+$/.test(tokens[i]))throw Error('Plakat-Wortposition ungültig.');
  }
- state.sign.signText=editor.value;
- state.sign.wordColors=colors;
- const mapped=window.stravaSignColorMap318(state.sign);
- if(mapped.words.some(x=>colors[x.index]!==x.color))throw Error('Plakat-Farbprüfung fehlgeschlagen.');
  save();
 }
 /* V4.4.0: Restore missing core prompt and view entry points before extension scripts load. */
