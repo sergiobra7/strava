@@ -7,6 +7,7 @@ var KEY="strava-wall-six-tabs-v450";
 var defaults={mode:"bpm",scenario:"0",location:"Breite Einkaufsstraße",lens:"24",distance:"20",pose:"Auf Bank sitzend, Beine locker nach vorne",gaze:"Direkt in die Kamera",mood:"Ernst",outfit:"PUMA Lime Green / Schwarz",opa:true,mantel:false,crowd:20,distribution:"Natürlich verstreut",height:"Mittelhoch (3–5 Etagen)",side:"Rechts",width:"30",angle:"Leicht schräg",surface:"Schwarzer Backstein",space:"Breit",placement:"Links",statsSize:75,gpsSize:70,projection:"Direkt auf der Fassade",spacing:"Ausgewogen",extra:""};
 var cfg;try{cfg=Object.assign({},defaults,JSON.parse(localStorage.getItem(KEY)||"{}"))}catch(e){cfg=Object.assign({},defaults)}
 var active="Presets";
+var lastPresetLoad457=null;
 var outfitDefaults={brand:"PUMA",club:"Kein Verein",collection:"Training",top:"Full-Zip-Laufjacke",topColor:"Neon Gelbgrün (#DFFF00)",topColorHex:"#DFFF00",topDetails:"Keine Ärmelstreifen",topLogo:"Schwarzes PUMA-Logo links auf der Brust",zipColor:"Schwarz",pants:"Lange Trainingshose, regulärer Schnitt",pantsColor:"Schwarz",pantsLogoColor:"#DFFF00",cap:"Rote Cap rückwärts",socks:"Schwarz",watch:"COROS PACE Pro, schwarz, Display aus",customOutfit:""};
 var opaDefaults={opaAge:"75–85 Jahre",opaBuild:"Schlank und drahtig",opaHead:"Dunkle Schiebermütze",opaBeard:"Markanter grauer Schnurrbart",opaClothing:"Braunes Cord-Sakko, kariertes Hemd, Stoffhose",opaShirt:"Braun-blau kariert",opaPants:"Dunkle, weite Stoffhose",opaShoes:"Abgetragene braune Lederschuhe",opaPose:"Auf abgestelltem alten Mofa, ein Fuß am Boden",opaGaze:"Zum Läufer",opaReaction:"Ungläubig",opaProfile:"OPA 01 · Klassisch",opaCustom:""};
 var poseDirectorCategories457={"Treppen-Chill":["Unterarme locker auf getrennten Knien, frontal sitzend","Ein Knie etwas höher, Hand entspannt darauf","Leicht zurückgelehnt, Hände seitlich abgestützt","Ein Unterarm auf Knie, andere Hand locker","Seitlich auf breiter Stufe, Kopf zur Kamera","Auf oberster Stufe sitzend, Füße versetzt","Auf breiter Treppe, Ellenbogen auf Knien","Eine Hand am Schienbein, andere auf dem Knie","Ruhig sitzend, Hände locker ineinander","Auf breiter Stufe, ein Bein leicht ausgestreckt","Mit offenen Händen entspannt auf den Oberschenkeln","Dreiviertelansicht, auf Treppe entspannt","Sitzend, Schulter leicht zur Statistik gedreht","Auf Stufen sitzend, Rücken sehr leicht geneigt","Auf Stufe, Hände entspannt zwischen den Knien"],"Bank & Sitzplatz":["Breit und entspannt auf Bank sitzend","Ein Arm locker auf Rückenlehne","Zurückgelehnt, Beine nach vorne","Seitlich sitzend, Schulter zur Kamera","Hände locker auf beiden Oberschenkeln","Ein Ellbogen an Rückenlehne, Blick zur Kamera","Ruhig nach dem Lauf auf Parkbank","Auf Holzstuhl, beide Füße fest am Boden","Rückwärts auf Stuhl, Unterarme locker auf Lehne","Locker auf Bank, ein Bein leicht nach vorne","Halb zur Wand gedreht auf Bank","Auf Mauerbank, beide Hände seitlich gestützt","Auf Sitzkante, Unterarme auf Knien","Auf Bank mit Opa, ruhig unterhaltend","Sitzend mit verschränkten Händen, aufrechte Haltung"],"Wand & Fassade":["Eine Schulter locker an schwarzer Wand","Arme entspannt vor der Brust verschränkt","Eine Hand in Hosentasche, seitlich angelehnt","An Wand, Knie leicht angewinkelt","Rücken an Fassade, Kopf zur Kamera","Seitlich an Gebäudeecke gelehnt","Mit Schulterkontakt, Füße leicht versetzt","Leicht an Fassadenpfeiler angelehnt","An Wand, Arme locker seitlich","Am Backstein, Blick zur Mitte der Statistik","An niedriger Mauer, Oberkörper zurückgelehnt","Locker an Wand, eine Hand an Hüfte","Schulter an Wand, andere Hand an Jackentasche","Dreiviertel zur Kamera, lehnend","An Wand, beide Füße sicher am Boden"],"Geländer & Mauerkante":["Beide Unterarme locker auf Geländer","Seitlich an breiter Mauerkante angelehnt","Eine Hand entspannt auf Geländer","Halb gedreht mit Rücken zur Mauer","Auf niedriger Mauer, beide Füße am Boden","Neben Geländer stehend, ein Unterarm aufgelegt","Auf Mauerkante sitzend, Hände neben Körper","Auf breiter Mauer, ein Fuß etwas vorgezogen","Leicht über Geländer blickend, natürlich","An Steinbrüstung, Arme unaufgeregt abgelegt","An Geländer, Kopf direkt zur Kamera","Auf Mauerkante, Unterarme locker auf Knien"],"Locker stehend":["Beide Hände locker in Jackentaschen","Gewicht entspannt auf einem Bein","Arme ruhig seitlich hängen lassen","Locker verschränkte Arme, frontaler Blick","Halb zur Kamera gedreht","Ein Fuß leicht vor dem anderen","Auf Platz stehend, Schultern entspannt","Mit offenen Händen locker vor dem Körper","Dreiviertelstand, ruhiger Gesichtsausdruck","Hände hinter dem Rücken, aufrechte Haltung","Ein Arm leicht angewinkelt, anderer locker","Entspannt vor Statistik stehend","Seitlich stehend, Blick zur Kamera","Stehend, eine Hand am Jackensaum","Nach Lauf stehen geblieben, ruhig"],"After-Run & Alltag":["Mit Sportflasche auf Bank sitzend","Auf Mauer nach Lauf entspannt ausruhend","Sportuhr beiläufig kontrollierend","Auf breiter Stufe nach dem Lauf sitzend","Gelassen die Umgebung beobachtend","Mit Sportflasche in einer Hand stehend","Nach Lauf, Hände auf Oberschenkeln","Auf Bank, kurzes Gespräch mit Opa","Ruhig die Statistik an der Wand betrachtend","Auf Treppe, Sportflasche zwischen Füßen","Neben Bank ausruhend, Hände locker","Nach Lauf an Geländer ausruhend"]};
@@ -139,10 +140,11 @@ if(!NAMES.includes(active))active="Presets";
 state.tab=active;
 document.querySelectorAll(".world").forEach(function(b){b.classList.toggle("active",b.dataset.world===state.world)});
 document.getElementById("tabs").innerHTML=NAMES.map(function(n){return '<button class="tab '+(n===active?"active":"")+'" data-w450tab="'+esc(n)+'">'+esc(n)+'</button>'}).join("");
-document.getElementById("view").innerHTML=content();
+document.getElementById("view").innerHTML=(lastPresetLoad457?
+ '<div id="w457loadNotice" role="status" aria-live="polite" class="notice" style="border:1px solid #4dba87;margin-bottom:12px"><strong>Preset „'+esc(lastPresetLoad457.name)+'“ erfolgreich geladen</strong><div>'+lastPresetLoad457.count+' gespeicherte Einstellungen übernommen. Szene & Kamera ist geöffnet.</div></div>':"")+content();
 document.querySelectorAll("[data-w450tab]").forEach(function(el){el.onclick=function(){active=el.dataset.w450tab;render()}});
-document.querySelectorAll("[data-w450]").forEach(function(el){function change(){cfg[el.dataset.w450]=el.type==="checkbox"?el.checked:el.type==="range"?Number(el.value):el.dataset.w450==="scenario"?String(parseInt(el.value,10)):el.value;if(el.dataset.w450==="poseCategory"&&poseDirectorCategories457[cfg.poseCategory])cfg.pose=poseDirectorCategories457[cfg.poseCategory][0];persist();if(el.type!=="textarea"&&el.type!=="text"){var expanded=Array.from(document.querySelectorAll("#view details")).map(function(d,i){return d.open?i:-1}).filter(function(i){return i>=0});render();document.querySelectorAll("#view details").forEach(function(d,i){d.open=expanded.includes(i)})}}el.addEventListener(el.type==="range"?"input":"change",change);if(el.tagName==="TEXTAREA")el.addEventListener("input",change)});
-document.querySelectorAll('input[name="w450mode"]').forEach(function(el){el.onchange=function(){cfg.mode=el.value;persist();render()}});
+document.querySelectorAll("[data-w450]").forEach(function(el){function change(){lastPresetLoad457=null;cfg[el.dataset.w450]=el.type==="checkbox"?el.checked:el.type==="range"?Number(el.value):el.dataset.w450==="scenario"?String(parseInt(el.value,10)):el.value;if(el.dataset.w450==="poseCategory"&&poseDirectorCategories457[cfg.poseCategory])cfg.pose=poseDirectorCategories457[cfg.poseCategory][0];persist();if(el.type!=="textarea"&&el.type!=="text"){var expanded=Array.from(document.querySelectorAll("#view details")).map(function(d,i){return d.open?i:-1}).filter(function(i){return i>=0});render();document.querySelectorAll("#view details").forEach(function(d,i){d.open=expanded.includes(i)})}}el.addEventListener(el.type==="range"?"input":"change",change);if(el.tagName==="TEXTAREA")el.addEventListener("input",change)});
+document.querySelectorAll('input[name="w450mode"]').forEach(function(el){el.onchange=function(){lastPresetLoad457=null;cfg.mode=el.value;persist();render()}});
 if(active==="Prompt & Export"){
 var pre=document.getElementById("w450prompt");pre.textContent=wallPrompt();
 document.getElementById("w450generate").onclick=function(){pre.textContent=wallPrompt()};
@@ -214,8 +216,24 @@ function initPresets(){
     '<button class="btn ghost" data-preset-delete="'+esc(p.id)+'">Löschen</button></div></div>';
   }).join("")||'<p class="hint">Noch keine Presets gespeichert.</p>';
   root.querySelectorAll("[data-preset-load]").forEach(function(b){b.onclick=function(){
-   var p=getPresets().find(function(p){return p.id===b.dataset.presetLoad});
-   if(p){cfg=Object.assign({},fullDefaults,p.settings);cfg.surface="Schwarzer Backstein";persist();render()}
+   var p=getPresets().find(function(p){return String(p.id)===String(b.dataset.presetLoad)});
+   if(!p){report("Laden fehlgeschlagen: Preset nicht gefunden.");return}
+   try{
+    if(!p.settings||typeof p.settings!=="object"||Array.isArray(p.settings))throw Error("Gespeicherte Konfiguration fehlt oder ist beschädigt.");
+    var keys=Object.keys(p.settings).filter(function(k){return Object.prototype.hasOwnProperty.call(fullDefaults,k)});
+    if(!keys.length)throw Error("Preset enthält keine gültigen STRAVA-WALL-Einstellungen.");
+    var restored=Object.assign({},fullDefaults,p.settings);
+    restored.surface="Schwarzer Backstein";
+    var serialized=JSON.stringify(restored);
+    // Verify persistence before claiming success or replacing the active view.
+    localStorage.setItem(KEY,serialized);
+    var readBack=JSON.parse(localStorage.getItem(KEY)||"null");
+    if(!readBack||keys.some(function(k){return k==="surface"?readBack.surface!=="Schwarzer Backstein":JSON.stringify(readBack[k])!==JSON.stringify(restored[k])}))throw Error("Gespeicherte Einstellungen konnten nicht bestätigt werden.");
+    cfg=restored;
+    lastPresetLoad457={name:p.name||"Ohne Namen",count:keys.length};
+    active="Szene & Kamera";
+    render();
+   }catch(e){report("Laden fehlgeschlagen: "+e.message)}
   }});
   root.querySelectorAll("[data-preset-share]").forEach(function(b){b.onclick=function(){
    var p=getPresets().find(function(p){return p.id===b.dataset.presetShare});
@@ -250,7 +268,7 @@ function initPresets(){
   catch(e){report("Speicher voll; bitte alte Presets sichern oder entfernen")}
  };
  document.getElementById("w450reset").onclick=function(){
-  if(confirm("Einstellungen auf Standard zurücksetzen? Presets bleiben erhalten.")){cfg=Object.assign({},fullDefaults);persist();render()}
+  if(confirm("Einstellungen auf Standard zurücksetzen? Presets bleiben erhalten.")){lastPresetLoad457=null;cfg=Object.assign({},fullDefaults);persist();render()}
  };
  document.getElementById("w450shareAllPresets").onclick=function(){
   var title=document.getElementById("w450presetName").value.trim();
