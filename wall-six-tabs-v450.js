@@ -167,7 +167,17 @@ document.getElementById("tabs").innerHTML=NAMES.map(function(n){return '<button 
 document.getElementById("view").innerHTML=(lastPresetLoad457?
  '<div id="w457loadNotice" role="status" aria-live="polite" class="notice" style="border:1px solid #4dba87;margin-bottom:12px"><strong>Preset „'+esc(lastPresetLoad457.name)+'“ erfolgreich geladen</strong><div>'+lastPresetLoad457.count+' gespeicherte Einstellungen übernommen. Szene & Kamera ist geöffnet.</div></div>':"")+content();
 document.querySelectorAll("[data-w450tab]").forEach(function(el){el.onclick=function(){active=el.dataset.w450tab;render()}});
-document.querySelectorAll("[data-w450]").forEach(function(el){function change(){lastPresetLoad457=null;cfg[el.dataset.w450]=el.type==="checkbox"?el.checked:el.type==="range"?Number(el.value):el.dataset.w450==="scenario"?String(parseInt(el.value,10)):el.value;if(el.dataset.w450==="poseCategory"&&poseDirectorCategories457[cfg.poseCategory])cfg.pose=poseDirectorCategories457[cfg.poseCategory][0];persist();if(el.type!=="textarea"&&el.type!=="text"){var expanded=Array.from(document.querySelectorAll("#view details")).map(function(d,i){return d.open?i:-1}).filter(function(i){return i>=0});render();document.querySelectorAll("#view details").forEach(function(d,i){d.open=expanded.includes(i)})}}el.addEventListener(el.type==="range"?"input":"change",change);if(el.tagName==="TEXTAREA")el.addEventListener("input",change)});
+document.querySelectorAll("[data-w450]").forEach(function(el){function change(){
+var key=el.dataset.w450;
+if(key==="lensManual"||key==="distanceManual"){
+ var manual=String(el.value||"").trim();
+ if(manual&&(!/^[0-9]+([.,][0-9]+)?$/.test(manual)||!(Number(manual.replace(",","."))>0)||!Number.isFinite(Number(manual.replace(",","."))))){
+  el.setCustomValidity("Bitte eine positive Zahl eingeben, z. B. 27,5.");
+  el.reportValidity();return;
+ }
+ el.setCustomValidity("");
+}
+lastPresetLoad457=null;cfg[key]=el.type==="checkbox"?el.checked:el.type==="range"?Number(el.value):key==="scenario"?String(parseInt(el.value,10)):el.value;if(el.dataset.w450==="poseCategory"&&poseDirectorCategories457[cfg.poseCategory])cfg.pose=poseDirectorCategories457[cfg.poseCategory][0];persist();if(el.type!=="textarea"&&el.type!=="text"){var expanded=Array.from(document.querySelectorAll("#view details")).map(function(d,i){return d.open?i:-1}).filter(function(i){return i>=0});render();document.querySelectorAll("#view details").forEach(function(d,i){d.open=expanded.includes(i)})}}el.addEventListener(el.type==="range"?"input":"change",change);if(el.tagName==="TEXTAREA")el.addEventListener("input",change)});
 document.querySelectorAll("[data-w458-clear]").forEach(function(el){el.onclick=function(){
  var key=el.dataset.w458Clear+"Manual";cfg[key]="";lastPresetLoad457=null;persist();render();
 }});
