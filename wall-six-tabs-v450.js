@@ -1,4 +1,4 @@
-/* STRAVA WALL V4.5.8 — single scene accordion and manual camera overrides, wall-only */
+/* STRAVA WALL V4.5.19 — single scene accordion and manual camera overrides, wall-only */
 (function(){
 "use strict";
 if(typeof state==="undefined"||typeof render!=="function"||typeof buildPrompt!=="function")return;
@@ -7,6 +7,7 @@ var KEY="strava-wall-six-tabs-v450";
 var defaults={mode:"bpm",scenario:"0",location:"Breite Einkaufsstraße",lens:"24",distance:"20",pose:"Auf Bank sitzend, Beine locker nach vorne",gaze:"Direkt in die Kamera",mood:"Ernst",outfit:"PUMA Lime Green / Schwarz",opa:true,mantel:false,crowd:20,distribution:"Natürlich verstreut",height:"Mittelhoch (3–5 Etagen)",side:"Rechts",width:"30",angle:"Leicht schräg",surface:"Schwarzer Backstein",space:"Breit",placement:"Links",statsSize:75,gpsSize:70,projection:"Direkt auf der Fassade",spacing:"Ausgewogen",extra:""};
 var cfg;try{cfg=Object.assign({},defaults,JSON.parse(localStorage.getItem(KEY)||"{}"))}catch(e){cfg=Object.assign({},defaults)}
 var active="Presets";
+var promptMode4519="smart";
 var lastPresetLoad457=null;
 var outfitDefaults={brand:"PUMA",club:"Kein Verein",collection:"Training",top:"Full-Zip-Laufjacke",topColor:"Neon Gelbgrün (#DFFF00)",topColorHex:"#DFFF00",topDetails:"Keine Ärmelstreifen",topLogo:"Schwarzes PUMA-Logo links auf der Brust",zipColor:"Schwarz",pants:"Lange Trainingshose, regulärer Schnitt",pantsColor:"Schwarz",pantsLogoColor:"#DFFF00",cap:"Rote Cap rückwärts",socks:"Schwarz",watch:"COROS PACE Pro, schwarz, Display aus",customOutfit:""};
 var opaDefaults={opaAge:"75–85 Jahre",opaBuild:"Schlank und drahtig",opaHead:"Dunkle Schiebermütze",opaBeard:"Markanter grauer Schnurrbart",opaClothing:"Braunes Cord-Sakko, kariertes Hemd, Stoffhose",opaShirt:"Braun-blau kariert",opaPants:"Dunkle, weite Stoffhose",opaShoes:"Abgetragene braune Lederschuhe",opaPose:"Auf abgestelltem alten Mofa, ein Fuß am Boden",opaGaze:"Zum Läufer",opaReaction:"Ungläubig",opaProfile:"OPA 01 · Klassisch",opaCustom:""};
@@ -122,12 +123,12 @@ group("Weitere Figuren",toggle("mantel","Mantelmann aktivieren"),false)+
 group("Publikum",'<div class="field"><label>Personenanzahl: '+cfg.crowd+'</label><input type="range" data-w450="crowd" min="0" max="100" step="5" value="'+cfg.crowd+'"></div>'+select("distribution","Verteilung",["Natürlich verstreut","Lockerer Halbkreis","Belebte Alltagsszene"]),false);
 case "Wandarchitektur":return '<section class="panel"><h2>Wandarchitektur</h2>'+select("height","Wandhöhe",["Niedrig (1–2 Etagen)","Mittelhoch (3–5 Etagen)","Monumental (6+ Etagen)"])+select("side","Wandseite",["Links","Zentral","Rechts"])+select("width","Wandbreite in m",["15","20","30","40","50"])+select("angle","Kamerawinkel zur Wand",["Frontal","Leicht schräg","Deutlich schräg"])+'<div class="notice"><b>Feste Wandfarbe:</b> tiefschwarze Backsteinfassade, schwarze Fugen. Keine roten oder braunen Ziegel.</div>'+select("space","Freiraum vor Wand",["Normal","Breit","Sehr breit"])+'</section>';
 case "Statistik & Projektion":return '<section class="panel"><h2>Statistik & Projektion</h2>'+select("placement","Statistikposition",["Links","Mitte","Rechts"])+range("statsSize","Statistikgröße",40,95)+(cfg.mode==="bpm"?range("gpsSize","GPS-Streckengröße",40,100):"")+select("projection","Darstellungsart",["Direkt auf der Fassade","Realistische Lichtprojektion","Großflächiger Wanddruck"])+select("spacing","Elementabstand",["Kompakt","Ausgewogen","Großzügig"])+'<div class="notice"><b>ORIGINAL-PIXEL-LOCK:</b> Schriftart, Zeichenformen, Zahlen, Einheiten, Farben, Diagramme und GPS-Strecke ausschließlich aus den originalen Strava-Screenshots übernehmen. Skalieren und perspektivisch verzerren erlaubt; kein Neusetzen der Schrift. Für garantierte Pixelidentität ist eine Montage der Originalpixel nötig – ein Bildprompt allein garantiert sie nicht.</div></section>';
-case "Prompt & Export":return '<section class="panel"><h2>Prompt & Export</h2><div class="field"><label>Eigene Zusatzanweisungen</label><textarea data-w450="extra" id="w450extra">'+esc(cfg.extra)+'</textarea></div><div class="actions"><button id="w450generate" class="btn">Prompt erstellen</button><button id="w450copy" class="btn secondary">Prompt kopieren</button><button id="w450download" class="btn secondary">Als TXT exportieren</button></div><pre class="prompt" id="w450prompt" style="margin-top:12px"></pre></section>';
+case "Prompt & Export":return '<section class="panel"><h2>Prompt & Export</h2><label>Prompt-Modus</label><select id="w4519mode"><option value="full">FULL · Original unverändert</option><option value="smart">SMART COMPACT · Standard</option><option value="ultra">ULTRA COMPACT</option></select><div id="w4519metrics" class="notice" style="margin:12px 0"></div><div id="w4519issues" role="status" class="notice" style="margin:12px 0"></div><div class="field"><label>Eigene Zusatzanweisungen</label><textarea data-w450="extra" id="w450extra">'+esc(cfg.extra)+'</textarea></div><div class="actions"><button id="w450generate" class="btn">Prompt erstellen</button><button id="w450copy" class="btn secondary">Prompt kopieren</button><button id="w450download" class="btn secondary">Als TXT exportieren</button></div><pre class="prompt" id="w450prompt" style="margin-top:12px"></pre></section>';
 }return "";
 }
 function wallPrompt(){
 var lines=[
-"STRAVA WALL V4.5.8 — EIGHT TAB MASTER PROMPT",
+"STRAVA WALL V4.5.19 — EIGHT TAB MASTER PROMPT",
 "CAMERA SETTINGS — SINGLE AUTHORITATIVE SOURCE",
 "FOCAL LENGTH: "+manualCameraValue458("lens")+" mm full-frame equivalent",
 "CAMERA DISTANCE: "+manualCameraValue458("distance")+" m from runner",
@@ -156,6 +157,55 @@ cfg.mode==="bpm"?"GPS MAP SCALE: "+cfg.gpsSize+"% of planned GPS region; GPS rou
 cfg.extra?"USER ADDITIONAL INSTRUCTIONS (cannot override identity, camera or statistics locks): "+cfg.extra:""
 ];return lines.filter(Boolean).join("\n\n");
 }
+
+function wallCompact4519(ultra){
+ var short=!!ultra,cam=manualCameraValue458,add=function(label,value){return label+": "+String(value)};
+ var outfit=["brand "+cfg.brand,"club "+cfg.club,"collection "+cfg.collection,"top "+cfg.top,"color "+(cfg.topColorHex||cfg.topColor),"logo "+cfg.topLogo,"zip "+cfg.zipColor,"sleeves "+cfg.topDetails,"pants "+cfg.pants,"pants color "+cfg.pantsColor,"pants logo "+cfg.pantsLogoColor,"cap "+cfg.cap,"socks "+cfg.socks,"watch "+cfg.watch];
+ if(cfg.customOutfit)outfit.push("custom "+cfg.customOutfit);
+ var rows=[
+ "CAMERA / OPTICS — MANUAL OVERRIDES PRESETS",
+ "Focal length: "+cam("lens")+" mm; runner distance: "+cam("distance")+" m; native 9:16 portrait. View: "+cfg.angle+"; position: "+cfg.runnerDepth+", "+cfg.runnerHorizontal+"; site: "+cfg.location+".",
+ "OUTPUT / REALISM",
+ short?"One native 9:16 candid photo; real faces, anatomy, light, shadows and perspective; no CGI.":"One native 9:16 documentary photograph; authentic human proportions, hands, feet, lighting, shadows and perspective; no CGI or poster rendering.",
+ "LOCATION / SCENE",
+ cfg.location+"; "+cfg.space+" foreground; "+cfg.height+" facade, "+cfg.width+" m wide, "+cfg.side+" side, "+cfg.angle+". BLACK brick and BLACK mortar; no other facade colors.",
+ "MAIN RUNNER / IDENTITY / POSE",
+ "PERSON PHOTO: preserve exact original facial identity, age, asymmetry, hair, beard and skin texture 1:1. SHOE PHOTO: exact shoe model, shape, colors, logos and soles on BOTH feet. "+cfg.pose+"; gaze "+cfg.gaze+"; expression "+cfg.mood+"; body "+cfg.runnerAngle+"; depth "+cfg.runnerDepth+"; horizontal "+cfg.runnerHorizontal+"; scale "+cfg.runnerRelativeSize+".",
+ "Outfit: "+outfit.join("; ")+".",
+ "CROWD / AUDIENCE",
+ cfg.crowd+" people; "+cfg.distribution+"; varied natural faces, gestures, depth and reactions; never block runner or statistics.",
+ "SIDE FIGURES",
+ cfg.opa?"Anatolian Turkish village grandfather, authentic rural 1970s: "+["profile "+cfg.opaProfile,"age "+cfg.opaAge,"build "+cfg.opaBuild,"head "+cfg.opaHead,"beard "+cfg.opaBeard,"clothes "+cfg.opaClothing,"shirt "+cfg.opaShirt,"pants "+cfg.opaPants,"shoes "+cfg.opaShoes,"pose "+cfg.opaPose,"gaze "+cfg.opaGaze,"reaction "+cfg.opaReaction].concat(cfg.opaCustom?["custom "+cfg.opaCustom]:[]).join("; ")+".":"",
+ cfg.mantel?"Coat-wearing man enabled.":"",
+ "SIGN / PLACARD / BANNER — STRAVA WALL",
+ "BLACK brick facade; original STRAVA screenshot source pixels only, no retyping, OCR, fabricated numbers, font, graphs or GPS geometry. Original logos, kerning, pace, units, decimal marks, charts and colors. Use source-pixel compositing/perspective warp; if unavailable, final original-pixel overlay required for exact fidelity.",
+ "Mode "+(cfg.mode==="bpm"?"BPM + GPS; TWO screenshots (normal + BPM). STRAVA wordmark and shoe logo #FC4C02, same LEFT grid as statistics; GPS route CENTERED in its own area.":"statistics ONLY; ONE normal screenshot; no BPM or invented GPS.")+" Wall layout: "+cfg.placement+"; stats "+cfg.statsSize+"%; "+cfg.projection+"; spacing "+cfg.spacing+(cfg.mode==="bpm"?" ; GPS scale "+cfg.gpsSize+"%":"")+".",
+ "EXACT MESSAGE",
+ "No fabricated poster text. Preserve ALL visible original STRAVA screenshot text, numbers, line breaks, symbols and graphics exactly.",
+ "FINAL VALIDATION",
+ short?"Keep identity, shoes, optics, selected crowd and original source pixels; coherent wall perspective, no obstruction.":"Respect manual camera, original PERSON/SHOE references, all selected people and positions; coherent 3D mounting, readable statistics and original colors. Do not invent metrics, text or logos."
+ ];
+ if(cfg.extra)rows.push("ACTIVE USER OVERRIDE: "+cfg.extra);
+ return rows.filter(Boolean).join("\n");
+}
+function wallIssues4519(){
+ var issues=[],lens=Number(manualCameraValue458("lens")),distance=Number(manualCameraValue458("distance"));
+ if(!Number.isFinite(lens)||lens<=0||!Number.isFinite(distance)||distance<=0)issues.push("Ungültige Kameraangaben.");
+ if(cfg.mode==="bpm")issues.push("Vor Generierung PERSON PHOTO, SHOE PHOTO und zwei STRAVA-Screenshots anhängen; Anhänge können hier nicht automatisch erkannt werden.");
+ else issues.push("Vor Generierung PERSON PHOTO, SHOE PHOTO und einen STRAVA-Screenshot anhängen; Anhänge können hier nicht automatisch erkannt werden.");
+ if(Number(cfg.crowd)>100&&Number(cfg.width)<10)issues.push("Viele Zuschauer bei schmaler Wand: räumliche Plausibilität prüfen.");
+ if(/sitz/i.test(cfg.pose)&&/steh/i.test(cfg.runnerAngle))issues.push("Pose und Körperwinkel auf Vereinbarkeit prüfen.");
+ return issues;
+}
+function wallPromptSelected4519(){return promptMode4519==="full"?wallPrompt():wallCompact4519(promptMode4519==="ultra")}
+function wallRefresh4519(){
+ var full=wallPrompt(),smart=wallCompact4519(false),ultra=wallCompact4519(true),selected=wallPromptSelected4519();
+ var pre=document.getElementById("w450prompt"),metrics=document.getElementById("w4519metrics"),issues=document.getElementById("w4519issues");
+ if(pre)pre.textContent=selected;
+ if(metrics)metrics.textContent="Zeichen · FULL "+full.length+" | SMART "+smart.length+" ("+(100*(1-smart.length/full.length)).toFixed(1)+" % weniger) | ULTRA "+ultra.length+" ("+(100*(1-ultra.length/full.length)).toFixed(1)+" % weniger)";
+ if(issues)issues.textContent="Prüfung: "+wallIssues4519().join(" ");
+}
+
 var prevRender=render,prevPrompt=buildPrompt,prevTabs=tabs;
 tabs=function(){return state.world==="wall"?NAMES.slice():prevTabs()};
 render=function(){
@@ -183,14 +233,14 @@ document.querySelectorAll("[data-w458-clear]").forEach(function(el){el.onclick=f
 }});
 document.querySelectorAll('input[name="w450mode"]').forEach(function(el){el.onchange=function(){lastPresetLoad457=null;cfg.mode=el.value;persist();render()}});
 if(active==="Prompt & Export"){
-var pre=document.getElementById("w450prompt");pre.textContent=wallPrompt();
-document.getElementById("w450generate").onclick=function(){pre.textContent=wallPrompt()};
-document.getElementById("w450copy").onclick=function(){pre.textContent=wallPrompt();navigator.clipboard.writeText(pre.textContent).catch(function(){})};
-document.getElementById("w450download").onclick=function(){downloadText("strava-wall-prompt-v450.txt",wallPrompt(),"text/plain")};
+var selector=document.getElementById("w4519mode");selector.value=promptMode4519;selector.onchange=function(){promptMode4519=selector.value;wallRefresh4519()};wallRefresh4519();
+document.getElementById("w450generate").onclick=wallRefresh4519;
+document.getElementById("w450copy").onclick=function(){wallRefresh4519();navigator.clipboard.writeText(wallPromptSelected4519()).catch(function(){})};
+document.getElementById("w450download").onclick=function(){downloadText("strava-wall-"+promptMode4519+"-prompt.txt",wallPromptSelected4519(),"text/plain")};
 }
 if(active==="Presets")initPresets();
 };
-buildPrompt=function(){return state.world==="wall"?wallPrompt():prevPrompt()};
+buildPrompt=function(){return state.world==="wall"?wallPromptSelected4519():prevPrompt()};
 function downloadText(name,content,type){var u=URL.createObjectURL(new Blob([content],{type:type||"application/json"}));var a=document.createElement("a");a.href=u;a.download=name;a.click();setTimeout(function(){URL.revokeObjectURL(u)},1000)}
 var PRESETKEY="strava-wall-presets-v450";
 function getPresets(){try{return JSON.parse(localStorage.getItem(PRESETKEY)||"[]")}catch(e){return []}}
@@ -341,5 +391,5 @@ function initPresets(){
 }
 function thumbnail(file){return new Promise(function(resolve,reject){var img=new Image(),url=URL.createObjectURL(file);img.onload=function(){try{var c=document.createElement("canvas"),w=320,h=400;c.width=w;c.height=h;var scale=Math.max(w/img.width,h/img.height),sw=w/scale,sh=h/scale;c.getContext("2d").drawImage(img,(img.width-sw)/2,(img.height-sh)/2,sw,sh,0,0,w,h);resolve(c.toDataURL("image/jpeg",.72))}catch(e){reject(e)}finally{URL.revokeObjectURL(url)}};img.onerror=reject;img.src=url})}
 if(state.world==="wall"){active=NAMES.includes(state.tab)?state.tab:"Presets";render()}
-window.stravaWall450={tabs:NAMES.slice(),get:function(){return Object.assign({},cfg)},prompt:wallPrompt,version:"V4.5.8"};
+window.stravaWall450={tabs:NAMES.slice(),get:function(){return Object.assign({},cfg)},prompt:wallPromptSelected4519,fullPrompt:wallPrompt,compactPrompt:wallCompact4519,version:"V4.5.19"};
 })();
