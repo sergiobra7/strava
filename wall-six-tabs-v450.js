@@ -1,4 +1,4 @@
-/* STRAVA WALL V4.5.3 — neon PUMA photo-default and original Strava pixel/typeface lock, wall-only */
+/* STRAVA WALL V4.5.4 — BPM layout and named preview preset export; BLACK SIGN untouched */
 (function(){
 "use strict";
 if(typeof state==="undefined"||typeof render!=="function"||typeof buildPrompt!=="function")return;
@@ -42,7 +42,7 @@ function toggle(k,label){return '<label class="check"><input type="checkbox" dat
 function group(label,body,opened){return '<details class="panel" '+(opened?"open":"")+' style="margin-bottom:10px"><summary style="cursor:pointer;font-size:15px;font-weight:800">'+label+'</summary><div style="padding-top:14px">'+body+'</div></details>'}
 function content(){
 switch(active){
-case "Presets":return '<section class="panel"><h2>Meine Presets · mit echter Bildvorschau</h2><div id="w450gallery" class="grid"></div><div class="field"><label>Presetname</label><input id="w450presetName" placeholder="Meine Inszenierung"></div><div class="field"><label>Ergebnisbild für die Vorschau</label><input id="w450presetImage" type="file" accept="image/*"><p class="hint">Optional: echtes fertiges Bild auswählen. Lokal gespeichert.</p></div><div class="actions"><button id="w450savePreset" class="btn">Preset speichern</button><button id="w450reset" class="btn secondary">Auf Standard zurücksetzen</button><button id="w450exportPresets" class="btn secondary">Presets sichern</button></div><div class="field" style="margin-top:12px"><label>Preset-Sicherung importieren</label><input id="w450importPresets" type="file" accept=".json,application/json"></div><div id="w450status" class="hint"></div></section>';
+case "Presets":return '<section class="panel"><h2>Meine Presets · mit echter Bildvorschau</h2><div id="w450gallery" class="grid"></div><div class="field"><label>Presetname</label><input id="w450presetName" placeholder="Meine Inszenierung"></div><div class="field"><label>Ergebnisbild für die Vorschau</label><input id="w450presetImage" type="file" accept="image/*"><p class="hint">Für die echte Vorschau das fertige Ergebnisfoto auswählen. Beim iPhone-Teilen wird es zusätzlich als JPG bereitgestellt; JSON selbst hat keine Fotovorschau.</p></div><div class="actions"><button id="w450savePreset" class="btn">Preset speichern</button><button id="w450reset" class="btn secondary">Auf Standard zurücksetzen</button><button id="w450exportPresets" class="btn secondary">Alle Presets herunterladen</button></div><div class="field" style="margin-top:12px"><label>Preset-Sicherung importieren</label><input id="w450importPresets" type="file" accept=".json,application/json"></div><div id="w450status" class="hint"></div></section>';
 case "Statistikmodus":return '<section class="panel"><h2>Statistikmodus</h2><label class="check"><input type="radio" name="w450mode" value="bpm" '+(cfg.mode==="bpm"?"checked":"")+'> A · Statistik + BPM + Karte</label><label class="check"><input type="radio" name="w450mode" value="only" '+(cfg.mode==="only"?"checked":"")+'> B · Nur Statistik</label><div class="notice" style="margin-top:16px" id="w450modeInfo">'+(cfg.mode==="bpm"?"In ChatGPT: normale Strava-Statistik und BPM-Screenshot anhängen. Die Karte wird aus den vorhandenen Referenzen übernommen.":"In ChatGPT: nur den normalen Strava-Statistik-Screenshot anhängen.")+'</div><p class="hint">Keine Uploads im Generator. Die Auswahl steuert den Bildprompt.</p></section>';
 case "Szene & Kamera":
 var locations=["Breite Einkaufsstraße","Großer Marktplatz","Bahnhofsvorplatz","Bäckerei an breiter Straße","Markthalle mit Vorplatz","Einkaufspark-Promenade","Supermarkt-Eingang","Balkon 1. Stock","Balkon 2. Stock","Baustelle","Busbahnhof","Industriefassade an Platz","Dachterrasse","Freie Szene (Zusatzanweisung)"];
@@ -63,7 +63,7 @@ case "Prompt & Export":return '<section class="panel"><h2>Prompt & Export</h2><d
 }
 function wallPrompt(){
 var lines=[
-"STRAVA WALL V4.5.3 — EIGHT TAB MASTER PROMPT",
+"STRAVA WALL V4.5.4 — EIGHT TAB MASTER PROMPT",
 "CAMERA SETTINGS — SINGLE AUTHORITATIVE SOURCE",
 "FOCAL LENGTH: "+cfg.lens+" mm full-frame equivalent",
 "CAMERA DISTANCE: "+cfg.distance+" m from runner",
@@ -74,6 +74,7 @@ var lines=[
 "STATISTICS MODE: "+(cfg.mode==="bpm"?"WITH BPM + MAP. Expect TWO Strava screenshots attached in ChatGPT: regular run statistics and BPM statistics. Preserve available GPS map from supplied reference.":"STATISTICS ONLY. Expect ONE normal Strava statistics screenshot attached in ChatGPT. No BPM chart and no separate GPS map."),
 "STRAVA ORIGINAL TYPEFACE & SOURCE-PIXEL LOCK — ABSOLUTE PRIORITY: Transfer the screenshot’s EXACT original typographic glyphs, font shapes, weight, kerning, line spacing, numerals, decimal separators, units, labels, STRAVA branding, chart traces, GPS topology, orange route, colors and visible source layout. NO OCR transcription, no reconstructed font, no retypesetting, no translation, no rounding, no replacement of metrics or logo. Crop and arrange only existing screenshot pixels; uniform scaling and realistic perspective-warp of whole source regions are permitted. Reproduce no statistic absent from the original screenshots.",
 "ORIGINAL SCREENSHOT COMPOSITING: If available, use the existing STRAVA WALL source-pixel overlay exported from the original screenshots. Keep all typography, statistics, chart and GPS-route as actual source image pixels in that overlay, mask away only the near-black screenshot backdrop, then perspective-composite those pixels onto the physical BLACK BRICK wall. If the image-generation process cannot physically composite unchanged source pixels, the prompt alone CANNOT guarantee exact font or data. Perform final pixel overlay compositing after generation rather than repainting or hallucinating any character.",
+cfg.mode==="bpm"?"BPM LAYOUT ABSOLUTE LOCK: The STRAVA wordmark AND the STRAVA shoe emblem are BOTH exactly STRAVA ORANGE #FC4C02 (not white), and they are both aligned to the SAME LEFT EDGE as the left-aligned statistics block. They must never be centered independently. Keep the ORIGINAL GPS route horizontally CENTERED in its dedicated GPS display area of the wall; never left-align it merely because the text and icons are left-aligned. Do NOT modify the route geometry or color. Only permitted source-pixel translation, uniform resizing and perspective warp.":"STATISTICS ONLY: preserve screenshot source alignment and do not add BPM.",
 "SCENE: "+cfg.location+". Natural real-world location with visible context.",
 "ORIGINAL SCENE SET: "+(typeof sceneData!=="undefined"&&sceneData[parseInt(cfg.scenario,10)]?sceneData[parseInt(cfg.scenario,10)][0]+" — "+sceneData[parseInt(cfg.scenario,10)][1]:"No scene preset")+".",
 "RUNNER: "+cfg.pose+"; gaze "+cfg.gaze+"; expression "+cfg.mood+".",
@@ -83,7 +84,7 @@ var lines=[
 "BLACK FACADE ABSOLUTE LOCK: Entire statistics wall is deep matte BLACK BRICK with BLACK mortar joints. NO red, brown, terracotta, beige, grey, or white wall; black texture visible under realistic light.",
 "FACADE: "+cfg.height+", "+cfg.width+" m wide; wall on image "+cfg.side+"; "+cfg.angle+"; BLACK brick surface; foreground space "+cfg.space+".",
 "WALL STATISTICS: position "+cfg.placement+"; size "+cfg.statsSize+"% of usable wall; "+cfg.projection+"; spacing "+cfg.spacing+".",
-cfg.mode==="bpm"?"GPS MAP SCALE: "+cfg.gpsSize+"% of planned GPS region.":"GPS MAP: not applicable.",
+cfg.mode==="bpm"?"GPS MAP SCALE: "+cfg.gpsSize+"% of planned GPS region; GPS route remains CENTERED.":"GPS MAP: not applicable.",
 "Perspective-correct statistics on a physically coherent wall. Keep all readable statistics visible.",
 "No flags, religious symbols/buildings, fake logos, extra text or invented measurements.",
 cfg.extra?"USER ADDITIONAL INSTRUCTIONS (cannot override identity, camera or statistics locks): "+cfg.extra:""
@@ -135,5 +136,5 @@ document.getElementById("w450importPresets").onchange=async function(){try{var d
 }
 function thumbnail(file){return new Promise(function(resolve,reject){var img=new Image(),url=URL.createObjectURL(file);img.onload=function(){try{var c=document.createElement("canvas"),w=320,h=400;c.width=w;c.height=h;var scale=Math.max(w/img.width,h/img.height),sw=w/scale,sh=h/scale;c.getContext("2d").drawImage(img,(img.width-sw)/2,(img.height-sh)/2,sw,sh,0,0,w,h);resolve(c.toDataURL("image/jpeg",.72))}catch(e){reject(e)}finally{URL.revokeObjectURL(url)}};img.onerror=reject;img.src=url})}
 if(state.world==="wall"){active=NAMES.includes(state.tab)?state.tab:"Presets";render()}
-window.stravaWall450={tabs:NAMES.slice(),get:function(){return Object.assign({},cfg)},prompt:wallPrompt,version:"V4.5.3"};
+window.stravaWall450={tabs:NAMES.slice(),get:function(){return Object.assign({},cfg)},prompt:wallPrompt,version:"V4.5.4"};
 })();
