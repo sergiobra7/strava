@@ -7,7 +7,7 @@ var KEY="strava-wall-six-tabs-v450";
 var defaults={mode:"bpm",scenario:"0",location:"Breite Einkaufsstraße",lens:"24",distance:"20",pose:"Auf Bank sitzend, Beine locker nach vorne",gaze:"Direkt in die Kamera",mood:"Ernst",outfit:"PUMA Lime Green / Schwarz",opa:true,mantel:false,crowd:20,distribution:"Natürlich verstreut",height:"Mittelhoch (3–5 Etagen)",side:"Rechts",width:"30",angle:"Leicht schräg",surface:"Schwarzer Backstein",space:"Breit",placement:"Links",statsSize:75,gpsSize:70,projection:"Direkt auf der Fassade",spacing:"Ausgewogen",extra:""};
 var cfg;try{cfg=Object.assign({},defaults,JSON.parse(localStorage.getItem(KEY)||"{}"))}catch(e){cfg=Object.assign({},defaults)}
 var active="Presets";
-var promptMode4519="smart";
+var promptMode4519="full";
 var lastPresetLoad457=null;
 var outfitDefaults={brand:"PUMA",club:"Kein Verein",collection:"Training",top:"Full-Zip-Laufjacke",topColor:"Neon Gelbgrün (#DFFF00)",topColorHex:"#DFFF00",topDetails:"Keine Ärmelstreifen",topLogo:"Schwarzes PUMA-Logo links auf der Brust",zipColor:"Schwarz",pants:"Lange Trainingshose, regulärer Schnitt",pantsColor:"Schwarz",pantsLogoColor:"#DFFF00",cap:"Rote Cap rückwärts",socks:"Schwarz",watch:"COROS PACE Pro, schwarz, Display aus",customOutfit:""};
 var opaDefaults={opaAge:"75–85 Jahre",opaBuild:"Schlank und drahtig",opaHead:"Dunkle Schiebermütze",opaBeard:"Markanter grauer Schnurrbart",opaClothing:"Braunes Cord-Sakko, kariertes Hemd, Stoffhose",opaShirt:"Braun-blau kariert",opaPants:"Dunkle, weite Stoffhose",opaShoes:"Abgetragene braune Lederschuhe",opaPose:"Auf abgestelltem alten Mofa, ein Fuß am Boden",opaGaze:"Zum Läufer",opaReaction:"Ungläubig",opaProfile:"OPA 01 · Klassisch",opaCustom:""};
@@ -160,32 +160,42 @@ cfg.extra?"USER ADDITIONAL INSTRUCTIONS (cannot override identity, camera or sta
 
 function wallCompact4519(ultra){
  var short=!!ultra,cam=manualCameraValue458,add=function(label,value){return label+": "+String(value)};
- var outfit=["brand "+cfg.brand,"club "+cfg.club,"collection "+cfg.collection,"top "+cfg.top,"color "+(cfg.topColorHex||cfg.topColor),"logo "+cfg.topLogo,"zip "+cfg.zipColor,"sleeves "+cfg.topDetails,"pants "+cfg.pants,"pants color "+cfg.pantsColor,"pants logo "+cfg.pantsLogoColor,"cap "+cfg.cap,"socks "+cfg.socks,"watch "+cfg.watch];
+ var outfit=["active outfit "+cfg.outfit,"brand "+cfg.brand,"club "+cfg.club,"collection "+cfg.collection,"top "+cfg.top,"color "+(cfg.topColorHex||cfg.topColor),"logo "+cfg.topLogo,"zip "+cfg.zipColor,"sleeves "+cfg.topDetails,"pants "+cfg.pants,"pants color "+cfg.pantsColor,"pants logo "+cfg.pantsLogoColor,"cap "+cfg.cap,"socks "+cfg.socks,"watch "+cfg.watch];
  if(cfg.customOutfit)outfit.push("custom "+cfg.customOutfit);
  var rows=[
  "CAMERA / OPTICS — MANUAL OVERRIDES PRESETS",
- "Focal length: "+cam("lens")+" mm; runner distance: "+cam("distance")+" m; native 9:16 portrait. View: "+cfg.angle+"; position: "+cfg.runnerDepth+", "+cfg.runnerHorizontal+"; site: "+cfg.location+".",
+ "Lens "+cam("lens")+" mm; distance "+cam("distance")+" m; native 9:16; view "+cfg.angle+"; camera height: not manually set; site "+cfg.location+".",
  "OUTPUT / REALISM",
- short?"One native 9:16 candid photo; real faces, anatomy, light, shadows and perspective; no CGI.":"One native 9:16 documentary photograph; authentic human proportions, hands, feet, lighting, shadows and perspective; no CGI or poster rendering.",
+ short?"Native 9:16 documentary photo; real anatomy, light and depth; no CGI.":"Native 9:16 documentary photograph; natural anatomy, light, shadows and depth; no CGI.",
  "LOCATION / SCENE",
- cfg.location+"; "+cfg.space+" foreground; "+cfg.height+" facade, "+cfg.width+" m wide, "+cfg.side+" side, "+cfg.angle+". BLACK brick and BLACK mortar; no other facade colors.",
+ cfg.space+" forecourt; "+cfg.height+" building, "+cfg.width+" m wall on "+cfg.side+"; matte BLACK brick/mortar.",
  "MAIN RUNNER / IDENTITY / POSE",
- "PERSON PHOTO: preserve exact original facial identity, age, asymmetry, hair, beard and skin texture 1:1. SHOE PHOTO: exact shoe model, shape, colors, logos and soles on BOTH feet. "+cfg.pose+"; gaze "+cfg.gaze+"; expression "+cfg.mood+"; body "+cfg.runnerAngle+"; depth "+cfg.runnerDepth+"; horizontal "+cfg.runnerHorizontal+"; scale "+cfg.runnerRelativeSize+".",
+ "PERSON PHOTO: exact face, hair, age, asymmetry, beard, skin 1:1. SHOE PHOTO: exact both shoes/soles/logos. Pose "+cfg.pose+"; gaze "+cfg.gaze+"; mood "+cfg.mood+"; angle "+cfg.runnerAngle+"; depth "+cfg.runnerDepth+"; lateral "+cfg.runnerHorizontal+"; size "+cfg.runnerRelativeSize+".",
  "Outfit: "+outfit.join("; ")+".",
+ "Active scene: "+(typeof sceneData!=="undefined"&&sceneData[parseInt(cfg.scenario,10)]?sceneData[parseInt(cfg.scenario,10)][0]+" / "+sceneData[parseInt(cfg.scenario,10)][1]:"custom/current location")+".",
  "CROWD / AUDIENCE",
- cfg.crowd+" people; "+cfg.distribution+"; varied natural faces, gestures, depth and reactions; never block runner or statistics.",
+ cfg.crowd+" people; "+cfg.distribution+"; varied real faces/poses; do not obstruct runner or statistics.",
  "SIDE FIGURES",
- cfg.opa?"Anatolian Turkish village grandfather, authentic rural 1970s: "+["profile "+cfg.opaProfile,"age "+cfg.opaAge,"build "+cfg.opaBuild,"head "+cfg.opaHead,"beard "+cfg.opaBeard,"clothes "+cfg.opaClothing,"shirt "+cfg.opaShirt,"pants "+cfg.opaPants,"shoes "+cfg.opaShoes,"pose "+cfg.opaPose,"gaze "+cfg.opaGaze,"reaction "+cfg.opaReaction].concat(cfg.opaCustom?["custom "+cfg.opaCustom]:[]).join("; ")+".":"",
+ cfg.opa?"Anatolian rural 1970s grandfather: "+["profile "+cfg.opaProfile,"age "+cfg.opaAge,"build "+cfg.opaBuild,"head "+cfg.opaHead,"beard "+cfg.opaBeard,"clothes "+cfg.opaClothing,"shirt "+cfg.opaShirt,"pants "+cfg.opaPants,"shoes "+cfg.opaShoes,"pose "+cfg.opaPose,"gaze "+cfg.opaGaze,"reaction "+cfg.opaReaction].concat(cfg.opaCustom?["custom "+cfg.opaCustom]:[]).join("; ")+".":"",
  cfg.mantel?"Coat-wearing man enabled.":"",
  "SIGN / PLACARD / BANNER — STRAVA WALL",
- "BLACK brick facade; original STRAVA screenshot source pixels only, no retyping, OCR, fabricated numbers, font, graphs or GPS geometry. Original logos, kerning, pace, units, decimal marks, charts and colors. Use source-pixel compositing/perspective warp; if unavailable, final original-pixel overlay required for exact fidelity.",
- "Mode "+(cfg.mode==="bpm"?"BPM + GPS; TWO screenshots (normal + BPM). STRAVA wordmark and shoe logo #FC4C02, same LEFT grid as statistics; GPS route CENTERED in its own area.":"statistics ONLY; ONE normal screenshot; no BPM or invented GPS.")+" Wall layout: "+cfg.placement+"; stats "+cfg.statsSize+"%; "+cfg.projection+"; spacing "+cfg.spacing+(cfg.mode==="bpm"?" ; GPS scale "+cfg.gpsSize+"%":"")+".",
+ "Original STRAVA screenshot pixels only: font, logo, metrics, units, charts, GPS, colors, geometry. No OCR, retyping or invented data. Perspective-map source pixels; exact fidelity needs compositing.",
+ "Mode "+(cfg.mode==="bpm"?"BPM + MAP: TWO screenshots, normal + BPM. STRAVA wordmark and shoe #FC4C02, LEFT aligned to metrics; GPS CENTERED in its region.":"STATISTICS ONLY: ONE normal screenshot; no BPM/GPS invention.")+" Wall layout: "+cfg.placement+"; stats "+cfg.statsSize+"%; "+cfg.projection+"; spacing "+cfg.spacing+(cfg.mode==="bpm"?" ; GPS scale "+cfg.gpsSize+"%":"")+".",
  "EXACT MESSAGE",
- "No fabricated poster text. Preserve ALL visible original STRAVA screenshot text, numbers, line breaks, symbols and graphics exactly.",
+ "Exact source screenshot text, numbers and GPS; no invention.",
  "FINAL VALIDATION",
- short?"Keep identity, shoes, optics, selected crowd and original source pixels; coherent wall perspective, no obstruction.":"Respect manual camera, original PERSON/SHOE references, all selected people and positions; coherent 3D mounting, readable statistics and original colors. Do not invent metrics, text or logos."
+ short?"Verify identity, shoes, camera, crowd, source pixels and perspective.":"Verify optics, face/shoes, poses, crowd, readable statistics and perspective."
  ];
  if(cfg.extra)rows.push("ACTIVE USER OVERRIDE: "+cfg.extra);
+ if(short)rows=rows.map(function(row){
+  if(typeof row!=="string")return row;
+  if(row.startsWith("PERSON PHOTO:"))return row.replace("PERSON PHOTO: exact face, hair, age, asymmetry, beard, skin 1:1. SHOE PHOTO: exact both shoes/soles/logos.","PERSON PHOTO: same face, hair, beard, age, skin 1:1. SHOE PHOTO: exact both feet.");
+  if(row.startsWith("Original STRAVA screenshot pixels only:"))return "SOURCE PIXELS ONLY: original STRAVA logo, data, font, charts, GPS and colors. No OCR, retyping or inventions; use source-pixel perspective-compositing.";
+  if(row.startsWith("Exact source screenshot text,"))return "Original screenshot pixels only.";
+  if(row.startsWith("Anatolian rural 1970s grandfather:"))return row.replace("Anatolian rural 1970s grandfather:","Anatolian 1970s Opa:").replace(/; profile /g,"; profile ").replace(/; clothes /g,"; clothes ");
+  if(row.startsWith("Outfit:"))return row.replace("Outfit: active outfit ","Outfit: ").replace(/; collection /g,"; series ").replace(/; custom /g,"; custom ");
+  return row;
+ });
  return rows.filter(Boolean).join("\n");
 }
 function wallIssues4519(){
