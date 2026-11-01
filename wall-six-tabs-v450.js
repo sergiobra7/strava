@@ -42,7 +42,7 @@ function toggle(k,label){return '<label class="check"><input type="checkbox" dat
 function group(label,body,opened){return '<details class="panel" '+(opened?"open":"")+' style="margin-bottom:10px"><summary style="cursor:pointer;font-size:15px;font-weight:800">'+label+'</summary><div style="padding-top:14px">'+body+'</div></details>'}
 function content(){
 switch(active){
-case "Presets":return '<section class="panel"><h2>Meine Presets · mit echter Bildvorschau</h2><div id="w450gallery" class="grid"></div><div class="field"><label>Presetname</label><input id="w450presetName" placeholder="Meine Inszenierung"></div><div class="field"><label>Ergebnisbild für die Vorschau</label><input id="w450presetImage" type="file" accept="image/*"><p class="hint">Für die echte Vorschau das fertige Ergebnisfoto auswählen. Beim iPhone-Teilen wird es zusätzlich als JPG bereitgestellt; JSON selbst hat keine Fotovorschau.</p></div><div class="actions"><button id="w450savePreset" class="btn">Preset speichern</button><button id="w450reset" class="btn secondary">Auf Standard zurücksetzen</button><button id="w450exportPresets" class="btn secondary">Alle Presets herunterladen</button></div><div class="field" style="margin-top:12px"><label>Preset-Sicherung importieren</label><input id="w450importPresets" type="file" accept=".json,application/json"></div><div id="w450status" class="hint"></div></section>';
+case "Presets":return '<section class="panel"><h2>Meine Presets · mit echter Bildvorschau</h2><div id="w450gallery" class="grid"></div><div class="field"><label>Presetname</label><input id="w450presetName" placeholder="Meine Inszenierung"></div><div class="field"><label>Ergebnisbild für die Vorschau</label><input id="w450presetImage" type="file" accept="image/*"><p class="hint">Für die echte Vorschau das fertige Ergebnisfoto auswählen. Beim iPhone-Teilen wird es zusätzlich als JPG bereitgestellt; JSON selbst hat keine Fotovorschau.</p></div><div class="actions"><button id="w450savePreset" class="btn">Preset speichern</button><button id="w450reset" class="btn secondary">Auf Standard zurücksetzen</button><button id="w450shareAllPresets" class="btn secondary">Alle Presets teilen</button><button id="w450exportPresets" class="btn secondary">Alle Presets herunterladen</button></div><div class="field" style="margin-top:12px"><label>Preset-Sicherung importieren</label><input id="w450importPresets" type="file" accept=".json,application/json"></div><div id="w450status" class="hint"></div></section>';
 case "Statistikmodus":return '<section class="panel"><h2>Statistikmodus</h2><label class="check"><input type="radio" name="w450mode" value="bpm" '+(cfg.mode==="bpm"?"checked":"")+'> A · Statistik + BPM + Karte</label><label class="check"><input type="radio" name="w450mode" value="only" '+(cfg.mode==="only"?"checked":"")+'> B · Nur Statistik</label><div class="notice" style="margin-top:16px" id="w450modeInfo">'+(cfg.mode==="bpm"?"In ChatGPT: normale Strava-Statistik und BPM-Screenshot anhängen. Die Karte wird aus den vorhandenen Referenzen übernommen.":"In ChatGPT: nur den normalen Strava-Statistik-Screenshot anhängen.")+'</div><p class="hint">Keine Uploads im Generator. Die Auswahl steuert den Bildprompt.</p></section>';
 case "Szene & Kamera":
 var locations=["Breite Einkaufsstraße","Großer Marktplatz","Bahnhofsvorplatz","Bäckerei an breiter Straße","Markthalle mit Vorplatz","Einkaufspark-Promenade","Supermarkt-Eingang","Balkon 1. Stock","Balkon 2. Stock","Baustelle","Busbahnhof","Industriefassade an Platz","Dachterrasse","Freie Szene (Zusatzanweisung)"];
@@ -210,6 +210,18 @@ function initPresets(){
  };
  document.getElementById("w450reset").onclick=function(){
   if(confirm("Einstellungen auf Standard zurücksetzen? Presets bleiben erhalten.")){cfg=Object.assign({},fullDefaults);persist();render()}
+ };
+ document.getElementById("w450shareAllPresets").onclick=function(){
+  var title=document.getElementById("w450presetName").value.trim();
+  var name=title?safePresetName(title)+"-Sicherung.json":"Strava-Wall-Alle-Presets.json";
+  var json=new File([JSON.stringify(getPresets())],name,{type:"application/json"});
+  if(typeof navigator.share!=="function"||(typeof navigator.canShare==="function"&&!navigator.canShare({files:[json]}))){
+   report("Native Datei-Freigabe nicht verfügbar. Benutze 'Herunterladen' oder öffne den Generator in Safari.");return;
+  }
+  try{Promise.resolve(navigator.share({files:[json],title:title||"STRAVA WALL Presets"})).then(
+   function(){report("Sicherung geteilt")},
+   function(e){report(e&&e.name==="AbortError"?"Teilen abgebrochen":"Teilen nicht möglich: "+(e&&e.message||"Fehler"))}
+  )}catch(e){report("Teilen nicht möglich: "+e.message)}
  };
  document.getElementById("w450exportPresets").onclick=function(){
   var title=document.getElementById("w450presetName").value.trim();
