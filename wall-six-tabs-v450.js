@@ -1,4 +1,4 @@
-/* STRAVA WALL V4.5.7 — reliable preset load plus 84 relaxed poses and runner placement */
+/* STRAVA WALL V4.5.8 — single scene accordion and manual camera overrides, wall-only */
 (function(){
 "use strict";
 if(typeof state==="undefined"||typeof render!=="function"||typeof buildPrompt!=="function")return;
@@ -12,7 +12,7 @@ var outfitDefaults={brand:"PUMA",club:"Kein Verein",collection:"Training",top:"F
 var opaDefaults={opaAge:"75–85 Jahre",opaBuild:"Schlank und drahtig",opaHead:"Dunkle Schiebermütze",opaBeard:"Markanter grauer Schnurrbart",opaClothing:"Braunes Cord-Sakko, kariertes Hemd, Stoffhose",opaShirt:"Braun-blau kariert",opaPants:"Dunkle, weite Stoffhose",opaShoes:"Abgetragene braune Lederschuhe",opaPose:"Auf abgestelltem alten Mofa, ein Fuß am Boden",opaGaze:"Zum Läufer",opaReaction:"Ungläubig",opaProfile:"OPA 01 · Klassisch",opaCustom:""};
 var poseDirectorCategories457={"Treppen-Chill":["Unterarme locker auf getrennten Knien, frontal sitzend","Ein Knie etwas höher, Hand entspannt darauf","Leicht zurückgelehnt, Hände seitlich abgestützt","Ein Unterarm auf Knie, andere Hand locker","Seitlich auf breiter Stufe, Kopf zur Kamera","Auf oberster Stufe sitzend, Füße versetzt","Auf breiter Treppe, Ellenbogen auf Knien","Eine Hand am Schienbein, andere auf dem Knie","Ruhig sitzend, Hände locker ineinander","Auf breiter Stufe, ein Bein leicht ausgestreckt","Mit offenen Händen entspannt auf den Oberschenkeln","Dreiviertelansicht, auf Treppe entspannt","Sitzend, Schulter leicht zur Statistik gedreht","Auf Stufen sitzend, Rücken sehr leicht geneigt","Auf Stufe, Hände entspannt zwischen den Knien"],"Bank & Sitzplatz":["Breit und entspannt auf Bank sitzend","Ein Arm locker auf Rückenlehne","Zurückgelehnt, Beine nach vorne","Seitlich sitzend, Schulter zur Kamera","Hände locker auf beiden Oberschenkeln","Ein Ellbogen an Rückenlehne, Blick zur Kamera","Ruhig nach dem Lauf auf Parkbank","Auf Holzstuhl, beide Füße fest am Boden","Rückwärts auf Stuhl, Unterarme locker auf Lehne","Locker auf Bank, ein Bein leicht nach vorne","Halb zur Wand gedreht auf Bank","Auf Mauerbank, beide Hände seitlich gestützt","Auf Sitzkante, Unterarme auf Knien","Auf Bank mit Opa, ruhig unterhaltend","Sitzend mit verschränkten Händen, aufrechte Haltung"],"Wand & Fassade":["Eine Schulter locker an schwarzer Wand","Arme entspannt vor der Brust verschränkt","Eine Hand in Hosentasche, seitlich angelehnt","An Wand, Knie leicht angewinkelt","Rücken an Fassade, Kopf zur Kamera","Seitlich an Gebäudeecke gelehnt","Mit Schulterkontakt, Füße leicht versetzt","Leicht an Fassadenpfeiler angelehnt","An Wand, Arme locker seitlich","Am Backstein, Blick zur Mitte der Statistik","An niedriger Mauer, Oberkörper zurückgelehnt","Locker an Wand, eine Hand an Hüfte","Schulter an Wand, andere Hand an Jackentasche","Dreiviertel zur Kamera, lehnend","An Wand, beide Füße sicher am Boden"],"Geländer & Mauerkante":["Beide Unterarme locker auf Geländer","Seitlich an breiter Mauerkante angelehnt","Eine Hand entspannt auf Geländer","Halb gedreht mit Rücken zur Mauer","Auf niedriger Mauer, beide Füße am Boden","Neben Geländer stehend, ein Unterarm aufgelegt","Auf Mauerkante sitzend, Hände neben Körper","Auf breiter Mauer, ein Fuß etwas vorgezogen","Leicht über Geländer blickend, natürlich","An Steinbrüstung, Arme unaufgeregt abgelegt","An Geländer, Kopf direkt zur Kamera","Auf Mauerkante, Unterarme locker auf Knien"],"Locker stehend":["Beide Hände locker in Jackentaschen","Gewicht entspannt auf einem Bein","Arme ruhig seitlich hängen lassen","Locker verschränkte Arme, frontaler Blick","Halb zur Kamera gedreht","Ein Fuß leicht vor dem anderen","Auf Platz stehend, Schultern entspannt","Mit offenen Händen locker vor dem Körper","Dreiviertelstand, ruhiger Gesichtsausdruck","Hände hinter dem Rücken, aufrechte Haltung","Ein Arm leicht angewinkelt, anderer locker","Entspannt vor Statistik stehend","Seitlich stehend, Blick zur Kamera","Stehend, eine Hand am Jackensaum","Nach Lauf stehen geblieben, ruhig"],"After-Run & Alltag":["Mit Sportflasche auf Bank sitzend","Auf Mauer nach Lauf entspannt ausruhend","Sportuhr beiläufig kontrollierend","Auf breiter Stufe nach dem Lauf sitzend","Gelassen die Umgebung beobachtend","Mit Sportflasche in einer Hand stehend","Nach Lauf, Hände auf Oberschenkeln","Auf Bank, kurzes Gespräch mit Opa","Ruhig die Statistik an der Wand betrachtend","Auf Treppe, Sportflasche zwischen Füßen","Neben Bank ausruhend, Hände locker","Nach Lauf an Geländer ausruhend"]};
 var poseCategoryNames457=["Alle bisherigen Posen"].concat(Object.keys(poseDirectorCategories457));
-var poseSettingsDefaults457={poseCategory:"Alle bisherigen Posen",runnerDepth:"Mittelgrund",runnerHorizontal:"Mittig",runnerRelativeSize:"Automatisch",runnerAngle:"Leicht zur Kamera gedreht"};
+var poseSettingsDefaults457={poseCategory:"Alle bisherigen Posen",runnerDepth:"Mittelgrund",runnerHorizontal:"Mittig",runnerRelativeSize:"Automatisch",runnerAngle:"Leicht zur Kamera gedreht",lensManual:"",distanceManual:""};
 function poseOptions457(){
  var base=typeof poses!=="undefined"?poses:["Locker stehend","Laufbewegung"];
  var current=poseDirectorCategories457[cfg.poseCategory];
@@ -20,20 +20,44 @@ function poseOptions457(){
  if(cfg.pose&&!items.includes(cfg.pose))items=[cfg.pose].concat(items);
  return items;
 }
-function runnerPosition457(){
- return group("Position der Hauptfigur",
- select("runnerDepth","Bildtiefe",["Vordergrund","Leicht zurückversetzt","Mittelgrund","Weiter hinten"])+
- select("runnerHorizontal","Horizontale Position",["Links","Mittig","Rechts"])+
- select("runnerRelativeSize","Größe im Bild",["Automatisch","Etwas größer","Etwas kleiner"])+
- '<p class="hint">Die natürliche Perspektive und der Kameraabstand bleiben maßgeblich. Kein künstliches Verkleinern oder Vergrößern der Person.</p>',false)
+function manualCameraValue458(k){
+ var raw=String(cfg[k+"Manual"]||"").trim().replace(",",".");
+ if(!raw)return String(cfg[k]);
+ var n=Number(raw);
+ return Number.isFinite(n)&&n>0?String(n):String(cfg[k]);
 }
-function poseDirector457(){
- return group("Pose, Blick & Mimik",
+function cameraField458(k,label,options,unit){
+ var val=String(cfg[k+"Manual"]||"");
+ return '<div class="field">'+
+ '<label>'+label+' · Auswahl</label>'+select(k,label+" ("+unit+")",options)+
+ '<label for="wall458-'+k+'">Oder '+label.toLowerCase()+' manuell eingeben ('+unit+')</label>'+
+ '<div style="display:flex;gap:8px;align-items:center">'+
+ '<input id="wall458-'+k+'" data-w450="'+k+'Manual" inputmode="decimal" type="text" autocomplete="off" placeholder="z. B. '+(k==="lens"?"27,5":"12,5")+'" value="'+esc(val)+'" style="flex:1;min-width:0">'+
+ '<button type="button" class="btn secondary" data-w458-clear="'+k+'" '+(!val?'disabled':'')+'>Löschen</button></div>'+
+ '<p class="hint">Manuelle Eingabe hat Vorrang. Aktuell im Prompt: '+esc(manualCameraValue458(k))+' '+unit+'.</p>'+
+ '</div>';
+}
+function sceneCameraView458(){
+ var scene='<h3>1 · Aufnahmeort</h3>'+wallLocationSelect456()+
+ (typeof sceneData!=="undefined"?select("scenario","Bestehendes Szenen-Set (30 Originale)",sceneData.map(function(x,i){return String(i).padStart(2,"0")+" · "+x[0]})):"");
+ var camera='<h3>2 · Kamera</h3>'+
+ cameraField458("lens","Brennweite",["18","20","24","28","35","50"],"mm")+
+ cameraField458("distance","Kameraabstand",["10","12","15","20","25","30","40"],"m")+
+ '<p class="hint">Eine verbindliche Kameraquelle. Native Aufnahme 9:16. Kommazahlen möglich (z. B. 27,5 mm / 12,5 m).</p>';
+ var poses='<h3>3 · Pose, Blick & Mimik</h3>'+
  select("poseCategory","Pose-Kategorie",poseCategoryNames457)+
  select("pose","Läuferpose",poseOptions457())+
  select("runnerAngle","Körperdrehung",["Frontal zur Kamera","Leicht zur Kamera gedreht","Dreiviertelansicht","Seitlich zur Kamera"])+
  select("gaze","Blickrichtung",["Direkt in die Kamera","Zur Statistik-Wand","Zum Opa","Seitlich zur Umgebung","Seitlich in die Ferne"])+
- select("mood","Mimik",["Ernst","Locker","Frech","Locker-ernst"]),false);
+ select("mood","Mimik",["Ernst","Locker","Frech","Locker-ernst"]);
+ var placement='<h3>4 · Position der Hauptfigur</h3>'+
+ select("runnerDepth","Bildtiefe",["Vordergrund","Leicht zurückversetzt","Mittelgrund","Weiter hinten"])+
+ select("runnerHorizontal","Horizontale Position",["Links","Mittig","Rechts"])+
+ select("runnerRelativeSize","Größe im Bild",["Automatisch","Etwas größer","Etwas kleiner"])+
+ '<p class="hint">Perspektivische Körpergröße bleibt natürlich. Entfernung und Position bleiben getrennte Einstellungen.</p>';
+ return group("Szene & Kamera · alle Einstellungen",scene+'<hr style="border:0;border-top:1px solid #343b48;margin:18px 0">'+camera+
+ '<hr style="border:0;border-top:1px solid #343b48;margin:18px 0">'+poses+
+ '<hr style="border:0;border-top:1px solid #343b48;margin:18px 0">'+placement,true);
 }
 var fullDefaults=Object.assign({},defaults,outfitDefaults,opaDefaults,poseSettingsDefaults457);
 var migrationKey="strava-wall-v452-default-migration";
@@ -87,7 +111,7 @@ switch(active){
 case "Presets":return '<section class="panel"><h2>Meine Presets · mit echter Bildvorschau</h2><div id="w450gallery" class="grid"></div><div class="field"><label>Presetname</label><input id="w450presetName" placeholder="Meine Inszenierung"></div><div class="field"><label>Ergebnisbild für die Vorschau</label><input id="w450presetImage" type="file" accept="image/*"><p class="hint">Für die echte Vorschau das fertige Ergebnisfoto auswählen. Beim iPhone-Teilen wird es zusätzlich als JPG bereitgestellt; JSON selbst hat keine Fotovorschau.</p></div><div class="actions"><button id="w450savePreset" class="btn">Preset speichern</button><button id="w450reset" class="btn secondary">Auf Standard zurücksetzen</button><button id="w450shareAllPresets" class="btn secondary">Alle Presets teilen</button><button id="w450exportPresets" class="btn secondary">Alle Presets herunterladen</button></div><div class="field" style="margin-top:12px"><label>Preset-Sicherung importieren</label><input id="w450importPresets" type="file" accept=".json,application/json"></div><div id="w450status" class="hint"></div></section>';
 case "Statistikmodus":return '<section class="panel"><h2>Statistikmodus</h2><label class="check"><input type="radio" name="w450mode" value="bpm" '+(cfg.mode==="bpm"?"checked":"")+'> A · Statistik + BPM + Karte</label><label class="check"><input type="radio" name="w450mode" value="only" '+(cfg.mode==="only"?"checked":"")+'> B · Nur Statistik</label><div class="notice" style="margin-top:16px" id="w450modeInfo">'+(cfg.mode==="bpm"?"In ChatGPT: normale Strava-Statistik und BPM-Screenshot anhängen. Die Karte wird aus den vorhandenen Referenzen übernommen.":"In ChatGPT: nur den normalen Strava-Statistik-Screenshot anhängen.")+'</div><p class="hint">Keine Uploads im Generator. Die Auswahl steuert den Bildprompt.</p></section>';
 case "Szene & Kamera":
-return '<section class="panel"><h2>Szene & Kamera</h2>'+wallLocationSelect456()+(typeof sceneData!=="undefined"?select("scenario","Bestehendes Szenen-Set (30 Originale)",sceneData.map(function(x,i){return String(i).padStart(2,"0")+" · "+x[0]})):"")+select("lens","Brennweite",["18","20","24","28","35","50"])+select("distance","Kameraabstand in m",["10","12","15","20","25","30","40"])+'<p class="hint">Verbindliche Kameraquelle. Bildformat 9:16.</p></section>'+poseDirector457()+runnerPosition457();
+return sceneCameraView458();
 case "Hauptfigur":
 return '<div class="notice">PERSON PHOTO Identität 1:1. SHOE PHOTO ist die alleinige Schuhreferenz. Identische Outfit-Auswahl wie BLACK SIGN, unabhängig gespeichert.</div>'+
 group("Marke & Oberteil",select("brand","Sportmarke",["PUMA","Adidas","Nike","Under Armour","Neutral / ohne Marke"])+select("club","Verein",["Kein Verein","Vereinsoutfit (nur wenn ausdrücklich beschrieben)"])+select("collection","Kollektion",["Training","Running","Lifestyle","Winter"])+select("top","Oberteil",["Full-Zip-Laufjacke","Half-Zip-Laufjacke","Longsleeve","Kurzarm-Funktionsshirt","Laufweste","Winterlaufjacke","Thermo-Longsleeve","Hoodie","Individuell"])+select("topColor","Oberteilfarbe",["Neon Gelbgrün (#DFFF00)","Rot","Grün","Schwarz","Gelb","Weiß","Blau","Grau","Orange","Dunkelblau","COROS Neon grün","COROS Neon Yellow (Neongelb)","COROS Lime Green (Gelbgrün)","COROS Neon Green (Neongrün)","COROS Streckenlinie – leuchtendes Neongelbgrün"])+input("topColorHex","Eigener Oberteil-Farbcode (HEX)")+input("topLogo","Brustlogo (Position / Farbe)")+select("zipColor","Reißverschlussfarbe",["Schwarz","Weiß","Ton-in-Ton","Individuell"])+select("topDetails","Ärmel- / Markendetails",["Keine Ärmelstreifen","Nur tatsächlich vorhandene Details laut Outfit-Referenz","Explizit gewählte modellgetreue Streifen"]),true)+
@@ -103,10 +127,10 @@ case "Prompt & Export":return '<section class="panel"><h2>Prompt & Export</h2><d
 }
 function wallPrompt(){
 var lines=[
-"STRAVA WALL V4.5.7 — EIGHT TAB MASTER PROMPT",
+"STRAVA WALL V4.5.8 — EIGHT TAB MASTER PROMPT",
 "CAMERA SETTINGS — SINGLE AUTHORITATIVE SOURCE",
-"FOCAL LENGTH: "+cfg.lens+" mm full-frame equivalent",
-"CAMERA DISTANCE: "+cfg.distance+" m from runner",
+"FOCAL LENGTH: "+manualCameraValue458("lens")+" mm full-frame equivalent",
+"CAMERA DISTANCE: "+manualCameraValue458("distance")+" m from runner",
 "IMAGE FORMAT: native 9:16 portrait",
 "OUTPUT: Exactly one ultra-photorealistic documentary photograph; natural anatomy, light and perspective; no CGI.",
 "PERSON PHOTO: preserve exact facial identity, eyes, eyebrows, nose, lips, jaw, beard, pores, asymmetry, age, head size and natural anatomy. No beautification, no face redesign. Transform it 1:1.",
@@ -144,6 +168,9 @@ document.getElementById("view").innerHTML=(lastPresetLoad457?
  '<div id="w457loadNotice" role="status" aria-live="polite" class="notice" style="border:1px solid #4dba87;margin-bottom:12px"><strong>Preset „'+esc(lastPresetLoad457.name)+'“ erfolgreich geladen</strong><div>'+lastPresetLoad457.count+' gespeicherte Einstellungen übernommen. Szene & Kamera ist geöffnet.</div></div>':"")+content();
 document.querySelectorAll("[data-w450tab]").forEach(function(el){el.onclick=function(){active=el.dataset.w450tab;render()}});
 document.querySelectorAll("[data-w450]").forEach(function(el){function change(){lastPresetLoad457=null;cfg[el.dataset.w450]=el.type==="checkbox"?el.checked:el.type==="range"?Number(el.value):el.dataset.w450==="scenario"?String(parseInt(el.value,10)):el.value;if(el.dataset.w450==="poseCategory"&&poseDirectorCategories457[cfg.poseCategory])cfg.pose=poseDirectorCategories457[cfg.poseCategory][0];persist();if(el.type!=="textarea"&&el.type!=="text"){var expanded=Array.from(document.querySelectorAll("#view details")).map(function(d,i){return d.open?i:-1}).filter(function(i){return i>=0});render();document.querySelectorAll("#view details").forEach(function(d,i){d.open=expanded.includes(i)})}}el.addEventListener(el.type==="range"?"input":"change",change);if(el.tagName==="TEXTAREA")el.addEventListener("input",change)});
+document.querySelectorAll("[data-w458-clear]").forEach(function(el){el.onclick=function(){
+ var key=el.dataset.w458Clear+"Manual";cfg[key]="";lastPresetLoad457=null;persist();render();
+}});
 document.querySelectorAll('input[name="w450mode"]').forEach(function(el){el.onchange=function(){lastPresetLoad457=null;cfg.mode=el.value;persist();render()}});
 if(active==="Prompt & Export"){
 var pre=document.getElementById("w450prompt");pre.textContent=wallPrompt();
@@ -304,5 +331,5 @@ function initPresets(){
 }
 function thumbnail(file){return new Promise(function(resolve,reject){var img=new Image(),url=URL.createObjectURL(file);img.onload=function(){try{var c=document.createElement("canvas"),w=320,h=400;c.width=w;c.height=h;var scale=Math.max(w/img.width,h/img.height),sw=w/scale,sh=h/scale;c.getContext("2d").drawImage(img,(img.width-sw)/2,(img.height-sh)/2,sw,sh,0,0,w,h);resolve(c.toDataURL("image/jpeg",.72))}catch(e){reject(e)}finally{URL.revokeObjectURL(url)}};img.onerror=reject;img.src=url})}
 if(state.world==="wall"){active=NAMES.includes(state.tab)?state.tab:"Presets";render()}
-window.stravaWall450={tabs:NAMES.slice(),get:function(){return Object.assign({},cfg)},prompt:wallPrompt,version:"V4.5.7"};
+window.stravaWall450={tabs:NAMES.slice(),get:function(){return Object.assign({},cfg)},prompt:wallPrompt,version:"V4.5.8"};
 })();
