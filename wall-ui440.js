@@ -35,7 +35,7 @@ function stats(){
  panel('2 · Original-STRAVA-Screenshots',
  mode==='bpm'?sourcePanel('bpm','A · Vollstatistik mit Avg HR/BPM')+sourcePanel('route','B · Statistik/Karte mit orangefarbener Route'):sourcePanel('solo','C · Originalstatistik ohne BPM')+
  '<p id="wallSourceStatus440" role="status" class="hint">Quellenstatus wird geprüft.</p>'+
- '<div class="actions"><button id="wallMakeOverlay440" class="btn" type="button">Originalpixel-Vorlage als transparentes PNG erstellen</button></div>'+
+ '<div class="actions"><button id="wallMakeOverlay440" class="btn" type="button">Originalpixel-Vorlage als transparentes PNG erstellen</button><button id="wallToAuto440" class="btn secondary" type="button">Direkt an Auto-Wand übergeben</button></div>'+
  '<canvas id="wallOverlayPreview440" width="600" height="800" style="width:100%;max-width:420px;background:repeating-conic-gradient(#292929 0% 25%, #414141 0% 50%) 50% / 22px 22px;border:1px solid #59616b;border-radius:9px"></canvas>'+
  '<p class="hint">Das PNG wird nur aus den sichtbaren Originalpixeln zusammengesetzt. Schwarzer Screenshot-Hintergrund wird transparent; Buchstaben und GPS-Linie werden nicht neu erzeugt. PNG danach als Grafik für Auto-Wand nutzen und die Original-Screenshots beim finalen Bildauftrag ebenfalls anhängen.</p>')+
  wallSignView();
@@ -125,6 +125,7 @@ function bind(){
   document.querySelectorAll('[data-wall-source440]').forEach(e=>e.onchange=async()=>{try{if(!e.files?.[0])return;await window.stravaWallSources440.set(e.dataset.wallSource440,e.files[0]);await refreshSources()}catch(err){alert('Speichern fehlgeschlagen: '+err.message)}});
   document.querySelectorAll('[data-wall-remove440]').forEach(b=>b.onclick=async()=>{await window.stravaWallSources440.del(b.dataset.wallRemove440);render()});
   const mk=document.getElementById('wallMakeOverlay440');mk.onclick=async()=>{try{const c=document.getElementById('wallOverlayPreview440');await window.stravaWallSources440.make(current(),c);const a=document.createElement('a');a.download=current()==='bpm'?'STRAVA_WALL_BPM_KARTE_ORIGINAL.png':'STRAVA_WALL_STATISTIK_ONLY_ORIGINAL.png';a.href=c.toDataURL('image/png');a.click()}catch(e){alert(e.message)}};
+  const send=document.getElementById('wallToAuto440');if(send)send.onclick=async()=>{try{const canvas=document.getElementById('wallOverlayPreview440');await window.stravaWallSources440.make(current(),canvas);if(typeof aw==='undefined')throw Error('Auto-Wand-Bildmodul fehlt');aw.graphic=canvas;state.tab='projection';save();render()}catch(e){alert('Auto-Wand-Übertragung: '+e.message)}};
   refreshSources().catch(e=>{const el=document.getElementById('wallSourceStatus440');if(el)el.textContent='Speicherprüfung fehlgeschlagen: '+e.message});
   const oldAudit=document.getElementById('wallAudit432');if(oldAudit)oldAudit.onclick=()=>{const a=window.stravaWallASF432.audit(state);document.getElementById('wallAuditStatus432').textContent=a.pass?'ASF Wall-Filter OK':'ASF Wall-Filter: '+a.errors.join(', ')};
  }
