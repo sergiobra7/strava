@@ -14,7 +14,7 @@
 #premiumPanel270 > #premiumCards270{display:block!important}
 #premiumPanel270 > #refreshPremium270{display:block!important;margin:14px 0}
 #premiumPanel270 #allSettings339,#premiumPanel270 #master320,#premiumPanel270 #premiumEditor270,#premiumPanel270 #premiumCast311,#premiumPanel270 #manualRegie328,#premiumPanel270 #premiumActiveFilters340{display:none!important}
-</style><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Anton&family=Archivo+Black&family=Archivo+Narrow:wght@900&family=Barlow+Condensed:wght@800;900&family=Bebas+Neue&family=League+Gothic&family=Oswald:wght@700&family=Roboto+Condensed:wght@900&family=Teko:wght@700&display=swap" rel="stylesheet"></head><body><header><div><h1>STRAVA RUN <span class="mark">V4.5.10</span></h1><small>RUNNER PHOTO + STRAVA WALL · GITHUB EDITION</small><div id="onlineBuild414" style="font-size:12px;color:#a8c6b8;margin-top:5px;font-weight:700" aria-label="Online-Version">ONLINE · V4.4.0 · Commit wird geprüft …</div></div><div style="display:flex;align-items:center;gap:9px;flex-wrap:wrap;justify-content:flex-end"><span id="saveStatus" class="status">Lokal gespeichert</span><button id="stravaRefresh401" type="button" title="Neueste GitHub-Version laden" style="background:#2cbd79;color:#101510;border:0;border-radius:9px;padding:10px 13px;font-weight:800;cursor:pointer">🔄 Aktualisieren</button></div></header><main><div class="worlds"><button class="world active" data-world="wall">🧱 STRAVA WALL</button><button class="world" data-world="sign">⬛ BLACK SIGN / PLAKAT</button></div><div style="display:flex;align-items:center;justify-content:space-between;gap:10px;margin:9px 0"><button id="presetShortcut403" type="button" style="background:#f2bd49;color:#151515;border:2px solid #f8d57b;border-radius:10px;padding:12px 16px;font-size:15px;font-weight:900;cursor:pointer;flex:1">⭐ MEINE PRESETS · GALERIE ÖFFNEN</button></div><section id="presetDirect404" hidden style="margin:14px 0;padding:14px;border:2px solid #f2bd49;border-radius:14px;background:#151a21"></section><nav class="tabs" id="tabs"></nav><div id="view"></div><div class="footer">Lokale Offline-Web-App · Keine Bilder werden an einen Server gesendet · Prompt zum Kopieren für ChatGPT/Bildgenerierung</div></main><script>
+</style><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Anton&family=Archivo+Black&family=Archivo+Narrow:wght@900&family=Barlow+Condensed:wght@800;900&family=Bebas+Neue&family=League+Gothic&family=Oswald:wght@700&family=Roboto+Condensed:wght@900&family=Teko:wght@700&display=swap" rel="stylesheet"></head><body><header><div><h1>STRAVA RUN <span class="mark">V4.5.11</span></h1><small>RUNNER PHOTO + STRAVA WALL · GITHUB EDITION</small><div id="onlineBuild414" style="font-size:12px;color:#a8c6b8;margin-top:5px;font-weight:700" aria-label="Online-Version">ONLINE · V4.4.0 · Commit wird geprüft …</div></div><div style="display:flex;align-items:center;gap:9px;flex-wrap:wrap;justify-content:flex-end"><span id="saveStatus" class="status">Lokal gespeichert</span><button id="stravaRefresh401" type="button" title="Neueste GitHub-Version laden" style="background:#2cbd79;color:#101510;border:0;border-radius:9px;padding:10px 13px;font-weight:800;cursor:pointer">🔄 Aktualisieren</button></div></header><main><div class="worlds"><button class="world active" data-world="wall">🧱 STRAVA WALL</button><button class="world" data-world="sign">⬛ BLACK SIGN / PLAKAT</button></div><div style="display:flex;align-items:center;justify-content:space-between;gap:10px;margin:9px 0"><button id="presetShortcut403" type="button" style="background:#f2bd49;color:#151515;border:2px solid #f8d57b;border-radius:10px;padding:12px 16px;font-size:15px;font-weight:900;cursor:pointer;flex:1">⭐ MEINE PRESETS · GALERIE ÖFFNEN</button></div><section id="presetDirect404" hidden style="margin:14px 0;padding:14px;border:2px solid #f2bd49;border-radius:14px;background:#151a21"></section><nav class="tabs" id="tabs"></nav><div id="view"></div><div class="footer">Lokale Offline-Web-App · Keine Bilder werden an einen Server gesendet · Prompt zum Kopieren für ChatGPT/Bildgenerierung</div></main><script>
 /* V3.18 stabilization: one color serializer shared by prompt sections. */
 window.stravaSignColorMap318=function(sign){
  const source=sign||{},raw=String(source.signText||''),colors=source.wordColors||{},base=String(source.signColor||'#FFFFFF').toUpperCase();
@@ -116,9 +116,13 @@ function fullPosterView321(){
  '<div class="field"><label>Textfarbe</label><input type="color" id="posterColor321" value="#ffffff"></div>'+
  '<div class="field"><label>Hintergrund</label><input type="color" id="posterBg321" value="#000000"></div></div>'+
  '<div class="field" id="posterFavorites430" style="border:1px solid #586374;border-radius:10px;padding:12px;margin:14px 0"><h3 style="margin:0 0 8px">MEINE TEXTE · FAVORITEN</h3><p class="hint">Text, Zeilenumbrüche, alle Wortfarben und Schrift gemeinsam sichern. Favorit speichern und später sofort laden.</p><div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap"><button type="button" class="btn secondary" id="favPrev430" aria-label="Vorheriger Text">◀</button><select id="favSelect430" aria-label="Textfavorit auswählen" style="flex:1;min-width:150px;max-width:100%"></select><button type="button" class="btn secondary" id="favNext430" aria-label="Nächster Text">▶</button></div><div class="actions" style="margin-top:10px"><button type="button" class="btn" id="favNew430">+ Als neuen Favorit speichern</button><button type="button" class="btn secondary" id="favUpdate430">Aktuellen Favorit aktualisieren</button><button type="button" class="btn secondary" id="favDelete430">Favorit löschen</button></div><p id="favStatus430" class="hint" role="status"></p></div>'+ 
- '<h3>Live-Vorschau · Zeilen und Farben</h3><div id="posterPreview321" style="background:#000;color:white;min-height:320px;padding:18px 12px;overflow:hidden;white-space:pre-wrap;overflow-wrap:break-word;line-height:1.12;border:2px solid #555;border-radius:8px"></div>'+
- '<p class="hint">Einzelne Wörter unten antippen und individuell einfärben. Die Vorschau bewahrt die manuell gesetzten Zeilenumbrüche.</p>'+ 
- '<details style="margin:12px 0;padding:10px;border:1px solid #69cf9b;border-radius:9px" open><summary><b>TYPOGRAPHY ENGINE V4.4.0 · ECHT ZENTRIERT</b></summary><p class="hint">Gemessene Mittelachse für jede Zeile. Exakte PNG-Vorlage für die Bildgenerierung separat anhängen.</p><canvas id="posterGeometry430" style="width:100%;max-width:420px;height:auto;display:block;margin:auto;background:#000"></canvas><p id="posterGeometryStatus430" class="hint" role="status"></p><button type="button" class="btn" id="posterExport430">Zentriertes Plakat als PNG exportieren</button></details>'+
+ '<h3>LIVE-VORSCHAU · TYPOGRAPHY ENGINE · ECHTZEIT</h3>'+
+ '<p class="hint">Eine verbindliche Vorschau: Wörter direkt im Plakat antippen, Farben ändern und sofort das zentrierte PNG-Layout sehen. Vorschau und PNG-Export nutzen dieselbe gemessene Schriftgeometrie.</p>'+
+ '<div id="posterPreview321" style="position:relative;max-width:420px;width:100%;margin:0 auto;background:#000;border:2px solid #555;border-radius:8px;overflow:hidden;touch-action:pan-y">'+
+ '<canvas id="posterGeometry430" style="width:100%;height:auto;display:block;background:#000"></canvas>'+
+ '<div id="posterWordOverlay4511" style="position:absolute;inset:0;pointer-events:none" aria-label="Wörter im Plakat antippen"></div></div>'+
+ '<p id="posterGeometryStatus430" class="hint" role="status"></p>'+
+ '<button type="button" class="btn" id="posterExport430">Exakte Live-Vorschau als PNG exportieren</button>'+
  '<div id="posterWords321" style="display:flex;flex-wrap:wrap;gap:7px;margin:12px 0"></div>'+
  '<div class="field"><label>Ausgewählte Wortfarbe</label><input id="posterWordColor321" type="color" value="#ff4b30"></div>'+ 
  '<div class="field" style="padding:12px;border:1px solid #586374;border-radius:9px;margin:12px 0"><label style="display:flex;align-items:center;gap:10px"><input id="posterKeepColors421" type="checkbox" style="width:22px;height:22px"> Farbwahl dauerhaft speichern</label><p class="hint">Mit Haken: Farben bleiben nach Neuladen. Ohne Haken: nur bis zum nächsten Neuladen sichtbar.</p><button type="button" class="btn secondary" id="posterStoreColors421">Farben jetzt speichern</button></div>'+
@@ -138,23 +142,71 @@ function bindFullPoster321(){
  function persist(){p.align='center';localStorage.setItem('stravaPoster321',JSON.stringify(p));state.sign.signText=t.value;state.sign.signColor=p.color||'#ffffff';save();}
  function tokens(){return t.value.match(/\S+|\s+/g)||[]}
  function renderPreview(){
-  const preview=el('posterPreview321');preview.replaceChildren();
-  preview.style.background=p.bg||'#000000';preview.style.color=p.color||'#ffffff';
-  preview.style.fontFamily=p.font||'Impact,Arial Narrow,sans-serif';
-  preview.style.fontSize=(Number(p.size)||56)+'px';preview.style.textAlign='center';
-  try{const canvas=el('posterGeometry430'),status=el('posterGeometryStatus430');if(canvas&&window.stravaTypography430){const result=window.stravaTypography430.draw(canvas,window.stravaTypography430.options());if(status)status.textContent='✓ ASF Layout bestanden · '+result.audit.checkedLines+' Zeilen · gemeinsame Mittelachse 50 % · Randabstand 7 %';}}catch(e){const status=el('posterGeometryStatus430');if(status)status.textContent='⚠ TYPOGRAPHY ASF: '+(e.message||e)}
-  const ts=tokens();ts.forEach((word,i)=>{const span=document.createElement('span');span.textContent=word;if(!/^\s+$/.test(word)){span.style.color=(state.sign.wordColors||{})[i]||p.color||'#ffffff';span.dataset.posterWordIndex=String(i);span.style.cursor='pointer';span.style.borderRadius='3px';span.style.outline=selected.has(i)?'2px solid #fc4c02':'none';span.title='Wort auswählen: '+word;span.setAttribute('role','button');span.tabIndex=0;const toggle=()=>{selected.has(i)?selected.delete(i):selected.add(i);renderPreview()};span.onclick=toggle;span.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();toggle()}}}preview.appendChild(span)});
-  const audit=el('posterColorAudit321');if(audit){const mapped=window.stravaSignColorMap318(state.sign);audit.textContent='PROMPT-FARBEN (Live-Vorschau = Prompt):\n'+mapped.lines;const visible=[...preview.querySelectorAll('[data-poster-word-index]')];if(visible.length&&visible.some(node=>{const x=mapped.words.find(w=>w.index===Number(node.dataset.posterWordIndex));return !x||x.color.toUpperCase()!==((()=>{const c=node.style.color.toUpperCase(),m=c.match(/^RGBA?\(\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+)/);return m?'#'+[m[1],m[2],m[3]].map(n=>Number(n).toString(16).padStart(2,'0')).join('').toUpperCase():c})())}))audit.textContent+='\n⚠ Farbprüfung fehlgeschlagen';}
+  const preview=el('posterPreview321');
+  const overlay=el('posterWordOverlay4511'),canvas=el('posterGeometry430'),status=el('posterGeometryStatus430');
+  const ts=tokens();
+  // Use exactly the measured typography source also used by PNG export and prompt.
+  if(!canvas||!overlay||!window.stravaTypography430)return;
+  try{
+   const engine=window.stravaTypography430;
+   const result=engine.draw(canvas,engine.options());
+   const layout=result.layout;
+   status.textContent='✓ Live-Layout synchron · '+result.audit.checkedLines+' Zeilen · gemeinsame Mittelachse 50 % · PNG identisch';
+   preview.style.background=p.bg||'#000000';
+   overlay.replaceChildren();
+   const ctx=document.createElement('canvas').getContext('2d');
+   layout.lines.forEach(row=>{
+    ctx.font='900 '+row.fontSize+'px "'+layout.font+'", Impact, sans-serif';
+    row.words.forEach(w=>{
+     const token=w.tokenIndex;
+     if(token===undefined)return;
+     const prefix=ctx.measureText(row.text.slice(0,w.start)).width;
+     const ww=Math.max(ctx.measureText(w.text).width,1);
+     const button=document.createElement('button');
+     button.type='button';
+     button.dataset.posterWordIndex=String(token);
+     button.title='Wort auswählen: '+w.text;
+     button.setAttribute('aria-label','Wort '+w.text+' auswählen');
+     button.setAttribute('aria-pressed',selected.has(token)?'true':'false');
+     const x=100*(row.x+prefix)/layout.width;
+     const top=100*(row.baseline-row.fontSize*.95)/layout.height;
+     button.style.cssText='position:absolute;box-sizing:border-box;pointer-events:auto;cursor:pointer;'+
+      'left:'+x.toFixed(4)+'%;top:'+top.toFixed(4)+'%;width:'+(100*ww/layout.width).toFixed(4)+'%;'+
+      'height:'+(100*row.fontSize*1.1/layout.height).toFixed(4)+'%;'+
+      'padding:0;margin:0;border:'+(selected.has(token)?'2px solid #fc4c02':'2px solid transparent')+';'+
+      'border-radius:4px;background:transparent;color:transparent;touch-action:manipulation;';
+     button.onclick=()=>{selected.has(token)?selected.delete(token):selected.add(token);renderPreview()};
+     overlay.appendChild(button);
+    });
+   });
+  }catch(e){status.textContent='⚠ TYPOGRAPHY ASF: '+(e.message||e)}
+  const audit=el('posterColorAudit321');
+  if(audit){const mapped=window.stravaSignColorMap318(state.sign);audit.textContent='PROMPT-FARBEN (Live-Vorschau = Prompt):\\n'+mapped.lines;}
   const words=el('posterWords321');words.replaceChildren();
-  ts.forEach((word,i)=>{if(/^\s+$/.test(word))return;const btn=document.createElement('button');btn.type='button';btn.textContent=word;btn.style.cssText='padding:7px 9px;border-radius:6px;border:2px solid '+(selected.has(i)?'#fc4c02':'#586374')+';background:#252d38;color:'+((state.sign.wordColors||{})[i]||'#ffffff');btn.onclick=()=>{selected.has(i)?selected.delete(i):selected.add(i);renderPreview()};words.appendChild(btn)});
+  ts.forEach((word,i)=>{
+   if(/^\\s+$/.test(word))return;
+   const btn=document.createElement('button');btn.type='button';btn.textContent=word;
+   btn.style.cssText='padding:7px 9px;border-radius:6px;border:2px solid '+(selected.has(i)?'#fc4c02':'#586374')+';background:#252d38;color:'+((state.sign.wordColors||{})[i]||p.color||'#ffffff');
+   btn.onclick=()=>{selected.has(i)?selected.delete(i):selected.add(i);renderPreview()};
+   words.appendChild(btn);
+  });
  }
  const export430=el('posterExport430');if(export430)export430.onclick=()=>{try{persist();const canvas=el('posterGeometry430');const r=window.stravaTypography430.draw(canvas,window.stravaTypography430.options());if(!r.audit.pass)throw Error(r.audit.errors.join(' | '));const link=document.createElement('a');link.download='STRAVA-ZENTRIERTES-PLAKAT.png';link.href=canvas.toDataURL('image/png');document.body.appendChild(link);link.click();link.remove();el('posterGeometryStatus430').textContent='✓ PNG exportiert · als SIGN PHOTO separat beim Bildgenerator anhängen';}catch(e){el('posterGeometryStatus430').textContent='⚠ PNG-Export: '+(e.message||e)}};
  let previousTokens=tokens();t.oninput=()=>{const next=tokens(),oldColors=state.sign.wordColors||{},newColors={};let a=0,b=next.length;while(a<previousTokens.length&&a<b&&previousTokens[a]===next[a]){if(oldColors[a])newColors[a]=oldColors[a];a++}let oi=previousTokens.length-1,ni=b-1;while(oi>=a&&ni>=a&&previousTokens[oi]===next[ni]){if(oldColors[oi])newColors[ni]=oldColors[oi];oi--;ni--}state.sign.wordColors=newColors;previousTokens=next;selected.clear();persist();renderPreview();autoHeight430()};
  const size=el('posterSize321'),number=el('posterSizeNumber321');
  function setSize(x){p.size=Math.min(120,Math.max(12,Number(x)||56));size.value=number.value=p.size;persist();renderPreview()}
  size.oninput=()=>setSize(size.value);number.oninput=()=>setSize(number.value);
- for(const [id,key] of [['posterFont321','font'],['posterAlign321','align'],['posterColor321','color'],['posterBg321','bg']])el(id).onchange=e=>{p[key]=e.target.value;if(key==='font'){try{const k='strava-premium-studio-350',q=JSON.parse(localStorage.getItem(k)||'{}');q.posterFont=p.font;localStorage.setItem(k,JSON.stringify(q));}catch(e){console.warn('Font sync',e)} }persist();renderPreview();if(key==='font'&&document.fonts)document.fonts.load('900 30px "'+p.font+'"').then(renderPreview).catch(()=>{})};
- el('posterApplyColor321').onclick=()=>{state.sign.wordColors=state.sign.wordColors||{};selected.forEach(i=>state.sign.wordColors[i]=el('posterWordColor321').value.toUpperCase());persist();renderPreview();el('posterStatus321').textContent='✓ '+selected.size+' Wortfarben gespeichert. Farbprüfung unten aktualisiert.'};
+ for(const [id,key] of [['posterFont321','font'],['posterAlign321','align'],['posterColor321','color'],['posterBg321','bg']])el(id).oninput=e=>{p[key]=e.target.value;if(key==='font'){try{const k='strava-premium-studio-350',q=JSON.parse(localStorage.getItem(k)||'{}');q.posterFont=p.font;localStorage.setItem(k,JSON.stringify(q));}catch(e){console.warn('Font sync',e)} }persist();renderPreview();if(key==='font'&&document.fonts)document.fonts.load('900 30px "'+p.font+'"').then(renderPreview).catch(()=>{})};
+ function applySelectedColor4511(){
+  if(!selected.size)return;
+  state.sign.wordColors=state.sign.wordColors||{};
+  const color=el('posterWordColor321').value.toUpperCase();
+  selected.forEach(i=>state.sign.wordColors[i]=color);
+  persist();renderPreview();
+  el('posterStatus321').textContent='✓ '+selected.size+' Wortfarben in Echtzeit aktualisiert.';
+ }
+ el('posterWordColor321').oninput=applySelectedColor4511;
+ el('posterApplyColor321').onclick=applySelectedColor4511;
  el('posterResetColors321').onclick=()=>{state.sign.wordColors={};selected.clear();persist();renderPreview()};
  const keep=el('posterKeepColors421'),store=el('posterStoreColors421');keep.checked=localStorage.getItem('strava-colors-persist-421')==='on';store.disabled=!keep.checked;keep.onchange=()=>{localStorage.setItem('strava-colors-persist-421',keep.checked?'on':'off');store.disabled=!keep.checked;save();el('posterStatus321').textContent=keep.checked?'✓ Dauerhafte Farbspeicherung aktiviert.':'Farbspeicherung deaktiviert: Aktuelle Farben bleiben bis zum Neuladen sichtbar.'};store.onclick=()=>{if(!keep.checked)return;save();el('posterStatus321').textContent='✓ Aktuelle Wortfarben dauerhaft gespeichert.'};
  el('posterSave321').onclick=()=>{persist();el('posterStatus321').textContent='✓ Plakattext, Schrift und Layout übernommen. Farbwahl nur mit aktivem Haken dauerhaft gespeichert.'};
@@ -250,22 +302,21 @@ function syncPosterPreviewColors321(){
  if(!root||!preview||state.world!=='sign')return;
  const editor=document.getElementById('posterText321');
  if(!editor)return;
- const tokens=editor.value.match(/\S+|\s+/g)||[];
- const nodes=[...preview.querySelectorAll('[data-poster-word-index]')];
- const expected=tokens.filter(w=>!/^\s+$/.test(w));
- if(nodes.length!==expected.length)throw Error('Plakat-Vorschau nicht synchron: Wortanzahl stimmt nicht.');
- const colors={};
- for(const node of nodes){
+ // Canvas is the visual authority. Transparent hit targets contain no text or color;
+ // never read their CSS to rewrite a saved per-word color map.
+ if(!window.stravaTypography430)throw Error('Typography Engine nicht geladen');
+ if(String(state.sign.signText||'')!==editor.value)state.sign.signText=editor.value;
+ const engine=window.stravaTypography430;
+ const layout=engine.layout(engine.options()),audit=engine.audit(layout);
+ if(!audit.pass)throw Error('Plakat-Layout ungültig: '+audit.errors.join(' | '));
+ const tokens=editor.value.match(/\\S+|\\s+/g)||[];
+ const expected=tokens.filter(w=>!/^\\s+$/.test(w)).length;
+ const hitTargets=[...preview.querySelectorAll('[data-poster-word-index]')];
+ if(layout.lines.reduce((n,row)=>n+row.words.length,0)!==expected||hitTargets.length!==expected)throw Error('Plakat-Wortzuordnung nicht synchron.');
+ for(const node of hitTargets){
   const i=Number(node.dataset.posterWordIndex);
-  if(!Number.isInteger(i)||!tokens[i]||tokens[i]!==node.textContent)throw Error('Plakat-Vorschau nicht synchron: Wortposition stimmt nicht.');
-  const css=node.style.color;const rgb=css.match(/^rgba?\(\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+)/i);const hex=/^#[0-9a-f]{6}$/i.test(css)?css.toUpperCase():rgb?[rgb[1],rgb[2],rgb[3]].map(n=>Number(n).toString(16).padStart(2,'0')).join('').toUpperCase().padStart(7,'#'):null;
-  if(!hex)throw Error('Plakat-Vorschau: ungültiger Farbwert '+css);
-  colors[i]=hex;
+  if(!Number.isInteger(i)||!tokens[i]||/^\\s+$/.test(tokens[i]))throw Error('Plakat-Wortposition ungültig.');
  }
- state.sign.signText=editor.value;
- state.sign.wordColors=colors;
- const mapped=window.stravaSignColorMap318(state.sign);
- if(mapped.words.some(x=>colors[x.index]!==x.color))throw Error('Plakat-Farbprüfung fehlgeschlagen.');
  save();
 }
 /* V4.4.0: Restore missing core prompt and view entry points before extension scripts load. */
@@ -1873,7 +1924,7 @@ function archiveBind413(){gallery413();let file=document.getElementById('a413fil
 /* V3.13.8: public GitHub Pages deployment identity, independent of local settings. */
 (function(){
  const el=document.getElementById('onlineBuild414');if(!el)return;
- const version='V4.5.10';
+ const version='V4.5.11';
  const fallback='ONLINE · '+version+' · Commit: nicht abrufbar';
  const url='https://api.github.com/repos/sergiobra7/strava/commits/main';
  const controller=new AbortController();
@@ -1994,7 +2045,9 @@ function fontName430(){
 }
 function options430(){
  const sign=state.sign||{},text=String(sign.signText||'').replace(/\r\n?/g,'\n');
- return {text,colors:sign.wordColors||{},font:fontName430(),width:WIDTH,height:HEIGHT};
+ let p={};try{p=JSON.parse(localStorage.getItem('stravaPoster321')||'{}')||{}}catch(e){}
+ return {text,colors:sign.wordColors||{},font:fontName430(),width:WIDTH,height:HEIGHT,
+  baseColor:p.color||sign.signColor||'#FFFFFF',background:p.bg||'#000000',size:Number(p.size)||56};
 }
 function layout430(options){
  const text=String(options.text??'').replace(/\r\n?/g,'\n'),rows=text.split('\n');
@@ -2004,7 +2057,7 @@ function layout430(options){
  if(!ctx)throw Error('Canvas nicht verfügbar');
  const safeWidth=width*(1-2*SAFE),safeHeight=height*(1-2*SAFE);
  const lineUnits=rows.reduce((n,row)=>n+(row.trim()?1.16:.45),0)||1;
- const base=Math.min(114,safeHeight/lineUnits);
+ const base=Math.min(114*Math.max(.2,Math.min(3,(Number(options.size)||56)/56)),safeHeight/lineUnits);
  const wordIndices=new Map();
  for(const [i,t] of [...text.matchAll(/\S+|\s+/g)].entries())if(!/^\s+$/.test(t[0]))wordIndices.set(t.index,i);
  let offset=0;
@@ -2020,7 +2073,7 @@ function layout430(options){
   const x=(width-measured)/2;
   const words=[...row.matchAll(/\S+/g)].map(m=>({
     text:m[0],start:m.index,tokenIndex:wordIndices.get(offset+m.index),
-    color:options.colors?.[wordIndices.get(offset+m.index)]||'#FFFFFF'
+    color:options.colors?.[wordIndices.get(offset+m.index)]||options.baseColor||'#FFFFFF'
   }));
   offset+=row.length+1;
   return {number:i+1,text:row,empty:!row.trim(),fontSize:size,width:measured,x,center:x+measured/2,words};
@@ -2046,7 +2099,7 @@ function draw430(canvas,options){
  const l=layout430(options),audit=audit430(l);
  if(!audit.pass)throw Error('TYPOGRAPHY ASF: '+audit.errors.join(' | '));
  canvas.width=l.width;canvas.height=l.height;
- const c=canvas.getContext('2d');c.fillStyle='#000000';c.fillRect(0,0,l.width,l.height);
+ const c=canvas.getContext('2d');c.fillStyle=/^#[0-9a-f]{6}$/i.test(options.background)?options.background:'#000000';c.fillRect(0,0,l.width,l.height);
  c.textBaseline='alphabetic';c.textAlign='left';
  l.lines.forEach(row=>{
   c.font='900 '+row.fontSize+'px "'+l.font+'", Impact, sans-serif';
