@@ -63,7 +63,6 @@ function body4520(full,ultra){
  audience=audience.filter(function(row){
   if(/^Premium scene cast:\s*No Premium cast override/.test(row))return false;
   if(/^Premium-selected figure appearance.*No Premium/.test(row))return false;
-  if(/^Legacy side-character details:/.test(row)&&/No Premium cast override/.test(peopleSection))return false;
   return true;
  });
  var typed=["Typography: "+(options.font||"selected font")+"; text size "+(options.size||"selected")+"; center axis 50%; edge margin "+Math.round(Number(options.margin||0)*100)+"%."];
@@ -136,7 +135,7 @@ function refresh4520(){
   if(warnings)warnings.textContent="Prüfung: "+reports4520(full,smart,ultra).join(" ");
  }catch(e){
   var err=document.getElementById("sign4520warnings");if(err)err.textContent="⚠ PROMPT BLOCKIERT: "+String(e.message||e);
-  var pre=document.getElementById("promptText");if(pre)pre.textContent="";
+  var pre=document.getElementById("promptText");if(pre){try{pre.textContent=mode4520==="full"?fullPrompt4520():""}catch(_){pre.textContent=""}}
  }
 }
 promptView=function(){
