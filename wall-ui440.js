@@ -68,6 +68,8 @@ function output(){
 }
 function draw(){
  if(state.world!=='wall')return false;
+ if(!state.wall.statsMode440)state.wall.statsMode440=state.wall.version==='B'?'only':'bpm';
+ state.wall.version=state.wall.statsMode440==='only'?'B':'A';
  if(!TABS.some(t=>t[0]===state.tab))state.tab='scene';
  const tabs=document.getElementById('tabs'),view=document.getElementById('view');
  document.querySelectorAll('[data-world]').forEach(b=>b.classList.toggle('active',b.dataset.world===state.world));
@@ -115,8 +117,8 @@ function bind(){
   const ex=document.getElementById('exportJson');if(ex)ex.onclick=()=>download('STRAVA_WALL_SETTINGS_V440.json',JSON.stringify(state,null,2),'application/json');
   const imp=document.getElementById('importJson');if(imp)imp.onchange=()=>{const file=imp.files?.[0];if(!file)return;file.text().then(s=>{const x=JSON.parse(s);if(!x.wall||!x.common)throw Error('Ungültiges Projekt');state.wall={...state.wall,...x.wall};state.common={...state.common,...x.common};save();render()}).catch(e=>alert(e.message))};
   const check=document.getElementById('wallAudit440');if(check)check.onclick=async()=>{const el=document.getElementById('wallAuditStatus440');try{const a=window.stravaWallASF432.audit(state),m=window.stravaWallASF432.matrix(),r=await window.stravaWallSources440.ready(current());el.textContent='Szenen '+m.passed+'/'+m.total+' · 14 Wall-Filter '+(a.pass?'OK':'FEHLER '+a.errors.join(', '))+' · Screenshots '+(r.ok?'bereit':'FEHLEN: '+r.missing.join(', '))}catch(e){el.textContent='ASF FEHLER: '+e.message}};
-  const cp=document.getElementById('copyPrompt');if(cp)cp.onclick=async()=>{try{const p=await safePrompt();await navigator.clipboard.writeText(p);cp.textContent='✓ Prompt kopiert'}catch(e){alert(e.message)}};
-  const dl=document.getElementById('downloadPrompt');if(dl)dl.onclick=async()=>{try{download('STRAVA_WALL_V440_PROMPT.txt',await safePrompt(),'text/plain')}catch(e){alert(e.message)}};
+  const cp=document.getElementById('copyPrompt');if(cp)cp.onclick=async()=>{try{const p=await safePrompt();const preview=document.getElementById('promptText');if(preview)preview.textContent=p;try{await navigator.clipboard.writeText(p);cp.textContent='✓ Prompt kopiert'}catch(e){cp.textContent='Text unten manuell kopieren';alert('Automatisches Kopieren vom Browser blockiert. Der vollständige Prompt steht im Textfeld darunter.')}}catch(e){alert(e.message)}};
+  const dl=document.getElementById('downloadPrompt');if(dl)dl.onclick=async()=>{try{const p=await safePrompt();const preview=document.getElementById('promptText');if(preview)preview.textContent=p;download('STRAVA_WALL_V440_PROMPT.txt',p,'text/plain')}catch(e){alert(e.message)}};
  }
  if(state.tab==='stats'){
   const m=document.getElementById('wallMode440');m.onchange=()=>{state.wall.statsMode440=m.value;state.wall.version=m.value==='bpm'?'A':'B';save();render()};
