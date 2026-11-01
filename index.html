@@ -341,10 +341,7 @@ function wallSignView(){
  field('Position der Statistiken','statsPosition',['Wand frei halten; erste Statistikzeile sichtbar','Linke Wandhälfte','Rechte Wandhälfte','Mittig an der Fassade'],'wall')+
  input('GPS-Strecken-Skalierung (%)','routeScaleB','wall','number')+
  area('Eigene Wall-Anweisung','wallNote','wall'))+
- panel('Läufer & Szene',
- field('Läuferpose', 'runnerPose',poses,'wall')+
- field('Stimmung','variant',['Humorvoll','Provokant','Natürlich'],'wall')+
- '<p class="hint">Weitere Posen, Opa/Teyze und Schnellwahl über die eigenen STRAVA-WALL-Reiter.</p>')+panel('ASF · Wall-Matrix & Prompt-Übertragung','<button type="button" class="btn" id="wallAudit432">90 Szenen und Wall-Filter prüfen</button><p class="hint" id="wallAuditStatus432" role="status">Noch nicht geprüft.</p>')+
+ panel('ASF · Wall-Matrix & Prompt-Übertragung','<button type="button" class="btn" id="wallAudit432">90 Szenen und Wall-Filter prüfen</button><p class="hint" id="wallAuditStatus432" role="status">Noch nicht geprüft.</p>')+
  '</div>';
 }
 function autoWallView(){
