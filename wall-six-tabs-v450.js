@@ -13,7 +13,7 @@ var fullDefaults=Object.assign({},defaults,outfitDefaults,opaDefaults);
 var migrationKey="strava-wall-v452-default-migration";
 if(!localStorage.getItem(migrationKey)){
  if(cfg.top==="Longsleeve"&&cfg.topColor==="COROS Lime Green (Gelbgrün)"&&!cfg.topColorHex){cfg.top="Full-Zip-Laufjacke";cfg.topColor="Rot";}
- if(cfg.opa===false&&cfg.opaProfile===undefined)cfg.opa=true;
+ // Respect an existing user choice to disable the Opa; fresh/default profiles enable him.
  try{localStorage.setItem(migrationKey,"1")}catch(e){}
 }
 cfg=Object.assign({},fullDefaults,cfg);cfg.surface="Schwarzer Backstein";
