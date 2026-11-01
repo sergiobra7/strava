@@ -255,7 +255,7 @@ function calculate(){
  }finally{inBuild=false}
 }
 function selected(data){return mode==='FULL'?data.full:mode==='ULTRA COMPACT'?data.ultra:data.smart}
-buildPrompt=function(){return selected(calculate())};
+buildPrompt=function(){return mode==='FULL'?fullBuilder():selected(calculate())};
 function lengths(d){var n=d.full.length||1;return {full:d.full.length,smart:d.smart.length,ultra:d.ultra.length,smartSaving:(100*(1-d.smart.length/n)).toFixed(1),ultraSaving:(100*(1-d.ultra.length/n)).toFixed(1)}}
 function panel(){
  return '<section id="compactPanel4519" class="panel" style="border:1px solid #586374;padding:14px;margin:12px 0;border-radius:12px">'+
