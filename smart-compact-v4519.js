@@ -170,7 +170,33 @@ function commonHeaders(lines,cam){
  lines.push('OUTPUT / REALISM');
  lines.push('Exactly one native '+cam.format+' authentic documentary photograph; coherent scale, anatomy, hands, feet, lighting, shadows, mounts and perspective; no CGI or synthetic poster.');
 }
+function buildSignUltra(full){
+ var c=camera(full,false),t=exactText(full),colors=sourceColors(t),sg=signatureFields(),l=[];
+ commonHeaders(l,c);
+ l.push('LOCATION / SCENE: '+(sg.details.find(function(x){return x.startsWith('venue=')})||line(full,'Location:')||c.site));
+ l.push('MAIN RUNNER / IDENTITY / POSE');
+ l.push(identity(full));
+ l.push('SHOE PHOTO: '+(line(full,'Use the separately attached SHOE PHOTO')||'exact reference shoes on both feet, no substitutes.'));
+ l.push('CROWD / AUDIENCE: natural non-cloned crowds, obey the active fields and all sightlines.');
+ l.push('SIGN / PLACARD / BANNER: physical sign type/material/placement follows active settings; single perspective-correct plane, sign-local centered 50%; no independently skewed text; real mounts.');
+ l.push('Typography: '+typography());
+ var outf=getOutfit(full);if(outf)l.push('Outfit: '+outf);
+ var disp=line(full,'SIGNATURE DISPLAY INSTALLATION:');if(disp)l.push('Display: '+disp);
+ if(sg.details.length)l.push('ALL ACTIVE SIGNATURE SETTINGS: '+sg.details.join('; '));
+ if(sg.custom.length)l.push('ACTIVE CUSTOM OVERRIDES: '+sg.custom.join('; '));
+ var premium=full.split('\n').filter(function(x){return x.includes('[original displayed value:')});if(premium.length)l.push('ACTIVE PREMIUM SETTINGS: '+premium.join(' | '));
+ ['Legacy side-character details:','Premium scene cast:','Premium-selected figure appearance:','Background ambience:'].forEach(function(k){var v=line(full,k);if(v&&!/No Premium|none|no premium override/i.test(v))l.push(k+' '+v)});
+ l.push('EXACT MESSAGE — DO NOT EDIT');
+ l.push('<<< SIGN TEXT START >>>');
+ l.push(t);
+ l.push('<<< SIGN TEXT END >>>');
+ l.push('EXACT PER-WORD COLORS');
+ l.push(colors);
+ l.push('FINAL VALIDATION: preserve identity, camera, all active values, exact text/word colors, coherent real perspective and anatomy; do not add inactive figures.');
+ return l.join('\n');
+}
 function buildSign(full,ultra){
+ if(ultra)return buildSignUltra(full);
  var data=issues(full,false),cam=data.cam,t=exactText(full),colors=sourceColors(t),s=signatureFields(),l=[];
  commonHeaders(l,cam);
  l.push('LOCATION / SCENE');
@@ -209,13 +235,32 @@ function buildSign(full,ultra){
  l.push(ultra?'Match face and shoes, camera, 2D text/colors, one-plane perspective, real mounts, selected pose/crowd; never invent extras.':'Reference identity and shoes must match. Exact text, diacritics, layout, word colors and physical display plane must match the active source; naturally separate all limbs and keep sign legible. Manual camera and active custom overrides take precedence; report unresolvable conflicts.');
  return l.join('\n');
 }
+function buildWallUltra(full){
+ var x=issues(full,true),c=x.cam,w=window.stravaWall450?.get?.()||{},l=[];
+ commonHeaders(l,c);
+ l.push('LOCATION / SCENE: '+(w.location||c.site)+'; deep matte BLACK brick and BLACK mortar, real architecture; wall '+(w.height||'')+', '+(w.width||'')+' m, '+(w.side||'')+', '+(w.angle||'')+'.');
+ l.push('MAIN RUNNER / IDENTITY / POSE');
+ l.push('PERSON PHOTO: '+(line(full,'PERSON PHOTO:')||'preserve exact original facial features, skin detail and natural anatomy. No redesign.'));
+ l.push('SHOE PHOTO: '+(line(full,'SHOE PHOTO:')||'exact original shoes on BOTH feet, with all reference details.'));
+ l.push('CROWD / AUDIENCE: '+str(w.crowd||0)+'; '+(w.distribution||'')+'; natural non-cloned, keep runner and wall readable.');
+ l.push('SIGN / PLACARD / BANNER: '+(w.mode==='bpm'?'TWO untouched Strava screenshots (normal + BPM); stats, wordmark and emblem LEFT in original orange #FC4C02; GPS CENTERED.':'ONE untouched normal Strava screenshot; no BPM or GPS.'));
+ l.push('Exact SOURCE PIXELS for all original data, symbols, numbers, fonts, kerning, chart/GPS paths, colors; NO OCR, fake data or retypesetting. Composite unchanged pixels, not regenerated typography.');
+ l.push('ACTIVE SETTINGS');
+ l.push(wallFields().join('; '));
+ l.push('EXACT MESSAGE / SOURCE DATA: use original attached STRAVA screenshots without adding metrics.');
+ l.push('FINAL VALIDATION: exact face, shoes, screenshots, camera, perspective, materials and anatomy; no invented elements.');
+ return l.join('\n');
+}
 function buildWall(full,ultra){
+ if(ultra)return buildWallUltra(full);
  var x=issues(full,true),c=x.cam,w=window.stravaWall450?.get?.()||{},l=[];
  commonHeaders(l,c);
  l.push('LOCATION / SCENE');
  l.push('Place: '+(w.location||c.site)+'; wall: deep matte BLACK bricks with BLACK mortar, never gray or brown. '+(w.height||'')+'; '+(w.width||'')+' m; side '+(w.side||'')+'; wall angle '+(w.angle||'')+'; open space '+(w.space||'')+'.');
  l.push('MAIN RUNNER / IDENTITY / POSE');
- l.push('PERSON PHOTO: preserve exact reference face, pores, age, natural asymmetry and head. No beautification/reconstruction; SHOE PHOTO alone determines exact shoes on both feet.');
+ l.push('PERSON PHOTO: '+(line(full,'PERSON PHOTO:')||'preserve exact facial identity, eyes, eyebrows, nose, lips, jaw, beard, pores, asymmetry, age, head size and natural anatomy. No beautification or face redesign. Transform it 1:1.'));
+ l.push('SHOE PHOTO: '+(line(full,'SHOE PHOTO:')||'use the separately supplied shoe reference as sole authority for both feet; exact model, silhouette, colors, logos, laces and sole.'));
+
  l.push('Pose '+(w.pose||'')+'; gaze '+(w.gaze||'')+'; expression '+(w.mood||'')+'; rotation '+(w.runnerAngle||'')+'; position '+(w.runnerDepth||'')+', '+(w.runnerHorizontal||'')+', scale '+(w.runnerRelativeSize||'')+'. Anatomical contact and support must be real.');
  l.push('CROWD / AUDIENCE');
  l.push('Count '+str(w.crowd||0)+'; distribution '+(w.distribution||'')+'; natural irregular faces; do not obscure runner or source statistics.');
@@ -255,7 +300,7 @@ function calculate(){
  }finally{inBuild=false}
 }
 function selected(data){return mode==='FULL'?data.full:mode==='ULTRA COMPACT'?data.ultra:data.smart}
-buildPrompt=function(){return mode==='FULL'?fullBuilder():selected(calculate())};
+buildPrompt=function(){if(mode==='FULL')return fullBuilder();var d=calculate();if(d.check.errors.length)throw Error('ASF Compact validation: '+d.check.errors.join(' | '));return selected(d)};
 function lengths(d){var n=d.full.length||1;return {full:d.full.length,smart:d.smart.length,ultra:d.ultra.length,smartSaving:(100*(1-d.smart.length/n)).toFixed(1),ultraSaving:(100*(1-d.ultra.length/n)).toFixed(1)}}
 function panel(){
  return '<section id="compactPanel4519" class="panel" style="border:1px solid #586374;padding:14px;margin:12px 0;border-radius:12px">'+
