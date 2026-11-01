@@ -7,7 +7,7 @@ var KEY="strava-wall-six-tabs-v450";
 var defaults={mode:"bpm",scenario:"0",location:"Breite Einkaufsstraße",lens:"24",distance:"20",pose:"Auf Bank sitzend, Beine locker nach vorne",gaze:"Direkt in die Kamera",mood:"Ernst",outfit:"PUMA Lime Green / Schwarz",opa:true,mantel:false,crowd:20,distribution:"Natürlich verstreut",height:"Mittelhoch (3–5 Etagen)",side:"Rechts",width:"30",angle:"Leicht schräg",surface:"Schwarzer Backstein",space:"Breit",placement:"Links",statsSize:75,gpsSize:70,projection:"Direkt auf der Fassade",spacing:"Ausgewogen",extra:""};
 var cfg;try{cfg=Object.assign({},defaults,JSON.parse(localStorage.getItem(KEY)||"{}"))}catch(e){cfg=Object.assign({},defaults)}
 var active="Presets";
-var promptMode4519="smart";
+var promptMode4519="full";
 var lastPresetLoad457=null;
 var outfitDefaults={brand:"PUMA",club:"Kein Verein",collection:"Training",top:"Full-Zip-Laufjacke",topColor:"Neon Gelbgrün (#DFFF00)",topColorHex:"#DFFF00",topDetails:"Keine Ärmelstreifen",topLogo:"Schwarzes PUMA-Logo links auf der Brust",zipColor:"Schwarz",pants:"Lange Trainingshose, regulärer Schnitt",pantsColor:"Schwarz",pantsLogoColor:"#DFFF00",cap:"Rote Cap rückwärts",socks:"Schwarz",watch:"COROS PACE Pro, schwarz, Display aus",customOutfit:""};
 var opaDefaults={opaAge:"75–85 Jahre",opaBuild:"Schlank und drahtig",opaHead:"Dunkle Schiebermütze",opaBeard:"Markanter grauer Schnurrbart",opaClothing:"Braunes Cord-Sakko, kariertes Hemd, Stoffhose",opaShirt:"Braun-blau kariert",opaPants:"Dunkle, weite Stoffhose",opaShoes:"Abgetragene braune Lederschuhe",opaPose:"Auf abgestelltem alten Mofa, ein Fuß am Boden",opaGaze:"Zum Läufer",opaReaction:"Ungläubig",opaProfile:"OPA 01 · Klassisch",opaCustom:""};
@@ -160,7 +160,7 @@ cfg.extra?"USER ADDITIONAL INSTRUCTIONS (cannot override identity, camera or sta
 
 function wallCompact4519(ultra){
  var short=!!ultra,cam=manualCameraValue458,add=function(label,value){return label+": "+String(value)};
- var outfit=["brand "+cfg.brand,"club "+cfg.club,"collection "+cfg.collection,"top "+cfg.top,"color "+(cfg.topColorHex||cfg.topColor),"logo "+cfg.topLogo,"zip "+cfg.zipColor,"sleeves "+cfg.topDetails,"pants "+cfg.pants,"pants color "+cfg.pantsColor,"pants logo "+cfg.pantsLogoColor,"cap "+cfg.cap,"socks "+cfg.socks,"watch "+cfg.watch];
+ var outfit=["active outfit "+cfg.outfit,"brand "+cfg.brand,"club "+cfg.club,"collection "+cfg.collection,"top "+cfg.top,"color "+(cfg.topColorHex||cfg.topColor),"logo "+cfg.topLogo,"zip "+cfg.zipColor,"sleeves "+cfg.topDetails,"pants "+cfg.pants,"pants color "+cfg.pantsColor,"pants logo "+cfg.pantsLogoColor,"cap "+cfg.cap,"socks "+cfg.socks,"watch "+cfg.watch];
  if(cfg.customOutfit)outfit.push("custom "+cfg.customOutfit);
  var rows=[
  "CAMERA / OPTICS — MANUAL OVERRIDES PRESETS",
