@@ -24,6 +24,7 @@ function body4520(full,ultra){
  var focal=first4520(full,/^FOCAL LENGTH:\s*(.+)$/m)||first4520(full,/^Camera:\s*(.+)$/m);
  var distance=first4520(full,/^CAMERA DISTANCE:\s*(.+)$/m);
  var format=first4520(full,/^IMAGE FORMAT:\s*(.+)$/m)||"native 9:16 portrait";
+ if(!focal||!distance)throw Error("ASF: Verbindliche Brennweite oder Kameraentfernung im FULL-Prompt fehlt.");
  var viewpoint=line4520(full,"Viewpoint:")||line4520(full,"Camera view:");
  var site=line4520(full,"Location:");
  var camBlock=["CAMERA / OPTICS — SINGLE AUTHORITY",
@@ -106,10 +107,11 @@ function body4520(full,ultra){
  if(!short&&topLogo)rows.push(topLogo);
  if(!short&&crowdDirection)rows.push("Crowd geometry: "+crowdDirection.replace(/^DYNAMIC COMPOSITION — CONSTANT PRINCIPLES, VARIABLE GEOMETRY:\s*/,""));
  // Active custom directives must survive. They are drawn from real FULL output.
- var overrideLines=full.split("\n").filter(function(row){return row.includes("CUSTOM OVERRIDE (AUTHORITATIVE):")});
+ var overrideLines=full.split("\n").filter(function(row){return row.includes("CUSTOM OVERRIDE (AUTHORITATIVE):")||/^USER ADDITIONAL INSTRUCTIONS:|^ACTIVE USER OVERRIDE:|^CUSTOM USER PROMPT:/i.test(row.trim())});
  overrideLines.forEach(function(row){if(!rows.some(function(x){return x.includes(row.trim())}))rows.push(row)});
  var out=rows.filter(Boolean).join("\n");
  if(!out.includes(message)||!out.includes(map))throw Error("ASF: Nachricht oder Wortfarben fehlen.");
+ for(var i=0;i<signatureLines.length;i++){if(!out.includes(signatureLines[i]))throw Error("ASF: Aktives Signature-Feld nicht übernommen: "+signatureLines[i]);}
  return out;
 }
 function reports4520(full,smart,ultra){
