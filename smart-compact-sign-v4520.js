@@ -154,4 +154,6 @@ bind=function(){
 };
 buildPrompt=function(){return state.world==="sign"?selected4520():fullPrompt4520()};
 window.stravaSignCompact4520={full:fullPrompt4520,compact:body4520,prompt:selected4520,refresh:refresh4520,mode:function(){return mode4520},version:"V4.5.20"};
+// A restored project may reopen directly in the Prompt tab before this script loads.
+if(state.world==="sign"&&state.tab==="Prompt"&&typeof render==="function")render();
 })();
