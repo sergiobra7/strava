@@ -8,7 +8,7 @@ var defaults={mode:"bpm",scenario:"0",location:"Breite Einkaufsstraße",lens:"24
 var cfg;try{cfg=Object.assign({},defaults,JSON.parse(localStorage.getItem(KEY)||"{}"))}catch(e){cfg=Object.assign({},defaults)}
 var active="Presets";
 var outfitDefaults={brand:"PUMA",club:"Kein Verein",collection:"Training",top:"Longsleeve",topColor:"COROS Lime Green (Gelbgrün)",topColorHex:"",topDetails:"Keine Ärmelstreifen",pants:"Laufshorts",pantsColor:"Schwarz",cap:"Rote Cap rückwärts",socks:"Schwarz",watch:"COROS PACE Pro, schwarz, Display aus",customOutfit:""};
-var opaDefaults={opaAge:"75–85 Jahre",opaBuild:"Schlank und drahtig",opaHead:"Dunkle Schiebermütze",opaBeard:"Markanter grauer Schnurrbart",opaClothing:"Braunes Cord-Sakko, kariertes Hemd, Stoffhose",opaPose:"Am alten Mofa stehend",opaGaze:"Zum Läufer",opaReaction:"Ungläubig",opaProfile:"OPA 01 · Klassisch",opaCustom:""};
+var opaDefaults={opaAge:"75–85 Jahre",opaBuild:"Schlank und drahtig",opaHead:"Dunkle Schiebermütze",opaBeard:"Markanter grauer Schnurrbart",opaClothing:"Braunes Cord-Sakko, kariertes Hemd, Stoffhose",opaPose:"Auf abgestelltem alten Mofa, ein Fuß am Boden",opaGaze:"Zum Läufer",opaReaction:"Ungläubig",opaProfile:"OPA 01 · Klassisch",opaCustom:""};
 cfg=Object.assign({},outfitDefaults,opaDefaults,cfg);cfg.surface="Schwarzer Backstein";
 
 function esc(x){return String(x==null?"":x).replace(/[&<>"']/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]})}
@@ -76,7 +76,7 @@ document.querySelectorAll(".world").forEach(function(b){b.classList.toggle("acti
 document.getElementById("tabs").innerHTML=NAMES.map(function(n){return '<button class="tab '+(n===active?"active":"")+'" data-w450tab="'+esc(n)+'">'+esc(n)+'</button>'}).join("");
 document.getElementById("view").innerHTML=content();
 document.querySelectorAll("[data-w450tab]").forEach(function(el){el.onclick=function(){active=el.dataset.w450tab;render()}});
-document.querySelectorAll("[data-w450]").forEach(function(el){function change(){cfg[el.dataset.w450]=el.type==="checkbox"?el.checked:el.type==="range"?Number(el.value):el.dataset.w450==="scenario"?String(parseInt(el.value,10)):el.value;persist();if(el.type!=="textarea"&&el.type!=="text")render()}el.addEventListener(el.type==="range"?"input":"change",change);if(el.tagName==="TEXTAREA")el.addEventListener("input",change)});
+document.querySelectorAll("[data-w450]").forEach(function(el){function change(){cfg[el.dataset.w450]=el.type==="checkbox"?el.checked:el.type==="range"?Number(el.value):el.dataset.w450==="scenario"?String(parseInt(el.value,10)):el.value;persist();if(el.type!=="textarea"&&el.type!=="text"){var expanded=Array.from(document.querySelectorAll("#view details")).map(function(d,i){return d.open?i:-1}).filter(function(i){return i>=0});render();document.querySelectorAll("#view details").forEach(function(d,i){d.open=expanded.includes(i)})}}el.addEventListener(el.type==="range"?"input":"change",change);if(el.tagName==="TEXTAREA")el.addEventListener("input",change)});
 document.querySelectorAll('input[name="w450mode"]').forEach(function(el){el.onchange=function(){cfg.mode=el.value;persist();render()}});
 if(active==="Prompt & Export"){
 var pre=document.getElementById("w450prompt");pre.textContent=wallPrompt();
