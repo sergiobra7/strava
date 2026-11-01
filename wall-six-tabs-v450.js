@@ -164,26 +164,27 @@ function wallCompact4519(ultra){
  if(cfg.customOutfit)outfit.push("custom "+cfg.customOutfit);
  var rows=[
  "CAMERA / OPTICS — MANUAL OVERRIDES PRESETS",
- "Focal length: "+cam("lens")+" mm; runner distance: "+cam("distance")+" m; native 9:16 portrait. View: "+cfg.angle+"; position: "+cfg.runnerDepth+", "+cfg.runnerHorizontal+"; site: "+cfg.location+".",
+ "Lens "+cam("lens")+" mm; distance "+cam("distance")+" m; native 9:16; view "+cfg.angle+"; height "+(cfg.height||"natural")+"; site "+cfg.location+".",
  "OUTPUT / REALISM",
- short?"One native 9:16 candid photo; real faces, anatomy, light, shadows and perspective; no CGI.":"One native 9:16 documentary photograph; authentic human proportions, hands, feet, lighting, shadows and perspective; no CGI or poster rendering.",
+ short?"Native 9:16 documentary photo; real anatomy, light and depth; no CGI.":"Native 9:16 documentary photograph; natural anatomy, light, shadows and depth; no CGI.",
  "LOCATION / SCENE",
- cfg.location+"; "+cfg.space+" foreground; "+cfg.height+" facade, "+cfg.width+" m wide, "+cfg.side+" side, "+cfg.angle+". BLACK brick and BLACK mortar; no other facade colors.",
+ cfg.location+"; "+cfg.space+" space; "+cfg.height+" facade, "+cfg.width+" m, "+cfg.side+" side, "+cfg.angle+"; matte BLACK brick/mortar.",
  "MAIN RUNNER / IDENTITY / POSE",
- "PERSON PHOTO: preserve exact original facial identity, age, asymmetry, hair, beard and skin texture 1:1. SHOE PHOTO: exact shoe model, shape, colors, logos and soles on BOTH feet. "+cfg.pose+"; gaze "+cfg.gaze+"; expression "+cfg.mood+"; body "+cfg.runnerAngle+"; depth "+cfg.runnerDepth+"; horizontal "+cfg.runnerHorizontal+"; scale "+cfg.runnerRelativeSize+".",
+ "PERSON PHOTO: exact face, hair, age, asymmetry, beard and skin 1:1. SHOE PHOTO: exact both shoes, logos and soles. Pose "+cfg.pose+"; gaze "+cfg.gaze+"; expression "+cfg.mood+"; angle "+cfg.runnerAngle+"; depth "+cfg.runnerDepth+"; lateral "+cfg.runnerHorizontal+"; size "+cfg.runnerRelativeSize+".",
  "Outfit: "+outfit.join("; ")+".",
+ "Active scene: "+(typeof sceneData!=="undefined"&&sceneData[parseInt(cfg.scenario,10)]?sceneData[parseInt(cfg.scenario,10)][0]+" / "+sceneData[parseInt(cfg.scenario,10)][1]:"custom/current location")+".",
  "CROWD / AUDIENCE",
- cfg.crowd+" people; "+cfg.distribution+"; varied natural faces, gestures, depth and reactions; never block runner or statistics.",
+ cfg.crowd+" people; "+cfg.distribution+"; diverse natural faces, positions and reactions; no text/face occlusion.",
  "SIDE FIGURES",
- cfg.opa?"Anatolian Turkish village grandfather, authentic rural 1970s: "+["profile "+cfg.opaProfile,"age "+cfg.opaAge,"build "+cfg.opaBuild,"head "+cfg.opaHead,"beard "+cfg.opaBeard,"clothes "+cfg.opaClothing,"shirt "+cfg.opaShirt,"pants "+cfg.opaPants,"shoes "+cfg.opaShoes,"pose "+cfg.opaPose,"gaze "+cfg.opaGaze,"reaction "+cfg.opaReaction].concat(cfg.opaCustom?["custom "+cfg.opaCustom]:[]).join("; ")+".":"",
+ cfg.opa?"Anatolian rural 1970s grandfather: "+["profile "+cfg.opaProfile,"age "+cfg.opaAge,"build "+cfg.opaBuild,"head "+cfg.opaHead,"beard "+cfg.opaBeard,"clothes "+cfg.opaClothing,"shirt "+cfg.opaShirt,"pants "+cfg.opaPants,"shoes "+cfg.opaShoes,"pose "+cfg.opaPose,"gaze "+cfg.opaGaze,"reaction "+cfg.opaReaction].concat(cfg.opaCustom?["custom "+cfg.opaCustom]:[]).join("; ")+".":"",
  cfg.mantel?"Coat-wearing man enabled.":"",
  "SIGN / PLACARD / BANNER — STRAVA WALL",
- "BLACK brick facade; original STRAVA screenshot source pixels only, no retyping, OCR, fabricated numbers, font, graphs or GPS geometry. Original logos, kerning, pace, units, decimal marks, charts and colors. Use source-pixel compositing/perspective warp; if unavailable, final original-pixel overlay required for exact fidelity.",
- "Mode "+(cfg.mode==="bpm"?"BPM + GPS; TWO screenshots (normal + BPM). STRAVA wordmark and shoe logo #FC4C02, same LEFT grid as statistics; GPS route CENTERED in its own area.":"statistics ONLY; ONE normal screenshot; no BPM or invented GPS.")+" Wall layout: "+cfg.placement+"; stats "+cfg.statsSize+"%; "+cfg.projection+"; spacing "+cfg.spacing+(cfg.mode==="bpm"?" ; GPS scale "+cfg.gpsSize+"%":"")+".",
+ "Preserve ORIGINAL STRAVA screenshot pixels: font, logos, metrics, units, graphs, GPS route, original colors and geometry. Never retype/OCR/invent. Perspective-map source pixel regions; exact fidelity requires final source-pixel overlay.",
+ "Mode "+(cfg.mode==="bpm"?"BPM + MAP: TWO screenshots, normal + BPM. STRAVA wordmark and shoe #FC4C02, LEFT aligned to metrics; GPS CENTERED in its region.":"STATISTICS ONLY: ONE normal screenshot; no BPM/GPS invention.")+" Wall layout: "+cfg.placement+"; stats "+cfg.statsSize+"%; "+cfg.projection+"; spacing "+cfg.spacing+(cfg.mode==="bpm"?" ; GPS scale "+cfg.gpsSize+"%":"")+".",
  "EXACT MESSAGE",
- "No fabricated poster text. Preserve ALL visible original STRAVA screenshot text, numbers, line breaks, symbols and graphics exactly.",
+ "Exact source screenshot text, numbers, layout, colors and symbols; invent nothing.",
  "FINAL VALIDATION",
- short?"Keep identity, shoes, optics, selected crowd and original source pixels; coherent wall perspective, no obstruction.":"Respect manual camera, original PERSON/SHOE references, all selected people and positions; coherent 3D mounting, readable statistics and original colors. Do not invent metrics, text or logos."
+ short?"Keep face, shoes, camera, crowd, original pixels and coherent wall perspective.":"Check camera, exact identity/shoes, positions, crowd, readable source stats and wall perspective. No invented data."
  ];
  if(cfg.extra)rows.push("ACTIVE USER OVERRIDE: "+cfg.extra);
  return rows.filter(Boolean).join("\n");
