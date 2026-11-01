@@ -26,8 +26,9 @@ function camera(full,isWall){
   function effective(key){var v=clean(wall[key+'Manual']).replace(',','.');return v&&Number(v)>0?v:clean(wall[key])}
   lens=effective('lens');dist=effective('distance');
  }else{
-  lens=clean(c.cameraLens)||clean(c.lens);
-  dist=clean(c.personDistance)||clean(c.distance);
+  var pref=state.sign258?.premium270||{};
+  lens=clean(pref.manualLens)||clean(c.cameraLens)||clean(c.lens);
+  dist=clean(pref.manualDistance)||clean(c.personDistance)||clean(c.distance);
  }
  var match=full.match(/FOCAL LENGTH:\s*([0-9.,]+)\s*mm/i);
  if(!lens&&match)lens=match[1];
@@ -178,7 +179,8 @@ function buildSignUltra(full){
  l.push(identity(full));
  l.push('SHOE PHOTO: '+(line(full,'Use the separately attached SHOE PHOTO')||'exact reference shoes on both feet, no substitutes.'));
  l.push('CROWD / AUDIENCE: natural non-cloned crowds, obey the active fields and all sightlines.');
- l.push('SIGN / PLACARD / BANNER: physical sign type/material/placement follows active settings; single perspective-correct plane, sign-local centered 50%; no independently skewed text; real mounts.');
+ var mount=sg.details.find(function(x){return x.startsWith('mount=')})||'';
+ l.push('SIGN / PLACARD / BANNER: '+(/LED|digital|screen|bildschirm/i.test(mount)?'Rigid, securely anchored LED screen with realistic emissive pixel plane; ':'Real securely fastened physical printed sign/banner; ')+'active material, placement and mount; single perspective-correct plane, sign-local centered 50%; no independently skewed text.');
  l.push('Typography: '+typography());
  var outf=getOutfit(full);if(outf)l.push('Outfit: '+outf);
  var disp=line(full,'SIGNATURE DISPLAY INSTALLATION:');if(disp)l.push('Display: '+disp);
@@ -205,7 +207,8 @@ function buildSign(full,ultra){
  l.push('MAIN RUNNER / IDENTITY / POSE');
  l.push(identity(full));
  l.push('SHOE PHOTO: '+(line(full,'Use the separately attached SHOE PHOTO')||'Exact separately supplied shoes on both feet; no brand substitutions.'));
- var pose=clean(s.details.find(function(x){return x.startsWith('pose=')}))||line(full,'Pose:');
+ var customPose=s.custom.find(function(x){return /^pose(?:\s|\/|=)/i.test(x)})||'';
+ var pose=customPose||clean(s.details.find(function(x){return x.startsWith('pose=')}))||line(full,'Pose:');
  if(pose)l.push('Pose and gaze: '+pose);
  var o=getOutfit(full);if(o)l.push('Outfit: '+o);
  l.push('CROWD / AUDIENCE');
@@ -239,6 +242,7 @@ function buildWallUltra(full){
  var x=issues(full,true),c=x.cam,w=window.stravaWall450?.get?.()||{},l=[];
  commonHeaders(l,c);
  l.push('LOCATION / SCENE: '+(w.location||c.site)+'; deep matte BLACK brick and BLACK mortar, real architecture; wall '+(w.height||'')+', '+(w.width||'')+' m, '+(w.side||'')+', '+(w.angle||'')+'.');
+ var originalScene=line(full,'ORIGINAL SCENE SET:');if(originalScene)l.push('Scene source: '+originalScene);
  l.push('MAIN RUNNER / IDENTITY / POSE');
  l.push('PERSON PHOTO: '+(line(full,'PERSON PHOTO:')||'preserve exact original facial features, skin detail and natural anatomy. No redesign.'));
  l.push('SHOE PHOTO: '+(line(full,'SHOE PHOTO:')||'exact original shoes on BOTH feet, with all reference details.'));
@@ -257,6 +261,7 @@ function buildWall(full,ultra){
  commonHeaders(l,c);
  l.push('LOCATION / SCENE');
  l.push('Place: '+(w.location||c.site)+'; wall: deep matte BLACK bricks with BLACK mortar, never gray or brown. '+(w.height||'')+'; '+(w.width||'')+' m; side '+(w.side||'')+'; wall angle '+(w.angle||'')+'; open space '+(w.space||'')+'.');
+ var originalScene=line(full,'ORIGINAL SCENE SET:');if(originalScene)l.push('Scene source: '+originalScene);
  l.push('MAIN RUNNER / IDENTITY / POSE');
  l.push('PERSON PHOTO: '+(line(full,'PERSON PHOTO:')||'preserve exact facial identity, eyes, eyebrows, nose, lips, jaw, beard, pores, asymmetry, age, head size and natural anatomy. No beautification or face redesign. Transform it 1:1.'));
  l.push('SHOE PHOTO: '+(line(full,'SHOE PHOTO:')||'use the separately supplied shoe reference as sole authority for both feet; exact model, silhouette, colors, logos, laces and sole.'));
@@ -322,7 +327,7 @@ function augment(){
    counter.textContent='FULL '+n.full+' Zeichen · SMART '+n.smart+' (−'+n.smartSaving+' %) · ULTRA '+n.ultra+' (−'+n.ultraSaving+' %)';
    audit.textContent=(e.length?'BLOCKIERT: '+e.join(' | '):'Prüfung: aktive Einstellungen und Quellen übernommen.')+(warning.length?' Hinweise: '+warning.join(' | '):'');
    audit.style.color=e.length?'#ff9a91':'#96dfb9';
-   if(preview)preview.textContent=e.length?'PROMPT BLOCKIERT: '+e.join(' | '):selected(d);
+   if(preview)preview.textContent=e.length&&mode!=='FULL'?'PROMPT BLOCKIERT: '+e.join(' | '):selected(d);
   }catch(e){audit.textContent='Prompt-Prüfung fehlgeschlagen: '+e.message;audit.style.color='#ff9a91'}
  }
  control.onchange=function(){mode=this.value;try{localStorage.setItem(STORE,mode)}catch(e){}update()};
