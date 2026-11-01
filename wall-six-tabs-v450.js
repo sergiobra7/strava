@@ -187,6 +187,15 @@ function wallCompact4519(ultra){
  short?"Verify identity, shoes, camera, crowd, source pixels and perspective.":"Verify optics, face/shoes, poses, crowd, readable statistics and perspective."
  ];
  if(cfg.extra)rows.push("ACTIVE USER OVERRIDE: "+cfg.extra);
+ if(short)rows=rows.map(function(row){
+  if(typeof row!=="string")return row;
+  if(row.startsWith("PERSON PHOTO:"))return row.replace("PERSON PHOTO: exact face, hair, age, asymmetry, beard, skin 1:1. SHOE PHOTO: exact both shoes/soles/logos.","PERSON PHOTO: same face, hair, beard, age, skin 1:1. SHOE PHOTO: exact both feet.");
+  if(row.startsWith("Original STRAVA screenshot pixels only:"))return "SOURCE PIXELS ONLY: original STRAVA logo, data, font, charts, GPS and colors. No OCR, retyping or inventions; use source-pixel perspective-compositing.";
+  if(row.startsWith("Exact source screenshot text,"))return "Original screenshot pixels only.";
+  if(row.startsWith("Anatolian rural 1970s grandfather:"))return row.replace("Anatolian rural 1970s grandfather:","Anatolian 1970s Opa:").replace(/; profile /g,"; profile ").replace(/; clothes /g,"; clothes ");
+  if(row.startsWith("Outfit:"))return row.replace("Outfit: active outfit ","Outfit: ").replace(/; collection /g,"; series ").replace(/; custom /g,"; custom ");
+  return row;
+ });
  return rows.filter(Boolean).join("\n");
 }
 function wallIssues4519(){
