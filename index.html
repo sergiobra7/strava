@@ -14,7 +14,7 @@
 #premiumPanel270 > #premiumCards270{display:block!important}
 #premiumPanel270 > #refreshPremium270{display:block!important;margin:14px 0}
 #premiumPanel270 #allSettings339,#premiumPanel270 #master320,#premiumPanel270 #premiumEditor270,#premiumPanel270 #premiumCast311,#premiumPanel270 #manualRegie328,#premiumPanel270 #premiumActiveFilters340{display:none!important}
-</style><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Anton&family=Archivo+Black&family=Archivo+Narrow:wght@900&family=Barlow+Condensed:wght@800;900&family=Bebas+Neue&family=League+Gothic&family=Oswald:wght@700&family=Roboto+Condensed:wght@900&family=Teko:wght@700&display=swap" rel="stylesheet"></head><body><header><div><h1>STRAVA RUN <span class="mark">V4.5.11</span></h1><small>RUNNER PHOTO + STRAVA WALL · GITHUB EDITION</small><div id="onlineBuild414" style="font-size:12px;color:#a8c6b8;margin-top:5px;font-weight:700" aria-label="Online-Version">ONLINE · V4.4.0 · Commit wird geprüft …</div></div><div style="display:flex;align-items:center;gap:9px;flex-wrap:wrap;justify-content:flex-end"><span id="saveStatus" class="status">Lokal gespeichert</span><button id="stravaRefresh401" type="button" title="Neueste GitHub-Version laden" style="background:#2cbd79;color:#101510;border:0;border-radius:9px;padding:10px 13px;font-weight:800;cursor:pointer">🔄 Aktualisieren</button></div></header><main><div class="worlds"><button class="world active" data-world="wall">🧱 STRAVA WALL</button><button class="world" data-world="sign">⬛ BLACK SIGN / PLAKAT</button></div><div style="display:flex;align-items:center;justify-content:space-between;gap:10px;margin:9px 0"><button id="presetShortcut403" type="button" style="background:#f2bd49;color:#151515;border:2px solid #f8d57b;border-radius:10px;padding:12px 16px;font-size:15px;font-weight:900;cursor:pointer;flex:1">⭐ MEINE PRESETS · GALERIE ÖFFNEN</button></div><section id="presetDirect404" hidden style="margin:14px 0;padding:14px;border:2px solid #f2bd49;border-radius:14px;background:#151a21"></section><nav class="tabs" id="tabs"></nav><div id="view"></div><div class="footer">Lokale Offline-Web-App · Keine Bilder werden an einen Server gesendet · Prompt zum Kopieren für ChatGPT/Bildgenerierung</div></main><script>
+</style><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Anton&family=Archivo+Black&family=Archivo+Narrow:wght@900&family=Barlow+Condensed:wght@800;900&family=Bebas+Neue&family=League+Gothic&family=Oswald:wght@700&family=Roboto+Condensed:wght@900&family=Teko:wght@700&display=swap" rel="stylesheet"></head><body><header><div><h1>STRAVA RUN <span class="mark">V4.5.12</span></h1><small>RUNNER PHOTO + STRAVA WALL · GITHUB EDITION</small><div id="onlineBuild414" style="font-size:12px;color:#a8c6b8;margin-top:5px;font-weight:700" aria-label="Online-Version">ONLINE · V4.4.0 · Commit wird geprüft …</div></div><div style="display:flex;align-items:center;gap:9px;flex-wrap:wrap;justify-content:flex-end"><span id="saveStatus" class="status">Lokal gespeichert</span><button id="stravaRefresh401" type="button" title="Neueste GitHub-Version laden" style="background:#2cbd79;color:#101510;border:0;border-radius:9px;padding:10px 13px;font-weight:800;cursor:pointer">🔄 Aktualisieren</button></div></header><main><div class="worlds"><button class="world active" data-world="wall">🧱 STRAVA WALL</button><button class="world" data-world="sign">⬛ BLACK SIGN / PLAKAT</button></div><div style="display:flex;align-items:center;justify-content:space-between;gap:10px;margin:9px 0"><button id="presetShortcut403" type="button" style="background:#f2bd49;color:#151515;border:2px solid #f8d57b;border-radius:10px;padding:12px 16px;font-size:15px;font-weight:900;cursor:pointer;flex:1">⭐ MEINE PRESETS · GALERIE ÖFFNEN</button></div><section id="presetDirect404" hidden style="margin:14px 0;padding:14px;border:2px solid #f2bd49;border-radius:14px;background:#151a21"></section><nav class="tabs" id="tabs"></nav><div id="view"></div><div class="footer">Lokale Offline-Web-App · Keine Bilder werden an einen Server gesendet · Prompt zum Kopieren für ChatGPT/Bildgenerierung</div></main><script>
 /* V3.18 stabilization: one color serializer shared by prompt sections. */
 window.stravaSignColorMap318=function(sign){
  const source=sign||{},raw=String(source.signText||''),colors=source.wordColors||{},base=String(source.signColor||'#FFFFFF').toUpperCase();
@@ -123,7 +123,7 @@ function fullPosterView321(){
  '<div id="posterWordOverlay4511" style="position:absolute;inset:0;pointer-events:none" aria-label="Wörter im Plakat antippen"></div></div>'+
  '<p id="posterGeometryStatus430" class="hint" role="status"></p>'+
  '<button type="button" class="btn" id="posterExport430">Exakte Live-Vorschau als PNG exportieren</button>'+
- '<div id="posterWords321" style="display:flex;flex-wrap:wrap;gap:7px;margin:12px 0"></div>'+
+ '<details id="posterAlternateWordPicker4512" style="margin:10px 0"><summary style="cursor:pointer;font-weight:700">Wörter alternativ auswählen</summary><div id="posterWords321" style="display:flex;flex-wrap:wrap;gap:7px;margin:12px 0"></div></details>'+
  '<div class="field"><label>Ausgewählte Wortfarbe</label><input id="posterWordColor321" type="color" value="#ff4b30"></div>'+ 
  '<div class="field" style="padding:12px;border:1px solid #586374;border-radius:9px;margin:12px 0"><label style="display:flex;align-items:center;gap:10px"><input id="posterKeepColors421" type="checkbox" style="width:22px;height:22px"> Farbwahl dauerhaft speichern</label><p class="hint">Mit Haken: Farben bleiben nach Neuladen. Ohne Haken: nur bis zum nächsten Neuladen sichtbar.</p><button type="button" class="btn secondary" id="posterStoreColors421">Farben jetzt speichern</button></div>'+
  '<div class="actions"><button class="btn" id="posterApplyColor321">Wort einfärben</button><button class="btn secondary" id="posterResetColors321">Wortfarben zurücksetzen</button><button class="btn" id="posterSave321">Einstellungen übernehmen</button></div>'+
@@ -309,13 +309,13 @@ function syncPosterPreviewColors321(){
  const engine=window.stravaTypography430;
  const layout=engine.layout(engine.options()),audit=engine.audit(layout);
  if(!audit.pass)throw Error('Plakat-Layout ungültig: '+audit.errors.join(' | '));
- const tokens=editor.value.match(/\\S+|\\s+/g)||[];
- const expected=tokens.filter(w=>!/^\\s+$/.test(w)).length;
+ const tokens=editor.value.match(/\S+|\s+/g)||[];
+ const expected=tokens.filter(w=>!/^\s+$/.test(w)).length;
  const hitTargets=[...preview.querySelectorAll('[data-poster-word-index]')];
  if(layout.lines.reduce((n,row)=>n+row.words.length,0)!==expected||hitTargets.length!==expected)throw Error('Plakat-Wortzuordnung nicht synchron.');
  for(const node of hitTargets){
   const i=Number(node.dataset.posterWordIndex);
-  if(!Number.isInteger(i)||!tokens[i]||/^\\s+$/.test(tokens[i]))throw Error('Plakat-Wortposition ungültig.');
+  if(!Number.isInteger(i)||!tokens[i]||/^\s+$/.test(tokens[i]))throw Error('Plakat-Wortposition ungültig.');
  }
  save();
 }
@@ -1818,18 +1818,19 @@ document.addEventListener('click',function(event){
 const btn=document.getElementById('stravaRefresh401');if(!btn)return;
 btn.addEventListener('click',async function(){
  if(btn.disabled)return;
- btn.disabled=true;btn.textContent='⏳ Prüfe Version …';
+ btn.disabled=true;btn.textContent='ASF · Quelle prüfen …';
  try{
-   const url=new URL(location.href);
-   url.searchParams.set('refresh',String(Date.now()));
-   url.hash='';
-   const response=await fetch(url.toString(),{cache:'no-store',redirect:'follow'});
-   if(!response.ok)throw new Error('HTTP '+response.status);
-   const html=await response.text();
-   if(!html.includes('STRAVA RUN')||!html.includes('stravaRefresh401'))throw new Error('Ungültige Antwort');
-   try{if('caches' in window){const keys=await caches.keys();await Promise.all(keys.filter(k=>/strava/i.test(k)).map(k=>caches.delete(k)))}}catch(e){console.warn('Cache cleanup',e)}
-   location.replace(url.toString());
- }catch(e){btn.disabled=false;btn.textContent='🔄 Aktualisieren';alert('Aktualisierung fehlgeschlagen: '+e.message+' — bitte Internetverbindung prüfen.')}
+  const url=new URL(location.href);url.searchParams.set('asf',String(Date.now()));url.hash='';
+  const response=await fetch(url.toString(),{cache:'no-store',redirect:'follow'});
+  if(!response.ok)throw Error('HTTP '+response.status);
+  const html=await response.text();
+  const required=['LIVE-VORSCHAU · TYPOGRAPHY ENGINE · ECHTZEIT','posterWordOverlay4511','posterAlternateWordPicker4512','posterGeometry430','V4.5.12'];
+  const missing=required.filter(mark=>!html.includes(mark));
+  if(missing.length)throw Error('GitHub Pages liefert noch eine veraltete Plakat-Version (fehlend: '+missing.join(', ')+'). Bestehende Einstellungen bleiben erhalten.');
+  if(html.includes('TYPOGRAPHY ENGINE V4.4.0 · ECHT ZENTRIERT'))throw Error('Die ausgelieferte Seite enthält noch die alte zweite Vorschau.');
+  try{if('caches' in window){const keys=await caches.keys();await Promise.all(keys.filter(k=>/strava/i.test(k)).map(k=>caches.delete(k)))}}catch(e){console.warn('ASF cache cleanup',e)}
+  btn.textContent='ASF · aktuelle Quelle geladen';location.replace(url.toString());
+ }catch(e){btn.disabled=false;btn.textContent='🔄 Aktualisieren';alert('ASF-Prüfung: '+e.message)}
 });
 })();
 </script><script>
@@ -1924,7 +1925,7 @@ function archiveBind413(){gallery413();let file=document.getElementById('a413fil
 /* V3.13.8: public GitHub Pages deployment identity, independent of local settings. */
 (function(){
  const el=document.getElementById('onlineBuild414');if(!el)return;
- const version='V4.5.11';
+ const version='V4.5.12';
  const fallback='ONLINE · '+version+' · Commit: nicht abrufbar';
  const url='https://api.github.com/repos/sergiobra7/strava/commits/main';
  const controller=new AbortController();
