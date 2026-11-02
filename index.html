@@ -2440,88 +2440,116 @@ function compositionText421(){const c=compositionVariants421[compositionIndex421
 return 'DYNAMIC COMPOSITION — CONSTANT PRINCIPLES, VARIABLE GEOMETRY: Selected variant '+c.title+'. '+c.directions+' Avoid a fixed layout or identical crowd geometry; obey explicit RUNNER POSITION authority even when foreground, center or directly below the sign is manually chosen. Respect user-selected pose '+v.pose+', venue '+v.venue+', installation '+v.mount+' and real architecture. Place spectators around the runner according to the explicitly selected RUNNER POSITION, depth and side controls; allow spectators in foreground, alongside or behind only where that placement makes spatial sense, without obscuring face, shoes, defining pose or text. Do not change camera lens, distance, 9:16 format, identity, sign carrier or text. ATTENTION TARGET GEOMETRY: '+v.attention+' of spectators visually attend to the runner or actual display; readers of high signs look upward, others look toward the actual runner position or directly at their discussion partner; keep all conversations causally about the same sign. No disaster-panic or synchronized open mouths. Selected reaction '+v.reaction+' uses natural diverse facial expressions and gestures. NATURAL POSE ENERGY: keep exact selected pose with relaxed asymmetric weight, realistic contact and hands rather than a stiff portrait. TYPOGRAPHY GEOMETRY: keep exact printed text, line breaks, word colors and font with consistent baseline, spacing and margins, no compressed or skewed glyphs.';
 }
 
+
+/* V4.5.32: Simplified Signature editor; historical saved values/notes/scenes untouched. */
+const sxSimpleOptions4532={
+ dominance:['Normal','Groß','XXL','Monumental'],
+ relation:['Oberhalb','Seitlich','Hinter mir'],
+ pose:['Locker stehend','Arme verschränkt','Rückwärts auf Stuhl, Unterarme auf Lehne','Normal sitzend','Angelehnt','Mit Plakat in der Hand'],
+ gaze:['Direkt in die Kamera','Zum Plakat','Zum Publikum','Seitlich','Zu einer Nebenfigur'],
+ expression:['Ernst','Leichtes Lächeln','Überlegenes Schmunzeln','Provokantes Grinsen','Nachdenklich'],
+ position:['Automatisch','Im Vordergrund','Im Mittelgrund','Im Hintergrund'],
+ count:['Keine','15–40','50–100','100–300','300–500','500–800','1000+'],
+ reaction:['Empört','Überrascht','Lachend','Neugierig','Gespalten','Neutral'],
+ dynamics:['Ruhig','Natürlich lebendig','Aufgeregt']
+};
+function sxMigrate4532(){
+ if(data.simple4532)return;
+ const v=data.values||{},react=activeFieldNote429('reaction');
+ function pick(k,value,fallback){return sxSimpleOptions4532[k].includes(value)?value:fallback}
+ const position=/Vordergrund/.test(v.runnerPosition)?'Im Vordergrund':/Hintergrund|Hinterer/.test(v.runnerPosition)?'Im Hintergrund':'Im Mittelgrund';
+ const reactText=String(react?.text||v.reaction||'');
+ data.simple4532={
+  dominance:pick('dominance',v.dominance,'XXL'),
+  relation:/Seitlich/.test(v.relation)?'Seitlich':/Hinter/.test(v.relation)?'Hinter mir':'Oberhalb',
+  pose:pick('pose',v.pose,'Locker stehend'),
+  gaze:/Kamera/.test(v.gaze)?'Direkt in die Kamera':/Botschaft|Plakat/.test(v.gaze)?'Zum Plakat':/Menschenmenge|Publikum/.test(v.gaze)?'Zum Publikum':'Seitlich',
+  expression:/Schmunzel/.test(v.expression)?'Überlegenes Schmunzeln':/ernst/i.test(v.expression)?'Ernst':/Grinsen/.test(v.expression)?'Provokantes Grinsen':'Nachdenklich',
+  position:position,
+  count:pick('count',v.count,'500–800'),
+  reaction:/empör/i.test(reactText)?'Empört':/lach/i.test(reactText)?'Lachend':/neugier/i.test(reactText)?'Neugierig':/gemischt|gespalten/i.test(reactText)?'Gespalten':'Überrascht',
+  dynamics:/ruhig/i.test(v.dynamics)?'Ruhig':/dynamisch|unruhig/i.test(v.dynamics)?'Aufgeregt':'Natürlich lebendig',
+  description:(react?String(react.text||'').trim():'')
+ };
+ persist();
+}
+sxMigrate4532();
+function sxCurrent4532(){return data.simple4532}
+function sxGaze4532(g){
+ const dict={
+ 'Direkt in die Kamera':'The main runner looks DIRECTLY INTO THE CAMERA LENS with BOTH EYES; head, chin and pupils naturally oriented toward the camera, regardless of torso angle. Do not look at the sign or crowd.',
+ 'Zum Plakat':'The main runner looks at the ACTUAL physical sign; head and pupils naturally follow its position, not the camera.',
+ 'Zum Publikum':'The main runner looks toward the nearby spectators, not at the lens or sign.',
+ 'Seitlich':'The main runner looks naturally to one side without facing the camera lens.',
+ 'Zu einer Nebenfigur':'The main runner visibly looks at an existing selected side character; do not invent an extra figure.'
+ };return dict[g]||dict['Direkt in die Kamera'];
+}
 function signaturePrompt(){
  if(!data.enabled)return '';
- let out=['SIGNATURE PROTEST XXL — AUTHORITATIVE SCENE COMPOSITION: The oversized legible sign message is visual priority ONE; the visibly expressive demonstrator is priority TWO; the massive reacting audience is priority THREE. Respect exact sign text, manual line breaks and all per-word colors without alteration. Keep the demonstrator recognizable and do not obscure the sign text.'];
- for(const [g,def] of Object.entries(groups)){out.push(def.label+':');for(const k of Object.keys(def.fields)){const n=activeFieldNote429(k);out.push(labels[k]+': '+(n?'CUSTOM OVERRIDE (AUTHORITATIVE): '+String(n.text).trim()+' [Dropdown-Standard ersetzt]':data.values[k])+'.')}}
- if(!activeFieldNote429('venue'))out.push(locationDirection423(data.values.venue));
- if(!activeFieldNote429('pose'))out.push(poseDirection424(data.values.pose));
- out.push("PERMANENT CENTERLINE TYPOGRAPHY LOCK — NON-NEGOTIABLE: All authored text rows share one flat sign-local horizontal center at exactly 50% of display width before perspective projection. Preserve exact text, intentional empty lines, font and all per-word colors from TYPOGRAPHY MASTER LAYOUT V4.4.0 and the optional PNG reference. Never skew, justify or stretch any individual row inside the local 2D graphic; apply the final camera perspective to the COMPLETE graphic as one coherent display plane. Never move the runner, physical display or camera to achieve text centering.");
- const chosenMount=String(activeFieldNote429('mount')?.text||data.values.mount||'');
- const isLED=/LED|digital|screen|bildschirm/i.test(chosenMount);
- const engine=window.stravaTypography430;
- const margin=engine&&typeof engine.options==='function'?Number(engine.options().margin):.07;
- const marginPercent=Number.isFinite(margin)?Math.max(0,Math.min(7,Math.round(margin*100))):7;
- out.push('SIGN PLANE PERSPECTIVE LOCK — ABSOLUTE: Build the full 2D sign graphic once, with all rows sign-local centered, original letterforms, punctuation, line breaks, colors and '+marginPercent+'% edge margin on each side. Next, perspective-project that COMPLETE graphic as a single continuous plane onto the actual display surface, using the same corner geometry, convergence, vanishing points, viewing angle and surface normal as the physical display. Text baselines and glyphs must all follow that same plane homography; NO separately front-facing text floating in front of an angled sign, NO independent per-row tilts, no inconsistent skew. Sign-local centering must remain exact even though the entire plane appears perspectively angled to the camera. Do not change the camera, subject placement or physical sign to force frontality.');
- out.push('SINGLE MARGIN AUTHORITY — ABSOLUTE: The ACTIVE Typography Engine edge margin is '+marginPercent+'% per side. Ignore any older generic 5% or 7% sign-print margin instructions. The complete perspective-mapped LED or printed graphic uses this same margin from the source design; do not add a second margin inside the physical display frame.');
- out.push(isLED?
- 'DISPLAY MATERIAL AUTHORITY — XXL LED SCREEN: The selected carrier '+chosenMount+' is a genuine, rigid, physically anchored electronic LED video display, NOT printed textile, vinyl or paper. Show coherent LED module/pixel texture and restrained natural emissive illumination across the SAME perspective-correct plane as the entire sign graphic. Preserve exact word hex colors without global tinting, overglow or blown-out glyphs; all letters remain legible. Visible real structural mounting, correct planar joints and consistent environmental lighting. Do not invent decorative stripes or independent luminous floating lettering.':
- 'DISPLAY MATERIAL AUTHORITY — PHYSICAL PRINT: The selected carrier '+chosenMount+' uses physically plausible printed ink/vinyl or mounted board with correct realistic surface texture and secure fixings (fabric folds only if the actual carrier is fabric). The ENTIRE printed text graphic is attached to one perspective-correct carrier plane, not hovering or separately projected. Preserve exact original word colors and line geometry; do not introduce electronic LED pixel glow unless the selected carrier is explicitly digital.');
- out.push('NATURAL BODY PROPORTIONS — SINGLE AUTHORITY: Preserve realistic adult body proportions and physical scale consistent with the supplied person reference. Keep a natural head-to-body ratio, shoulder width, torso length, arm length and leg proportions. No elongated legs, stretched torso, undersized head or artificial scaling. Preserve the selected pose and camera settings. This rule concerns BODY geometry only; the user-edited PERSON PHOTO identity command remains the sole facial-identity authority.');
- if(!['runnerPosition','runnerDepth','runnerSide'].some(k=>activeFieldNote429(k)))out.push(runnerPositionText425(data.values,activeFieldNote429('pose')?'ACTIVE CUSTOM BODY POSE (see corresponding individual description)':null));else out.push('RUNNER POSITION — SINGLE SPATIAL AUTHORITY: Apply active custom spatial descriptions exactly; these override only the corresponding runner-position dropdown fields. Preserve the independently selected body pose or active custom pose. Maintain locked camera lens, distance, face, anatomy, sign readability and safe architecture.');
- if(!['pose','runnerPosition','runnerDepth','runnerSide','venue','mount'].some(k=>activeFieldNote429(k)))out.push(compositionText421());else out.push('DYNAMIC COMPOSITION — CONSTANT PRINCIPLES, VARIABLE GEOMETRY: Adapt selected organic crowd layout to the custom authoritative pose, position, mount and venue. Do not reinstate stored dropdown defaults or require a fixed composition. ATTENTION TARGET GEOMETRY: Onlookers watch the actual display or runner, or talk naturally about the scene.');
- out.push('AUDIENCE ATTENTION AND REACTION — MANDATORY: Approximately '+data.values.attention+' of the spectators genuinely face and visibly look at the runner OR read the sign, with head direction, eyes and torso consistent. Opa, Teyze, children and nearby key figures must direct their attention to the sign or runner, not stare into the distance or randomly at the camera. Remaining spectators may react to each other while staying part of the same event. Realistic restrained expressions: disbelief, curiosity, frowning, skeptical glances, quiet laughter or brief surprise; avoid exaggerated open mouths, theatrical acting, synchronized cloned faces and unrelated passersby. Crowd must feel like one connected reaction to the message.');
- out.push('ORGANIC CROWD DYNAMICS: energy '+data.values.dynamics+'; gestures '+data.values.gestures+'; irregularity '+data.values.irregularity+'; body overlap '+data.values.overlap+'; natural side conversations '+data.values.interactions+'. Preserve the selected '+data.values.attention+' attention to the runner or readable sign, but make it natural rather than synchronized. No neat rows, equal gaps, cloned poses or aligned shoulders. Use varied body angles, staggered distances, natural crowd overlap, head turns, discreet open-hand gestures, shrugs, hands briefly near chin or mouth, and small conversations about the message. People spontaneously react, switch their gaze between runner and sign, and display diverse restrained expressions. Avoid theatrical screaming, uniformly open mouths and unrelated background traffic. Maintain clean sightlines to the runner face, exact selected pose, shoes and every letter of the sign without putting the runner at the front of the crowd.');
- out.push('CROWD SCALE AND OCCLUSION: Depict the selected crowd count and density with a plausible large public space, foreground/midground/background depth and natural perspective. Show the requested crowd count naturally through foreground, side groups, midground and background without orderly ranks or cloned poses. No spectators may block runner face, defining pose, shoes or any sign lettering. Maintain the selected crowd count with plausible depth and scale while protecting readable lettering and identifiable runner.');
- out.push('CAMERA AUTHORITY: Preserve the exact user-selected focal length and camera distance; never override camera settings to fit the crowd. Maintain native 9:16. For hanging displays, show realistic secure attachment and avoid ground stands when excluded.');
- for(const [g,items] of Object.entries(data.notes))for(const n of items)if(n.active&&n.text.trim()&&!Object.prototype.hasOwnProperty.call(labels,g))out.push('ACTIVE CUSTOM DIRECTION ['+g+' / '+n.title+']: '+n.text.trim()+'. Preserve facial identity, 178 cm anatomy, camera, exact sign words, word colors and permanent text centering.');
- const overridden=fieldOverrides429();if(overridden.length)out.push('CUSTOM FIELD PRIORITY — FINAL AUTHORITY: Each ACTIVE SAVED INDIVIDUAL DESCRIPTION REPLACES the corresponding dropdown, inherited Premium and legacy instructions. Active custom fields: '+overridden.map(k=>labels[k]).join('; ')+'. Never combine the old dropdown pose with a different custom body pose, or enforce old location, crowd reaction or position against the corresponding custom description. The dropdown choices remain saved only as fallback when their custom description is switched OFF. Higher permanent locks remain authoritative: original PERSON PHOTO face identity, 178 cm body anatomy, camera lens/distance, exact sign text and word colors, permanent centered typography, realistic physical safety.');
- return '\n\n'+out.join('\n');
+ var v=sxCurrent4532();
+ var lines=[
+ 'SIGNATURE PROTEST XXL — AUTHORITATIVE SCENE COMPOSITION: Show the readable oversized sign first, a recognizable main runner second and the reacting crowd third. Preserve exact authored sign text, mapped colors, font and camera header.',
+ '01 · PLAKAT & WIRKUNG: Dominanz '+v.dominance+'. Position relativ zum Läufer: '+v.relation+'. Installation, construction, physical anchor and text typography are controlled ONLY by the existing Plakat & Text and scene settings.',
+ '02 · MEIN AUFTRITT: Pose '+v.pose+'. Blickrichtung '+v.gaze+'. Mimik '+v.expression+'.',
+ 'MAIN RUNNER GAZE — SINGLE AUTHORITY: '+sxGaze4532(v.gaze)+' This instruction applies ONLY to the main runner; audience gaze instructions never override it. Preserve the selected facial expression and original PERSON PHOTO identity.',
+ 'POSE FIDELITY: Keep the selected '+v.pose+' naturally and anatomically; real stable physical contact, separate limbs and hands, no invented chair unless a chair pose is selected.',
+ 'NATURAL BODY PROPORTIONS — SINGLE AUTHORITY: Maintain natural adult head-to-body, torso, arms and leg proportions at the selected camera geometry; no stretched torso, elongated legs, undersized head or artificial scaling. The user-editable PERSON PHOTO command alone governs facial identity.',
+ 'RUNNER POSITION — SINGLE SPATIAL AUTHORITY: '+v.position+'. Keep the face and defining pose visible where physically possible; never move camera, runner or sign to force an artificial foreground close-up.',
+ '03 · MEINE SICHTBARKEIT: '+v.position+'.',
+ '04 · PUBLIKUM & REAKTION: '+v.count+' spectators; reaction '+v.reaction+'; dynamics '+v.dynamics+'. Onlookers react naturally to the actual sign or runner, with irregular spacing and believable gestures; no cloned expressions, forced 85-percent gaze quota or staged synchronized panic.',
+ 'DYNAMIC COMPOSITION — CONSTANT PRINCIPLES, VARIABLE GEOMETRY: Natural perspective, depth and irregular organic crowd distribution; respect selected runner position and banner readability. ATTENTION TARGET GEOMETRY: Only spectator gaze follows the sign, runner or a real conversation partner; main runner gaze is controlled solely by MAIN RUNNER GAZE.',
+ 'PERMANENT CENTERLINE TYPOGRAPHY LOCK — NON-NEGOTIABLE: All sign text remains centered on one sign-local horizontal axis; preserve word-color map and Typography Engine layout, and perspective-project the whole sign plane rather than independently warping rows.',
+ 'CAMERA AUTHORITY: Use the exact camera-header focal length, distance and native 9:16; never override by Signature crowd or sign instructions.'
+ ];
+ if(v.description.trim())lines.push('INDIVIDUELLE SZENENBESCHREIBUNG — ACTIVE: '+v.description.trim()+'. This overrides conflicting scene/reaction defaults only; never overwrite PERSON PHOTO, SHOE PHOTO, selected gaze, camera, sign text, word colors, font or physical safety.');
+ return '\n\n'+lines.join('\n');
 }
+
 function matrixSelfTest(){const backup=JSON.stringify(data),checks=[];const ok=(label,value)=>checks.push({label,pass:!!value});try{ok('60 scenes',scenes.length===60);ok('49 venues',venueCatalog423.length===49);ok('50 pose choices',poseCatalog424.length===50);ok('50 positions',runnerPositions425.length===50);ok('field level descriptions available',sceneKeys.every(k=>Object.prototype.hasOwnProperty.call(labels,k)));ok('permanent centerline',signaturePrompt().includes('PERMANENT CENTERLINE TYPOGRAPHY LOCK — NON-NEGOTIABLE:'));ok('body proportion lock independent of face',signaturePrompt().includes('NATURAL BODY PROPORTIONS — SINGLE AUTHORITY:')&&signaturePrompt().includes('user-edited PERSON PHOTO identity command'));ok('all scene positions valid',scenes.every(x=>positionByName425.has(x.values.runnerPosition)));ok('all matrix poses valid',scenes.every(x=>poseByName424.has(x.values.pose)));ok('17 filters per scene',scenes.every(x=>sceneKeys.every(k=>k in x.values)));ok('matrix architecture valid',matrixAudit422().results.every(x=>!x.missing.length&&!x.invalid.length&&!x.warnings.length));ok('six compositions in matrix',new Set(scenes.map(x=>x.compositionIndex)).size===6);ok('valid options',scenes.every(x=>sceneKeys.every(k=>Object.values(groups).some(g=>g.fields[k]&&g.fields[k].includes(x.values[k])))));data.locks={};data.values={...defaults.values};const x=evaluateScene(scenes[0]);ok('coherent first scene',!x.warnings.length);ok('crowd transferred',x.values.count===scenes[0].values.count);data.locks={pose:true,venue:true};data.values.pose='Arme verschränkt';data.values.venue='Großer Marktplatz';const y=evaluateScene(scenes[0]);ok('locks respected',y.values.pose==='Arme verschränkt'&&y.values.venue==='Großer Marktplatz');ok('conflict detected',y.warnings.length>0);data.locks={};data.values={...defaults.values};ok('no ground support conflict',evaluateScene({values:{mount:'Freistehende Werbetafel'}}).warnings.length>0);data.enabled=true;data.notes={overall:[{id:'selftest',title:'Selftest',text:'SXTOKEN',active:false}]};ok('inactive note excluded',!signaturePrompt().includes('SXTOKEN'));data.notes.overall[0].active=true;ok('active note included',signaturePrompt().includes('SXTOKEN'));ok('camera preserved',signaturePrompt().includes('Preserve the exact user-selected focal length'));ok('dynamic composition active',signaturePrompt().includes('DYNAMIC COMPOSITION — CONSTANT PRINCIPLES, VARIABLE GEOMETRY:'));
 ok('no rigid runner foreground',!signaturePrompt().includes('CAMERA → RUNNER + XXL SIGN IN CLEAR FOREGROUND → AUDIENCE'));ok('runner visibility mandated',signaturePrompt().includes('face, shoes, defining pose or text'));ok('key figures face message',signaturePrompt().includes('Opa, Teyze'));ok('organic crowd direction',signaturePrompt().includes('ORGANIC CROWD DYNAMICS'));ok('open hand gesture',signaturePrompt().includes('open-hand gestures'));
 }finally{Object.assign(data,JSON.parse(backup))}return {pass:checks.every(x=>x.pass),checks}}
 
 function cleanSignatureConflicts420(raw){
- let out=String(raw||''),v=effectiveValues429();
+ var out=String(raw||''),v=sxCurrent4532();
  out=out.replace(/\nXXL DISPLAY PRIMARY DIRECTIVE:[\s\S]*?(?=\nFINAL ABSOLUTE WORD-COLOR CONTRACT:|\nGARMENT BRAND MARKS|\nSIGNATURE PROTEST XXL|$)/g,'\n');
- out=out.replace(/If site space is insufficient, use a realistic smaller group\./gi,'Maintain the selected crowd count in plausible image depth.');
- out=out.replace(/^Audience count:.*$/gm,'Audience count: '+v.count+' people (Signature authority).');
- out=out.replace(/^Location:.*$/gm,'Location: '+v.venue+' (Signature scene authority; preserve locked LOCATION PHOTO architecture).');
- out=out.replace(/^Audience action:.*$/gm,'Audience action: '+v.reaction+' (Signature authority).');
- out=out.replace(/^Audience:.*$/gm,'Audience: '+v.count+' spectators at '+v.density+' density.');
- out=out.replace(/^Runner pose:.*$/gm,'Runner pose: '+v.pose+' (Signature authority).');
+ out=out.replace(/If site space is insufficient, use a realistic smaller group\./gi,'Keep the selected crowd size in natural scene depth.');
  out=out.replace(/^Pose:.*$/gm,'Pose: '+v.pose+'. Gaze: '+v.gaze+'. Expression/action: '+v.expression+'.');
- out=out.replace(/^Physical seating surface:.*$/gm,'Physical seating surface: '+(/Mauer/.test(v.pose)?'a broad existing masonry wall':/Stuhl/.test(v.pose)?'a real stable chair':'according to the selected pose')+'.');
- out=out.replace(/^ORIGINAL SIGN TYPE:.*$/gm,'SIGNATURE DISPLAY INSTALLATION: '+v.mount+'. Relation: '+v.relation+'. Ground supports: '+v.ground+'. Secure appropriate real mounting.');
+ out=out.replace(/^Runner pose:.*$/gm,'Runner pose: '+v.pose+'.');
  out=out.replace(/^RUNNER:.*$/gm,'RUNNER: '+v.pose+'; '+v.expression+'; gaze '+v.gaze+'.');
- out=out.replace(/^SINGLE DISPLAY AUTHORITY:.*$/gm,'SINGLE DISPLAY AUTHORITY: Active Signature controls display, pose and audience; Plakat controls text, font and word colors.');
- out=out.replace(/^SCENE CONSISTENCY:.*$/gm,'SCENE CONSISTENCY: physical display and seating must match active Signature mount and pose; preserve all reference photos and legibility.');
- out=out.replace(/^The English meaning of every field above is authoritative\..*$/gm,'Premium scene values supplement only fields not actively governed by Signature; Signature overrides conflicting Premium scene fields.');
  out=out.replace(/^Expression\/action:.*$/gm,'Expression/action: '+v.expression+'.');
+ out=out.replace(/^Audience:.*$/gm,'Audience: '+v.count+' spectators; '+v.reaction+', '+v.dynamics+'.');
+ out=out.replace(/^Audience count:.*$/gm,'Audience count: '+v.count+' spectators.');
+ out=out.replace(/^Audience action:.*$/gm,'Audience action: '+v.reaction+'.');
+ out=out.replace(/^CROSSED ARMS \/ CHAIR BACK:.*$/gm, /Stuhl/.test(v.pose)?'CHAIR POSE ANATOMY: Rest both forearms naturally on a real chair back, visible separate wrists and realistic contact.':'');
+ out=out.replace(/^Physical seating surface:.*$/gm,/Stuhl/.test(v.pose)?'Physical seating surface: real stable chair.':'');
+ out=out.replace(/^SIGNATURE DISPLAY INSTALLATION:.*$/gm,'');
+ out=out.replace(/^SCENE CONSISTENCY:.*$/gm,'SCENE CONSISTENCY: Preserve real mounts, reference photos and sign text.');
+ out=out.replace(/^SINGLE DISPLAY AUTHORITY:.*$/gm,'SINGLE DISPLAY AUTHORITY: The existing Plakat & Text controls sign mounting and lettering; Signature controls only presence and dominance.');
  out=out.replace(/\b100\+ Personen\b/g,v.count+' Personen').replace(/\b100\+ people\b/gi,v.count+' people');
  return out;
 }
 function signatureAudit420(prompt){
- const out=String(prompt||''),v=effectiveValues429();
+ var out=String(prompt||''),v=sxCurrent4532();
  if(!data.enabled||typeof state==='undefined'||state.world!=='sign')return {pass:!!out.trim(),failures:out.trim()?[]:['Master-Prompt ist leer'],checked:0};
- const failures=[];
- for(const k of Object.keys(v))if(!out.includes(String(v[k])))failures.push('Signature-Feld fehlt: '+labels[k]+' = '+v[k]);
- const blocks=(out.match(/SIGNATURE PROTEST XXL — AUTHORITATIVE SCENE COMPOSITION/g)||[]).length;
- if(blocks!==1)failures.push('Signature-Block nicht genau einmal vorhanden.');
- if(out.includes('If site space is insufficient, use a realistic smaller group'))failures.push('Alte Regel reduziert Menschenmenge.');
- if(out.includes('XXL DISPLAY PRIMARY DIRECTIVE:'))failures.push('Alte Display-Autorität aktiv.');
- if(out.includes('CAMERA → RUNNER + XXL SIGN IN CLEAR FOREGROUND'))failures.push('Starre Vordergrundregel noch aktiv.');
- if(!out.includes('DYNAMIC COMPOSITION — CONSTANT PRINCIPLES, VARIABLE GEOMETRY:'))failures.push('Variable Komposition fehlt.');
- if(!out.includes('ATTENTION TARGET GEOMETRY:'))failures.push('Publikumsblickachsen-Regel fehlt.');
- if(!activeFieldNote429('pose')&&!out.includes('POSE FIDELITY:'))failures.push('Präzise Pose-Ausführung fehlt.');
- for(const k of fieldOverrides429())if(!out.includes('CUSTOM OVERRIDE (AUTHORITATIVE): '+String(activeFieldNote429(k).text).trim()))failures.push('Eigene Beschreibung nicht wirksam: '+labels[k]);
- if(!out.includes('PERMANENT CENTERLINE TYPOGRAPHY LOCK — NON-NEGOTIABLE:'))failures.push('Zentrierungs-Dauerlock fehlt.');
- if(/Text alignment:\s*(?:LEFT-ALIGNED|RIGHT-ALIGNED)/i.test(out))failures.push('Nicht-zentrierte Ausrichtung im Prompt.');
- if(!out.includes('NATURAL BODY PROPORTIONS — SINGLE AUTHORITY:'))failures.push('Natürlicher Körperproportionsschutz fehlt.');
- if(!out.includes('RUNNER POSITION — SINGLE SPATIAL AUTHORITY:'))failures.push('Läuferposition fehlt.');
- if(/Audience count:\s*100\+ Personen|Audience:\s*100\+ Personen/.test(out))failures.push('Veraltete Zuschauerzahl.');
- if(!out.includes('CAMERA SETTINGS — SINGLE AUTHORITATIVE SOURCE'))failures.push('Kamera-Autorität fehlt.');
- if(!out.includes('EXACT SIGN TEXT:')||!out.includes('EXACT PER-WORD COLOR MAP'))failures.push('Text-/Farbvertrag fehlt.');
- return {pass:!failures.length,failures,checked:Object.keys(v).length};
+ var errors=[];
+ if((out.match(/SIGNATURE PROTEST XXL — AUTHORITATIVE SCENE COMPOSITION/g)||[]).length!==1)errors.push('Signature-Block fehlt oder doppelt.');
+ if(!out.includes('MAIN RUNNER GAZE — SINGLE AUTHORITY: '+sxGaze4532(v.gaze)))errors.push('Ausgewählte Blickrichtung fehlt.');
+ if(!out.includes('NATURAL BODY PROPORTIONS — SINGLE AUTHORITY:'))errors.push('Natürliche Körperproportionen fehlen.');
+ if(!out.includes('RUNNER POSITION — SINGLE SPATIAL AUTHORITY: '+v.position))errors.push('Läuferposition fehlt.');
+ if(!out.includes('PERMANENT CENTERLINE TYPOGRAPHY LOCK — NON-NEGOTIABLE:'))errors.push('Plakatzentrierung fehlt.');
+ if(!out.includes('CAMERA SETTINGS — SINGLE AUTHORITATIVE SOURCE'))errors.push('Kamera-Hauptwerte fehlen.');
+ if(!out.includes('EXACT SIGN TEXT:')||!out.includes('EXACT PER-WORD COLOR MAP'))errors.push('Plakattext oder Farben fehlen.');
+ if(v.description.trim()&&!out.includes(v.description.trim()))errors.push('Individuelle Beschreibung fehlt.');
+ return {pass:!errors.length,failures:errors,checked:9};
 }
+
 function installPrompt(){
  if(typeof buildPrompt!=='function'||buildPrompt.__sx400)return;
  const previous=buildPrompt;
  const wrapped=function(){
   const base=String(previous.apply(this,arguments));
   if(typeof state==='undefined'||state.world!=='sign'||!data.enabled)return base;
-  const result=cleanSignatureConflicts420(base)+'\n'+signaturePrompt()+'\nSIGNATURE FINAL AUTHORITY: The values in Signature override older scene presets; preserve exact sign text, word colors, photos, outfit and central camera settings. GAZE TARGET LOCK: overhead display readers look up at the actual display; other spectators may watch the runner or talk. NO DISASTER REACTION LOCK: no collective catastrophe-like panic, synchronized open mouths or staged identical shock expressions. Show '+effectiveValues429().reaction+' with natural diversity, '+effectiveValues429().attention+' attention and '+effectiveValues429().count+' spectators at '+effectiveValues429().density+' density.';const validation=signatureAudit420(result);if(!validation.pass)throw Error('ASF-Prompt blockiert: '+validation.failures.join(' | '));return result;
+  const result=cleanSignatureConflicts420(base)+'\n'+signaturePrompt();const validation=signatureAudit420(result);if(!validation.pass)throw Error('ASF-Prompt blockiert: '+validation.failures.join(' | '));return result;
  };
  buildPrompt=wrapped;
  const brandBase=buildPrompt;
@@ -2529,7 +2557,7 @@ function installPrompt(){
   let out=String(brandBase.apply(this,arguments));
   const c=(typeof state!=='undefined'&&state.common)||{};
   const topOn=c.topLogoVisible314!==false,pantsOn=c.pantsLogoVisible270!==false;
-  return out+'\n\nGARMENT BRAND MARKS — FINAL AUTHORITATIVE RULE: Reproduce the selected authentic brand mark sharply and precisely, with natural print or embroidery, correct geometry, orientation and selected logo color. Maximum ONE visible brand logo per individual garment (one on the top, one on trousers/shorts only when its toggle is ON). Never repeat, mirror, clone, scatter or invent logos on the same garment. Top logo must be visible in a realistic single location without changing the outfit or reference shoes. Respect OFF logo toggles. No extra sleeve branding unless selected. CROWD REALISM — AUTHORITATIVE STYLE LOCK: Preserve the exact selected spectator count and density, chosen focal length, camera distance and format. Show a candid documentary crowd rather than a choreographed demonstration: irregular gaps, staggered distances and depths, natural overlaps, diverse postures, a few cropped back views at the lower or side edges, side conversations and differing restrained expressions. As a general naturalness target around 75 to 85 percent look toward the runner or read the sign while others talk to companions or gradually notice the event; if the user explicitly sets another attention level, honor that selection. The runner is naturally integrated within the crowd at realistic scale, not isolated in the nearest camera plane; keep face, pose, shoes and complete sign readable. Avoid uniform gaze, aligned shoulders, cloned faces, evenly spaced ranks, artificial synchronized gestures and theatrical shouting. FONT STYLE: Follow the user-selected poster font exactly, uppercase bold condensed typography with sharp clean glyphs and accurate Turkish/German diacritics; never substitute an unselected font. TOP LOGO: '+(topOn?'ON — exactly one':'OFF — zero')+'. PANTS/SHORTS LOGO: '+(pantsOn?'ON — exactly one':'OFF — zero')+'.';
+  return out+'\n\nGARMENT BRAND MARKS — FINAL AUTHORITATIVE RULE: Reproduce the selected authentic brand mark sharply and precisely, with natural print or embroidery, correct geometry, orientation and selected logo color. Maximum ONE visible brand logo per individual garment (one on the top, one on trousers/shorts only when its toggle is ON). Never repeat, mirror, clone, scatter or invent logos on the same garment. Top logo must be visible in a realistic single location without changing the outfit or reference shoes. Respect OFF logo toggles. No extra sleeve branding unless selected. CROWD REALISM — AUTHORITATIVE STYLE LOCK: Preserve the exact selected spectator count and density, chosen focal length, camera distance and format. Show a candid documentary crowd rather than a choreographed demonstration: irregular gaps, staggered distances and depths, natural overlaps, diverse postures, a few cropped back views at the lower or side edges, side conversations and differing restrained expressions. Spectators naturally look at the sign, main runner or companions; the runner's selected gaze takes priority. The runner is naturally integrated within the crowd at realistic scale, not isolated in the nearest camera plane; keep face, pose, shoes and complete sign readable. Avoid uniform gaze, aligned shoulders, cloned faces, evenly spaced ranks, artificial synchronized gestures and theatrical shouting. FONT STYLE: Follow the user-selected poster font exactly, uppercase bold condensed typography with sharp clean glyphs and accurate Turkish/German diacritics; never substitute an unselected font. TOP LOGO: '+(topOn?'ON — exactly one':'OFF — zero')+'. PANTS/SHORTS LOGO: '+(pantsOn?'ON — exactly one':'OFF — zero')+'.';
  };
  buildPrompt.__sx400=true;
 }
