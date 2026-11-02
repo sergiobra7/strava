@@ -14,7 +14,7 @@
 #premiumPanel270 > #premiumCards270{display:block!important}
 #premiumPanel270 > #refreshPremium270{display:block!important;margin:14px 0}
 #premiumPanel270 #allSettings339,#premiumPanel270 #master320,#premiumPanel270 #premiumEditor270,#premiumPanel270 #premiumCast311,#premiumPanel270 #manualRegie328,#premiumPanel270 #premiumActiveFilters340{display:none!important}
-</style><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Anton&family=Archivo+Black&family=Archivo+Narrow:wght@900&family=Barlow+Condensed:wght@800;900&family=Bebas+Neue&family=League+Gothic&family=Oswald:wght@700&family=Roboto+Condensed:wght@900&family=Teko:wght@700&display=swap" rel="stylesheet"></head><body><header><div><h1>STRAVA RUN <span class="mark">V4.5.22</span></h1><small>RUNNER PHOTO + STRAVA WALL · GITHUB EDITION</small><div id="onlineBuild414" style="font-size:12px;color:#a8c6b8;margin-top:5px;font-weight:700" aria-label="Online-Version">ONLINE · V4.4.0 · Commit wird geprüft …</div></div><div style="display:flex;align-items:center;gap:9px;flex-wrap:wrap;justify-content:flex-end"><span id="saveStatus" class="status">Lokal gespeichert</span><button id="stravaRefresh401" type="button" title="Neueste GitHub-Version laden" style="background:#2cbd79;color:#101510;border:0;border-radius:9px;padding:10px 13px;font-weight:800;cursor:pointer">🔄 Aktualisieren</button></div></header><main><div class="worlds"><button class="world active" data-world="wall">🧱 STRAVA WALL</button><button class="world" data-world="sign">⬛ BLACK SIGN / PLAKAT</button></div><div style="display:flex;align-items:center;justify-content:space-between;gap:10px;margin:9px 0"><button id="presetShortcut403" type="button" style="background:#f2bd49;color:#151515;border:2px solid #f8d57b;border-radius:10px;padding:12px 16px;font-size:15px;font-weight:900;cursor:pointer;flex:1">⭐ MEINE PRESETS · GALERIE ÖFFNEN</button></div><section id="presetDirect404" hidden style="margin:14px 0;padding:14px;border:2px solid #f2bd49;border-radius:14px;background:#151a21"></section><nav class="tabs" id="tabs"></nav><div id="view"></div><div class="footer">Lokale Offline-Web-App · Keine Bilder werden an einen Server gesendet · Prompt zum Kopieren für ChatGPT/Bildgenerierung</div></main><script>
+</style><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Anton&family=Archivo+Black&family=Archivo+Narrow:wght@900&family=Barlow+Condensed:wght@800;900&family=Bebas+Neue&family=League+Gothic&family=Oswald:wght@700&family=Roboto+Condensed:wght@900&family=Teko:wght@700&display=swap" rel="stylesheet"></head><body><header><div><h1>STRAVA RUN <span class="mark">V4.5.23</span></h1><small>RUNNER PHOTO + STRAVA WALL · GITHUB EDITION</small><div id="onlineBuild414" style="font-size:12px;color:#a8c6b8;margin-top:5px;font-weight:700" aria-label="Online-Version">ONLINE · V4.4.0 · Commit wird geprüft …</div></div><div style="display:flex;align-items:center;gap:9px;flex-wrap:wrap;justify-content:flex-end"><span id="saveStatus" class="status">Lokal gespeichert</span><button id="stravaRefresh401" type="button" title="Neueste GitHub-Version laden" style="background:#2cbd79;color:#101510;border:0;border-radius:9px;padding:10px 13px;font-weight:800;cursor:pointer">🔄 Aktualisieren</button></div></header><main><div class="worlds"><button class="world active" data-world="wall">🧱 STRAVA WALL</button><button class="world" data-world="sign">⬛ BLACK SIGN / PLAKAT</button></div><div style="display:flex;align-items:center;justify-content:space-between;gap:10px;margin:9px 0"><button id="presetShortcut403" type="button" style="background:#f2bd49;color:#151515;border:2px solid #f8d57b;border-radius:10px;padding:12px 16px;font-size:15px;font-weight:900;cursor:pointer;flex:1">⭐ MEINE PRESETS · GALERIE ÖFFNEN</button></div><section id="presetDirect404" hidden style="margin:14px 0;padding:14px;border:2px solid #f2bd49;border-radius:14px;background:#151a21"></section><nav class="tabs" id="tabs"></nav><div id="view"></div><div class="footer">Lokale Offline-Web-App · Keine Bilder werden an einen Server gesendet · Prompt zum Kopieren für ChatGPT/Bildgenerierung</div></main><script>
 /* V3.18 stabilization: one color serializer shared by prompt sections. */
 window.stravaSignColorMap318=function(sign){
  const source=sign||{},raw=String(source.signText||''),colors=source.wordColors||{},base=String(source.signColor||'#FFFFFF').toUpperCase();
@@ -1935,7 +1935,7 @@ function archiveBind413(){gallery413();let file=document.getElementById('a413fil
 /* V3.13.8: public GitHub Pages deployment identity, independent of local settings. */
 (function(){
  const el=document.getElementById('onlineBuild414');if(!el)return;
- const version='V4.5.22';
+ const version='V4.5.23';
  const fallback='ONLINE · '+version+' · Commit: nicht abrufbar';
  const url='https://api.github.com/repos/sergiobra7/strava/commits/main';
  const controller=new AbortController();
@@ -2682,71 +2682,78 @@ window.stravaSignCompact4520={full:fullPrompt4520,compact:body4520,prompt:select
 if(state.world==="sign"&&state.tab==="Prompt"&&typeof render==="function")render();
 })();
 </script>
-<script id="black-sign-smart-compact-ui-v4522">
-/* V4.5.22: Correct BLACK SIGN route. sign258.js renders 'Prompt & Projekt'
-   through prompt258(), not legacy promptView()/bind(). Never touch STRAVA WALL. */
+<script id="black-sign-smart-compact-ui-v4523">
+/* VISIBLE-FIRST-LOCK: mount the active BLACK SIGN Prompt & Projekt tab.
+   Preserve source FULL output, never change STRAVA WALL or saved project values. */
 (function(){
 "use strict";
-if(!window.stravaSignCompact4520 || typeof render!=="function")return;
+if(typeof render!=="function" || !window.stravaSignCompact4520)return;
 var originalFull=window.stravaSignCompact4520.full;
-var previousRender=render;
-var currentMode="full";
-function compact(full, ultra){
-  var lines=full.split("\n"), chosen=[], seen=new Set(), collectingIdentity=false, message=false;
-  var allowed=/^(\[REG-|\[BS-SD\]|\[HF-PO\]|\[BS-PL\]|\[BS-TY-01\]|\[BS-TX-COLORS\]|\[BS-ORT\]|\[BS-KA\]|\[BS-KA-ABSOLUTE|\[BS-SIGN-FRONT-LOCK\]|\[BS-CROWD-FACING\]|\[NF\]|\[NF-|\[BS-TX\]|\[BS-CA|\[BS-POSE|\[MANUAL|\[AUTO|\[CUSTOM|\[BS-G|\[BS-H|\[BS-INT|\[BS-OUT|\[BS-ATT|\[BS-BR|\[BS-SIGN|\[BS-CROWD|\[BS-TY|PERSON PHOTO:|SHOE PHOTO:|\[SHOE PHOTO|Brand:|SIGN TEXT \(EXACT\):|OUTPUT:|PHOTOREALISM:|SPATIAL DIRECTOR:|ATTACH PERSON PHOTO|CUSTOM OVERRIDE|USER ADDITIONAL|ACTIVE USER OVERRIDE|Premium scene cast:)/i;
-  var vital=/PERSON PHOTO|SHOE PHOTO|CAMERA|LENS|DISTANCE|MOUNT|SIGN|COLOR|TYPOGRAPHY|GAZE|POSE|SHOE|REFERENCE|OVERRIDE|CUSTOM|AUDIENCE|CROWD/i;
-  function add(x){var v=x.trim();if(v&&!seen.has(v)){chosen.push(v);seen.add(v)}}
-  add("STRAVA RUN BLACK SIGN — "+(ultra?"ULTRA COMPACT":"SMART COMPACT")+" V4.5.22");
-  add("Exactly ONE native 9:16 photorealistic documentary photograph. Use active PERSON PHOTO and separate SHOE PHOTO. All user-selected details and instructions below are authoritative.");
-  for(var i=0;i<lines.length;i++){
-    var line=lines[i], t=line.trim();
-    if(t==="01 — ABSOLUTE REFERENCE HIERARCHY"){collectingIdentity=true;continue}
-    if(t==="02 — MAIN RUNNER OUTFIT"){collectingIdentity=false}
-    if(t==="<<< SIGN TEXT START >>>"){message=true;add(t);continue}
-    if(t==="<<< SIGN TEXT END >>>"){message=false;add(t);continue}
-    if(message){add(line);continue}
-    if(collectingIdentity){add(line);continue}
-    if(!allowed.test(t))continue;
-    if(ultra && /^(\[BS-KA-COMPOSITION CHECK|\[BS-TY-01\] MANDATORY AUTO|SPATIAL DIRECTOR:)/.test(t))continue;
-    if(!ultra || t.length<350 || vital.test(t))add(t);
+var priorRender=render, mode="full";
+var STORAGELESS=true;
+function compact(full,ultra){
+  // Compact an already-generated FULL prompt. No assumptions about section names,
+  // populated sign text, per-word map format, or user's current configuration.
+  // Exact sign-text section, custom instructions and active settings remain verbatim.
+  var protectedStart="<<< SIGN TEXT START >>>", protectedEnd="<<< SIGN TEXT END >>>";
+  var a=full.indexOf(protectedStart),b=a<0?-1:full.indexOf(protectedEnd,a+protectedStart.length);
+  var prefix=b<0?full:full.slice(0,a), literal=b<0?"":full.slice(a,b+protectedEnd.length), suffix=b<0?"":full.slice(b+protectedEnd.length);
+  function compressOutside(text,aggressive){
+    // Limit changes to redundant boilerplate and whitespace only.
+    var replacements=[
+      [/Camera lens and distance values anywhere else in this prompt are non-authoritative scene descriptions; do not override these values\./g,"Camera: the top settings are authoritative."],
+      [/Produce exactly ONE native 9:16 ultra-photorealistic documentary photograph\. Never crop another format to 9:16\. No CGI, drawing, 3D rendering, or synthetic poster\./g,"One native 9:16 photorealistic documentary photo; no crop or CGI."],
+      [/Exactly ONE native 9:16 ultra-photorealistic documentary photograph\. Real anatomy, light, shadows and materials; no CGI\./g,"One native 9:16 documentary photo, realistic anatomy and light, no CGI."],
+      [/The restriction applies ONLY to ambient\/background signage, never to the two explicit message texts\./g,"Background-sign restriction excludes user-authored text."],
+      [/No beautification, no face redesign\./g,"No face redesign."],
+      [/No moving closer, no virtual camera relocation, no enlarging people or props, no perspective cheating, no fake background expansion\./g,"No camera relocation, subject scaling or perspective cheating."]
+    ];
+    for(var i=0;i<replacements.length;i++)text=text.replace(replacements[i][0],replacements[i][1]);
+    if(aggressive){
+      text=text.replace(/\n[ \t]*\n[ \t]*\n+/g,"\n\n");
+      text=text.replace(/\n[ \t]+(?=\n)/g,"\n");
+    }
+    return text;
   }
-  var out=chosen.join("\n");
-  var msg=full.split("<<< SIGN TEXT START >>>")[1]?.split("<<< SIGN TEXT END >>>")[0]?.trim();
-  if(!msg || !out.includes(msg))throw Error("Originaltext fehlt; Compact-Export blockiert.");
-  if(!out.includes("[BS-TX-COLORS]") || !out.includes("PERSON PHOTO") || !out.includes("SHOE PHOTO"))throw Error("Pflichtdaten fehlen; Compact-Export blockiert.");
+  var out=compressOutside(prefix,ultra)+literal+compressOutside(suffix,ultra);
+  // Additional safe reduction: remove only exact adjacent duplicate lines outside SIGN TEXT.
+  if(ultra){
+    function consecutive(t){return t.replace(/(^|\n)([^\n]{40,})\n\2(?=\n|$)/gm,"$1$2");}
+    out=consecutive(compressOutside(prefix,true))+literal+consecutive(compressOutside(suffix,true));
+  }
+  if(out===full){
+    // Non-destructive compaction of blank lines OUTSIDE verbatim message.
+    out=prefix.replace(/\n\n\n+/g,"\n\n")+literal+suffix.replace(/\n\n\n+/g,"\n\n");
+  }
+  // A mode that cannot safely shorten source must display this fact, not erase content.
+  if(literal && !out.includes(literal))throw Error("Der wortgetreue Originaltext wurde verändert.");
+  if(!out.includes("PERSON PHOTO") || !out.includes("SHOE PHOTO"))throw Error("Referenzvorgaben fehlen.");
   return out;
 }
-buildPrompt=function(){
-  var full=originalFull();
-  if(state.world!=="sign" || currentMode==="full")return full;
-  return compact(full,currentMode==="ultra");
-};
-function decorate(){
- if(state.world!=="sign" || state.tab!=="Prompt & Projekt")return;
- var pre=document.querySelector("#view pre.prompt");
- if(!pre)return;
- var panel=document.createElement("div");
- panel.className="notice";
- panel.style.cssText="border:2px solid #67bf94;padding:14px;margin:12px 0";
- panel.innerHTML='<strong>SMART COMPACT ENGINE · V4.5.22</strong><p style="margin:7px 0">Prompt-Modus auswählen:</p><select id="signCompactMode4522" style="display:block;width:100%;min-height:48px"><option value="full">FULL · Original (Standard)</option><option value="smart">SMART COMPACT</option><option value="ultra">ULTRA COMPACT</option></select><p id="signCompactStats4522" class="hint"></p>';
- pre.parentElement.insertBefore(panel,pre);
- var sel=panel.querySelector("select");sel.value=currentMode;
- sel.onchange=function(){
-  currentMode=sel.value;
-  try{
-   var txt=buildPrompt();
-   pre.textContent=txt;
-   panel.querySelector("#signCompactStats4522").textContent=txt.length+" Zeichen · "+(currentMode==="full"?"unverändertes Original":Math.round((1-txt.length/originalFull().length)*100)+" % kürzer als FULL");
-  }catch(e){
-   sel.value=currentMode="full";pre.textContent=originalFull();
-   panel.querySelector("#signCompactStats4522").textContent="Kompaktmodus nicht verfügbar: "+String(e.message||e);
-  }
- };
- sel.onchange();
+function selected(){var full=originalFull();return state.world!=="sign"||mode==="full"?full:compact(full,mode==="ultra")}
+buildPrompt=function(){return selected()};
+function mount(){
+ if(state.world!=="sign"||state.tab!=="Prompt & Projekt")return;
+ var pre=document.querySelector("#view pre.prompt");if(!pre)return;
+ var box=document.createElement("div");box.className="notice";
+ box.style.cssText="border:2px solid #67bf94;padding:14px;margin:12px 0";
+ box.innerHTML='<strong>SMART COMPACT ENGINE · V4.5.23</strong><p style="margin:7px 0">Prompt-Modus auswählen:</p><select id="signCompactMode4523" style="display:block;width:100%;min-height:48px"><option value="full">FULL · Original (Standard)</option><option value="smart">SMART COMPACT</option><option value="ultra">ULTRA COMPACT</option></select><p id="signCompactStats4523" class="hint" role="status"></p>';
+ pre.parentElement.insertBefore(box,pre);
+ var sel=box.querySelector("select"),info=box.querySelector("#signCompactStats4523");sel.value=mode;
+ function refresh(){
+   try{
+    var full=originalFull(),txt=selected();pre.textContent=txt;
+    var pct=full.length?100*(1-txt.length/full.length):0;
+    info.textContent=(mode==="full"?"FULL-Original unverändert":mode.toUpperCase()+" · "+pct.toFixed(1)+" % kürzer als FULL")+" · "+txt.length+" Zeichen";
+    if(mode!=="full"&&pct<=0)info.textContent+=" · Keine sichere Kürzung möglich – keine Inhalte gelöscht.";
+   }catch(e){mode="full";sel.value=mode;pre.textContent=originalFull();info.textContent="Fehler: "+String(e.message||e)}
+ }
+ sel.onchange=function(){mode=sel.value;refresh()};
+ refresh();
 }
-render=function(){previousRender();decorate()};
+render=function(){priorRender();mount()};
 if(state.world==="sign"&&state.tab==="Prompt & Projekt")render();
-window.stravaSignCompact4522={version:"V4.5.22",mode:function(){return currentMode}};
+window.stravaSignCompact4523={full:originalFull,prompt:selected,compact:compact,mode:function(){return mode},version:"V4.5.23"};
 })();
 </script>
 </body></html>
