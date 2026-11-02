@@ -2601,7 +2601,7 @@ function installPrompt(){
 
 function boot(){installPrompt();mountPanel()}
 const obs=new MutationObserver(()=>{if(!document.getElementById('signatureXXL400'))mountPanel()});if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',()=>{boot();const v=document.getElementById('view');if(v)obs.observe(v,{childList:true})});else{boot();const v=document.getElementById('view');if(v)obs.observe(v,{childList:true})}
-window.stravaSignature400={get:()=>JSON.parse(JSON.stringify(data)),restore:payload=>{if(!payload||typeof payload!=='object'||!payload.values)return false;data={...defaults,...JSON.parse(JSON.stringify(payload)),values:{...defaults.values,...payload.values},locks:{...(payload.locks||{})},notes:{...(payload.notes||{})}};persist();refresh();return true},prompt:signaturePrompt,validate:signatureAudit420,scenes,matrixAudit:matrixAudit422,compositions:()=>compositionVariants421.map((x,index)=>({index,title:x.title})),audit:()=>scenes.map(scene=>({name:scene.title,...evaluateScene(scene)})),test:matrixSelfTest};
+window.stravaSignature400={get:()=>JSON.parse(JSON.stringify(data)),restore:payload=>{if(!payload||typeof payload!=='object'||!payload.values)return false;data={...defaults,...JSON.parse(JSON.stringify(payload)),values:{...defaults.values,...payload.values},locks:{...(payload.locks||{})},notes:{...(payload.notes||{})}};sxMigrate4532();persist();refresh();return true},prompt:signaturePrompt,validate:signatureAudit420,scenes,matrixAudit:matrixAudit422,compositions:()=>compositionVariants421.map((x,index)=>({index,title:x.title})),audit:()=>scenes.map(scene=>({name:scene.title,...evaluateScene(scene)})),test:matrixSelfTest};
 })();
 </script>
 <script>
