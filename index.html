@@ -14,7 +14,7 @@
 #premiumPanel270 > #premiumCards270{display:block!important}
 #premiumPanel270 > #refreshPremium270{display:block!important;margin:14px 0}
 #premiumPanel270 #allSettings339,#premiumPanel270 #master320,#premiumPanel270 #premiumEditor270,#premiumPanel270 #premiumCast311,#premiumPanel270 #manualRegie328,#premiumPanel270 #premiumActiveFilters340{display:none!important}
-</style><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Anton&family=Archivo+Black&family=Archivo+Narrow:wght@900&family=Barlow+Condensed:wght@800;900&family=Bebas+Neue&family=League+Gothic&family=Oswald:wght@700&family=Roboto+Condensed:wght@900&family=Teko:wght@700&display=swap" rel="stylesheet"></head><body><header><div><h1>STRAVA RUN <span class="mark">V4.7.0</span></h1><small>RUNNER PHOTO + STRAVA WALL · GITHUB EDITION</small><div id="onlineBuild414" style="font-size:12px;color:#a8c6b8;margin-top:5px;font-weight:700" aria-label="Online-Version">ONLINE · V4.4.0 · Commit wird geprüft …</div></div><div style="display:flex;align-items:center;gap:9px;flex-wrap:wrap;justify-content:flex-end"><span id="saveStatus" class="status">Lokal gespeichert</span><button id="stravaRefresh401" type="button" title="Neueste GitHub-Version laden" style="background:#2cbd79;color:#101510;border:0;border-radius:9px;padding:10px 13px;font-weight:800;cursor:pointer">🔄 Aktualisieren</button></div></header><main><div class="worlds"><button class="world active" data-world="wall">🧱 STRAVA WALL</button><button class="world" data-world="sign">⬛ BLACK SIGN / PLAKAT</button></div><div style="display:flex;align-items:center;justify-content:space-between;gap:10px;margin:9px 0"><button id="presetShortcut403" type="button" style="background:#f2bd49;color:#151515;border:2px solid #f8d57b;border-radius:10px;padding:12px 16px;font-size:15px;font-weight:900;cursor:pointer;flex:1">⭐ MEINE PRESETS · GALERIE ÖFFNEN</button></div><section id="presetDirect404" hidden style="margin:14px 0;padding:14px;border:2px solid #f2bd49;border-radius:14px;background:#151a21"></section><nav class="tabs" id="tabs"></nav><div id="view"></div><div class="footer">Lokale Offline-Web-App · Keine Bilder werden an einen Server gesendet · Prompt zum Kopieren für ChatGPT/Bildgenerierung</div></main><script>
+</style><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Anton&family=Archivo+Black&family=Archivo+Narrow:wght@900&family=Barlow+Condensed:wght@800;900&family=Bebas+Neue&family=League+Gothic&family=Oswald:wght@700&family=Roboto+Condensed:wght@900&family=Teko:wght@700&display=swap" rel="stylesheet"></head><body><header><div><h1>STRAVA RUN <span class="mark">V4.7.1</span></h1><small>RUNNER PHOTO + STRAVA WALL · GITHUB EDITION</small><div id="onlineBuild414" style="font-size:12px;color:#a8c6b8;margin-top:5px;font-weight:700" aria-label="Online-Version">ONLINE · V4.4.0 · Commit wird geprüft …</div></div><div style="display:flex;align-items:center;gap:9px;flex-wrap:wrap;justify-content:flex-end"><span id="saveStatus" class="status">Lokal gespeichert</span><button id="stravaRefresh401" type="button" title="Neueste GitHub-Version laden" style="background:#2cbd79;color:#101510;border:0;border-radius:9px;padding:10px 13px;font-weight:800;cursor:pointer">🔄 Aktualisieren</button></div></header><main><div class="worlds"><button class="world active" data-world="wall">🧱 STRAVA WALL</button><button class="world" data-world="sign">⬛ BLACK SIGN / PLAKAT</button></div><button type="button" id="transformDirect471" onclick="state.world=\'sign\';state.tab=\'TRANSFORM\';save();render();" style="display:block;width:100%;margin:8px 0 12px;background:#176f53;color:#fff;border:2px solid #69cf9b;border-radius:12px;padding:15px 12px;font-size:17px;font-weight:900;cursor:pointer">TRANSFORM-STUDIO · HIER ÖFFNEN</button><div style="display:flex;align-items:center;justify-content:space-between;gap:10px;margin:9px 0"><button id="presetShortcut403" type="button" style="background:#f2bd49;color:#151515;border:2px solid #f8d57b;border-radius:10px;padding:12px 16px;font-size:15px;font-weight:900;cursor:pointer;flex:1">⭐ MEINE PRESETS · GALERIE ÖFFNEN</button></div><section id="presetDirect404" hidden style="margin:14px 0;padding:14px;border:2px solid #f2bd49;border-radius:14px;background:#151a21"></section><nav class="tabs" id="tabs"></nav><div id="view"></div><div class="footer">Lokale Offline-Web-App · Keine Bilder werden an einen Server gesendet · Prompt zum Kopieren für ChatGPT/Bildgenerierung</div></main><script>
 /* V3.18 stabilization: one color serializer shared by prompt sections. */
 window.stravaSignColorMap318=function(sign){
  const source=sign||{},raw=String(source.signText||''),colors=source.wordColors||{},base=String(source.signColor||'#FFFFFF').toUpperCase();
@@ -67,7 +67,7 @@ const extraCharacterStyles=['Arbeitsjacke, robuste Hose, Sicherheitsschuhe','War
 const extraCharacterPoses=['Stehend, Hände locker','Arme vor der Brust verschränkt','Auf rückwärts gedrehtem Holzstuhl, Unterarme auf Lehne','Auf Holzstuhl sitzend','Auf Bank sitzend','An Wand gelehnt, Arme verschränkt','Lässig stehend, Beine gekreuzt','Neben Mofa stehend','Auf alter Mofa sitzend, ein Fuß am Boden','Neben Sackkarre / Handwagen','Mit Werkzeugtasche stehend','Mit Besen bei der Arbeit','Auf Kiste sitzend','Mit Teeglas in der Hand','Mit Einkaufstasche','Neben Fahrrad stehend','Mit offener Hand diskutierend','Mit Händen in den Taschen','Auf Treppe sitzend, nur wenn vorhanden','Gehend, natürliche Bewegung','Individuelle Pose'];
 const extraCharacterReactions=['Natürlich','Ungläubig','Humorvoll','Lachend','Provokant grinsend','Ernst','Skeptisch','Diskutierend','Überrascht','Gelassen','Nachdenklich'];
 const extraCharacterProps=['Keine','Holzstuhl rückwärts','Werkzeugtasche','Werkzeugkiste','Sackkarre','Handwagen','Alte Mofa','Fahrrad','Besen','Teeglas','Einkaufstasche','Aktenkoffer','Marktkiste','Individuell'];
-let uploads={};let activeWord=-1;let activeWords=new Set();const $=id=>document.getElementById(id);const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));const opts=(items,value)=>items.map((x,i)=>`<option value="${esc(x)}" ${x===value?'selected':''}>${String(i+1).padStart(2,'0')} · ${esc(x)}</option>`).join('');function field(label,key,items,section='common'){const v=state[section][key];return `<div class="field"><label>${esc(label)}</label><select data-section="${section}" data-key="${key}">${opts(items,v)}</select></div>`}function input(label,key,section='common',type='text'){return `<div class="field"><label>${esc(label)}</label><input type="${type}" value="${esc(state[section][key])}" data-section="${section}" data-key="${key}"></div>`}function area(label,key,section='common'){return `<div class="field"><label>${esc(label)}</label><textarea data-section="${section}" data-key="${key}">${esc(state[section][key])}</textarea></div>`}function check(label,key){return `<div class="check"><input type="checkbox" id="c_${key}" data-section="common" data-key="${key}" ${state.common[key]?'checked':''}><label for="c_${key}">${esc(label)}</label></div>`}function panel(title,html){return `<section class="panel"><h2>${title}</h2>${html}</section>`}function save(){try{const snapshot=JSON.parse(JSON.stringify(state));if(localStorage.getItem('strava-colors-persist-421')!=='on'&&snapshot.sign){snapshot.sign.wordColors={};}localStorage.setItem('stravaV25',JSON.stringify(snapshot));$('saveStatus').textContent='Lokal gespeichert'}catch{$('saveStatus').textContent='Speichern nicht möglich'}}function tabs(){if(state.world==='wall')return ['Schnellwahl','Wand / Plakat','Posen','Szenen','Hauptfigur','Nebenfiguren','Auto-Wand','Kamera & Ort','⭐ Meine Presets','Prompt','Projekt'];const fixed=['Smart Director','Plakat','Hauptfigur','Kamera','Szenen ⭐'];const rest=['⭐ Meine Presets','Nebenfiguren','Prompt','Projekt'];return fixed.concat(rest)}const APPEARANCE396='strava-premium-appearance-396';
+let uploads={};let activeWord=-1;let activeWords=new Set();const $=id=>document.getElementById(id);const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));const opts=(items,value)=>items.map((x,i)=>`<option value="${esc(x)}" ${x===value?'selected':''}>${String(i+1).padStart(2,'0')} · ${esc(x)}</option>`).join('');function field(label,key,items,section='common'){const v=state[section][key];return `<div class="field"><label>${esc(label)}</label><select data-section="${section}" data-key="${key}">${opts(items,v)}</select></div>`}function input(label,key,section='common',type='text'){return `<div class="field"><label>${esc(label)}</label><input type="${type}" value="${esc(state[section][key])}" data-section="${section}" data-key="${key}"></div>`}function area(label,key,section='common'){return `<div class="field"><label>${esc(label)}</label><textarea data-section="${section}" data-key="${key}">${esc(state[section][key])}</textarea></div>`}function check(label,key){return `<div class="check"><input type="checkbox" id="c_${key}" data-section="common" data-key="${key}" ${state.common[key]?'checked':''}><label for="c_${key}">${esc(label)}</label></div>`}function panel(title,html){return `<section class="panel"><h2>${title}</h2>${html}</section>`}function save(){try{const snapshot=JSON.parse(JSON.stringify(state));if(localStorage.getItem('strava-colors-persist-421')!=='on'&&snapshot.sign){snapshot.sign.wordColors={};}localStorage.setItem('stravaV25',JSON.stringify(snapshot));$('saveStatus').textContent='Lokal gespeichert'}catch{$('saveStatus').textContent='Speichern nicht möglich'}}function tabs(){if(state.world==='wall')return ['Schnellwahl','Wand / Plakat','Posen','Szenen','Hauptfigur','Nebenfiguren','Auto-Wand','Kamera & Ort','⭐ Meine Presets','Prompt','Projekt'];const fixed=['Smart Director','Plakat','TRANSFORM','Hauptfigur','Kamera','Szenen ⭐'];const rest=['⭐ Meine Presets','Nebenfiguren','Prompt','Projekt'];return fixed.concat(rest)}const APPEARANCE396='strava-premium-appearance-396';
 const LOOKS396={opa:['Schiebermütze, Weste, markanter Schnurrbart','Brille, gezwirbelter Schnurrbart, Sakko','Langer weißer Bart, Hut, traditionelles Sakko','Flache Kappe, Hemd, Strickweste'],teyze:['Gemustertes Kopftuch, Strickjacke, Kleid','Kopftuch, geblümtes Kleid, Weste','Schlichte Jacke, langes Kleid','Unbedecktes graues Haar, traditionelle Jacke','Dunkles Kopftuch, gemusterter Rock'],weitere:['Natürliche Alltagskleidung, dem Ort angemessen','Arbeitsjacke, robuste Hose, Sicherheitsschuhe','Mantel, Hemd, dunkle Hose'],gemischt:['Unterschiedliche realistische Alltagskleidung, dem Ort und Wetter angemessen','Gemischte Altersgruppen mit schlichter Kleidung']};
 const OPA_PROFILES397=[
  ['OPA 01 · Klassisch','Schlank bis normal, älterer anatolischer Mann, grauer Schnurrbart, graues Haar, dunkelgraue Schiebermütze, braunes Cord-Sakko mit aufgesetzten Taschen, braun-blau kariertes Hemd, dunkelgraue Stoffhose, brauner Ledergürtel, abgetragene braune Lederschuhe. Optische Standardvorlage: der vom Nutzer gezeigte Opa.'],
@@ -341,7 +341,7 @@ function promptView(){return '<section class="panel"><h2>Master-Prompt</h2><butt
 function projectView(){return '<section class="panel"><h2>Projekt</h2><button class="btn" type="button" id="exportJson">Projekt exportieren</button><label>Projekt importieren<input id="importJson" type="file" accept="application/json,.json"></label></section>';}
 function cameraView(){const c=state.common||{};if(state.world==='wall')return '<section class="panel"><h2>STRAVA WALL · Kamera</h2><p>Diese beiden Werte sind die ausschließliche Kameraquelle für den Wall-Master-Prompt.</p><label>Brennweite in mm</label><input type="number" min="15" max="120" data-section="common" data-key="cameraLens" value="'+esc(c.cameraLens||24)+'"><label>Abstand Kamera–Läufer in m</label><input type="number" min="1" max="200" data-section="common" data-key="personDistance" value="'+esc(c.personDistance||15)+'"><p>Ausgabeformat: '+esc(c.format||'4:5')+'</p></section>';return '<section class="panel"><h2>Kamera</h2><label>Objektiv (mm)</label><input type="number" min="15" max="120" data-section="common" data-key="lens" value="'+esc(c.lens||24)+'"><label>Abstand (m)</label><input type="number" min="1" max="200" data-section="common" data-key="distance" value="'+esc(c.distance||20)+'"></section>';}
 
-function render(){const legacyTabs=state.world==='wall'?{'Smart Director':'Schnellwahl','Szenen ⭐':'Szenen','Kamera':'Kamera & Ort','Plakat':'Wand / Plakat'}:{'Schnellwahl':'Smart Director','Erweitert':'Hauptfigur','Meine Bilder':'⭐ Meine Presets','Szenen':'Szenen ⭐','Kamera & Ort':'Kamera','Plakat & Text':'Plakat','Wand / Plakat':'Plakat','Auto-Wand':'Plakat'};if(legacyTabs[state.tab]){state.tab=legacyTabs[state.tab];save()}if(!tabs().includes(state.tab)){state.tab=state.world==='wall'?'Schnellwahl':'Smart Director';save()}document.querySelectorAll('.world').forEach(b=>b.classList.toggle('active',b.dataset.world===state.world));$('tabs').innerHTML=tabs().map(t=>`<button class="tab ${state.tab===t?'active':''}" data-tab="${t}">${t}</button>`).join('');let h='';switch(state.tab){case 'Smart Director':h=`<div class="notice"><b>Smart Director · 120 Szenenvorschläge</b><p>Die vollständige Auswahl wird über das BLACK-SIGN-Modul geladen. Falls sie hier nicht erscheint, wurde dieses Modul nicht ausgeführt.</p><div id="directorDiagnostics">Modulstatus: nicht geladen</div></div>`;break;case 'Schnellwahl':h=newQuickView();break;case 'Szenen ⭐':case 'Szenen':h=scenesView();break;case '⭐ Meine Presets':h=presetsTab398();break;case 'Hauptfigur':h=mainDirector();break;case 'Nebenfiguren':h=state.world==='wall'?sideDirector()+appearanceView396():appearanceView396();break;case 'Figuren':h=charactersView();break;case 'Posen':h=posesView();break;case 'Outfit':h=outfitView();break;case 'Erweitert':h=advancedView();break;case 'Plakat':h=fullPosterView321();break;case 'Wand / Plakat':h=wallSignView();break;case 'Plakat & Text':h=wallSignView();break;case 'Auto-Wand':h=autoWallView();break;case 'Kamera':case 'Kamera & Ort':h=cameraView();break;case 'Referenzen':h=referencesView();break;case 'Prompt':h=promptView();break;case 'Projekt':h=projectView();break;case 'Meine Bilder':h=archiveView413();break;}$('view').innerHTML=h;bind();}
+function render(){const legacyTabs=state.world==='wall'?{'Smart Director':'Schnellwahl','Szenen ⭐':'Szenen','Kamera':'Kamera & Ort','Plakat':'Wand / Plakat'}:{'Schnellwahl':'Smart Director','Erweitert':'Hauptfigur','Meine Bilder':'⭐ Meine Presets','Szenen':'Szenen ⭐','Kamera & Ort':'Kamera','Plakat & Text':'Plakat','Wand / Plakat':'Plakat','Auto-Wand':'Plakat'};if(legacyTabs[state.tab]){state.tab=legacyTabs[state.tab];save()}if(!tabs().includes(state.tab)){state.tab=state.world==='wall'?'Schnellwahl':'Smart Director';save()}document.querySelectorAll('.world').forEach(b=>b.classList.toggle('active',b.dataset.world===state.world));$('tabs').innerHTML=tabs().map(t=>`<button class="tab ${state.tab===t?'active':''}" data-tab="${t}">${t}</button>`).join('');let h='';switch(state.tab){case 'Smart Director':h=`<div class="notice"><b>Smart Director · 120 Szenenvorschläge</b><p>Die vollständige Auswahl wird über das BLACK-SIGN-Modul geladen. Falls sie hier nicht erscheint, wurde dieses Modul nicht ausgeführt.</p><div id="directorDiagnostics">Modulstatus: nicht geladen</div></div>`;break;case 'Schnellwahl':h=newQuickView();break;case 'Szenen ⭐':case 'Szenen':h=scenesView();break;case '⭐ Meine Presets':h=presetsTab398();break;case 'Hauptfigur':h=mainDirector();break;case 'Nebenfiguren':h=state.world==='wall'?sideDirector()+appearanceView396():appearanceView396();break;case 'Figuren':h=charactersView();break;case 'Posen':h=posesView();break;case 'Outfit':h=outfitView();break;case 'Erweitert':h=advancedView();break;case 'Plakat':h=fullPosterView321();break;case 'TRANSFORM':h='<section class="panel"><h2>TRANSFORM-STUDIO</h2><p>TRANSFORM-STUDIO wird geladen. Falls diese Meldung stehen bleibt, öffne den Schnellzugang oben.</p></section>';break;case 'Wand / Plakat':h=wallSignView();break;case 'Plakat & Text':h=wallSignView();break;case 'Auto-Wand':h=autoWallView();break;case 'Kamera':case 'Kamera & Ort':h=cameraView();break;case 'Referenzen':h=referencesView();break;case 'Prompt':h=promptView();break;case 'Projekt':h=projectView();break;case 'Meine Bilder':h=archiveView413();break;}$('view').innerHTML=h;bind();}
 
 const PRESET_DB399='strava-presets-v399';
 function presetDb399(){return new Promise((ok,no)=>{const q=indexedDB.open(PRESET_DB399,1);q.onupgradeneeded=()=>q.result.createObjectStore('items',{keyPath:'id'});q.onsuccess=()=>ok(q.result);q.onerror=()=>no(q.error)})}
@@ -2020,7 +2020,7 @@ function archiveBind413(){gallery413();let file=document.getElementById('a413fil
 /* V3.13.8: public GitHub Pages deployment identity, independent of local settings. */
 (function(){
  const el=document.getElementById('onlineBuild414');if(!el)return;
- const version='V4.7.0';
+ const version='V4.7.1';
  const fallback='ONLINE · '+version+' · Commit: nicht abrufbar';
  const url='https://api.github.com/repos/sergiobra7/strava/commits/main';
  const controller=new AbortController();
@@ -3036,5 +3036,274 @@ window.stravaSignCompact4524={version:"V4.5.38",full:fullSource,prompt:selected,
 })();
 </script>
 
-<script src="transform470.js?v=470-scene-studio"></script>
+<script>
+/* STRAVA RUN TRANSFORM V4.7.0 — independent German photographic prompt engine.
+   Uses existing poster/outfit data read-only. Never calls BLACK SIGN buildPrompt,
+   never changes Premium, ASF or STRAVA WALL state. */
+(function(){
+'use strict';
+if(typeof tabs!=='function'||typeof render!=='function')return;
+const KEY='strava-transform-v470';
+const LEGACY_KEY='strava-transform-v460';
+const tabName='TRANSFORM';
+const presets=[
+ ['Monumentaler Treppenbalkon','Auf einem eindrucksvollen öffentlichen Steinbalkon hoch über einer breiten Freitreppe. Das schwarze XXL-Banner ist fest an der historischen Fassade über dem Podest verankert.','Ein Fuß steht auf einer niedrigen Steinstufe, ein Unterarm ruht auf dem angewinkelten Knie; er lehnt sich selbstbewusst nach vorn und grinst herausfordernd.'],
+ ['Bahnhofsvorplatz','Auf der breiten öffentlichen Steintreppe vor einem monumentalen Bahnhofsgebäude. Das schwarze XXL-Banner hängt sicher an der Fassade hinter ihm.','Er steht mit verschränkten Armen und leicht provokantem Grinsen seitlich vor dem Banner.'],
+ ['Markthalle','In der großen öffentlichen Markthalle mit hohem Glasdach und breiten Durchgängen. Das schwarze XXL-Banner hängt an einem sichtbaren stabilen Träger über dem Durchgang.','Er steht lässig und selbstbewusst auf einer breiten Treppenstufe, eine Hand ruht auf dem Geländer.'],
+ ['Einkaufsstraße','Mitten in einer weitläufigen belebten Fußgängerzone mit breiten Ladenfassaden und öffentlichen Sitzstufen. Das XXL-Banner ist sichtbar und sicher über dem Platz aufgehängt.','Er lehnt lässig neben einem Einkaufswagen an einem niedrigen öffentlichen Steinpodest.'],
+ ['Bäckereivorplatz','Vor einer gut besuchten generischen Bäckerei an einer breiten öffentlichen Einkaufsstraße. Das schwarze XXL-Banner hängt sichtbar befestigt an der Fassade.','Er lehnt locker an einem Einkaufswagen und grinst direkt in die Kamera.'],
+ ['Hochgelegene Stadtterrasse','Auf einer großen öffentlichen Aussichtsterrasse über einem dicht besuchten Stadtplatz. Das schwarze XXL-Banner ist mit sichtbaren Halterungen an einer massiven Wand befestigt.','Er steht aufrecht am Geländer, die Unterarme entspannt darauf abgelegt, das Gesicht frei zur Kamera.'],
+ ['Bahnhofspassage','In einer riesigen öffentlichen Bahnhofspassage mit breiten Treppen, hohen Säulen und einem offenen Vorplatz. Das schwarze Banner hängt an einem echten, fest montierten Querträger.','Er sitzt rückwärts auf einem stabilen Stuhl, die Unterarme leicht versetzt auf der Lehne, beide Hände natürlich sichtbar.'],
+ ['Altstadtplatz','Auf einem weitläufigen historischen Altstadtplatz mit monumentaler Freitreppe. Das schwarze XXL-Banner ist fest an einer großen Steinfront montiert.','Er steht breit und stabil auf dem obersten Absatz, die Arme verschränkt und mit frechem Grinsen.']
+,
+ ["Glasbrücke über Foodcourt","Im Obergeschoss einer lichtdurchfluteten öffentlichen Einkaufsgalerie über einem riesigen Foodcourt. Ein schwarzes XXL-Stoffbanner hängt mit sichtbaren Stahlseilen an zwei massiven Dachträgern über dem Atrium.","Er lehnt die Unterarme lässig auf die breite Geländerauflage der Glasbrücke und grinst in die Kamera. Unten essen Besucher Pizza."],
+ ["Rolltreppen-Galerie","Auf der oberen Galerie einer gewaltigen Shopping-Passage mit gläsernen Rolltreppen und öffentlichem Foodcourt. Das riesige schwarze Banner hängt an echten Deckenankern gut sichtbar über dem zentralen Durchgang.","Er steht neben der Rolltreppe am festen Geländer, beide Füße sicher auf dem Galerieboden; neben ihm diskutieren neugierige Passanten."],
+ ["Supermarkt-Kassenmeile","Am überdachten öffentlichen Ausgang eines großen Supermarkts mit langen Schaufenstern und Einkaufswagen. Das XXL-Banner ist sichtbar an einer massiven Außenwand befestigt.","Er steht gelassen neben einem Einkaufswagen, die Arme verschränkt; die Kundschaft mit Einkaufstüten reagiert auf den Text."],
+ ["Markthalle unter Glasdach","Auf einer breiten öffentlichen Besuchergalerie in einer riesigen Markthalle unter einem hohen Glasdach. Das schwarze XXL-Banner hängt von einem sichtbaren, robusten Dachquerträger.","Er stützt sich mit beiden Unterarmen auf das Galeriegeländer und blickt provokant zur Kamera; Marktbesucher schauen hinauf."],
+ ["Bäckerei mit Warteschlange","Vor einer großen generischen Bäckerei am öffentlichen Platz mit einer langen Warteschlange. Das schwarze Banner hängt mit sichtbaren Ösen sicher an einer hohen modernen Fassade.","Er lehnt selbstbewusst am Einkaufswagen neben der öffentlichen Eingangspassage, eine Hand locker auf dem Griff."],
+ ["Food-Truck-Festival","Auf einem weitläufigen öffentlichen Food-Truck-Festival mit bunten neutralen Ständen und vielen Essensgästen. Das XXL-Banner ist an einer gesicherten temporären Traversenkonstruktion befestigt.","Er steht auf einem niedrigen gesicherten Podium am Rand der Essenszone, mit verschränkten Armen und frechem Grinsen."],
+ ["Großer Pizza-Abholbereich","Vor dem öffentlichen Eingang einer großzügigen anonymen Pizza-Abholhalle mit Fenstern und Sitzgelegenheiten. Ein riesiges schwarzes Banner ist an der Außenfront mit Stahlösen befestigt.","Er steht entspannt direkt neben einem hohen Stapel neutraler Pizzakartons, lächelt provokant und schaut zur Kamera."],
+ ["Bahnhofshalle mit Obergalerie","Auf der öffentlich zugänglichen Galerie einer futuristischen Bahnhofshalle mit hohen Glasbögen. Ein monumentales schwarzes Banner hängt an sichtbaren, stabilen Deckenträgern.","Er steht direkt am Geländer der Galerie, die Arme verschränkt, während Reisende unten zu den roten Worten hinaufschauen."],
+ ["Straßenbahn-Haltestelleninsel","Auf einer breiten öffentlichen Straßenbahn-Haltestelleninsel zwischen mehreren überdachten Bahnsteigen. Das schwarze XXL-Banner hängt sichtbar an einer gesicherten temporären Stahltraverse über der Wartefläche.","Er steht breit und gelassen neben dem Fahrgastunterstand und schaut provozierend in die Kamera."],
+ ["Busbahnhof mit Überdachung","Im großen öffentlichen Busbahnhof unter einem weit ausladenden Glasdach. Das schwarze Banner hängt von einer festen Metalltraverse hinter dem sicheren Wartebereich.","Er lehnt locker an einem stabilen Geländer und sieht die Kamera mit frechem Grinsen an; Wartende gestikulieren zum Text."],
+ ["Fußgängerbrücke über Stadtverkehr","Auf einer breiten öffentlichen Fußgängerbrücke über einem dicht belebten Stadtboulevard. Das gewaltige Banner ist an einer benachbarten massiven Gebäudefront sichtbar befestigt.","Er lehnt mit beiden Unterarmen auf dem breiten Brückengeländer und blickt direkt in die Kamera."],
+ ["Bahnhofsvorplatz modern","Auf einem modernen weitläufigen Bahnhofsvorplatz mit überdachten Wartezonen, ohne historische Steintreppen. Ein riesiges schwarzes Banner hängt an einer gesicherten Stahlrahmenkonstruktion.","Er steht mittig vor dem Ankunftsstrom mit verschränkten Armen, ruhig und bewusst provozierend."],
+ ["U-Bahn-Vorplatz","Vor einer großen öffentlichen U-Bahn-Station mit modernen Glasaufzügen, breiter Rampe und Menschenstrom. Das XXL-Banner ist an einer hohen ebenen Außenwand glaubwürdig befestigt.","Er steht auf einer flachen sicheren Plattform neben dem Stationszugang und grinst in die Kamera."],
+ ["Stadion-Außenumlauf","Auf dem breiten öffentlich zugänglichen Außenumlauf eines gigantischen Stadions, mit Menschen auf mehreren Ebenen. Das riesige schwarze Banner hängt mit sichtbaren Halterungen an der massiven Stadionaußenhaut.","Er lehnt die Unterarme auf ein breites festes Brüstungsgeländer und schaut gelassen zur Kamera."],
+ ["Öffentliche Laufbahn mit Tribüne","An einer öffentlich zugänglichen städtischen Laufbahn mit großer Zuschauertribüne. Das XXL-Banner ist an einer stabilen Tribünenfront gesichert, nicht über der Laufbahn schwebend.","Er steht entspannt auf dem breiten Zugangsweg vor den Tribünen, Arme verschränkt, Schuhe vollständig sichtbar."],
+ ["Sporthallen-Foyer","Im gigantischen öffentlichen Foyer einer Mehrzweck-Sportarena mit hohen Glasfassaden und großen Besuchertreppen. Das XXL-Banner hängt an echten Metalltraversen über dem Atrium.","Er steht lässig am breiten oberen Besuchergeländer und schaut mit frechem Grinsen zur Kamera."],
+ ["Schwimmbad-Vorplatz","Auf dem überdachten öffentlichen Vorplatz eines großen Hallenbads mit modernen Glasflächen und langen Gehwegen. Ein schwarzes XXL-Banner ist an einer hohen Außenfassade montiert.","Er steht direkt neben einem stabilen Handlauf mit verschränkten Armen, trocken und vollständig bekleidet."],
+ ["Industriehafen-Kai","An einer abgesicherten öffentlich zugänglichen Hafenpromenade gegenüber einer monumentalen Industrie-Krananlage. Das große schwarze Banner hängt an einer festen Hallenfassade mit sichtbaren Ösen und Seilen.","Er lehnt lässig am breiten Promenadengeländer, mit sicherem Abstand zum Wasser, und grinst direkt in die Kamera."],
+ ["Container-Promenade","Auf einer öffentlichen Hafenpromenade gegenüber hohen gestapelten Schiffscontainern. Ein riesiges schwarzes Stoffbanner ist an einem gesicherten Ausstellungsträger verankert.","Er steht vor einem breiten fest montierten Geländer, Arme verschränkt und bewusst asymmetrisch im Vordergrund."],
+ ["Gasometer-Vorplatz","Auf einem großen öffentlichen Industriepark-Vorplatz vor einem gewaltigen zylindrischen Gasbehälter. Das schwarze Banner hängt glaubwürdig an einer rechteckigen seitlichen Ausstellungswand.","Er steht auf einem niedrigen öffentlichen Besucherpodest, leicht schräg zur Kamera mit frechem Grinsen."],
+ ["Lagerhallen-Passage","In einer großen öffentlich zugänglichen Ausstellungspassage einer ehemaligen Industriehalle mit Stahlstreben und Oberlichtern. Das XXL-Banner ist sicher am Stahlquerträger montiert.","Er sitzt lässig rückwärts auf einem stabilen Besucher-Stuhl und sieht direkt in die Kamera."],
+ ["Parkdeck mit Stadtsilhouette","Auf einem breiten öffentlichen Parkdeck mit freier Sicht auf die Stadtsilhouette. Das XXL-Banner hängt an einer hohen angrenzenden massiven Gebäudewand; klare Verankerungen sind sichtbar.","Er lehnt entspannt am breiten, sicheren Parkdeckgeländer, beide Füße vollständig sichtbar."],
+ ["Skywalk über Fußgängerzone","Auf einem spektakulären verglasten öffentlichen Skywalk über einer breiten Fußgängerzone. Das Banner hängt an einer benachbarten großen Glas-Stahl-Fassadenstruktur mit sichtbaren Halterungen.","Er steht direkt hinter der breiten Geländerauflage des Skywalks, Arme verschränkt und Gesicht zur Kamera."],
+ ["Aussichtsplattform am Fluss","Auf einer weitläufigen öffentlichen Aussichtsplattform am Fluss mit imposanter Skyline. Das schwarze XXL-Banner ist an einer angrenzenden massiven Gebäudefront verankert.","Er lehnt mit beiden Unterarmen am breiten Geländer, natürlich proportioniert und nicht über den Rand gebeugt."],
+ ["Stadtpark-Rampe","Auf einer breiten öffentlichen Rampe in einem modernen Stadtpark mit terrassierten Grünflächen und weitläufigen Wegen. Das große Banner ist sicher an einer angrenzenden Veranstaltungsbühne befestigt.","Er steht auf einer flachen Besucherplattform mit verschränkten Armen, während Menschen von den Parkwegen hinaufblicken."],
+ ["Rathausplatz modern","Auf einem großen öffentlichen Platz vor einer modernen skulpturalen Glasfassade mit eindrucksvoller Geometrie. Das riesige schwarze Banner ist sichtbar und sicher in einer hohen Fassadennische befestigt.","Er steht mit breitem, stabilem Stand vor der Fassade, Arme verschränkt, und blickt grinsend direkt in die Kamera."],
+ ["Museumshof mit Glasdach","In einem öffentlich zugänglichen Museumshof unter einem spektakulären Glasdach. Das XXL-Banner hängt an einer hohen ebenen Innenhofwand mit sichtbaren Stahlösen.","Er sitzt lässig auf einer breiten öffentlichen Sitzbank, ein Arm ruht auf der Rückenlehne, beide Schuhe im Bild."],
+ ["Konzerthallen-Plaza","Auf dem weiten öffentlichen Vorplatz einer modernen Konzerthalle mit geschwungenem Dach und großen Glasfronten. Das XXL-Banner ist sicher an einer flachen Seitenfassade befestigt.","Er steht auf einem gesicherten niedrigen Bühnenpodest, die Arme verschränkt und mit provokantem Lächeln."],
+ ["Fußgängerzone mit Stadtlichtern","Auf einer sehr breiten belebten Einkaufsstraße zwischen modernen Gebäudefronten und großen öffentlichen Sitzbänken. Das XXL-Banner hängt mit sichtbaren Halterungen an einer hohen Hauswand.","Er lehnt mit dem Rücken lässig an einer stabilen öffentlichen Bank, ein Fuß flach am Boden, und schaut in die Kamera."],
+ ["Hochhaus-Atrium","Im öffentlich zugänglichen mehrstöckigen Atrium eines modernen Hochhauses mit offenen Galerien. Das riesige schwarze Banner hängt von einem sichtbar tragfähigen Deckenträger über dem Foyer.","Er steht oben an der Besucherbalustrade, beide Hände entspannt am Geländer und sein Gesicht frei sichtbar."],
+ ["Öffentliche Fahrrad-Promenade","Auf einer breiten städtischen Rad- und Fußgängerpromenade mit öffentlichem Wartebereich. Das gigantische Banner hängt an einem gesicherten festen Rahmen über der Platzfläche, ohne den Weg zu blockieren.","Er steht abseits des Verkehrs auf einer breiten Aussichtsfläche, Arme verschränkt und direkt zur Kamera."],
+ ["Große Einkaufspassage Außenhof","In einem großzügigen öffentlichen Außenhof eines Einkaufsparks mit mehreren Etagen und überdachten Gängen. Das schwarze XXL-Banner hängt fest an der zentralen Fassade.","Er steht vor einem Einkaufswagen mit beiden Händen locker auf dem Griff; um ihn herum reagieren Passanten mit vollen Einkaufstüten."],
+ ["Freiluft-Bühne am Markt","Auf einer breiten gesicherten öffentlichen Veranstaltungsbühne mitten auf einem Marktplatz mit moderner Architektur. Ein schwarzes XXL-Banner ist hinter ihm an einer echten Bühnentraverse befestigt.","Er steht breit und selbstbewusst im Vordergrund, Arme verschränkt, während Zuschauer direkt zum Plakat schauen."],
+ ["Öffentliche Hafenterrasse","Auf einer großen öffentlichen Hafenterrasse mit Blick auf Lagerkräne und Schiffe. Ein gewaltiges schwarzes Banner hängt an der Wand eines modernen Besucherzentrums.","Er sitzt lässig auf einer breiten fest eingebauten Sitzbank, ein Unterarm auf einem Knie, beide Füße auf der Terrasse."],
+ ["Glasüberdachte Bahnhofspromenade","Auf einer weitläufigen glasüberdachten Bahnhofs-Promenade mit breiten Rolltreppen und Einkaufspassagen. Das Banner hängt an einer gesicherten hohen Hallenwand.","Er lehnt mit verschränkten Armen an einer massiven Stütze auf dem öffentlichen Vorplatz, deutlich vor dem Banner."],
+ ["Arena-Parkhausdach","Auf einem öffentlich zugänglichen Parkdeck gegenüber einer großen Sportarena, mit vielen Zuschauern auf den Fußwegen. Das XXL-Banner ist sichtbar an der Arenafassade befestigt.","Er steht entspannt an einem breiten sicheren Geländer und lächelt provozierend in die Kamera."]
+];
+const categories={"Glasbrücke über Foodcourt":"Konsum & Gastronomie","Rolltreppen-Galerie":"Konsum & Gastronomie","Supermarkt-Kassenmeile":"Konsum & Gastronomie","Markthalle unter Glasdach":"Konsum & Gastronomie","Bäckerei mit Warteschlange":"Konsum & Gastronomie","Food-Truck-Festival":"Konsum & Gastronomie","Großer Pizza-Abholbereich":"Konsum & Gastronomie","Bahnhofshalle mit Obergalerie":"Verkehr & Straße","Straßenbahn-Haltestelleninsel":"Verkehr & Straße","Busbahnhof mit Überdachung":"Verkehr & Straße","Fußgängerbrücke über Stadtverkehr":"Verkehr & Straße","Bahnhofsvorplatz modern":"Verkehr & Straße","U-Bahn-Vorplatz":"Verkehr & Straße","Stadion-Außenumlauf":"Sport & Arena","Öffentliche Laufbahn mit Tribüne":"Sport & Arena","Sporthallen-Foyer":"Sport & Arena","Schwimmbad-Vorplatz":"Sport & Arena","Industriehafen-Kai":"Industrie & Hafen","Container-Promenade":"Industrie & Hafen","Gasometer-Vorplatz":"Industrie & Hafen","Lagerhallen-Passage":"Industrie & Hafen","Parkdeck mit Stadtsilhouette":"Aussicht & Höhe","Skywalk über Fußgängerzone":"Aussicht & Höhe","Aussichtsplattform am Fluss":"Aussicht & Höhe","Stadtpark-Rampe":"Aussicht & Höhe","Rathausplatz modern":"Stadt & Architektur","Museumshof mit Glasdach":"Stadt & Architektur","Konzerthallen-Plaza":"Stadt & Architektur","Fußgängerzone mit Stadtlichtern":"Stadt & Architektur","Hochhaus-Atrium":"Stadt & Architektur","Öffentliche Fahrrad-Promenade":"Verkehr & Straße","Große Einkaufspassage Außenhof":"Konsum & Gastronomie","Freiluft-Bühne am Markt":"Stadt & Architektur","Öffentliche Hafenterrasse":"Industrie & Hafen","Glasüberdachte Bahnhofspromenade":"Verkehr & Straße","Arena-Parkhausdach":"Sport & Arena"};
+const poses=[
+ ['Aus Szene übernehmen',''],
+ ['Arme verschränkt','Er steht mit natürlich verschränkten Armen, selbstbewusstem Stand und frechem Blick direkt zur Kamera.'],
+ ['Überkopf-Plakat','Er hält eine eigenständige, handhabbare schwarze Protesttafel mit beiden Händen über dem Kopf; beide Arme sind anatomisch korrekt, die Hände greifen sichtbar den tragfähigen Rahmen. Ein zusätzliches Fassadenbanner wird nicht erzeugt.'],
+ ['Fuß auf Stufe','Ein Fuß steht auf einer niedrigen öffentlichen Steinstufe. Er stützt den Unterarm locker auf das angewinkelte Knie und schaut frech direkt in die Kamera.'],
+ ['An Geländer lehnen','Er lehnt sich mit beiden Unterarmen locker an ein festes öffentliches Geländer. Beide Füße stehen sicher und natürlich.'],
+ ['Anatolisch sitzend','Er sitzt mit natürlich angewinkelten Beinen auf einer breiten öffentlichen Steinstufe, ein Unterarm ruht auf einem Knie. Das Gesicht ist frei sichtbar.'],
+ ['Rückwärts auf Stuhl','Er sitzt rückwärts auf einem stabilen vorhandenen Stuhl, die Unterarme leicht versetzt auf der Lehne. Hände und Handgelenke sind sichtbar.']
+];
+const crowds=[
+ ['Empört und aufgebracht','Hunderte aufgebrachte Menschen richten ihre Blicke überwiegend direkt auf die provokanten Aussagen des Plakats. Viele sind empört, wütend oder fassungslos, diskutieren hitzig, schütteln den Kopf oder gestikulieren mit offenen Händen in Richtung der roten Schlüsselwörter. Nicht alle machen dasselbe; ihre Reaktionen bleiben verschieden und natürlich.'],
+ ['Wütend und diskutierend','Hunderte verärgerte Zuschauer lesen das Plakat. Einige diskutieren heftig, andere schimpfen sichtbar oder weisen mit offenen Händen auf die provokanten Aussagen. Viele sind empört, einzelne bleiben verblüfft oder skeptisch.'],
+ ['Schockiert und verwirrt','Die Passanten sind sichtbar überrascht und irritiert. Die meisten schauen direkt auf den Bannertext; einzelne diskutieren, andere bleiben fassungslos stehen und reagieren mit ungläubigen Gesichtsausdrücken.'],
+ ['Gemischt, aber aufmerksam','Eine große lebhafte Menschenmenge betrachtet das Plakat. Einige sind empört, andere lachen ungläubig oder diskutieren lautstark. Die Aufmerksamkeit richtet sich überwiegend auf die geschriebene Botschaft.']
+];
+function safe(s){return String(s??'').replace(/[&<>"']/g,ch=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));}
+function load(){try{const x=JSON.parse(localStorage.getItem(KEY)||localStorage.getItem(LEGACY_KEY)||'{}');return {scene:x.scene||presets[0][0],pose:x.pose||poses[0][0],crowd:x.crowd||crowds[0][0],extra:x.extra||'',world:x.world||'Alle Bildwelten',perspective:x.perspective||'Leichter Weitwinkel',history:Array.isArray(x.history)?x.history.slice(-12):[],saved:Array.isArray(x.saved)?x.saved:[]};}catch(e){return {scene:presets[0][0],pose:poses[0][0],crowd:crowds[0][0],extra:'',world:'Alle Bildwelten',perspective:'Leichter Weitwinkel',history:[],saved:[]};}}
+let settings=load();
+function store(){localStorage.setItem(KEY,JSON.stringify(settings));}
+function poster(){return (state.sign&&state.sign.signText)||'';}
+function posterColors(){const z=state.sign||{};try{if(window.stravaSignColorMap318){const m=window.stravaSignColorMap318(z);return m.lines;}}catch(e){}return poster().split('\n').map((line,i)=>'ZEILE '+(i+1)+': '+(line||'[LEERZEILE]')).join('\n');}
+function posterFont(){try{const p=JSON.parse(localStorage.getItem('stravaPoster321')||'{}');return p.font||'Impact';}catch(e){return 'Impact';}}
+function outfit(){
+ const c=state.common||{};
+ const brand=c.brand||'PUMA',top=c.top||'Full-Zip-Laufjacke',color=c.topColorHex||c.topColor||'#DFFF00';
+ const pants=c.pants||'sportliche Jogginghose',pcol=c.pantsColor||'Schwarz';
+ return 'Er trägt die gewählte '+brand+'-'+top+' in '+color+', dazu eine '+pcol+'e '+brand+'-'+pants+', '+(c.cap||'rote Cap rückwärts')+', '+(c.socks||'schwarze Socken')+' und '+(c.watch||'eine schwarze Sportuhr')+'. Verwende exakt die Laufschuhe aus dem separat beigefügten SHOE PHOTO. Keine erfundenen oder mehrfachen Markenlogos; keine zusätzlichen Ärmelstreifen.';
+}
+
+const worlds=['Alle Bildwelten','Konsum & Gastronomie','Verkehr & Straße','Sport & Arena','Industrie & Hafen','Aussicht & Höhe','Stadt & Architektur'];
+const perspectives={
+ 'Leichter Weitwinkel':'Eine natürliche leicht weitwinklige Fotoperspektive zeigt viel von der eindrucksvollen Umgebung, das gigantische Plakat und das Publikum. Die Hauptfigur bleibt im nahen, gut erkennbaren Vordergrund, mit unverzerrtem Gesicht und normalen Körperproportionen.',
+ 'Gesicht im Vordergrund':'Die Hauptfigur steht deutlich im Vordergrund. Gesicht, Bart und Augen sind klar erkennbar; das große Plakat und die Publikumsreaktionen bleiben vollständig im Bild.',
+ 'Ausgewogene Perspektive':'Eine natürliche dokumentarische Perspektive balanciert Hauptfigur, gigantisches Banner und sichtbar reagierendes Publikum.',
+ 'Monumentale Übersicht':'Die Szene vermittelt außergewöhnliche räumliche Größe und Tiefe. Die Architektur und das riesige Plakat bleiben vollständig erkennbar, ohne die Hauptfigur winzig werden zu lassen.'
+};
+const categoryKeywords={
+ 'Konsum & Gastronomie':/PIZZA|ESSEN|BURGER|FOOD|KAFFEE|BÄCK|SUPERMARKT|EINKAUF|FAST.FOOD|LIEFER|KÜHLSCHRANK|SOFA/,
+ 'Verkehr & Straße':/BUS|BAHN|AMPEL|HALTESTELLE|SPRINT|VERKEHR|FAHR|ZU FUSS|WARTEN/,
+ 'Sport & Arena':/SPORT|FITNESS|TRAIN|JOGG|LAUF|KILOMETER|KM|MARATHON/,
+ 'Industrie & Hafen':/ARBEIT|SCHICHT|WERK|JOB|FABRIK/,
+ 'Aussicht & Höhe':/TREPPE|STUFEN|AUFZUG|FAUL|OBEN|UNTEN|STEIG/,
+ 'Stadt & Architektur':/ALLTAG|HANDY|INTERNET|LIK(E|EN)|VIDEO/
+};
+function category(name){return categories[name]||({'Bahnhofsvorplatz':'Verkehr & Straße','Bahnhofspassage':'Verkehr & Straße','Markthalle':'Konsum & Gastronomie','Bäckereivorplatz':'Konsum & Gastronomie','Einkaufsstraße':'Konsum & Gastronomie','Hochgelegene Stadtterrasse':'Aussicht & Höhe','Monumentaler Treppenbalkon':'Aussicht & Höhe','Altstadtplatz':'Stadt & Architektur'})[name]||'Stadt & Architektur';}
+function scenesForWorld(world){return presets.filter(p=>world==='Alle Bildwelten'||category(p[0])===world);}
+function chooseCandidates(exclude){
+ const all=scenesForWorld(settings.world);
+ const recent=new Set((settings.history||[]).slice(-9));
+ let pool=all.filter(p=>!recent.has(p[0])&&!(exclude||[]).includes(p[0]));
+ if(!pool.length)pool=all.filter(p=>!(exclude||[]).includes(p[0]));
+ if(!pool.length)pool=all;
+ const txt=poster().toUpperCase();
+ const scored=pool.map(p=>{
+   const cat=category(p[0]),rx=categoryKeywords[cat],hit=rx&&rx.test(txt);
+   const pizza=/PIZZA|BURGER|ESSEN|FOOD/.test(txt);
+   const direct=pizza&&/Foodcourt|Pizza|Food-Truck|Markthalle|Einkauf/.test(p[0]);
+   return {p,weight:1+(hit?4:0)+(direct?4:0)};
+ });
+ return scored;
+}
+function pickScene(exclude){
+ const weighted=chooseCandidates(exclude);
+ const total=weighted.reduce((n,x)=>n+x.weight,0);
+ let t=Math.random()*total;
+ for(const x of weighted){t-=x.weight;if(t<=0)return x.p[0];}
+ return weighted[weighted.length-1].p[0];
+}
+function markScene(name){settings.history=(settings.history||[]).filter(x=>x!==name);settings.history.push(name);settings.history=settings.history.slice(-12);}
+function safePoseFor(sceneName,selectedPose){
+ const name=sceneName||'',cat=category(name);
+ if(selectedPose==='Aus Szene übernehmen')return 'Aus Szene übernehmen';
+ if(selectedPose==='An Geländer lehnen'&&!/Geländer|Brücke|Galerie|Skywalk|Promenade|Terrasse|Parkdeck|Umlauf|Atrium|Rampe|Hafen|Aussicht/.test(name))return 'Aus Szene übernehmen';
+ if(selectedPose==='Anatolisch sitzend'&&!/Treppe|Bahnhof|Sitz|Park|Stadion|Galerie|Parkdeck|Promenade/.test(name))return 'Aus Szene übernehmen';
+ if(selectedPose==='Fuß auf Stufe'&&!/Treppe|Stufe|Bahnhof|Arena|Museum|Galerie/.test(name))return 'Aus Szene übernehmen';
+ if(selectedPose==='Rückwärts auf Stuhl'&&!/Food|Markt|Halle|Museum|Bäck|Pizza|Einkauf|Passage/.test(name))return 'Aus Szene übernehmen';
+ return selectedPose;
+}
+
+function sceneValues(config){
+ const values=config||settings;const current=presets.find(p=>p[0]===values.scene)||presets[0];
+ if(values.scene==='Aktuelle Premium-Szene'){
+  const r=window.stravaEffectiveScene390&&window.stravaEffectiveScene390();
+  const c=r&&r.effective;
+  if(c)return ['Aktuelle Premium-Szene','An einem öffentlichen Ort: '+c.place+'. Das gewählte XXL-Plakat ist sichtbar und physikalisch glaubwürdig an einer geeigneten öffentlichen Architektur befestigt.','Hauptfigur-Pose: '+c.pose+'. Handlung: '+c.action+'. Das Gesicht bleibt zur Kamera erkennbar.'];
+ }
+ return current;
+}
+function createPrompt(config){
+ const active=config||settings;
+ const z=state.sign||{},text=String(poster()).trim();if(!text)throw Error('Im Plakat-Editor fehlt ein Text.');
+ const selected=sceneValues(active);const approvedPose=safePoseFor(active.scene,active.pose);const pose=poses.find(p=>p[0]===approvedPose);
+ const poseText=pose&&pose[1]?pose[1]:selected[2];
+ const crowd=(crowds.find(p=>p[0]===active.crowd)||crowds[0])[1];
+ const overHead=approvedPose==='Überkopf-Plakat';
+ const backdrop=overHead?selected[1].replace(/Das schwarze XXL-Banner[^.]*\./g,'').replace(/Das XXL-Banner[^.]*\./g,'').replace(/Das schwarze Banner[^.]*\./g,'') : selected[1];
+ const mount=overHead?'Die Protesttafel wird tatsächlich mit beiden Händen über dem Kopf gehalten und ist als handhabbares Schild konstruiert.':'Ein einziges monumentales schwarzes Protestplakat ist vollständig sichtbar, baulich glaubwürdig verankert und verdeckt weder Gesicht noch Körper.';
+ const perWord=posterColors();
+ const notes=(active.extra||'').trim();
+ const formatted=[
+ 'Transformiere diese Person aus dem beigefügten Gesichtsfoto in einen selbstbewussten Marathonläufer, der an einem außergewöhnlichen öffentlichen Ort eine provokative Demonstration gegen Bewegungsfaulheit veranstaltet.',
+ '',
+ 'GESICHT UND IDENTITÄT:',
+ 'Bewahre sein echtes Gesicht aus dem PERSON PHOTO 1:1: dieselben Augen, Augenbrauen, Nase, Lippen, Bart, natürliche Hautstruktur und individuellen Gesichtszüge. Keine Verschönerung und keine Veränderung der Identität. Ein normal proportionierter erwachsener Körper mit natürlicher Kopfgröße, natürlichem Oberkörper und realistischen Beinen, ohne künstliche Streckung.',
+ '',
+ 'OUTFIT UND SCHUHE:',
+ outfit(),
+ '',
+ 'DIE SZENE:',
+ backdrop,
+ poseText,
+ 'Der Marathonläufer bleibt gut erkennbar, selbstbewusst und ruhig. Sein Gesicht und seine Schuhe sind sichtbar, während die Menschen auf seine provokante Botschaft reagieren.',
+ perspectives[active.perspective]||perspectives['Leichter Weitwinkel'],
+ mount,
+ '',
+ 'DIE EMPÖRTE MENSCHENMENGE:',
+ crowd,
+ 'Die Menschen stehen in unregelmäßigen Gruppen mit natürlicher Tiefenstaffelung und verschiedenartigen Gesten. Keine gleichförmig ausgerichteten Köpfe, keine choreografierte Menge und keine Gewalt.',
+ '',
+ 'EXAKTER TEXT AUF DEM SCHWARZEN PLAKAT:',
+ text,
+ '',
+ 'SCHRIFT, ROT-WEISS-FARBEN UND ABSÄTZE:',
+ 'Verwende die im Plakat-Editor gewählte Schrift '+posterFont()+'. Die Großbuchstaben sind kräftig, breit, massiv und klar lesbar, nicht horizontal gestaucht und nicht künstlich verengt. Der Text ist sauber mittig gesetzt. Exakte Wörter, Satzzeichen und Zeilenumbrüche beibehalten. Zwischen den inhaltlichen Textblöcken bleibt die vorhandene Leerzeile deutlich sichtbar; nicht zwischen jede einzelne Zeile zusätzlichen Abstand einfügen.',
+ 'Diese Wortfarben sind verbindlich. Jedes einzelne Wort erhält exakt die angegebene Farbe; die Leerzeilen bleiben leer:',
+ perWord,
+ 'Rote Schlüsselwörter sind Signalrot #FF4B30, sofern der Plakat-Editor diese Farbe festgelegt hat. Die tatsächlich ausgewählten Einzelwortfarben aus der obigen Liste haben stets Vorrang.',
+ '',
+ ...(notes?['ZUSÄTZLICHER SZENENWUNSCH:',notes,'']:[]),
+ 'FOTOGRAFISCHE UMSETZUNG:',
+ 'Ein einziges ultrafotorealistisches dokumentarisches Straßenfoto mit natürlichem Tageslicht, glaubwürdigen Schatten, realen Materialien und authentischen Reaktionen. Das Gesicht und der vollständige Text sind gut zu erkennen. Keine künstliche Illustration, kein CGI, keine erfundenen Geschäftsnamen. Genau ein Bild im nativen 9:16-Hochformat.'
+ ].join('\n');
+ return formatted;
+}
+function option(list,selected){return list.map(x=>'<option value="'+safe(x)+'"'+(selected===x?' selected':'')+'>'+safe(x)+'</option>').join('');}
+function view(){
+ const current=sceneValues();
+ const allScenes=scenesForWorld(settings.world).map(p=>p[0]);
+ return '<section class="panel" id="transform460" style="border:2px solid #69cf9b">'+
+ '<h2>TRANSFORM-STUDIO · V4.7.0</h2><p class="hint">Deutscher Smart Scene Director · 44 eigenständige Schauplätze · keine Kamera-Pflichtwerte · Plakat-Editor bleibt erhalten.</p>'+
+ '<div class="field"><label for="tfWorld460">01 · Bildwelt</label><select id="tfWorld460">'+option(worlds,settings.world)+'</select></div>'+
+ '<div class="field"><label for="tfScene460">02 · Schauplatz & Auftritt</label><select id="tfScene460">'+option([...allScenes,'Aktuelle Premium-Szene'],settings.scene)+'</select><p class="hint">Wird automatisch passend zur Bildwelt und zum Plakat empfohlen.</p></div>'+
+ '<div class="field"><label for="tfPose460">03 · Deine Pose</label><select id="tfPose460">'+option(poses.map(x=>x[0]),settings.pose)+'</select></div>'+
+ '<div class="field"><label for="tfCrowd460">04 · Zuschauerreaktion</label><select id="tfCrowd460">'+option(crowds.map(x=>x[0]),settings.crowd)+'</select></div>'+
+ '<div class="field"><label for="tfPerspective460">05 · Bildwirkung (keine Kamera-Millimeter)</label><select id="tfPerspective460">'+option(Object.keys(perspectives),settings.perspective)+'</select></div>'+
+ '<div class="field"><label for="tfExtra460">06 · Eigene Szenenergänzung (optional)</label><textarea rows="2" id="tfExtra460" placeholder="z. B. Zuschauer zeigen empört auf die roten Wörter">'+safe(settings.extra)+'</textarea></div>'+
+ '<div class="notice" style="border-left-color:#69cf9b"><b>07 · Plakat & Outfit direkt aus deinen vorhandenen Einstellungen</b><p class="hint">Plakattext, Leerzeilen und Wortfarben aus Plakat. Outfit aus Hauptfigur. Kein zweiter Plakat-Editor.</p>'+
+ '<div style="white-space:pre-wrap;font-size:12px;background:#0f131a;padding:10px;border-radius:8px">'+safe(poster()||'Noch kein Plakattext')+'</div><button class="btn secondary" type="button" id="tfPoster460" style="margin-top:9px">Plakat-Editor öffnen</button></div>'+
+ '<div class="actions"><button class="btn secondary" type="button" id="tfRandom470">ÜBERRASCH MICH · neue Szene</button><button class="btn secondary" type="button" id="tfVariants470">3 KREATIVE VARIANTEN</button></div>'+
+ '<div id="tfVariantsView470" style="display:grid;gap:10px;margin:12px 0"></div>'+
+ '<div class="actions"><button class="btn" type="button" id="tfCopy460" style="width:100%;min-height:52px;background:#16875b">AKTUALISIEREN & PROMPT KOPIEREN</button><button class="btn secondary" type="button" id="tfRefresh460">Vorschau aktualisieren</button></div>'+
+ '<p id="tfStatus460" role="status" class="hint" style="min-height:20px"></p>'+
+ '<label for="tfPreview460">Dein natürlich formulierter deutscher Transformations-Prompt</label>'+
+ '<textarea id="tfPreview460" readonly rows="16" style="min-height:330px;font-size:13px"></textarea>'+
+ '<div class="actions"><button type="button" class="btn secondary" id="tfSave460">Szene als TRANSFORM-Preset speichern</button></div>'+
+ '<div class="field"><label for="tfSaved460">Meine TRANSFORM-Presets</label><select id="tfSaved460"><option value="">Gespeicherten Entwurf auswählen</option>'+settings.saved.map((x,i)=>'<option value="'+i+'">'+safe(x.name)+'</option>').join('')+'</select></div>'+
+ '<div class="actions"><button type="button" class="btn secondary" id="tfLoad460">Preset laden</button><button type="button" class="btn ghost" id="tfDelete460">Preset löschen</button></div>'+
+ '<p class="hint">Angehängte Bilder werden weiterhin beim Erzeugen des Bildes als PERSON PHOTO und SHOE PHOTO beigefügt. Der neue Reiter erzeugt nur den Textauftrag.</p></section>';
+}
+function bind(){
+ const root=document.getElementById('transform460');if(!root)return;
+ const el=id=>root.querySelector('#'+id);
+ const status=el('tfStatus460'),preview=el('tfPreview460');
+ function read(){
+  settings.scene=el('tfScene460').value;
+ settings.world=el('tfWorld460').value;
+ settings.perspective=el('tfPerspective460').value;
+  settings.pose=el('tfPose460').value;
+  settings.crowd=el('tfCrowd460').value;
+  settings.extra=el('tfExtra460').value;
+  store();
+ }
+ function refresh(){
+  try{read();const prompt=createPrompt();preview.value=prompt;status.textContent='✓ Vorschau aktualisiert · '+prompt.length+' Zeichen · Plakattext und Farben aus dem Editor';return prompt;}
+  catch(e){status.textContent='⚠ '+e.message;return '';}
+ }
+ ['tfScene460','tfPose460','tfCrowd460','tfExtra460','tfPerspective460'].forEach(id=>el(id).addEventListener('change',refresh));
+ el('tfRefresh460').onclick=refresh;
+ el('tfWorld460').onchange=function(){settings.world=el('tfWorld460').value;settings.scene=pickScene();settings.pose='Aus Szene übernehmen';store();render();};
+ el('tfRandom470').onclick=function(){read();settings.scene=pickScene();settings.pose='Aus Szene übernehmen';settings.crowd=crowds[Math.floor(Math.random()*crowds.length)][0];markScene(settings.scene);store();render();};
+ el('tfVariants470').onclick=function(){read();const used=[];let html='';window.stravaTransformVariants470=[];for(let i=0;i<3;i++){const scene=pickScene(used);used.push(scene);const variant={...settings,scene,pose:'Aus Szene übernehmen'};const result=createPrompt(variant);window.stravaTransformVariants470.push(result);markScene(scene);html+='<div class="scene"><strong>VARIANTE '+(i+1)+' · '+safe(scene)+'</strong><p class="tiny">'+safe(category(scene))+' · '+result.length+' Zeichen</p><button class="btn secondary" type="button" data-tfcopy="'+i+'">Diesen Auftrag kopieren</button></div>';}store();el('tfVariantsView470').innerHTML=html;el('tfVariantsView470').querySelectorAll('[data-tfcopy]').forEach(btn=>btn.onclick=function(){const i=Number(btn.dataset.tfcopy),v=window.stravaTransformVariants470[i];if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(v).then(()=>{status.textContent='✓ Variante '+(i+1)+' kopiert';},()=>{preview.value=v;preview.focus();preview.select();document.execCommand('copy');status.textContent='Variante in Vorschau ausgewählt';});}else{preview.value=v;preview.focus();preview.select();document.execCommand('copy');status.textContent='Variante kopiert';}});status.textContent='✓ Drei unterschiedliche Szenen zusammengestellt';};
+ el('tfPoster460').onclick=function(){state.tab='Plakat';save();render();window.scrollTo(0,0);};
+ el('tfCopy460').onclick=function(){
+  const prompt=refresh();if(!prompt)return;
+  const fallback=function(){
+   preview.focus();preview.select();preview.setSelectionRange(0,prompt.length);
+   const ok=document.execCommand('copy');
+   status.textContent=ok?'✓ TRANSFORM-Prompt kopiert · '+prompt.length+' Zeichen':'⚠ Text in der Vorschau markieren und manuell kopieren';
+  };
+  if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(prompt).then(()=>{status.textContent='✓ TRANSFORM-Prompt kopiert · '+prompt.length+' Zeichen';},fallback);
+  else fallback();
+ };
+ el('tfSave460').onclick=function(){
+  read();const name=window.prompt('Name für den TRANSFORM-Entwurf',settings.scene);if(!name||!name.trim())return;
+  settings.saved.push({name:name.trim(),scene:settings.scene,pose:settings.pose,crowd:settings.crowd,extra:settings.extra,world:settings.world,perspective:settings.perspective});store();render();
+ };
+ el('tfLoad460').onclick=function(){const x=settings.saved[Number(el('tfSaved460').value)];if(!x||!el('tfSaved460').value)return;Object.assign(settings,{scene:x.scene,pose:x.pose,crowd:x.crowd,extra:x.extra});store();render();};
+ el('tfDelete460').onclick=function(){const v=el('tfSaved460').value;if(v==='')return;settings.saved.splice(Number(v),1);store();render();};
+ refresh();
+}
+const oldTabs=tabs;tabs=function(){const values=oldTabs();if(state.world!=='sign')return values;return values.includes(tabName)?values:[...values.slice(0,2),tabName,...values.slice(2)];};
+const oldRender=render;render=function(){
+ oldRender();
+ if(state.world!=='sign'||state.tab!==tabName)return;
+ const holder=document.getElementById('view');if(!holder)return;
+ holder.innerHTML=view();bind();
+};
+/* Repaint the navigation immediately after installing the new tab; the first page render happened earlier. */
+if(state.world==='sign')render();
+window.stravaTransform460={createPrompt:createPrompt,version:'V4.7.0',getSettings:()=>JSON.parse(JSON.stringify(settings))};
+})();
+</script>
 </body></html>
