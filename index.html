@@ -2412,6 +2412,11 @@ function panel(){
  html+='<details style="border-top:1px solid #526173;padding:12px 0"><summary style="font-weight:800">✎ EINE INDIVIDUELLE SZENENBESCHREIBUNG</summary>'+
  '<p style="font-size:13px;color:#cbd5e1">Ergänzt die Inszenierung. Identität, Kamera, Blickrichtung, Plakattext und Wortfarben bleiben geschützt.</p>'+
  '<textarea id="sxSimpleDescription4532" rows="4" placeholder="Beschreibe deine besondere Szene ..." style="width:100%;min-height:112px;box-sizing:border-box;background:#111b24;color:#fff;padding:10px;border-radius:8px;border:1px solid #758293">'+escapeHtml(v.description||'')+'</textarea></details>';
+ html+='<details style="border-top:1px solid #526173;padding:12px 0"><summary style="font-weight:800">Gespeicherte Signature-Szenen · optional</summary>'+
+ '<p style="font-size:13px;color:#cbd5e1">60 bisherige Szenen bleiben erhalten. Eine Vorlage setzt nur die passenden neun neuen Felder.</p>'+
+ '<select id="sxSimplePreset4532" style="width:100%;padding:10px;margin:8px 0;background:#172331;color:white;border:1px solid #758293;border-radius:8px">'+
+ '<option value="">Szene auswählen</option>'+scenes.map(function(z,i){return '<option value="'+i+'">'+escapeHtml((i+1)+'. '+z.title)+'</option>'}).join('')+'</select>'+
+ '<button type="button" id="sxSimpleApplyPreset4532" style="width:100%;padding:12px;border-radius:8px;background:#354251;color:#fff;border:1px solid #758293">Vorlage auf neun Einstellungen anwenden</button></details>';
  html+=signatureCameraMarkup4531();
  html+='<div id="sxQuickActions405" style="display:grid;gap:10px;margin-top:18px;padding-top:16px;border-top:1px solid #485665">'+
  '<button type="button" id="sx-update405" style="width:100%;padding:15px;border:0;border-radius:10px;background:#354251;color:#fff;font-size:17px;font-weight:800">↻ Werte aktualisieren</button>'+
@@ -2441,6 +2446,21 @@ document.addEventListener('change',e=>{
 function refresh(){const p=document.getElementById('signatureXXL400');if(!p)return;const open=[...p.querySelectorAll('details')].map((d,i)=>d.open?i:-1).filter(i=>i>=0),y=window.scrollY;p.outerHTML=panel();const next=document.getElementById('signatureXXL400');if(next)[...next.querySelectorAll('details')].forEach((d,i)=>{d.open=open.includes(i)});window.scrollTo(0,y);}
 document.addEventListener('click',e=>{
  const t=e.target.closest('button');if(!t)return;
+ if(t.id==='sxSimpleApplyPreset4532'){
+   var field=document.getElementById('sxSimplePreset4532'),index=field?Number(field.value):-1;
+   if(!field||field.value===''||!scenes[index])return;
+   var src=evaluateScene(scenes[index]).values, v=data.simple4532;
+   v.dominance=/Monumental/.test(src.dominance)?'Monumental':/Groß/.test(src.dominance)?'Groß':'XXL';
+   v.relation=/Seitlich/.test(src.relation)?'Seitlich':/Hinter/.test(src.relation)?'Hinter mir':'Oberhalb';
+   v.pose=sxSimpleOptions4532.pose.includes(src.pose)?src.pose:v.pose;
+   v.gaze=/Kamera/.test(src.gaze)?'Direkt in die Kamera':/Botschaft|Plakat/.test(src.gaze)?'Zum Plakat':/Menschenmenge/.test(src.gaze)?'Zum Publikum':'Seitlich';
+   v.expression=/Schmunzel/.test(src.expression)?'Überlegenes Schmunzeln':/ernst/i.test(src.expression)?'Ernst':/Grinsen/.test(src.expression)?'Provokantes Grinsen':'Nachdenklich';
+   v.position=/Vordergrund/.test(src.runnerPosition)?'Im Vordergrund':/Hintergrund/.test(src.runnerPosition)?'Im Hintergrund':'Im Mittelgrund';
+   v.count=sxSimpleOptions4532.count.includes(src.count)?src.count:v.count;
+   v.reaction=/empör/i.test(src.reaction)?'Empört':/lach/i.test(src.reaction)?'Lachend':/neugier/i.test(src.reaction)?'Neugierig':/gemischt|gespalten/i.test(src.reaction)?'Gespalten':'Überrascht';
+   v.dynamics=/ruhig/i.test(src.dynamics)?'Ruhig':/dynamisch|unruhig/i.test(src.dynamics)?'Aufgeregt':'Natürlich lebendig';
+   persist();refresh();return;
+ }
  if(t.id==='sx-next-composition421'){data.compositionIndex=(compositionIndex421()+1)%compositionVariants421.length;persist();const label=document.getElementById('sx-composition-label421');if(label)label.textContent=compositionVariants421[compositionIndex421()].title;const st=document.getElementById('sx-status405');if(st)st.textContent='✓ Komposition gewählt: '+compositionVariants421[compositionIndex421()].title+'. Kamera, Pose und Schild unverändert.';return}
  if(t.id==='sx-update405'){const y=window.scrollY;const panel=document.getElementById('signatureXXL400');const open=panel?[...panel.querySelectorAll('details')].map((d,i)=>d.open?i:-1).filter(i=>i>=0):[];persist();if(typeof save==='function')save();if(typeof render==='function'){render();const next=document.getElementById('signatureXXL400');if(next)[...next.querySelectorAll('details')].forEach((d,i)=>{d.open=open.includes(i)})}else refresh();window.scrollTo(0,y);const status=document.getElementById('sx-status405');if(status)status.textContent='✓ Werte aktualisiert · Auswahl und Sperren bleiben erhalten';return}
  if(t.id==='sx-audit420'){const status=document.getElementById('sx-status405');try{const result=String(buildPrompt()||'');const audit=signatureAudit420(result);if(status)status.textContent=audit.pass?'✓ ASF bestanden · '+audit.checked+' Signature-Felder geprüft · Export freigegeben':'⚠ ASF FEHLER: '+audit.failures.join(' | ')}catch(e){if(status)status.textContent='⚠ ASF-Export gesperrt: '+String(e.message||e)}return}
@@ -2819,7 +2839,7 @@ function refineFigure4525(source){
       "STANDING CROSSED ARMS — ACTIVE POSE ONLY: Stand naturally with relaxed shoulders and lightly crossed forearms against the torso; preserve believable wrist, elbow and finger anatomy, with hands naturally visible where the overlap allows. Do not place forearms on an imaginary chair or invent chair support.");
   }
   // Retain user-chosen depth, side, camera and crowd; make the face and pose visible.
-  var position="RUNNER VISIBILITY WITHIN SELECTED PLACEMENT — MANDATORY: Keep the selected runner depth, lateral placement and position behind the first spectator row. Create an organic sightline through the crowd so the original face, head size, shoulders and crossed-arm silhouette remain unobstructed and recognizable. Never enlarge, stretch, vertically scale or relocate the runner to improve visibility. Prefer shifting unselected spectators, not changing fixed camera geometry or runner position.";
+  var position="RUNNER VISIBILITY WITHIN SELECTED PLACEMENT — MANDATORY: Respect the selected runner position from Signature. Keep the original face and defining pose identifiable through a natural sightline, adjusting unselected spectators when necessary. Do not enlarge, stretch or relocate the runner, and never override the chosen camera geometry.";
   if(result.includes("RUNNER POSITION — SINGLE SPATIAL AUTHORITY:") && !result.includes(position)){
     result=result.replace(/(RUNNER POSITION — SINGLE SPATIAL AUTHORITY:[^\n]*)/, "$1\n"+position);
   }
