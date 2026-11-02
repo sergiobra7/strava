@@ -14,7 +14,7 @@
 #premiumPanel270 > #premiumCards270{display:block!important}
 #premiumPanel270 > #refreshPremium270{display:block!important;margin:14px 0}
 #premiumPanel270 #allSettings339,#premiumPanel270 #master320,#premiumPanel270 #premiumEditor270,#premiumPanel270 #premiumCast311,#premiumPanel270 #manualRegie328,#premiumPanel270 #premiumActiveFilters340{display:none!important}
-</style><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Anton&family=Archivo+Black&family=Archivo+Narrow:wght@900&family=Barlow+Condensed:wght@800;900&family=Bebas+Neue&family=League+Gothic&family=Oswald:wght@700&family=Roboto+Condensed:wght@900&family=Teko:wght@700&display=swap" rel="stylesheet"></head><body><header><div><h1>STRAVA RUN <span class="mark">V4.5.31</span></h1><small>RUNNER PHOTO + STRAVA WALL · GITHUB EDITION</small><div id="onlineBuild414" style="font-size:12px;color:#a8c6b8;margin-top:5px;font-weight:700" aria-label="Online-Version">ONLINE · V4.4.0 · Commit wird geprüft …</div></div><div style="display:flex;align-items:center;gap:9px;flex-wrap:wrap;justify-content:flex-end"><span id="saveStatus" class="status">Lokal gespeichert</span><button id="stravaRefresh401" type="button" title="Neueste GitHub-Version laden" style="background:#2cbd79;color:#101510;border:0;border-radius:9px;padding:10px 13px;font-weight:800;cursor:pointer">🔄 Aktualisieren</button></div></header><main><div class="worlds"><button class="world active" data-world="wall">🧱 STRAVA WALL</button><button class="world" data-world="sign">⬛ BLACK SIGN / PLAKAT</button></div><div style="display:flex;align-items:center;justify-content:space-between;gap:10px;margin:9px 0"><button id="presetShortcut403" type="button" style="background:#f2bd49;color:#151515;border:2px solid #f8d57b;border-radius:10px;padding:12px 16px;font-size:15px;font-weight:900;cursor:pointer;flex:1">⭐ MEINE PRESETS · GALERIE ÖFFNEN</button></div><section id="presetDirect404" hidden style="margin:14px 0;padding:14px;border:2px solid #f2bd49;border-radius:14px;background:#151a21"></section><nav class="tabs" id="tabs"></nav><div id="view"></div><div class="footer">Lokale Offline-Web-App · Keine Bilder werden an einen Server gesendet · Prompt zum Kopieren für ChatGPT/Bildgenerierung</div></main><script>
+</style><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Anton&family=Archivo+Black&family=Archivo+Narrow:wght@900&family=Barlow+Condensed:wght@800;900&family=Bebas+Neue&family=League+Gothic&family=Oswald:wght@700&family=Roboto+Condensed:wght@900&family=Teko:wght@700&display=swap" rel="stylesheet"></head><body><header><div><h1>STRAVA RUN <span class="mark">V4.5.32</span></h1><small>RUNNER PHOTO + STRAVA WALL · GITHUB EDITION</small><div id="onlineBuild414" style="font-size:12px;color:#a8c6b8;margin-top:5px;font-weight:700" aria-label="Online-Version">ONLINE · V4.4.0 · Commit wird geprüft …</div></div><div style="display:flex;align-items:center;gap:9px;flex-wrap:wrap;justify-content:flex-end"><span id="saveStatus" class="status">Lokal gespeichert</span><button id="stravaRefresh401" type="button" title="Neueste GitHub-Version laden" style="background:#2cbd79;color:#101510;border:0;border-radius:9px;padding:10px 13px;font-weight:800;cursor:pointer">🔄 Aktualisieren</button></div></header><main><div class="worlds"><button class="world active" data-world="wall">🧱 STRAVA WALL</button><button class="world" data-world="sign">⬛ BLACK SIGN / PLAKAT</button></div><div style="display:flex;align-items:center;justify-content:space-between;gap:10px;margin:9px 0"><button id="presetShortcut403" type="button" style="background:#f2bd49;color:#151515;border:2px solid #f8d57b;border-radius:10px;padding:12px 16px;font-size:15px;font-weight:900;cursor:pointer;flex:1">⭐ MEINE PRESETS · GALERIE ÖFFNEN</button></div><section id="presetDirect404" hidden style="margin:14px 0;padding:14px;border:2px solid #f2bd49;border-radius:14px;background:#151a21"></section><nav class="tabs" id="tabs"></nav><div id="view"></div><div class="footer">Lokale Offline-Web-App · Keine Bilder werden an einen Server gesendet · Prompt zum Kopieren für ChatGPT/Bildgenerierung</div></main><script>
 /* V3.18 stabilization: one color serializer shared by prompt sections. */
 window.stravaSignColorMap318=function(sign){
  const source=sign||{},raw=String(source.signText||''),colors=source.wordColors||{},base=String(source.signColor||'#FFFFFF').toUpperCase();
@@ -1967,7 +1967,7 @@ function archiveBind413(){gallery413();let file=document.getElementById('a413fil
 /* V3.13.8: public GitHub Pages deployment identity, independent of local settings. */
 (function(){
  const el=document.getElementById('onlineBuild414');if(!el)return;
- const version='V4.5.31';
+ const version='V4.5.32';
  const fallback='ONLINE · '+version+' · Commit: nicht abrufbar';
  const url='https://api.github.com/repos/sergiobra7/strava/commits/main';
  const controller=new AbortController();
@@ -2391,18 +2391,33 @@ window.stravaSignatureCamera4531Sync=function(){
  if(status)status.textContent=(o.manual?"AKTIV: MANUELLE KAMERA":"AKTIV: SZENENKAMERA")+" · mit Premium Studio synchronisiert";
 };
 function panel(){
- let html='<section id="signatureXXL400" class="panel" style="margin:12px 0;border:2px solid #fc4c02;padding:14px"><h2>SIGNATURE PROTEST XXL · V4.4.0</h2><p>1. Botschaft → 2. Dein Auftritt → 3. Menschenmeer. Alle anderen Filter bleiben verfügbar.</p><label><input type="checkbox" id="sx-enabled" '+(data.enabled?'checked':'')+'> Signature-Inszenierung im Prompt aktiv</label>';
- for(const [g,def] of Object.entries(groups)){
- html+='<details '+(['message','runner','placement','crowd'].includes(g)?'open':'')+' style="border-top:1px solid #485665;margin-top:12px;padding-top:10px"><summary style="font-weight:800">'+def.label+'</summary>';
- for(const [k,opts] of Object.entries(def.fields))html+='<div style="margin:9px 0"><label>'+labels[k]+' <input type="checkbox" data-sx-lock="'+k+'" '+(data.locks[k]?'checked':'')+'> 🔒 Sperren</label><select data-sx-field="'+k+'" style="width:100%">'+(k==='venue'?venueCategories423().map(cat=>'<optgroup label="'+escapeHtml(cat)+'">'+venueCatalog423.filter(p=>p.category===cat).map(p=>'<option '+(data.values[k]===p.name?'selected':'')+'>'+escapeHtml(p.name)+'</option>').join('')+'</optgroup>').join(''):opts.map(o=>'<option '+(data.values[k]===o?'selected':'')+'>'+escapeHtml(o)+'</option>').join(''))+'</select>'+(k==='venue'?'<p style="font-size:12px;color:#cbd5e1">'+escapeHtml(locationDirection423(data.values[k]))+'</p>':'')+noteMarkup(k)+'</div>';
- html+=noteMarkup(g)+'</details>';
+ var v=sxCurrent4532();
+ var html='<section id="signatureXXL400" class="panel" style="margin:12px 0;border:2px solid #fc4c02;padding:14px"><h2>SIGNATURE PROTEST XXL · ASF EINFACH · V4.5.32</h2>'+
+ '<p style="font-size:14px;color:#cbd5e1">1. Plakat → 2. Du → 3. Sichtbarkeit → 4. Reaktion. Nur neun Haupteinstellungen; alle übrigen Werte automatisch.</p>'+
+ '<label style="display:flex;gap:9px;align-items:center;margin:10px 0"><input type="checkbox" id="sx-enabled" '+(data.enabled?'checked':'')+'> Signature-Inszenierung aktiv</label>';
+ function row(k,label){
+  return '<label style="display:block;margin:12px 0 5px;font-weight:700">'+label+'</label>'+
+   '<select data-sx-simple="'+k+'" style="width:100%;min-height:44px;background:#172331;color:white;border:1px solid #758293;border-radius:8px;padding:8px">'+
+   sxSimpleOptions4532[k].map(function(opt){return '<option value="'+escapeHtml(opt)+'" '+(v[k]===opt?'selected':'')+'>'+escapeHtml(opt)+'</option>'}).join('')+
+   (sxSimpleOptions4532[k].includes(v[k])?'':'<option selected value="'+escapeHtml(v[k])+'">'+escapeHtml(v[k])+' (bestehende Auswahl)</option>')+'</select>';
  }
- html+='<details style="border-top:1px solid #485665;margin-top:12px;padding-top:10px"><summary style="font-weight:800">05 · GESAMTE SZENE VERFEINERN</summary>'+noteMarkup('overall')+'</details>';
- html+='<details style="border-top:1px solid #485665;margin-top:12px;padding-top:10px"><summary style="font-weight:800">06 · PREMIUM-MATRIX · 60 ABGESTIMMTE SZENEN</summary><p>Empfehlungen übernehmen nur nicht gesperrte Einstellungen. Kamera und Wortfarben bleiben unverändert.</p>'+scenes.map((scene,i)=>'<button type="button" data-sx-scene="'+i+'" style="display:block;width:100%;text-align:left;margin:6px 0;padding:12px;border-radius:8px;border:1px solid #6a7889;background:'+(data.selectedScene===i?'#94400c':'#172331')+';color:white">'+escapeHtml((i+1)+'. '+scene.title+' · '+scene.values.mount+' · '+scene.values.pose+' · '+scene.values.count+' Personen')+(evaluateScene(scene).warnings.length?'<br><small>Konflikt: '+escapeHtml(evaluateScene(scene).warnings.join(' '))+'</small>':'')+'</button><details style="padding:4px 9px 12px;border-bottom:1px solid #485665"><summary style="cursor:pointer">20 Filter & Komposition prüfen</summary><div style="padding:8px 0">'+Object.entries(evaluateScene(scene).values).map(([k,val])=>'<div style="padding:3px 0"><b>'+escapeHtml(labels[k]||k)+':</b> '+escapeHtml(val)+(data.locks[k]?' 🔒':'')+'</div>').join('')+'<div style="padding:6px 0"><b>Komposition:</b> '+escapeHtml(compositionVariants421[evaluateScene(scene).compositionIndex]?.title||'Automatisch')+'</div></div></details>').join('')+'</details>';
- html+='<div style="margin-top:14px;padding:12px;border:1px solid #647688;border-radius:10px"><b>↔ VARIABLE KOMPOSITION</b><p style="margin:7px 0">Aktuell: <strong id="sx-composition-label421">'+escapeHtml(compositionVariants421[compositionIndex421()].title)+'</strong> · Kamera, Pose und Plakat bleiben unverändert.</p><button type="button" id="sx-next-composition421" style="padding:12px;background:#324152;color:#fff;border:1px solid #718197;border-radius:8px">↻ Andere Komposition wählen</button></div>';
- html+='<p id="sx-summary" style="margin-top:12px">Aktive Zusatzanweisungen: '+allNotes().filter(n=>n.active).length+'</p><button type="button" id="sx-disable-notes">Alle Zusatzanweisungen deaktivieren</button>';
+ html+='<details open style="border-top:1px solid #526173;padding:12px 0"><summary style="font-weight:800">01 · PLAKAT & AUFMERKSAMKEIT · 2 Einstellungen</summary>'+
+ row('dominance','Plakatdominanz')+row('relation','Plakatposition zum Läufer')+'</details>';
+ html+='<details open style="border-top:1px solid #526173;padding:12px 0"><summary style="font-weight:800">02 · MEIN AUFTRITT · 3 Einstellungen</summary>'+
+ row('pose','Körperhaltung / Pose')+row('gaze','Meine Blickrichtung')+row('expression','Meine Mimik')+'</details>';
+ html+='<details open style="border-top:1px solid #526173;padding:12px 0"><summary style="font-weight:800">03 · MEINE SICHTBARKEIT · 1 Einstellung</summary>'+
+ row('position','Meine Position im Bild')+'</details>';
+ html+='<details open style="border-top:1px solid #526173;padding:12px 0"><summary style="font-weight:800">04 · PUBLIKUM & REAKTION · 3 Einstellungen</summary>'+
+ row('count','Menschenanzahl')+row('reaction','Publikumsreaktion')+row('dynamics','Publikumsdynamik')+'</details>';
+ html+='<details style="border-top:1px solid #526173;padding:12px 0"><summary style="font-weight:800">✎ EINE INDIVIDUELLE SZENENBESCHREIBUNG</summary>'+
+ '<p style="font-size:13px;color:#cbd5e1">Ergänzt die Inszenierung. Identität, Kamera, Blickrichtung, Plakattext und Wortfarben bleiben geschützt.</p>'+
+ '<textarea id="sxSimpleDescription4532" rows="4" placeholder="Beschreibe deine besondere Szene ..." style="width:100%;min-height:112px;box-sizing:border-box;background:#111b24;color:#fff;padding:10px;border-radius:8px;border:1px solid #758293">'+escapeHtml(v.description||'')+'</textarea></details>';
  html+=signatureCameraMarkup4531();
- html+='<div id="sxQuickActions405" style="display:grid;gap:10px;margin-top:18px;padding-top:16px;border-top:1px solid #485665"><button type="button" id="sx-update405" style="width:100%;padding:15px;border:0;border-radius:10px;background:#354251;color:#fff;font-size:17px;font-weight:800">↻ Werte aktualisieren</button><button type="button" id="sx-audit420" style="width:100%;padding:13px;border:1px solid #74cda0;border-radius:9px;background:#19362a;color:#e3ffed;font-size:15px;font-weight:800">✓ ASF-Prompt prüfen</button><button type="button" id="sx-copy405" style="width:100%;padding:15px;border:0;border-radius:10px;background:#fc4c02;color:white;font-size:17px;font-weight:800">▣ Master-Prompt kopieren</button><div id="sx-status405" aria-live="polite" style="font-size:13px;color:#99e3b7;min-height:18px"></div></div></section>';
+ html+='<div id="sxQuickActions405" style="display:grid;gap:10px;margin-top:18px;padding-top:16px;border-top:1px solid #485665">'+
+ '<button type="button" id="sx-update405" style="width:100%;padding:15px;border:0;border-radius:10px;background:#354251;color:#fff;font-size:17px;font-weight:800">↻ Werte aktualisieren</button>'+
+ '<button type="button" id="sx-audit420" style="width:100%;padding:13px;border:1px solid #74cda0;border-radius:9px;background:#19362a;color:#e3ffed;font-size:15px;font-weight:800">✓ ASF-Prompt prüfen</button>'+
+ '<button type="button" id="sx-copy405" style="width:100%;padding:15px;border:0;border-radius:10px;background:#fc4c02;color:white;font-size:17px;font-weight:800">▣ Master-Prompt kopieren</button>'+
+ '<div id="sx-status405" aria-live="polite" style="font-size:13px;color:#99e3b7;min-height:18px"></div></div></section>';
  return html;
 }
 function mountPanel(){if(typeof state==='undefined'||state.world!=='sign'||state.tab!=='Smart Director')return;const root=document.getElementById('view');if(!root||document.getElementById('signatureXXL400'))return;root.insertAdjacentHTML('afterbegin',panel());}
@@ -2416,6 +2431,8 @@ document.addEventListener('change',e=>{
      if(!ok&&typeof window.stravaSignatureCamera4531Sync==="function")window.stravaSignatureCamera4531Sync();
    }return;
  }
+ if(t.matches('[data-sx-simple]')){var key=t.dataset.sxSimple;if(Object.prototype.hasOwnProperty.call(sxSimpleOptions4532,key)){data.simple4532[key]=t.value;persist()}return}
+ if(t.id==='sxSimpleDescription4532'){data.simple4532.description=t.value;persist();return}
  if(t.id==='sx-enabled'){data.enabled=t.checked;persist();return}
  if(t.matches('[data-sx-field]')){data.values[t.dataset.sxField]=t.value;persist();return}
  if(t.matches('[data-sx-lock]')){data.locks[t.dataset.sxLock]=t.checked;persist();return}
@@ -2866,7 +2883,7 @@ function mount(){
   if(state.world!=="sign"||state.tab!=="Prompt & Projekt")return;
   var pre=document.querySelector("#view pre.prompt");if(!pre)return;
   var box=document.createElement("div");box.className="notice";box.style.cssText="border:2px solid #67bf94;padding:14px;margin:12px 0";
-  box.innerHTML='<strong>SMART COMPACT ENGINE · V4.5.31</strong><p style="margin:7px 0">Prompt-Modus auswählen:</p><select id="signCompactMode4524" style="display:block;width:100%;min-height:48px"><option value="full">FULL · Original (Standard)</option><option value="smart">SMART COMPACT</option><option value="ultra">ULTRA COMPACT</option></select><p id="signCompactStats4524" class="hint" role="status"></p>';
+  box.innerHTML='<strong>SMART COMPACT ENGINE · V4.5.32</strong><p style="margin:7px 0">Prompt-Modus auswählen:</p><select id="signCompactMode4524" style="display:block;width:100%;min-height:48px"><option value="full">FULL · Original (Standard)</option><option value="smart">SMART COMPACT</option><option value="ultra">ULTRA COMPACT</option></select><p id="signCompactStats4524" class="hint" role="status"></p>';
   // User-triggered recommendation; never silently overwrite manual camera settings.
   var cameraInfo=document.createElement("div");
   cameraInfo.style.cssText="margin:12px 0;padding:10px;border:1px solid #536775;border-radius:10px";
@@ -2900,7 +2917,7 @@ function mount(){
 }
 render=function(){priorRender();mount()};
 if(state.world==="sign"&&state.tab==="Prompt & Projekt")render();
-window.stravaSignCompact4524={version:"V4.5.31",full:fullSource,prompt:selected,compact:compact,mode:function(){return mode}};
+window.stravaSignCompact4524={version:"V4.5.32",full:fullSource,prompt:selected,compact:compact,mode:function(){return mode}};
 })();
 </script>
 
