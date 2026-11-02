@@ -14,7 +14,7 @@
 #premiumPanel270 > #premiumCards270{display:block!important}
 #premiumPanel270 > #refreshPremium270{display:block!important;margin:14px 0}
 #premiumPanel270 #allSettings339,#premiumPanel270 #master320,#premiumPanel270 #premiumEditor270,#premiumPanel270 #premiumCast311,#premiumPanel270 #manualRegie328,#premiumPanel270 #premiumActiveFilters340{display:none!important}
-</style><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Anton&family=Archivo+Black&family=Archivo+Narrow:wght@900&family=Barlow+Condensed:wght@800;900&family=Bebas+Neue&family=League+Gothic&family=Oswald:wght@700&family=Roboto+Condensed:wght@900&family=Teko:wght@700&display=swap" rel="stylesheet"></head><body><header><div><h1>STRAVA RUN <span class="mark">V4.5.23</span></h1><small>RUNNER PHOTO + STRAVA WALL · GITHUB EDITION</small><div id="onlineBuild414" style="font-size:12px;color:#a8c6b8;margin-top:5px;font-weight:700" aria-label="Online-Version">ONLINE · V4.4.0 · Commit wird geprüft …</div></div><div style="display:flex;align-items:center;gap:9px;flex-wrap:wrap;justify-content:flex-end"><span id="saveStatus" class="status">Lokal gespeichert</span><button id="stravaRefresh401" type="button" title="Neueste GitHub-Version laden" style="background:#2cbd79;color:#101510;border:0;border-radius:9px;padding:10px 13px;font-weight:800;cursor:pointer">🔄 Aktualisieren</button></div></header><main><div class="worlds"><button class="world active" data-world="wall">🧱 STRAVA WALL</button><button class="world" data-world="sign">⬛ BLACK SIGN / PLAKAT</button></div><div style="display:flex;align-items:center;justify-content:space-between;gap:10px;margin:9px 0"><button id="presetShortcut403" type="button" style="background:#f2bd49;color:#151515;border:2px solid #f8d57b;border-radius:10px;padding:12px 16px;font-size:15px;font-weight:900;cursor:pointer;flex:1">⭐ MEINE PRESETS · GALERIE ÖFFNEN</button></div><section id="presetDirect404" hidden style="margin:14px 0;padding:14px;border:2px solid #f2bd49;border-radius:14px;background:#151a21"></section><nav class="tabs" id="tabs"></nav><div id="view"></div><div class="footer">Lokale Offline-Web-App · Keine Bilder werden an einen Server gesendet · Prompt zum Kopieren für ChatGPT/Bildgenerierung</div></main><script>
+</style><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Anton&family=Archivo+Black&family=Archivo+Narrow:wght@900&family=Barlow+Condensed:wght@800;900&family=Bebas+Neue&family=League+Gothic&family=Oswald:wght@700&family=Roboto+Condensed:wght@900&family=Teko:wght@700&display=swap" rel="stylesheet"></head><body><header><div><h1>STRAVA RUN <span class="mark">V4.5.24</span></h1><small>RUNNER PHOTO + STRAVA WALL · GITHUB EDITION</small><div id="onlineBuild414" style="font-size:12px;color:#a8c6b8;margin-top:5px;font-weight:700" aria-label="Online-Version">ONLINE · V4.4.0 · Commit wird geprüft …</div></div><div style="display:flex;align-items:center;gap:9px;flex-wrap:wrap;justify-content:flex-end"><span id="saveStatus" class="status">Lokal gespeichert</span><button id="stravaRefresh401" type="button" title="Neueste GitHub-Version laden" style="background:#2cbd79;color:#101510;border:0;border-radius:9px;padding:10px 13px;font-weight:800;cursor:pointer">🔄 Aktualisieren</button></div></header><main><div class="worlds"><button class="world active" data-world="wall">🧱 STRAVA WALL</button><button class="world" data-world="sign">⬛ BLACK SIGN / PLAKAT</button></div><div style="display:flex;align-items:center;justify-content:space-between;gap:10px;margin:9px 0"><button id="presetShortcut403" type="button" style="background:#f2bd49;color:#151515;border:2px solid #f8d57b;border-radius:10px;padding:12px 16px;font-size:15px;font-weight:900;cursor:pointer;flex:1">⭐ MEINE PRESETS · GALERIE ÖFFNEN</button></div><section id="presetDirect404" hidden style="margin:14px 0;padding:14px;border:2px solid #f2bd49;border-radius:14px;background:#151a21"></section><nav class="tabs" id="tabs"></nav><div id="view"></div><div class="footer">Lokale Offline-Web-App · Keine Bilder werden an einen Server gesendet · Prompt zum Kopieren für ChatGPT/Bildgenerierung</div></main><script>
 /* V3.18 stabilization: one color serializer shared by prompt sections. */
 window.stravaSignColorMap318=function(sign){
  const source=sign||{},raw=String(source.signText||''),colors=source.wordColors||{},base=String(source.signColor||'#FFFFFF').toUpperCase();
@@ -1935,7 +1935,7 @@ function archiveBind413(){gallery413();let file=document.getElementById('a413fil
 /* V3.13.8: public GitHub Pages deployment identity, independent of local settings. */
 (function(){
  const el=document.getElementById('onlineBuild414');if(!el)return;
- const version='V4.5.23';
+ const version='V4.5.24';
  const fallback='ONLINE · '+version+' · Commit: nicht abrufbar';
  const url='https://api.github.com/repos/sergiobra7/strava/commits/main';
  const controller=new AbortController();
@@ -2682,78 +2682,90 @@ window.stravaSignCompact4520={full:fullPrompt4520,compact:body4520,prompt:select
 if(state.world==="sign"&&state.tab==="Prompt"&&typeof render==="function")render();
 })();
 </script>
-<script id="black-sign-smart-compact-ui-v4523">
-/* VISIBLE-FIRST-LOCK: mount the active BLACK SIGN Prompt & Projekt tab.
-   Preserve source FULL output, never change STRAVA WALL or saved project values. */
+<script id="black-sign-smart-compact-ui-v4524">
+/* V4.5.24 — VISIBLE-FIRST-LOCK: active BLACK SIGN Prompt & Projekt only.
+  FULL and STRAVA WALL are pass-through. Never change saved state. */
 (function(){
 "use strict";
-if(typeof render!=="function" || !window.stravaSignCompact4520)return;
-var originalFull=window.stravaSignCompact4520.full;
-var priorRender=render, mode="full";
-var STORAGELESS=true;
+if(typeof render!=="function"||!window.stravaSignCompact4520)return;
+var priorRender=render, fullSource=window.stravaSignCompact4520.full, mode="full";
 function compact(full,ultra){
-  // Compact an already-generated FULL prompt. No assumptions about section names,
-  // populated sign text, per-word map format, or user's current configuration.
-  // Exact sign-text section, custom instructions and active settings remain verbatim.
-  var protectedStart="<<< SIGN TEXT START >>>", protectedEnd="<<< SIGN TEXT END >>>";
-  var a=full.indexOf(protectedStart),b=a<0?-1:full.indexOf(protectedEnd,a+protectedStart.length);
-  var prefix=b<0?full:full.slice(0,a), literal=b<0?"":full.slice(a,b+protectedEnd.length), suffix=b<0?"":full.slice(b+protectedEnd.length);
-  function compressOutside(text,aggressive){
-    // Limit changes to redundant boilerplate and whitespace only.
-    var replacements=[
-      [/Camera lens and distance values anywhere else in this prompt are non-authoritative scene descriptions; do not override these values\./g,"Camera: the top settings are authoritative."],
-      [/Produce exactly ONE native 9:16 ultra-photorealistic documentary photograph\. Never crop another format to 9:16\. No CGI, drawing, 3D rendering, or synthetic poster\./g,"One native 9:16 photorealistic documentary photo; no crop or CGI."],
-      [/Exactly ONE native 9:16 ultra-photorealistic documentary photograph\. Real anatomy, light, shadows and materials; no CGI\./g,"One native 9:16 documentary photo, realistic anatomy and light, no CGI."],
-      [/The restriction applies ONLY to ambient\/background signage, never to the two explicit message texts\./g,"Background-sign restriction excludes user-authored text."],
-      [/No beautification, no face redesign\./g,"No face redesign."],
-      [/No moving closer, no virtual camera relocation, no enlarging people or props, no perspective cheating, no fake background expansion\./g,"No camera relocation, subject scaling or perspective cheating."]
-    ];
-    for(var i=0;i<replacements.length;i++)text=text.replace(replacements[i][0],replacements[i][1]);
-    if(aggressive){
-      text=text.replace(/\n[ \t]*\n[ \t]*\n+/g,"\n\n");
-      text=text.replace(/\n[ \t]+(?=\n)/g,"\n");
-    }
-    return text;
+  // Protect user-authored sign text AND its authoritative per-token color mapping.
+  var lo=full.indexOf("<<< SIGN TEXT START >>>");
+  var hi=lo<0?-1:full.indexOf("05 / PEOPLE AND BACKGROUND",lo);
+  var before=hi<0?full:full.slice(0,lo), secure=hi<0?"":full.slice(lo,hi), after=hi<0?"":full.slice(hi);
+  // Literal source fragments only: replacements never interpolate or remove active values.
+  var common=[
+    ["Camera lens and distance values anywhere else in this prompt are non-authoritative scene descriptions; do not override these values.","Camera settings above override all later scene descriptions."],
+    ["Exactly ONE native 9:16 ultra-photorealistic documentary photograph. Real anatomy, light, shadows and materials; no CGI.","One native 9:16 photorealistic documentary photo, natural anatomy and lighting; no CGI."],
+    ["Maintain physical angular scale. Do not zoom, crop, move closer or enlarge subjects to rescue lettering. At long distances show proportionally more surroundings.","Preserve physical scale and selected camera distance; no zoom, cropping or subject enlargement."],
+    ["Use only authentic correctly placed logos, no invented sleeve stripes.","Authentic logos only; no invented stripes."],
+    ["no index-finger pointing by default. Point ONLY if explicitly selected in an active Premium pose, with fingertip and arm anatomically directed to actual visible sign lettering. Otherwise relaxed hands, especially on the chair back when seated backwards.","no pointing unless explicitly selected; keep anatomically natural hands and correct chair contact."],
+    ["every arm, elbow, forearm, wrist, hand and finger must have a continuous anatomically correct path with distinct contours. Never fuse sleeves, skin, arms or hands. Both hands must exist and remain visibly identifiable wherever pose and framing allow. Sleeves terminate at clearly identifiable wrists; no hidden missing hands, extra fingers, duplicated joints, melted fabric or merged limbs.","all limbs and fingers anatomically correct, continuous, distinct; no fused arms, missing hands, extra fingers, melted fabric or duplicated joints."],
+    ["when the runner sits backwards and rests forearms on a chair back, offset the forearms slightly instead of stacking them completely. Place both hands in clear view on top or beside the backrest with natural fingers, separate wrists and distinct sleeve cuffs. Use realistic contact shadows and no arm-to-arm fusion. If crossing would conceal a hand, use parallel or lightly staggered resting forearms while preserving the selected pose.","for backwards chair sitting, show both separate wrists/hands on backrest, stagger forearms, preserve pose and contact shadows."],
+    ["apply the same hand, wrist, sleeve, forearm and finger separation rules to every visible side character and spectator.","same anatomical separation for every side character and spectator."],
+    ["Every banner, facade-mounted sign, railing banner or advertising display must be securely anchored to the real architecture with physically visible brackets, bolts, straps, tensioning or suitable fixings. Respect gravity, wind load and structural attachment. No floating or unsupported displays. Do not invent a freestanding stand unless explicitly selected in Plakat & Text.","Every display physically anchored with visible fixings, respecting gravity and wind; no floating signs or unselected freestanding mounts."],
+    ["All sign text lines share precisely one sign-local horizontal center axis, preserving authored line breaks and colors.","Single sign-local horizontal center axis; preserve breaks and colors."],
+    ["Reproduce the authored text on the selected physical display surface, following the active Typography Engine margin setting as the ONLY edge-margin authority. Preserve authored line breaks, empty lines, punctuation and capitalization. No text substitutions.","Use active Typography Engine margins; preserve exact text, breaks, blank lines, punctuation and case."],
+    ["Depict the specified audience count, realistically distributed across visible foreground, midground and background, facing the runner or readable sign. Do not silently omit the crowd.","Keep exact audience count across foreground/background, facing runner or sign."],
+    ["A selected Opa/Teyze or mixed cast is additional to the audience count, not a replacement for it.","Named Opa/Teyze cast adds to the crowd count."],
+    ["Use fictional, unbranded, generic venues only. No real company names, commercial logos, store chains, identifiable business signage or advertising. Generic bakery, station, market hall, supermarket and workshop architecture must look physically authentic.","Fictional unbranded venues; no real companies, advertising or named signs; authentic architecture."],
+    ["User-authored German scene descriptions are authoritative. Interpret their meaning faithfully when composing the English-directed photograph; do not treat German text as visible sign lettering unless it is inside the EXACT SIGN TEXT block. Do not invent an English translation or silently discard German details.","German scene directions are authoritative; never translate, invent or print them outside the exact sign-text block."],
+    ["Attach PERSON PHOTO and SHOE PHOTO separately when generating. Browser previews are not embedded.","Attach both PERSON PHOTO and SHOE PHOTO; browser previews are not embedded."]
+  ];
+  var extra=[
+    ["PERMANENT CENTERLINE TYPOGRAPHY LOCK — ABSOLUTE","CENTERLINE TYPOGRAPHY LOCK"],
+    ["SIGN PLANE PERSPECTIVE LOCK — ABSOLUTE","SIGN PLANE PERSPECTIVE"],
+    ["SINGLE MARGIN AUTHORITY — ABSOLUTE","SINGLE MARGIN AUTHORITY"],
+    ["CAMERA SETTINGS — SINGLE AUTHORITATIVE SOURCE","CAMERA SETTINGS — AUTHORITATIVE"],
+    ["Camera lens and distance values anywhere else in this prompt are non-authoritative scene descriptions; do not override these values.","Only camera header controls lens/distance."],
+    ["The printed lettering faces the camera directly and is fully readable.","Sign lettering faces camera."],
+    ["Maintain exact source facial identity, eyes, eyebrows, nose, lips, jaw, beard, pores, asymmetry, age, head size and natural anatomy.","Preserve original face and anatomy exactly."],
+    ["Preserve all authored line breaks, punctuation and capitalization.","Preserve authored text verbatim."]
+  ];
+  function process(text){
+    for(var i=0;i<common.length;i++)text=text.split(common[i][0]).join(common[i][1]);
+    if(ultra)for(var j=0;j<extra.length;j++)text=text.split(extra[j][0]).join(extra[j][1]);
+    // Eliminate exact consecutive duplicate directives, only outside sign text/color map.
+    if(ultra)text=text.replace(/(^|\n)([^\n]{45,})\n\2(?=\n|$)/gm,"$1$2");
+    return text.replace(/\n{3,}/g,"\n\n");
   }
-  var out=compressOutside(prefix,ultra)+literal+compressOutside(suffix,ultra);
-  // Additional safe reduction: remove only exact adjacent duplicate lines outside SIGN TEXT.
-  if(ultra){
-    function consecutive(t){return t.replace(/(^|\n)([^\n]{40,})\n\2(?=\n|$)/gm,"$1$2");}
-    out=consecutive(compressOutside(prefix,true))+literal+consecutive(compressOutside(suffix,true));
+  var out=process(before)+secure+process(after);
+  if(!out.includes("PERSON PHOTO")||!out.includes("SHOE PHOTO"))throw Error("Referenzpflicht fehlt.");
+  if(secure&&!out.includes(secure))throw Error("Plakat oder Wortfarben verändert.");
+  // Value-preservation audit: exact top camera controls and all user overrides.
+  var critical=/^(FOCAL LENGTH:|CAMERA DISTANCE:|IMAGE FORMAT:|PERSON PHOTO:|SHOE PHOTO:|CUSTOM OVERRIDE|USER ADDITIONAL INSTRUCTIONS:|ACTIVE USER OVERRIDE:|CUSTOM USER PROMPT:)/i;
+  var srcLines=full.split("\n").filter(function(x){return critical.test(x.trim())});
+  for(var k=0;k<srcLines.length;k++){
+    if(!out.includes(srcLines[k]))throw Error("Verbindliche Einstellung fehlt: "+srcLines[k].slice(0,72));
   }
-  if(out===full){
-    // Non-destructive compaction of blank lines OUTSIDE verbatim message.
-    out=prefix.replace(/\n\n\n+/g,"\n\n")+literal+suffix.replace(/\n\n\n+/g,"\n\n");
-  }
-  // A mode that cannot safely shorten source must display this fact, not erase content.
-  if(literal && !out.includes(literal))throw Error("Der wortgetreue Originaltext wurde verändert.");
-  if(!out.includes("PERSON PHOTO") || !out.includes("SHOE PHOTO"))throw Error("Referenzvorgaben fehlen.");
   return out;
 }
-function selected(){var full=originalFull();return state.world!=="sign"||mode==="full"?full:compact(full,mode==="ultra")}
+function selected(){var full=fullSource();return state.world!=="sign"||mode==="full"?full:compact(full,mode==="ultra")}
 buildPrompt=function(){return selected()};
 function mount(){
- if(state.world!=="sign"||state.tab!=="Prompt & Projekt")return;
- var pre=document.querySelector("#view pre.prompt");if(!pre)return;
- var box=document.createElement("div");box.className="notice";
- box.style.cssText="border:2px solid #67bf94;padding:14px;margin:12px 0";
- box.innerHTML='<strong>SMART COMPACT ENGINE · V4.5.23</strong><p style="margin:7px 0">Prompt-Modus auswählen:</p><select id="signCompactMode4523" style="display:block;width:100%;min-height:48px"><option value="full">FULL · Original (Standard)</option><option value="smart">SMART COMPACT</option><option value="ultra">ULTRA COMPACT</option></select><p id="signCompactStats4523" class="hint" role="status"></p>';
- pre.parentElement.insertBefore(box,pre);
- var sel=box.querySelector("select"),info=box.querySelector("#signCompactStats4523");sel.value=mode;
- function refresh(){
-   try{
-    var full=originalFull(),txt=selected();pre.textContent=txt;
-    var pct=full.length?100*(1-txt.length/full.length):0;
-    info.textContent=(mode==="full"?"FULL-Original unverändert":mode.toUpperCase()+" · "+pct.toFixed(1)+" % kürzer als FULL")+" · "+txt.length+" Zeichen";
-    if(mode!=="full"&&pct<=0)info.textContent+=" · Keine sichere Kürzung möglich – keine Inhalte gelöscht.";
-   }catch(e){mode="full";sel.value=mode;pre.textContent=originalFull();info.textContent="Fehler: "+String(e.message||e)}
- }
- sel.onchange=function(){mode=sel.value;refresh()};
- refresh();
+  if(state.world!=="sign"||state.tab!=="Prompt & Projekt")return;
+  var pre=document.querySelector("#view pre.prompt");if(!pre)return;
+  var box=document.createElement("div");box.className="notice";box.style.cssText="border:2px solid #67bf94;padding:14px;margin:12px 0";
+  box.innerHTML='<strong>SMART COMPACT ENGINE · V4.5.24</strong><p style="margin:7px 0">Prompt-Modus auswählen:</p><select id="signCompactMode4524" style="display:block;width:100%;min-height:48px"><option value="full">FULL · Original (Standard)</option><option value="smart">SMART COMPACT</option><option value="ultra">ULTRA COMPACT</option></select><p id="signCompactStats4524" class="hint" role="status"></p>';
+  pre.parentElement.insertBefore(box,pre);
+  var sel=box.querySelector("select"),info=box.querySelector("#signCompactStats4524");sel.value=mode;
+  function refresh(){
+    try{
+      var full=fullSource(),txt=selected(),pct=full.length?100*(1-txt.length/full.length):0;
+      pre.textContent=txt;
+      info.textContent=(mode==="full"?"FULL unverändert":mode.toUpperCase()+" · "+pct.toFixed(1)+" % kürzer als FULL")+" · "+txt.length+" Zeichen · Pflichtfelder geprüft";
+      if(mode!=="full"&&pct<10)info.textContent+=" · Hinweis: geringe sichere Kürzung; kein willkürlicher Datenverlust";
+    }catch(e){
+      mode="full";sel.value=mode;pre.textContent=fullSource();
+      info.textContent="Kompaktmodus blockiert: "+String(e.message||e);
+    }
+  }
+  sel.onchange=function(){mode=sel.value;refresh()};refresh();
 }
 render=function(){priorRender();mount()};
 if(state.world==="sign"&&state.tab==="Prompt & Projekt")render();
-window.stravaSignCompact4523={full:originalFull,prompt:selected,compact:compact,mode:function(){return mode},version:"V4.5.23"};
+window.stravaSignCompact4524={version:"V4.5.24",full:fullSource,prompt:selected,compact:compact,mode:function(){return mode}};
 })();
 </script>
 </body></html>
