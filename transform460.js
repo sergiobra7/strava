@@ -160,6 +160,7 @@ const oldRender=render;render=function(){
  const holder=document.getElementById('view');if(!holder)return;
  holder.innerHTML=view();bind();
 };
-if(state.world==='sign'&&state.tab===tabName)render();
+/* Repaint the navigation immediately after installing the new tab; the first page render happened earlier. */
+if(state.world==='sign')render();
 window.stravaTransform460={createPrompt:createPrompt,version:'V4.6.0',getSettings:()=>JSON.parse(JSON.stringify(settings))};
 })();
