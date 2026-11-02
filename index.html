@@ -14,7 +14,7 @@
 #premiumPanel270 > #premiumCards270{display:block!important}
 #premiumPanel270 > #refreshPremium270{display:block!important;margin:14px 0}
 #premiumPanel270 #allSettings339,#premiumPanel270 #master320,#premiumPanel270 #premiumEditor270,#premiumPanel270 #premiumCast311,#premiumPanel270 #manualRegie328,#premiumPanel270 #premiumActiveFilters340{display:none!important}
-</style><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Anton&family=Archivo+Black&family=Archivo+Narrow:wght@900&family=Barlow+Condensed:wght@800;900&family=Bebas+Neue&family=League+Gothic&family=Oswald:wght@700&family=Roboto+Condensed:wght@900&family=Teko:wght@700&display=swap" rel="stylesheet"></head><body><header><div><h1>STRAVA RUN <span class="mark">V4.5.24</span></h1><small>RUNNER PHOTO + STRAVA WALL · GITHUB EDITION</small><div id="onlineBuild414" style="font-size:12px;color:#a8c6b8;margin-top:5px;font-weight:700" aria-label="Online-Version">ONLINE · V4.4.0 · Commit wird geprüft …</div></div><div style="display:flex;align-items:center;gap:9px;flex-wrap:wrap;justify-content:flex-end"><span id="saveStatus" class="status">Lokal gespeichert</span><button id="stravaRefresh401" type="button" title="Neueste GitHub-Version laden" style="background:#2cbd79;color:#101510;border:0;border-radius:9px;padding:10px 13px;font-weight:800;cursor:pointer">🔄 Aktualisieren</button></div></header><main><div class="worlds"><button class="world active" data-world="wall">🧱 STRAVA WALL</button><button class="world" data-world="sign">⬛ BLACK SIGN / PLAKAT</button></div><div style="display:flex;align-items:center;justify-content:space-between;gap:10px;margin:9px 0"><button id="presetShortcut403" type="button" style="background:#f2bd49;color:#151515;border:2px solid #f8d57b;border-radius:10px;padding:12px 16px;font-size:15px;font-weight:900;cursor:pointer;flex:1">⭐ MEINE PRESETS · GALERIE ÖFFNEN</button></div><section id="presetDirect404" hidden style="margin:14px 0;padding:14px;border:2px solid #f2bd49;border-radius:14px;background:#151a21"></section><nav class="tabs" id="tabs"></nav><div id="view"></div><div class="footer">Lokale Offline-Web-App · Keine Bilder werden an einen Server gesendet · Prompt zum Kopieren für ChatGPT/Bildgenerierung</div></main><script>
+</style><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Anton&family=Archivo+Black&family=Archivo+Narrow:wght@900&family=Barlow+Condensed:wght@800;900&family=Bebas+Neue&family=League+Gothic&family=Oswald:wght@700&family=Roboto+Condensed:wght@900&family=Teko:wght@700&display=swap" rel="stylesheet"></head><body><header><div><h1>STRAVA RUN <span class="mark">V4.5.25</span></h1><small>RUNNER PHOTO + STRAVA WALL · GITHUB EDITION</small><div id="onlineBuild414" style="font-size:12px;color:#a8c6b8;margin-top:5px;font-weight:700" aria-label="Online-Version">ONLINE · V4.4.0 · Commit wird geprüft …</div></div><div style="display:flex;align-items:center;gap:9px;flex-wrap:wrap;justify-content:flex-end"><span id="saveStatus" class="status">Lokal gespeichert</span><button id="stravaRefresh401" type="button" title="Neueste GitHub-Version laden" style="background:#2cbd79;color:#101510;border:0;border-radius:9px;padding:10px 13px;font-weight:800;cursor:pointer">🔄 Aktualisieren</button></div></header><main><div class="worlds"><button class="world active" data-world="wall">🧱 STRAVA WALL</button><button class="world" data-world="sign">⬛ BLACK SIGN / PLAKAT</button></div><div style="display:flex;align-items:center;justify-content:space-between;gap:10px;margin:9px 0"><button id="presetShortcut403" type="button" style="background:#f2bd49;color:#151515;border:2px solid #f8d57b;border-radius:10px;padding:12px 16px;font-size:15px;font-weight:900;cursor:pointer;flex:1">⭐ MEINE PRESETS · GALERIE ÖFFNEN</button></div><section id="presetDirect404" hidden style="margin:14px 0;padding:14px;border:2px solid #f2bd49;border-radius:14px;background:#151a21"></section><nav class="tabs" id="tabs"></nav><div id="view"></div><div class="footer">Lokale Offline-Web-App · Keine Bilder werden an einen Server gesendet · Prompt zum Kopieren für ChatGPT/Bildgenerierung</div></main><script>
 /* V3.18 stabilization: one color serializer shared by prompt sections. */
 window.stravaSignColorMap318=function(sign){
  const source=sign||{},raw=String(source.signText||''),colors=source.wordColors||{},base=String(source.signColor||'#FFFFFF').toUpperCase();
@@ -1935,7 +1935,7 @@ function archiveBind413(){gallery413();let file=document.getElementById('a413fil
 /* V3.13.8: public GitHub Pages deployment identity, independent of local settings. */
 (function(){
  const el=document.getElementById('onlineBuild414');if(!el)return;
- const version='V4.5.24';
+ const version='V4.5.25';
  const fallback='ONLINE · '+version+' · Commit: nicht abrufbar';
  const url='https://api.github.com/repos/sergiobra7/strava/commits/main';
  const controller=new AbortController();
@@ -2688,7 +2688,38 @@ if(state.world==="sign"&&state.tab==="Prompt"&&typeof render==="function")render
 (function(){
 "use strict";
 if(typeof render!=="function"||!window.stravaSignCompact4520)return;
-var priorRender=render, fullSource=window.stravaSignCompact4520.full, mode="full";
+var priorRender=render, rawFull=window.stravaSignCompact4520.full, fullSource=function(){return refineFigure4525(rawFull())}, mode="full";
+function refineFigure4525(source){
+  if(state.world!=="sign")return source;
+  var result=String(source);
+  var start=result.indexOf("01 / REFERENCE IDENTITY");
+  var stop=result.indexOf("02 / LOCATION AND CAMERA",start);
+  if(start>=0&&stop>start){
+    var identity=result.slice(start,stop);
+    // Only normalize literal newline escapes inside the user-defined identity block.
+    identity=identity.replace(/\\n/g,"\n");
+    identity=identity.replace("01 / REFERENCE IDENTITY\n",
+      "01 / REFERENCE IDENTITY\nFACE IDENTITY — HIGHEST VISUAL PRIORITY: Match the attached PERSON PHOTO's natural facial geometry (eyes, brows, nose, mouth, beard boundary and density, jaw, head shape, age and asymmetries); do not replace it with a similar-looking fictional face. Keep the exact head-to-body scale and do not beautify, smooth or invent facial detail. At 15 m a small face has limited real detail: prioritize identity over fake pore-level sharpening. An exact 1:1 photographic match cannot be guaranteed by text prompting.\n");
+    result=result.slice(0,start)+identity+result.slice(stop);
+  }
+  // A standing arms-crossed pose cannot use the reverse-chair resting instruction.
+  var standingCrossed=/Pose:\s*Arme verschränkt\b|Körperhaltung\s*\/\s*Pose:\s*Arme verschränkt\b/i.test(result);
+  if(standingCrossed){
+    result=result.replace(/^CROSSED ARMS \/ CHAIR BACK:[^\n]*/m,
+      "STANDING CROSSED ARMS — ACTIVE POSE ONLY: Stand naturally with relaxed shoulders and lightly crossed forearms against the torso; preserve believable wrist, elbow and finger anatomy, with hands naturally visible where the overlap allows. Do not place forearms on an imaginary chair or invent chair support.");
+  }
+  // Retain user-chosen depth, side, camera and crowd; make the face and pose visible.
+  var position="RUNNER VISIBILITY WITHIN SELECTED PLACEMENT — MANDATORY: Keep the selected runner depth, lateral placement and position behind the first spectator row. Create an organic sightline through the crowd so the original face, head size, shoulders and crossed-arm silhouette remain unobstructed and recognizable. Never enlarge, stretch, vertically scale or relocate the runner to improve visibility. Prefer shifting unselected spectators, not changing fixed camera geometry or runner position.";
+  if(result.includes("RUNNER POSITION — SINGLE SPATIAL AUTHORITY:") && !result.includes(position)){
+    result=result.replace(/(RUNNER POSITION — SINGLE SPATIAL AUTHORITY:[^\n]*)/, "$1\n"+position);
+  }
+  // 178 cm is a physical scale cue, not permission to estimate leg length from a selfie.
+  var body="BODY REFERENCE PRIORITY — NATURAL GEOMETRY: 178 cm fixes real-world scale only, not the thigh/shin ratio or head size. Do not infer full-body anatomy from a close-up selfie. If an additional BODY PHOTO is attached, use it only for natural head-to-body, shoulder, torso, pelvis and leg proportions; PERSON PHOTO alone controls face identity and SHOE PHOTO alone controls shoes. No elongated legs, stretched torso, narrow shrunken head or artificial height adjustment. Use natural perspective at the selected camera distance.";
+  if(result.includes("BODY PROPORTION REFERENCE — 178 CM ADULT HEIGHT")&&!result.includes(body)){
+    result=result.replace(/(BODY PROPORTION REFERENCE — 178 CM ADULT HEIGHT[^\n]*)/,"$1\n"+body);
+  }
+  return result;
+}
 function compact(full,ultra){
   // Protect user-authored sign text AND its authoritative per-token color mapping.
   var lo=full.indexOf("<<< SIGN TEXT START >>>");
@@ -2747,7 +2778,7 @@ function mount(){
   if(state.world!=="sign"||state.tab!=="Prompt & Projekt")return;
   var pre=document.querySelector("#view pre.prompt");if(!pre)return;
   var box=document.createElement("div");box.className="notice";box.style.cssText="border:2px solid #67bf94;padding:14px;margin:12px 0";
-  box.innerHTML='<strong>SMART COMPACT ENGINE · V4.5.24</strong><p style="margin:7px 0">Prompt-Modus auswählen:</p><select id="signCompactMode4524" style="display:block;width:100%;min-height:48px"><option value="full">FULL · Original (Standard)</option><option value="smart">SMART COMPACT</option><option value="ultra">ULTRA COMPACT</option></select><p id="signCompactStats4524" class="hint" role="status"></p>';
+  box.innerHTML='<strong>SMART COMPACT ENGINE · V4.5.25</strong><p style="margin:7px 0">Prompt-Modus auswählen:</p><select id="signCompactMode4524" style="display:block;width:100%;min-height:48px"><option value="full">FULL · Original (Standard)</option><option value="smart">SMART COMPACT</option><option value="ultra">ULTRA COMPACT</option></select><p id="signCompactStats4524" class="hint" role="status"></p>';
   pre.parentElement.insertBefore(box,pre);
   var sel=box.querySelector("select"),info=box.querySelector("#signCompactStats4524");sel.value=mode;
   function refresh(){
@@ -2765,7 +2796,7 @@ function mount(){
 }
 render=function(){priorRender();mount()};
 if(state.world==="sign"&&state.tab==="Prompt & Projekt")render();
-window.stravaSignCompact4524={version:"V4.5.24",full:fullSource,prompt:selected,compact:compact,mode:function(){return mode}};
+window.stravaSignCompact4524={version:"V4.5.25",full:fullSource,prompt:selected,compact:compact,mode:function(){return mode}};
 })();
 </script>
 </body></html>
