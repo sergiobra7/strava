@@ -14,7 +14,7 @@
 #premiumPanel270 > #premiumCards270{display:block!important}
 #premiumPanel270 > #refreshPremium270{display:block!important;margin:14px 0}
 #premiumPanel270 #allSettings339,#premiumPanel270 #master320,#premiumPanel270 #premiumEditor270,#premiumPanel270 #premiumCast311,#premiumPanel270 #manualRegie328,#premiumPanel270 #premiumActiveFilters340{display:none!important}
-</style><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Anton&family=Archivo+Black&family=Archivo+Narrow:wght@900&family=Barlow+Condensed:wght@800;900&family=Bebas+Neue&family=League+Gothic&family=Oswald:wght@700&family=Roboto+Condensed:wght@900&family=Teko:wght@700&display=swap" rel="stylesheet"></head><body><header><div><h1>STRAVA RUN <span class="mark">V4.5.28</span></h1><small>RUNNER PHOTO + STRAVA WALL · GITHUB EDITION</small><div id="onlineBuild414" style="font-size:12px;color:#a8c6b8;margin-top:5px;font-weight:700" aria-label="Online-Version">ONLINE · V4.4.0 · Commit wird geprüft …</div></div><div style="display:flex;align-items:center;gap:9px;flex-wrap:wrap;justify-content:flex-end"><span id="saveStatus" class="status">Lokal gespeichert</span><button id="stravaRefresh401" type="button" title="Neueste GitHub-Version laden" style="background:#2cbd79;color:#101510;border:0;border-radius:9px;padding:10px 13px;font-weight:800;cursor:pointer">🔄 Aktualisieren</button></div></header><main><div class="worlds"><button class="world active" data-world="wall">🧱 STRAVA WALL</button><button class="world" data-world="sign">⬛ BLACK SIGN / PLAKAT</button></div><div style="display:flex;align-items:center;justify-content:space-between;gap:10px;margin:9px 0"><button id="presetShortcut403" type="button" style="background:#f2bd49;color:#151515;border:2px solid #f8d57b;border-radius:10px;padding:12px 16px;font-size:15px;font-weight:900;cursor:pointer;flex:1">⭐ MEINE PRESETS · GALERIE ÖFFNEN</button></div><section id="presetDirect404" hidden style="margin:14px 0;padding:14px;border:2px solid #f2bd49;border-radius:14px;background:#151a21"></section><nav class="tabs" id="tabs"></nav><div id="view"></div><div class="footer">Lokale Offline-Web-App · Keine Bilder werden an einen Server gesendet · Prompt zum Kopieren für ChatGPT/Bildgenerierung</div></main><script>
+</style><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Anton&family=Archivo+Black&family=Archivo+Narrow:wght@900&family=Barlow+Condensed:wght@800;900&family=Bebas+Neue&family=League+Gothic&family=Oswald:wght@700&family=Roboto+Condensed:wght@900&family=Teko:wght@700&display=swap" rel="stylesheet"></head><body><header><div><h1>STRAVA RUN <span class="mark">V4.5.29</span></h1><small>RUNNER PHOTO + STRAVA WALL · GITHUB EDITION</small><div id="onlineBuild414" style="font-size:12px;color:#a8c6b8;margin-top:5px;font-weight:700" aria-label="Online-Version">ONLINE · V4.4.0 · Commit wird geprüft …</div></div><div style="display:flex;align-items:center;gap:9px;flex-wrap:wrap;justify-content:flex-end"><span id="saveStatus" class="status">Lokal gespeichert</span><button id="stravaRefresh401" type="button" title="Neueste GitHub-Version laden" style="background:#2cbd79;color:#101510;border:0;border-radius:9px;padding:10px 13px;font-weight:800;cursor:pointer">🔄 Aktualisieren</button></div></header><main><div class="worlds"><button class="world active" data-world="wall">🧱 STRAVA WALL</button><button class="world" data-world="sign">⬛ BLACK SIGN / PLAKAT</button></div><div style="display:flex;align-items:center;justify-content:space-between;gap:10px;margin:9px 0"><button id="presetShortcut403" type="button" style="background:#f2bd49;color:#151515;border:2px solid #f8d57b;border-radius:10px;padding:12px 16px;font-size:15px;font-weight:900;cursor:pointer;flex:1">⭐ MEINE PRESETS · GALERIE ÖFFNEN</button></div><section id="presetDirect404" hidden style="margin:14px 0;padding:14px;border:2px solid #f2bd49;border-radius:14px;background:#151a21"></section><nav class="tabs" id="tabs"></nav><div id="view"></div><div class="footer">Lokale Offline-Web-App · Keine Bilder werden an einen Server gesendet · Prompt zum Kopieren für ChatGPT/Bildgenerierung</div></main><script>
 /* V3.18 stabilization: one color serializer shared by prompt sections. */
 window.stravaSignColorMap318=function(sign){
  const source=sign||{},raw=String(source.signText||''),colors=source.wordColors||{},base=String(source.signColor||'#FFFFFF').toUpperCase();
@@ -1935,7 +1935,7 @@ function archiveBind413(){gallery413();let file=document.getElementById('a413fil
 /* V3.13.8: public GitHub Pages deployment identity, independent of local settings. */
 (function(){
  const el=document.getElementById('onlineBuild414');if(!el)return;
- const version='V4.5.28';
+ const version='V4.5.29';
  const fallback='ONLINE · '+version+' · Commit: nicht abrufbar';
  const url='https://api.github.com/repos/sergiobra7/strava/commits/main';
  const controller=new AbortController();
@@ -2771,7 +2771,7 @@ function mount(){
   if(state.world!=="sign"||state.tab!=="Prompt & Projekt")return;
   var pre=document.querySelector("#view pre.prompt");if(!pre)return;
   var box=document.createElement("div");box.className="notice";box.style.cssText="border:2px solid #67bf94;padding:14px;margin:12px 0";
-  box.innerHTML='<strong>SMART COMPACT ENGINE · V4.5.28</strong><p style="margin:7px 0">Prompt-Modus auswählen:</p><select id="signCompactMode4524" style="display:block;width:100%;min-height:48px"><option value="full">FULL · Original (Standard)</option><option value="smart">SMART COMPACT</option><option value="ultra">ULTRA COMPACT</option></select><p id="signCompactStats4524" class="hint" role="status"></p>';
+  box.innerHTML='<strong>SMART COMPACT ENGINE · V4.5.29</strong><p style="margin:7px 0">Prompt-Modus auswählen:</p><select id="signCompactMode4524" style="display:block;width:100%;min-height:48px"><option value="full">FULL · Original (Standard)</option><option value="smart">SMART COMPACT</option><option value="ultra">ULTRA COMPACT</option></select><p id="signCompactStats4524" class="hint" role="status"></p>';
   // User-triggered recommendation; never silently overwrite manual camera settings.
   var cameraInfo=document.createElement("div");
   cameraInfo.style.cssText="margin:12px 0;padding:10px;border:1px solid #536775;border-radius:10px";
@@ -2805,7 +2805,93 @@ function mount(){
 }
 render=function(){priorRender();mount()};
 if(state.world==="sign"&&state.tab==="Prompt & Projekt")render();
-window.stravaSignCompact4524={version:"V4.5.28",full:fullSource,prompt:selected,compact:compact,mode:function(){return mode}};
+window.stravaSignCompact4524={version:"V4.5.29",full:fullSource,prompt:selected,compact:compact,mode:function(){return mode}};
+})();
+</script>
+<script id="signature-shared-camera-v4529">
+/* BLACK SIGN V4.5.29: a linked camera control BEFORE Signature quick actions.
+   Use Premium Studio's EXISTING camera inputs/events as the only writable source.
+   Never store a second set of camera values; never affect STRAVA WALL. */
+(function(){
+"use strict";
+var signatureId="sxCameraLink4529";
+function source(){
+  var target=document.getElementById("psCameraTarget394");
+  if(!target)return null;
+  return {manual:target.querySelector("[data-ps-manual]"),
+    lens:target.querySelector('[data-ps-opt="lens"]'),
+    distance:target.querySelector('[data-ps-opt="distance"]'),
+    format:target.querySelector('[data-ps-opt="format"]')};
+}
+function active(){return typeof state!=="undefined"&&state.world==="sign"&&state.tab==="Smart Director"}
+function sync(){
+  var el=document.getElementById(signatureId),s=source();
+  if(!el)return;
+  var status=el.querySelector("[data-linked-status]");
+  if(!s||!s.manual||!s.lens||!s.distance||!s.format){
+    el.querySelectorAll("input,select").forEach(function(x){x.disabled=true});
+    if(status)status.textContent="Kameraquelle nicht geladen – Original-Kamerabereich öffnen.";
+    return;
+  }
+  var manual=el.querySelector('[data-linked-camera="manual"]');
+  if(document.activeElement!==manual)manual.checked=s.manual.checked;
+  ["lens","distance","format"].forEach(function(k){
+    var mirror=el.querySelector('[data-linked-camera="'+k+'"]'),original=s[k];
+    if(!mirror||!original)return;
+    if(document.activeElement!==mirror)mirror.value=original.value;
+    mirror.disabled=!s.manual.checked;
+  });
+  if(status)status.textContent=s.manual.checked?"AKTIV: MANUELLE KAMERA · synchronisiert":"AKTIV: SZENENKAMERA · synchronisiert";
+}
+function mount(){
+  if(!active())return;
+  var actions=document.getElementById("sxQuickActions405");
+  if(!actions||document.getElementById(signatureId))return;
+  var block=document.createElement("section");
+  block.id=signatureId;
+  block.style.cssText="border:2px solid #fc4c02;border-radius:12px;padding:14px;margin:18px 0;background:#19212b;color:#e5e7eb";
+  block.innerHTML='<div style="font-weight:900;font-size:19px;color:#ff8753;margin-bottom:12px">KAMERA · LIVE <span style="font-size:12px;color:#cbd5e1">VERKNÜPFT</span></div>'+
+   '<label style="display:flex;align-items:center;gap:9px;margin-bottom:14px;font-weight:700"><input type="checkbox" data-linked-camera="manual" style="width:22px;height:22px"> Manuell</label>'+
+   '<div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px">'+
+   '<label style="min-width:0">Brennweite (mm)<input type="number" min="10" max="200" step="1" data-linked-camera="lens" style="box-sizing:border-box;width:100%;margin-top:5px"></label>'+
+   '<label style="min-width:0">Kameraentfernung (m)<input type="number" min="1" max="500" step="0.5" data-linked-camera="distance" style="box-sizing:border-box;width:100%;margin-top:5px"></label></div>'+
+   '<label style="display:block;margin-top:12px">Bildformat<select data-linked-camera="format" style="width:100%;margin-top:5px"><option value="9:16">9:16</option></select></label>'+
+   '<p data-linked-status style="margin:10px 0 0;color:#b7c4d5;font-size:13px" role="status">Kamerawerte werden synchronisiert.</p>';
+  actions.parentNode.insertBefore(block,actions);
+  block.addEventListener("change",function(event){
+    var key=event.target.dataset.linkedCamera;
+    if(!key)return;
+    var s=source();
+    if(!s||!s[key]){sync();return}
+    var original=s[key],value=key==="manual"?event.target.checked:event.target.value;
+    if(key!=="manual" && (key==="lens"||key==="distance")){
+      var n=Number(value),low=Number(original.min||1),high=Number(original.max||500);
+      if(!Number.isFinite(n)||n<low||n>high){sync();return}
+    }
+    if(key==="manual")original.checked=!!value;else original.value=value;
+    original.dispatchEvent(new Event("change",{bubbles:true}));
+    setTimeout(function(){mount();sync()},0);
+  });
+  sync();
+}
+var watcher;
+function start(){
+  if(watcher)return;
+  var root=document.getElementById("view");if(!root)return;
+  watcher=new MutationObserver(function(){
+    if(!active())return;
+    mount();sync();
+  });
+  watcher.observe(root,{childList:true,subtree:true});
+  mount();sync();
+}
+if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",start,{once:true});else start();
+// Existing render switches worlds/tabs, and some Signature actions replace its panel.
+if(typeof render==="function"){
+  var prior=render;
+  render=function(){var value=prior.apply(this,arguments);mount();sync();return value};
+}
+window.stravaSignatureCamera4529={mount:mount,sync:sync,source:source};
 })();
 </script>
 </body></html>
