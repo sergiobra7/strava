@@ -36,7 +36,7 @@ function mount(){
  if(!auditResult.ok){console.warn('Smart Director Matrix nicht vollständig',auditResult);return;}
  const active=(original.find(b=>b.classList.contains('on'))||{}).dataset?.psOpen||'ort';
  const category=MATRIX.find(g=>g.items.some(i=>i[0]===active));
- if(!expanded||!MATRIX.some(g=>g.id===expanded))expanded=category?.id||MATRIX[0].id;
+ if(expanded!=='__closed__'&&!MATRIX.some(g=>g.id===expanded))expanded=category?.id||MATRIX[0].id;
  let wrap=root.querySelector('#smartDirectorGroups502');
  if(wrap&&wrap.dataset.active===active&&wrap.dataset.expanded===expanded)return;
  busy=true;
@@ -50,7 +50,7 @@ function mount(){
   for(const group of MATRIX){
    const shell=document.createElement('section');shell.style.cssText='border:1px solid '+(expanded===group.id?'#69cf9b':'#495563')+';border-radius:12px;background:#151b23;overflow:hidden';
    const header=createButton(group.icon+'  '+group.title+'  '+(expanded===group.id?'▴':'▾'),()=>{
-    const prior=expanded;expanded=prior===group.id?'':group.id;
+    const prior=expanded;expanded=prior===group.id?'__closed__':group.id;
     const first=group.items[0][0];
     if(expanded&&(!group.items.some(i=>i[0]===active))){
       const old=original.find(b=>b.dataset.psOpen===first);
@@ -78,7 +78,7 @@ function mount(){
   }
   const mainPanel=grid.nextElementSibling;
   if(mainPanel&&mainPanel!==wrap&&mainPanel.style){
-   mainPanel.style.display=expanded?'':'none';
+   mainPanel.style.display=expanded!=='__closed__'?'':'none';
   }
   const promo=grid.previousElementSibling;
   if(promo&&promo.id==='smartDirectorGroups502'){
