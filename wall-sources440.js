@@ -130,7 +130,7 @@ window.addEventListener('load',function(){
  if(document.getElementById('premiumHarmony504Script'))return;
  var script=document.createElement('script');
  script.id='premiumHarmony504Script';
- script.src='premium-harmony-v504.js?v=504-20261103';
+ script.src='premium-harmony-v504.js?v=509-yield-20261103';
  script.onerror=function(){console.error('PREMIUM Harmonisierung konnte nicht geladen werden.')};
  document.body.appendChild(script);
 },{once:true});
@@ -151,4 +151,14 @@ window.addEventListener('load',function(){
  catalog.onload=loadQuick;
  catalog.onerror=function(){console.error('130-Pose-Matrix konnte nicht geladen werden.');loadQuick()};
  document.body.appendChild(catalog);
+},{once:true});
+
+/* V5.0.9 · Unified eight-filter PREMIUM recommendation matrix and copy action. */
+window.addEventListener('load',function(){
+ if(document.getElementById('premiumUnified509Script'))return;
+ var script=document.createElement('script');
+ script.id='premiumUnified509Script';
+ script.src='premium-unified-v509.js?v=509-20261103';
+ script.onerror=function(){console.error('PREMIUM-Acht-Filter-Matrix konnte nicht geladen werden.')};
+ document.body.appendChild(script);
 },{once:true});
