@@ -80,6 +80,7 @@ function setOf(n,card){
  const distance=isManual&&Number(camera?.distance)>0?Number(camera.distance):original?.distance||Number(camera?.distance)||20;
  const eye=isManual||q.kamera&&q.kamera!=='Automatisch · PREMIUM-Szenenkamera'?'Manuell':'Szenenkamera';
  const errors=[];
+ if(!catalog?.poses?.length)errors.push('130-Posen-Katalog noch nicht geladen');
  if(!displayFits(display,place))errors.push('Anzeigemittel passt nicht zu diesem Ort');
  if(!resolution?.ok)errors.push('Pose benötigt eine fehlende Requisite oder Auflage');
  if(!(lens>=10&&lens<=200&&distance>=1&&distance<=500))errors.push('Kamerawerte ungültig');
@@ -121,8 +122,9 @@ function updateCards(){
  const selected=cards.findIndex(card=>card.classList.contains('on'));
  const active=cards[Math.max(0,selected)];
  const activeModel=active?.dataset.model509?JSON.parse(active.dataset.model509):null;
- const live=[...root.querySelectorAll('.ps-title')].find(node=>node.textContent.includes('LIVE · AKTIVE AUSWAHL'));
+ const live=[...root.querySelectorAll('.ps-title')].find(node=>node.textContent.includes('LIVE · AKTIVE AUSWAHL')||node.textContent.includes('FILTERVORSCHAU · PREMIUM'));
  const summary=live?.parentElement?.querySelector('.ps-summary');
+ if(live)live.textContent=selected>=0?'LIVE · AKTIVE AUSWAHL':'FILTERVORSCHAU · PREMIUM 001';
  if(summary&&activeModel){
    const signature=JSON.stringify(activeModel);
    if(summary.dataset.matrix509!==signature){
@@ -194,6 +196,13 @@ function schedule(){
  Promise.resolve().then(()=>{scheduled=false;updateCards()});
 }
 function init(){
+ const catalogNode=document.getElementById('stravaPoseCatalog508Script');
+ if(catalogNode&&!window.stravaPoseCatalog508){
+  catalogNode.addEventListener('load',()=>{
+   document.querySelectorAll('#ps350 .ps-card').forEach(card=>{delete card.dataset.unified509});
+   updateCards();
+  },{once:true});
+ }
  const view=document.getElementById('view');if(view){
   const observer=new MutationObserver(records=>{if(records.some(r=>r.target===view||r.addedNodes.length&&[...r.addedNodes].some(node=>node.id==='ps350'||node.querySelector?.('#ps350'))))schedule()});
   observer.observe(view,{childList:true,subtree:true});
@@ -241,7 +250,7 @@ const audit=function(){
  });
  return {pass:cards.length===10&&issues.length===0,scenes:cards.length,filters:KEYS.length,issues,keys:KEYS,poseCatalog:window.stravaPoseCatalog508?.audit?.()};
 };
-window.stravaPremiumUnified509={version:'V5.0.9',audit,resolve:setOf,apply:selectResolved,render:updateCards,keys:KEYS,displayFits,placeCompatibleMount};
+window.stravaPremiumUnified509={version:'V5.0.9.1',audit,resolve:setOf,apply:selectResolved,render:updateCards,prompt:overridePrompt,keys:KEYS,displayFits,placeCompatibleMount};
 document.addEventListener('click',clickHandler,true);
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init,{once:true});else init();
 })();
