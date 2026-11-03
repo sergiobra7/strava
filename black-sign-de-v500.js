@@ -18,8 +18,11 @@ function dePrompt(){
  const place=pick(s,"Location:").split(". Selected Premium scene:")[0].replace(/\.$/,"")||clean(p.location||c.location||z.location)||"gewählter öffentlicher Ort";
  const viewpoint=pick(s,"Viewpoint:").replace(/\.$/,"")||clean(p.camera)||"realistische Straßenperspektive";
  const pose=pick(s,"Pose:").split(". Gaze:")[0]||clean(z.runnerPose)||"natürliche, ausgewählte Pose";
- const gaze=(pick(s,"Pose:").split("Gaze:")[1]||"").split(". Expression/action:")[0]||clean(z.mainGaze)||"natürlicher Blick";
- const act=(pick(s,"Pose:").split("Expression/action:")[1]||"").trim()||"natürlicher Gesichtsausdruck";
+ let gaze=(pick(s,"Pose:").split("Gaze:")[1]||"").split(". Expression/action:")[0]||clean(z.mainGaze)||"natürlicher Blick";
+ let act=(pick(s,"Pose:").split("Expression/action:")[1]||"").trim()||"natürlicher Gesichtsausdruck";
+ let quick={};try{quick=JSON.parse(localStorage.getItem('strava-quick-director-506')||'{}')||{}}catch(e){}
+ if(quick.blick&&quick.blick!=='Automatisch')gaze=String(quick.blick);
+ if(quick.mimik&&quick.mimik!=='Automatisch')act=String(quick.mimik);
  const outfit=pick(s,"Outfit:").split(". Use only")[0]||[c.brand,c.top,c.topColor,c.pants,c.cap,c.socks,c.watch].filter(Boolean).join("; ");
  const crowd=pick(s,"Audience:").split(". ")[0]||clean(z.audience)||"entsprechend der gewählten Zuschaueroption";
  const cast=pick(s,"Premium scene cast:").split(". A selected")[0]||"";
