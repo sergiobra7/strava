@@ -114,3 +114,13 @@ window.addEventListener('load',function(){
  el.onerror=function(){console.error('Plakat-Farb-Prompt konnte nicht geladen werden.')};
  document.body.appendChild(el);
 },{once:true});
+
+/* Smart Director: vier zusammengefasste Filterbereiche, Originale bleiben aktiv. */
+window.addEventListener('load',function(){
+ if(document.getElementById('smartDirectorGroups502Script'))return;
+ var script=document.createElement('script');
+ script.id='smartDirectorGroups502Script';
+ script.src='smart-director-groups-v502.js?v=502-20261103';
+ script.onerror=function(){console.error('Smart Director Gruppen konnten nicht geladen werden.')};
+ document.body.appendChild(script);
+},{once:true});
