@@ -99,7 +99,7 @@ window.addEventListener('load',function(){
  if(window.stravaSignDeutsch500||document.getElementById('blackSignDeutsch500'))return;
  var script=document.createElement('script');
  script.id='blackSignDeutsch500';
- script.src='black-sign-de-v500.js?v=507-168cm-20261103';
+ script.src='black-sign-de-v500.js?v=508-168cm-20261103';
  script.onload=function(){if(typeof render==='function'&&typeof state!=='undefined'&&state.world==='sign')render()};
  script.onerror=function(){console.error('BLACK SIGN V5.0 konnte nicht geladen werden.')};
  document.body.appendChild(script);
@@ -135,12 +135,20 @@ window.addEventListener('load',function(){
  document.body.appendChild(script);
 },{once:true});
 
-/* BLACK SIGN V5.0.6 · Seven direct Smart Director controls. */
+/* BLACK SIGN V5.0.8 · First load the 130-pose matrix, then eight direct controls. */
 window.addEventListener('load',function(){
  if(document.getElementById('smartDirectorQuick506Script'))return;
- var el=document.createElement('script');
- el.id='smartDirectorQuick506Script';
- el.src='smart-director-quick-v506.js?v=507-20261103';
- el.onerror=function(){console.error('Direkte Smart Director Auswahlfelder konnten nicht geladen werden.')};
- document.body.appendChild(el);
+ function loadQuick(){
+  var el=document.createElement('script');
+  el.id='smartDirectorQuick506Script';
+  el.src='smart-director-quick-v506.js?v=508-20261103';
+  el.onerror=function(){console.error('Direkte Smart Director Auswahlfelder konnten nicht geladen werden.')};
+  document.body.appendChild(el);
+ }
+ var catalog=document.createElement('script');
+ catalog.id='stravaPoseCatalog508Script';
+ catalog.src='pose-catalog-v508.js?v=508-20261103';
+ catalog.onload=loadQuick;
+ catalog.onerror=function(){console.error('130-Pose-Matrix konnte nicht geladen werden.');loadQuick()};
+ document.body.appendChild(catalog);
 },{once:true});
