@@ -82,6 +82,7 @@ async function copy(text){
 document.addEventListener('click',function(event){
  const button=event.target?.closest?.('#ps350 [data-ps-apply-copy]');
  if(!button)return;
+ if(window.stravaPremiumUnified509)return;
  event.preventDefault();event.stopImmediatePropagation();
  const n=Number(button.dataset.psApplyCopy);
  const original=document.querySelector('#ps350 [data-ps-scene="'+n+'"]');
