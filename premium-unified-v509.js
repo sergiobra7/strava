@@ -31,7 +31,7 @@ function readableCamera(m){
 }
 function placeCompatibleMount(display,loc){
  const name=String(display||'').toLowerCase(),where=String(loc||'').toLowerCase();
- const outdoorFestival=/volksfest|stadtfest|sportevent|messe|marktplatz|stadtplatz|stadionvorplatz/.test(where);
+ const outdoorFestival=/volksfest|stadtfest|sportevent|messe|marktplatz|stadtplatz|stadionvorplatz|stadtpark|uferweg|sportplatz|brücke|skatepark|parkdeck|supermarktparkplatz|promenade|wochenmarkt|tankstelle/.test(where);
  if(/straßenbanner/.test(name)){
   return outdoorFestival?'An öffentlich genehmigter, standfester XXL-Stahltraverse mit sichtbar verankerten Stützen und statisch gesicherter Abhängung, nicht an erfundenen Hausfassaden':'Zwischen zwei vorhandenen tragfähigen Fassaden mit sichtbaren Spannseilen, Wandankern und Sicherungen';
  }
@@ -83,7 +83,9 @@ function setOf(n,card){
  if(!displayFits(display,place))errors.push('Anzeigemittel passt nicht zu diesem Ort');
  if(!resolution?.ok)errors.push('Pose benötigt eine fehlende Requisite oder Auflage');
  if(!(lens>=10&&lens<=200&&distance>=1&&distance<=500))errors.push('Kamerawerte ungültig');
- const position=normalizedPosition(pos,''); 
+ const crowdPref=String(data.crowd316||data.audience||'');
+ if(/^keine$/i.test(crowdPref)&&/gerangel|menschenmenge|publikum|reihe/i.test(pos)&&q.position&&q.position!=='Automatisch')errors.push('Position erfordert Publikum; bisherige Publikumseinstellung ist Keine');
+ const position=normalizedPosition(pos,crowdPref); 
  return {n,ort:place,bereich:area,anzeige:display,position,pose,mimik:mime,blick:gaze,kamera:lens+' mm / '+distance+' m'+(eye==='Manuell'?' · Manuell':''),lens,distance,
   requirement:resolution?.description||'',mount:placeCompatibleMount(display,place),errors};
 }
@@ -116,6 +118,20 @@ function updateCards(){
    warning.style.cssText='margin:7px 0;color:#ffb08a;font-size:12px;font-weight:700;display:'+(model.errors.length?'block':'none');
    warning.textContent=model.errors.length?'⚠ '+model.errors.join(' · '):'';
  });
+ const selected=cards.findIndex(card=>card.classList.contains('on'));
+ const active=cards[Math.max(0,selected)];
+ const activeModel=active?.dataset.model509?JSON.parse(active.dataset.model509):null;
+ const live=[...root.querySelectorAll('.ps-title')].find(node=>node.textContent.includes('LIVE · AKTIVE AUSWAHL'));
+ const summary=live?.parentElement?.querySelector('.ps-summary');
+ if(summary&&activeModel){
+   const signature=JSON.stringify(activeModel);
+   if(summary.dataset.matrix509!==signature){
+    summary.dataset.matrix509=signature;
+    summary.innerHTML=panelText(activeModel);
+   }
+   const legacyDetails=live.parentElement.querySelector('details');
+   if(legacyDetails)legacyDetails.style.display='none';
+ }
 }
 function models(n){
  const c=document.querySelector('#ps350 .ps-card [data-ps-scene="'+n+'"]')?.closest('.ps-card');
