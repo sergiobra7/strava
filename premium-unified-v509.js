@@ -4,7 +4,7 @@
 if(window.stravaPremiumUnified509)return;
 const KEYS=['ort','bereich','anzeige','position','pose','mimik','blick','kamera'];
 const NAMES=['ORT','BEREICH','ANZEIGEMITTEL','POSITION','POSE','MIMIK','BLICKRICHTUNG','KAMERA'];
-const PREF='strava-quick-director-506',STUDIO='strava-premium-studio-350';
+const PREF='strava-quick-director-506',STUDIO='strava-premium-studio-350',EDITS='strava-premium-eight-edits-510',ACTIVE='strava-premium-active-510';
 const AUTOPOS=['Ganz vorne · frei sichtbar','Vorderer Mittelgrund','Mittig in der Menschenmenge','Leicht hinter der ersten Reihe','Hinterer Mittelgrund','Seitlich links vor der Menge','Seitlich rechts vor der Menge','Mitten im Gerangel','Direkt unter dem Plakat','Ganz hinten im Publikum'];
 const AUTOGAZE=['Direkt in die Kamera','Zum Publikum','Zum Plakat','Seitlich'];
 const AUTOMIMIC=['Selbstbewusst','Provokantes Grinsen','Überlegenes Schmunzeln','Eiskalt ernst','Nachdenklich','Herausfordernd','Gelassen','Ernst'];
@@ -61,28 +61,33 @@ function choosePose(n,loc,area,display,preferSport){
  const pool=preferSport?(sport.length?sport:allowed):(anat.length?anat:allowed);
  return pool.length?pool[(n*17+3)%pool.length].name:'Stehen';
 }
+function sceneId(n){return String((json(STUDIO).round||0)*10+n+1)}
+function manual(n){return json(EDITS)[sceneId(n)]||{}}
 function setOf(n,card){
  const data=json(STUDIO),q=json(PREF),old=card.dataset?.rawRows509?JSON.parse(card.dataset.rawRows509):rawRows(card);
- const place=data.location&&data.location!=='Automatisch'?data.location:(old.ort||'Stadtplatz');
- const area=data.area311&&data.area311!=='Automatisch'?data.area311:(old.bereich||'Hauptbereich');
- const display=data.display316&&data.display316!=='BLACK SIGN'?data.display316:(old.anzeige||'BLACK SIGN');
- const pos=q.position&&q.position!=='Automatisch'?q.position:AUTOPOS[n%AUTOPOS.length];
+ const edits=manual(n);
+ const place=edits.ort||((data.location&&data.location!=='Automatisch')?data.location:(old.ort||'Stadtplatz'));
+ const area=edits.bereich||((data.area311&&data.area311!=='Automatisch')?data.area311:(old.bereich||'Hauptbereich'));
+ const display=edits.anzeige||((data.display316&&data.display316!=='BLACK SIGN')?data.display316:(old.anzeige||'BLACK SIGN'));
+ const pos=edits.position||(q.position&&q.position!=='Automatisch'?q.position:AUTOPOS[n%AUTOPOS.length]);
  const explicitPose=q.pose&&q.pose!=='Automatisch'?q.pose:(data.pose&&data.pose!=='Automatisch'?data.pose:null);
  const catalog=window.stravaPoseCatalog508;
- const pose=explicitPose||choosePose(n,place,area,display,n%3===0);
+ const pose=edits.pose||explicitPose||choosePose(n,place,area,display,n%3===0);
  const resolution=catalog?.poses.some(item=>item.name===pose)?catalog.resolve(pose,place,area,display):{ok:true,description:'Natürliche stabile Körperhaltung.'};
- const mime=q.mimik&&q.mimik!=='Automatisch'?q.mimik:AUTOMIMIC[n%AUTOMIMIC.length];
- const gaze=q.blick&&q.blick!=='Automatisch'?q.blick:AUTOGAZE[n%AUTOGAZE.length];
+ const mime=edits.mimik||(q.mimik&&q.mimik!=='Automatisch'?q.mimik:AUTOMIMIC[n%AUTOMIMIC.length]);
+ const gaze=edits.blick||(q.blick&&q.blick!=='Automatisch'?q.blick:AUTOGAZE[n%AUTOGAZE.length]);
  const camera=window.stravaCameraBridge4531?.read?.();
  const original=readableCamera(old.optics);
  const isManual=!!data.manualCamera;
- const lens=isManual&&Number(camera?.lens)>0?Number(camera.lens):original?.lens||Number(camera?.lens)||28;
- const distance=isManual&&Number(camera?.distance)>0?Number(camera.distance):original?.distance||Number(camera?.distance)||20;
+ let lens=isManual&&Number(camera?.lens)>0?Number(camera.lens):original?.lens||Number(camera?.lens)||28;
+ let distance=isManual&&Number(camera?.distance)>0?Number(camera.distance):original?.distance||Number(camera?.distance)||20;
+ if(edits.kamera){const custom=edits.kamera.match(/([\d.,]+)\s*mm\s*[/·,;-]\s*([\d.,]+)\s*m/i);if(custom){lens=Number(custom[1].replace(',','.'));distance=Number(custom[2].replace(',','.'));}}
  const eye=isManual||q.kamera&&q.kamera!=='Automatisch · PREMIUM-Szenenkamera'?'Manuell':'Szenenkamera';
  const errors=[];
  if(!catalog?.poses?.length)errors.push('130-Posen-Katalog noch nicht geladen');
  if(!displayFits(display,place))errors.push('Anzeigemittel passt nicht zu diesem Ort');
  if(!resolution?.ok)errors.push('Pose benötigt eine fehlende Requisite oder Auflage');
+ if(edits.kamera&&!/([\d.,]+)\s*mm\s*[/·,;-]\s*([\d.,]+)\s*m/i.test(edits.kamera))errors.push('Manuelle Kamera benötigt die Schreibweise 28 mm / 15 m');
  if(!(lens>=10&&lens<=200&&distance>=1&&distance<=500))errors.push('Kamerawerte ungültig');
  const crowdPref=String(data.crowd316||data.audience||'');
  if(/^keine$/i.test(crowdPref)&&/gerangel|menschenmenge|publikum|reihe/i.test(pos)&&q.position&&q.position!=='Automatisch')errors.push('Position erfordert Publikum; bisherige Publikumseinstellung ist Keine');
@@ -110,7 +115,7 @@ function updateCards(){
  }
  cards.forEach((card,i)=>{
    const existing=card.dataset.unified509;
-   const prefs=JSON.stringify([json(STUDIO).location,json(STUDIO).area311,json(STUDIO).display316,json(STUDIO).pose,json(STUDIO).manualCamera,json(PREF)]);
+   const prefs=JSON.stringify([json(STUDIO).round,json(STUDIO).selected,json(STUDIO).location,json(STUDIO).area311,json(STUDIO).display316,json(STUDIO).pose,json(STUDIO).manualCamera,window.stravaCameraBridge4531?.read?.(),json(PREF),manual(i)]);
    if(existing===prefs)return;
    const model=setOf(i,card);
    const button=card.querySelector('[data-ps-scene]'),small=button?.querySelector('small');
@@ -122,8 +127,18 @@ function updateCards(){
    if(title)title.textContent='PREMIUM '+String((json(STUDIO).round||0)*10+i+1).padStart(3,'0')+' · '+model.ort;
    small.innerHTML=panelText(model);
    for(const child of [...card.children]){
-     if(child!==button&&!child.matches('[data-ps-apply-copy]'))child.style.display='none';
+     if(child!==button&&!child.matches('[data-ps-apply-copy]')&&!child.classList.contains('unified510-editor')&&!child.classList.contains('unified509-warning'))child.style.display='none';
    }
+   let edit=card.querySelector('.unified510-editor');
+   if(!edit){edit=document.createElement('details');edit.className='unified510-editor';card.appendChild(edit);}
+   const alreadyOpen=edit.open;
+   const values=manual(i);
+   edit.innerHTML='<summary style="cursor:pointer;color:#ffc39c;font-weight:800;padding:10px 0">✎ Diese Empfehlung individuell bearbeiten · nur 8 Merkmale</summary>'+
+     KEYS.map((key,k)=>'<label style="display:block;font-size:12px;color:#c6cfdb;margin:8px 0 3px">'+NAMES[k]+'</label>'+
+       '<input data-ps-override510="'+key+'" value="'+escapeHtml(values[key]||'')+'" placeholder="'+escapeHtml(model[key])+'" style="width:100%;box-sizing:border-box;padding:10px;border:1px solid #5b6d80;border-radius:7px;background:#1e2936;color:white;font-size:14px">').join('')+
+     '<div style="display:flex;flex-wrap:wrap;gap:9px;margin-top:12px"><button type="button" data-ps-save510="'+i+'" style="background:#166346;color:#fff;border:1px solid #48ae81;border-radius:8px;padding:10px">✓ Individuell speichern</button>'+
+     '<button type="button" data-ps-clear510="'+i+'" style="background:#313a48;color:white;border:1px solid #69768a;border-radius:8px;padding:10px">↺ Diese Empfehlung zurücksetzen</button></div>';
+   edit.open=alreadyOpen;edit.style.display='block';
    let warning=card.querySelector('.unified509-warning');
    if(!warning){warning=document.createElement('div');warning.className='unified509-warning';card.appendChild(warning)}
    warning.style.cssText='margin:7px 0;color:#ffb08a;font-size:12px;font-weight:700;display:'+(model.errors.length?'block':'none');
@@ -150,7 +165,7 @@ function models(n){
  if(!c)return null;
  try{
   const saved=JSON.parse(c.dataset.model509||'null');
-  if(saved)return saved;
+  if(saved){const fresh=setOf(n,c);return fresh;}
  }catch(e){}
  return setOf(n,c);
 }
@@ -170,6 +185,7 @@ function selectResolved(n,model){
  q.activeSceneSource267='premium';
  state.sign=state.sign||{};state.sign.signType=model.anzeige;state.sign.signMountDetail=model.mount;state.sign.signMountChoice='Automatisch passend zum Plakattyp';
  saveState();
+ try{localStorage.setItem(ACTIVE,JSON.stringify({scene:sceneId(n),model}))}catch(e){}
  window.stravaPremiumUnified509Active=model;
  return model;
 }
@@ -177,6 +193,7 @@ function overridePrompt(original,x){
  let output=String(original||'');
  if(!output.startsWith('Transformiere die Person aus dem beigefügten Gesichtsfoto'))throw Error('Deutscher Transformations-Prompt fehlt');
  // Eight authoritative scene values; all legacy scene data must yield to these.
+ if(output.includes('- EINZIGE SZENENFILTER — PREMIUM '))return output;
  const block=[
   '- EINZIGE SZENENFILTER — PREMIUM '+String(x.n+1)+':',
   '- ORT: '+x.ort+'.',
@@ -193,6 +210,7 @@ function overridePrompt(original,x){
  const anchor='05 · ORT, SZENE & HAUPTFIGUR';
  if(!output.includes(anchor))throw Error('Hauptfigurblock fehlt');
  output=output.replace(anchor,anchor+'\n'+block);
+ output=output.replace(/^- Öffentlicher Ort: .*$/m,'- Öffentlicher Ort: '+x.ort+' · '+x.bereich+'.');
  const sceneLine=output.match(/^- Gewählte Pose: .*$/m);
  if(sceneLine)output=output.replace(sceneLine[0],'- Gewählte Pose: '+x.pose+'. Blick: '+x.blick+'. Ausdruck und Handlung der Hauptfigur: '+x.mimik+'.');
  output=output.replace(/^- Verbindliche Läuferposition im Gedränge und Bildraum: .*$/m,'- Verbindliche Läuferposition im Gedränge und Bildraum: '+x.position+'.');
@@ -229,6 +247,20 @@ async function copy(text){
  const ta=document.createElement('textarea');ta.value=text;ta.style.cssText='position:fixed;top:12%;left:5%;width:90%;height:42vh;z-index:999999';document.body.appendChild(ta);ta.focus();ta.select();let ok=false;try{ok=!!document.execCommand('copy')}catch(e){}if(ok)ta.remove();return ok;
 }
 function clickHandler(event){
+ const control=event.target?.closest?.('#ps350 [data-ps-save510],#ps350 [data-ps-clear510]');
+ if(control){
+  event.preventDefault();event.stopImmediatePropagation();
+  const n=Number(control.dataset.psSave510??control.dataset.psClear510);
+  if(!Number.isInteger(n)||n<0||n>9)return;
+  const all=json(EDITS);if(control.hasAttribute('data-ps-clear510'))delete all[sceneId(n)];else{
+   const parent=control.closest('.unified510-editor'),entries={};
+   for(const input of parent.querySelectorAll('[data-ps-override510]'))if(input.value.trim())entries[input.dataset.psOverride510]=input.value.trim();
+   all[sceneId(n)]=entries;
+  }
+  try{localStorage.setItem(EDITS,JSON.stringify(all))}catch(e){status('Speichern nicht möglich: Speicher voll',true);return}
+  const card=control.closest('.ps-card');if(card)delete card.dataset.unified509;
+  updateCards();status('✓ Individuelle Werte gespeichert und geprüft',false);return;
+ }
  const element=event.target?.closest?.('#ps350 [data-ps-apply-copy],#ps350 [data-ps-scene]');
  if(!element)return;
  const n=Number(element.dataset.psApplyCopy??element.dataset.psScene);
@@ -260,7 +292,7 @@ const audit=function(){
  });
  return {pass:cards.length===10&&issues.length===0,scenes:cards.length,filters:KEYS.length,issues,keys:KEYS,poseCatalog:window.stravaPoseCatalog508?.audit?.()};
 };
-window.stravaPremiumUnified509={version:'V5.0.9.1',audit,resolve:setOf,apply:selectResolved,render:updateCards,prompt:overridePrompt,keys:KEYS,displayFits,placeCompatibleMount};
+window.stravaPremiumUnified509={version:'V5.1.0',audit,resolve:setOf,apply:selectResolved,render:updateCards,prompt:overridePrompt,keys:KEYS,displayFits,placeCompatibleMount};
 document.addEventListener('click',clickHandler,true);
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init,{once:true});else init();
 })();
