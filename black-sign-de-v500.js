@@ -37,6 +37,20 @@ function dePrompt(){
  const custom=[getSourceLine(s,/^CUSTOM USER PROMPT:/i),getSourceLine(s,/^USER ADDITIONAL INSTRUCTIONS:/i),getSourceLine(s,/^ACTIVE USER OVERRIDE:/i)].filter(Boolean);
  const locPhoto=c.backgroundLock?"Falls ein LOCATION PHOTO beigefügt ist, dessen Architektur, Perspektive und vorhandene Details als Referenz erhalten.":"";
  const runnerPlacement=getSourceLine(s,/^RUNNER POSITION — SINGLE SPATIAL AUTHORITY:/i).replace(/^RUNNER POSITION — SINGLE SPATIAL AUTHORITY:\s*/i,"");
+ const placements={
+  'Ganz vorne · frei sichtbar':'Läufer klar im Vordergrund vor allen Zuschauern, ungehinderter Blick auf Gesicht, Körper und Plakat. Menschenmenge nur hinter ihm.',
+  'Vorderer Mittelgrund':'Läufer im vorderen Mittelgrund, einzelne Passanten dahinter; räumlich natürlich gestaffelt.',
+  'Mittig in der Menschenmenge':'Läufer mitten unter Zuschauern im Mittelgrund, sichtbar von Menschen flankiert; Gesicht und Plakat bleiben unverdeckt.',
+  'Mitten im Gerangel':'Läufer im lebhaften dicht gedrängten Menschenstrom, Menschen seitlich und teilweise davor, aber nie über Gesicht, Hände oder wichtigen Text; dokumentarisches Gedränge.',
+  'Leicht hinter der ersten Reihe':'Läufer hinter den ersten Zuschauern, einzelne Vordergrundpersonen am unteren Bildrand; der Läufer bleibt erkennbar.',
+  'Hinterer Mittelgrund':'Läufer deutlich tiefer in der Szene hinter mehreren Passantengruppen; realistische kleinere Bildgröße.',
+  'Ganz hinten im Publikum':'Läufer im Hintergrund jenseits der Menschenmenge, bewusst klein und dennoch erkennbar; das Plakat bleibt lesbar.',
+  'Seitlich links vor der Menge':'Läufer links im vorderen Bildbereich, Menschenmenge dahinter und nach rechts versetzt.',
+  'Seitlich rechts vor der Menge':'Läufer rechts im vorderen Bildbereich, Menschenmenge dahinter und nach links versetzt.',
+  'Direkt unter dem Plakat':'Läufer räumlich plausibel unmittelbar unterhalb der befestigten Anzeigenfläche, nicht davor schwebend; gesamter Text bleibt sichtbar.'
+ };
+ const chosenPosition=clean(quick.position);
+ const positionRule=chosenPosition&&chosenPosition!=='Automatisch'?placements[chosenPosition]||chosenPosition:runnerPlacement;
  const typMargin=getSourceLine(s,/^SINGLE MARGIN AUTHORITY/i);
  const lines=[
  "Transformiere die Person aus dem beigefügten Gesichtsfoto 1:1 in den Marathonläufer der nachfolgend gewählten öffentlichen Szene. Verwende die reale Person aus PERSON PHOTO als Identitätsvorlage, erfinde kein neues Gesicht. Verändere nur Kleidung, Haltung und Inszenierung entsprechend den Einstellungen.",
@@ -59,7 +73,7 @@ function dePrompt(){
  "05 · ORT, SZENE & HAUPTFIGUR",
  "- Öffentlicher Ort: "+place+". "+locPhoto,
  "- Gewählte Pose: "+pose+". Blick: "+gaze+". Ausdruck und Handlung: "+act+".",
- runnerPlacement?"- Gewählte Läuferposition: "+runnerPlacement:"",
+ positionRule?"- Verbindliche Läuferposition im Gedränge und Bildraum: "+positionRule:"",
  "- Keine Zeigefingergeste, sofern nicht ausdrücklich als Pose gewählt. Anatomisch korrekte Hände, Arme, Gelenke und natürliche Stand- bzw. Sitzkontakte.",
  "",
  "06 · ZUSCHAUER & NEBENFIGUREN",
