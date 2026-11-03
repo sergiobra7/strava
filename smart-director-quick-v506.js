@@ -78,7 +78,16 @@ function apply(k,v){
   }
  }
  else if(k==='position'){put('position',v);ok=true;try{if(typeof render==='function')render()}catch(e){console.warn('Quick Director position refresh',e)}}
- else if(k==='pose')ok=originalSelect('pose','pose',v);
+ else if(k==='pose'){
+  const catalog=window.stravaPoseCatalog508;
+  if(catalog?.poses.some(item=>item.name===v)){
+    const p=saved(),result=catalog.resolve(v,p.location,p.area311,p.display316);
+    if(result.ok){
+      ok=originalSelect('pose','pose','Automatisch');
+      if(ok){put('pose',v);try{if(typeof render==='function')render()}catch(e){console.warn('Pose redraw',e)}}
+    }else{alert('Pose nicht möglich: '+result.reason);ok=false}
+  }else{ok=originalSelect('pose','pose',v);if(ok)put('pose','Automatisch')}
+ }
  else if(k==='kamera')ok=setCamera(v);
  else if(k==='mimik'||k==='blick'){put(k,v);ok=true;try{if(typeof render==='function')render()}catch(e){console.warn('Quick Director: refresh',e)}}
  if(!ok)console.warn('Quick Director: selection not applied',k,v);
@@ -89,7 +98,7 @@ function choices(k,p){
  if(k==='bereich')return areaChoices(p.location||'Automatisch');
  if(k==='anzeige')return DISPLAYS;
  if(k==='position')return POSITIONS;
- if(k==='pose')return POSES;
+ if(k==='pose')return [...POSES,...(window.stravaPoseCatalog508?.poses.map(item=>item.name)||[])];
  if(k==='mimik')return MIMIK;
  if(k==='blick')return BLICKE;
  return KAMERAS;
@@ -99,7 +108,7 @@ function current(k,p,pref){
  if(k==='bereich')return p.area311||'Automatisch';
  if(k==='anzeige')return p.display316||'BLACK SIGN';
  if(k==='position')return pref.position||'Automatisch';
- if(k==='pose')return p.pose||'Automatisch';
+ if(k==='pose')return pref.pose&&pref.pose!=='Automatisch'?pref.pose:(p.pose||'Automatisch');
  if(k==='mimik'||k==='blick')return pref[k]||'Automatisch';
  if(k==='kamera'){
   const o=window.stravaCameraBridge4531?.read?.();
@@ -116,12 +125,16 @@ function mount(){
  mounting=true;
  try{
   const p=saved(),pref=prefs(),grid=root.querySelector('.ps-grid');
+  const poseCatalog=window.stravaPoseCatalog508;
+  if(pref.pose&&pref.pose!=='Automatisch'&&poseCatalog?.poses.some(item=>item.name===pref.pose)&&!poseCatalog.resolve(pref.pose,p.location,p.area311,p.display316).ok){
+    put('pose','Automatisch');pref.pose='Automatisch';console.warn('Pose wegen Ortswechsel zurückgesetzt:',p.location);
+  }
   grid.style.display='none';
   const oldGroups=root.querySelector('#smartDirectorGroups502');if(oldGroups)oldGroups.style.display='none';
   const originalBody=grid.nextElementSibling;
   if(originalBody&&originalBody.id!=='smartDirectorGroups502')originalBody.style.display='none';
   const oldHeader=root.querySelector('.ps-panel > .ps-title');
-  if(oldHeader&&oldHeader.textContent.includes('FILTERÜBERSICHT'))oldHeader.textContent='SZENENSTEUERUNG · 7 DIREKTE AUSWAHLFELDER';
+  if(oldHeader&&(oldHeader.textContent.includes('FILTERÜBERSICHT')||oldHeader.textContent.includes('DIREKTE AUSWAHLFELDER')))oldHeader.textContent='SZENENSTEUERUNG · 8 DIREKTE AUSWAHLFELDER';
   let host=root.querySelector('#smartDirectorQuick506');
   if(!host){host=document.createElement('div');host.id='smartDirectorQuick506';grid.insertAdjacentElement('beforebegin',host)}
   host.style.cssText='display:grid;gap:9px;margin:12px 0 16px;';
@@ -131,10 +144,20 @@ function mount(){
   host.innerHTML=ORDER.map(k=>{
     const list=choices(k,p),val=current(k,p,pref);
     const opts=list.includes(val)?list:[...list,val];
+    let optionsHtml=opts.map(v=>'<option value="'+esc(v)+'"'+(v===val?' selected':'')+'>'+esc(v)+'</option>').join('');
+    if(k==='pose'&&window.stravaPoseCatalog508?.poses.length===130){
+      const base=POSES.map(v=>'<option value="'+esc(v)+'"'+(v===val?' selected':'')+'>'+esc(v)+'</option>').join('');
+      const groups=[...new Set(window.stravaPoseCatalog508.poses.map(item=>item.group))];
+      const grouped=groups.map(group=>'<optgroup label="'+esc(group)+'">'+window.stravaPoseCatalog508.poses.filter(item=>item.group===group).map(item=>{
+        const enabled=window.stravaPoseCatalog508.resolve(item.name,p.location,p.area311,p.display316).ok;
+        return '<option value="'+esc(item.name)+'"'+(item.name===val?' selected':'')+(enabled?'':' disabled')+'>'+esc(item.name)+(enabled?'':' · Ort ungeeignet')+'</option>';
+      }).join('')+'</optgroup>').join('');
+      optionsHtml=base+grouped;
+    }
     return '<div style="display:grid;grid-template-columns:107px minmax(0,1fr);gap:9px;align-items:center">'+
       '<label for="quick506-'+k+'" style="font-weight:800;letter-spacing:.03em;font-size:12px;color:#f3f5f7">'+LABELS[k]+'</label>'+
       '<select id="quick506-'+k+'" data-quick506="'+k+'" style="display:block;width:100%;min-width:0;min-height:46px;background:#252e3a;color:#fff;border:1px solid #617082;border-radius:9px;padding:9px 30px 9px 10px;font-size:14px">'+
-      opts.map(v=>'<option value="'+esc(v)+'"'+(v===val?' selected':'')+'>'+esc(v)+'</option>').join('')+'</select></div>'
+      optionsHtml+'</select></div>'
   }).join('');
   host.querySelectorAll('[data-quick506]').forEach(select=>{
    select.onchange=function(){
@@ -175,5 +198,5 @@ if(oldPrompt){
  };
 }
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init,{once:true});else init();
-window.stravaDirectorQuick506={version:'V5.0.7',mount,apply,fields:ORDER,locations:LOCATIONS.length,displayOptions:DISPLAYS.length};
+window.stravaDirectorQuick506={version:'V5.0.8',mount,apply,fields:ORDER,locations:LOCATIONS.length,displayOptions:DISPLAYS.length};
 })();
