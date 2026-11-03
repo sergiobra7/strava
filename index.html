@@ -14,7 +14,7 @@
 #premiumPanel270 > #premiumCards270{display:block!important}
 #premiumPanel270 > #refreshPremium270{display:block!important;margin:14px 0}
 #premiumPanel270 #allSettings339,#premiumPanel270 #master320,#premiumPanel270 #premiumEditor270,#premiumPanel270 #premiumCast311,#premiumPanel270 #manualRegie328,#premiumPanel270 #premiumActiveFilters340{display:none!important}
-</style><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Anton&family=Archivo+Black&family=Archivo+Narrow:wght@900&family=Barlow+Condensed:wght@800;900&family=Bebas+Neue&family=League+Gothic&family=Oswald:wght@700&family=Roboto+Condensed:wght@900&family=Teko:wght@700&display=swap" rel="stylesheet"></head><body><header><div><h1>STRAVA RUN <span class="mark">V4.7.8</span></h1><small>RUNNER PHOTO + STRAVA WALL · GITHUB EDITION</small><div id="onlineBuild414" style="font-size:12px;color:#a8c6b8;margin-top:5px;font-weight:700" aria-label="Online-Version">ONLINE · V4.7.8 · Commit wird geprüft …</div></div><div style="display:flex;align-items:center;gap:9px;flex-wrap:wrap;justify-content:flex-end"><span id="saveStatus" class="status">Lokal gespeichert</span><button id="stravaRefresh401" type="button" title="Neueste GitHub-Version laden" style="background:#2cbd79;color:#101510;border:0;border-radius:9px;padding:10px 13px;font-weight:800;cursor:pointer">🔄 Aktualisieren</button></div></header><main><div class="worlds"><button class="world active" data-world="wall">🧱 STRAVA WALL</button><button class="world" data-world="sign">⬛ BLACK SIGN / PLAKAT</button></div><button type="button" id="transformDirect471" onclick="if(window.stravaTransform460&amp;&amp;window.stravaTransform460.open){window.stravaTransform460.open()}else{state.world='sign';state.tab='TRANSFORM';save();render()}" style="display:block;width:100%;margin:8px 0 12px;background:#176f53;color:#fff;border:2px solid #69cf9b;border-radius:12px;padding:15px 12px;font-size:17px;font-weight:900;cursor:pointer">TRANSFORM-STUDIO · HIER ÖFFNEN</button><div style="display:flex;align-items:center;justify-content:space-between;gap:10px;margin:9px 0"><button id="presetShortcut403" type="button" style="background:#f2bd49;color:#151515;border:2px solid #f8d57b;border-radius:10px;padding:12px 16px;font-size:15px;font-weight:900;cursor:pointer;flex:1">⭐ MEINE PRESETS · GALERIE ÖFFNEN</button></div><section id="presetDirect404" hidden style="margin:14px 0;padding:14px;border:2px solid #f2bd49;border-radius:14px;background:#151a21"></section><nav class="tabs" id="tabs"></nav><div id="view"></div><div class="footer">Lokale Offline-Web-App · Keine Bilder werden an einen Server gesendet · Prompt zum Kopieren für ChatGPT/Bildgenerierung</div></main><script>
+</style><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Anton&family=Archivo+Black&family=Archivo+Narrow:wght@900&family=Barlow+Condensed:wght@800;900&family=Bebas+Neue&family=League+Gothic&family=Oswald:wght@700&family=Roboto+Condensed:wght@900&family=Teko:wght@700&display=swap" rel="stylesheet"></head><body><header><div><h1>STRAVA RUN <span class="mark">V4.7.9</span></h1><small>RUNNER PHOTO + STRAVA WALL · GITHUB EDITION</small><div id="onlineBuild414" style="font-size:12px;color:#a8c6b8;margin-top:5px;font-weight:700" aria-label="Online-Version">ONLINE · V4.7.9 · Commit wird geprüft …</div></div><div style="display:flex;align-items:center;gap:9px;flex-wrap:wrap;justify-content:flex-end"><span id="saveStatus" class="status">Lokal gespeichert</span><button id="stravaRefresh401" type="button" title="Neueste GitHub-Version laden" style="background:#2cbd79;color:#101510;border:0;border-radius:9px;padding:10px 13px;font-weight:800;cursor:pointer">🔄 Aktualisieren</button></div></header><main><div class="worlds"><button class="world active" data-world="wall">🧱 STRAVA WALL</button><button class="world" data-world="sign">⬛ BLACK SIGN / PLAKAT</button></div><button type="button" id="transformDirect471" onclick="if(window.stravaTransform460&amp;&amp;window.stravaTransform460.open){window.stravaTransform460.open()}else{state.world='sign';state.tab='TRANSFORM';save();render()}" style="display:block;width:100%;margin:8px 0 12px;background:#176f53;color:#fff;border:2px solid #69cf9b;border-radius:12px;padding:15px 12px;font-size:17px;font-weight:900;cursor:pointer">TRANSFORM-STUDIO · HIER ÖFFNEN</button><div style="display:flex;align-items:center;justify-content:space-between;gap:10px;margin:9px 0"><button id="presetShortcut403" type="button" style="background:#f2bd49;color:#151515;border:2px solid #f8d57b;border-radius:10px;padding:12px 16px;font-size:15px;font-weight:900;cursor:pointer;flex:1">⭐ MEINE PRESETS · GALERIE ÖFFNEN</button></div><section id="presetDirect404" hidden style="margin:14px 0;padding:14px;border:2px solid #f2bd49;border-radius:14px;background:#151a21"></section><nav class="tabs" id="tabs"></nav><div id="view"></div><div class="footer">Lokale Offline-Web-App · Keine Bilder werden an einen Server gesendet · Prompt zum Kopieren für ChatGPT/Bildgenerierung</div></main><script>
 /* V3.18 stabilization: one color serializer shared by prompt sections. */
 window.stravaSignColorMap318=function(sign){
  const source=sign||{},raw=String(source.signText||''),colors=source.wordColors||{},base=String(source.signColor||'#FFFFFF').toUpperCase();
@@ -1933,7 +1933,7 @@ btn.addEventListener('click',async function(){
   if(missing.length)throw Error('GitHub Pages liefert noch eine veraltete Plakat-Version (fehlend: '+missing.join(', ')+'). Bestehende Einstellungen bleiben erhalten.');
   const oldTitle=['TYPOGRAPHY ENGINE V4.4.0','ECHT ZENTRIERT'].join(' · ');
   if(posterMarkup.includes('<summary><b>'+oldTitle+'</b></summary>'))throw Error('Die ausgelieferte Plakat-Ansicht enthält noch die alte zweite Vorschau.');
-  if(!html.includes('<span class="mark">V4.7.8</span>')||!html.includes('function premiumIndividual475(n)'))throw Error('GitHub Pages liefert noch nicht V4.7.8 mit sichtbarer manueller Bearbeitung. Bitte die Direktadresse mit ?v=477 öffnen.');
+  if(!html.includes('<span class="mark">V4.7.9</span>')||!html.includes('function premiumIndividual475(n)'))throw Error('GitHub Pages liefert noch nicht V4.7.9 mit sichtbarer manueller Bearbeitung. Bitte die Direktadresse mit ?v=477 öffnen.');
   try{if('caches' in window){const keys=await caches.keys();await Promise.all(keys.filter(k=>/strava/i.test(k)).map(k=>caches.delete(k)))}}catch(e){console.warn('ASF cache cleanup',e)}
   btn.textContent='ASF · aktuelle Quelle geladen';location.replace(url.toString());
  }catch(e){btn.disabled=false;btn.textContent='🔄 Aktualisieren';alert('ASF-Prüfung: '+e.message)}
@@ -3339,6 +3339,82 @@ document.addEventListener('click',function(e){
  e.stopImmediatePropagation();
  window.stravaTransform460.open();
 },true);
+})();
+</script>
+<script>
+/* V4.7.9 — independent DOM-level edit controls for whichever premium renderer is visible. */
+(function(){
+'use strict';
+const KEY='strava-visible-premium-edits-479';
+const FIELDS=['ORT','BEREICH','ANZEIGEMITTEL','POSITION','POSE','MIMIK','BLICKRICHTUNG','KAMERA'];
+function get(){try{return JSON.parse(localStorage.getItem(KEY)||'{}')||{}}catch(e){return {}}}
+function put(v){try{localStorage.setItem(KEY,JSON.stringify(v))}catch(e){console.error('premium edit storage',e)}}
+function ehtml(x){return String(x??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;','\'':'&#39;'}[c]));}
+function idFor(el){const m=(el.textContent||'').match(/PREMIUM\s*(\d{1,4})/i);return m?'PREMIUM-'+m[1].padStart(4,'0'):null}
+function actualCards(){
+ const buttons=Array.from(document.querySelectorAll('button')).filter(x=>/AKTUALISIEREN\s*&\s*PROMPT KOPIEREN/i.test(x.textContent||''));
+ return buttons.map(b=>{
+  let node=b.parentElement;
+  for(let n=0;node&&n<6;n++,node=node.parentElement){
+   if(node.dataset?.premiumEditor479)return null;
+   if(/PREMIUM\s*\d{1,4}/i.test((node.textContent||'').slice(0,120))&&node.querySelector('button'))return node;
+  }
+  return null;
+ }).filter(Boolean);
+}
+function makePanel(card,id){
+ const data=get(),saved=data[id]||{},panel=document.createElement('div');
+ panel.dataset.premiumEditor479=id;
+ panel.style.cssText='margin:12px 0;padding:12px;border:3px solid #fc4c02;border-radius:12px;background:#14212e;color:#fff;display:block!important;visibility:visible!important;';
+ let html='<button type="button" data-toggle479 style="display:block;width:100%;padding:13px;background:#fc4c02;color:white;border:0;border-radius:9px;font-weight:900;font-size:15px;text-align:left">✏️ INDIVIDUELLE TEXTE ▼ · BEARBEITEN</button><div data-fields479 hidden style="padding-top:12px">';
+ FIELDS.forEach(k=>{
+   const v=saved[k]||'';
+   html+='<div style="padding:7px 0;border-bottom:1px solid #465363"><label style="display:block;margin-bottom:5px;font-size:13px">'+k+'</label><textarea data-field479="'+k+'" rows="2" placeholder="Eigener Text für '+k+'" style="display:block;width:100%;box-sizing:border-box;min-height:56px">'+ehtml(v)+'</textarea><div style="display:flex;gap:7px;margin-top:6px"><button type="button" data-save479="'+k+'" style="flex:1;padding:10px;background:#166c49;color:white;border:1px solid #45bd83;border-radius:8px">✓ SPEICHERN</button><button type="button" data-reset479="'+k+'" style="padding:10px;background:#354154;color:white;border:1px solid #738398;border-radius:8px">✕ ORIGINAL</button></div></div>';
+ });
+ panel.innerHTML=html+'</div><div data-status479 style="font-size:12px;color:#91dbaa;padding-top:6px">Individuelle Werte pro Empfehlung gespeichert · V4.7.9</div>';
+ const body=panel.querySelector('[data-fields479]');
+ panel.querySelector('[data-toggle479]').onclick=()=>{body.hidden=!body.hidden;panel.querySelector('[data-toggle479]').textContent='✏️ INDIVIDUELLE TEXTE '+(body.hidden?'▼ · BEARBEITEN':'▲ · SCHLIESSEN')};
+ panel.querySelectorAll('[data-save479]').forEach(b=>b.onclick=()=>{
+  const k=b.dataset.save479,value=panel.querySelector('[data-field479="'+k+'"]').value.trim();
+  if(!value){panel.querySelector('[data-status479]').textContent='Bitte Text eingeben.';return;}
+  const data=get();data[id]=data[id]||{};data[id][k]=value;put(data);
+  panel.querySelector('[data-status479]').textContent='✓ '+k+' für '+id+' gespeichert';
+ });
+ panel.querySelectorAll('[data-reset479]').forEach(b=>b.onclick=()=>{
+  const k=b.dataset.reset479,data=get();if(data[id])delete data[id][k];put(data);
+  panel.querySelector('[data-field479="'+k+'"]').value='';
+  panel.querySelector('[data-status479]').textContent='✓ '+k+' auf Original zurückgesetzt';
+ });
+ return panel;
+}
+let scheduled=false;
+function mount(){
+ scheduled=false;
+ if(!document.body)return;
+ const cards=actualCards();
+ for(const card of cards){
+  const id=idFor(card);if(!id||card.querySelector('[data-premium-editor479]'))continue;
+  const h=makePanel(card,id);
+  const first=card.firstElementChild;
+  if(first)card.insertBefore(h,first);else card.append(h);
+ }
+}
+function queue(){if(scheduled)return;scheduled=true;requestAnimationFrame(mount)}
+new MutationObserver(queue).observe(document.body,{subtree:true,childList:true});
+queue();
+const previous=typeof buildPrompt==='function'?buildPrompt:null;
+if(previous)buildPrompt=function(){
+ let result=previous.apply(this,arguments);
+ let id=null;
+ const all=get();
+ const activeText=(document.querySelector('.ps-card.on')?.textContent||document.querySelector('.scene270.selected270')?.textContent||'');
+ const match=activeText.match(/PREMIUM\s*(\d{1,4})/i);
+ if(match)id='PREMIUM-'+match[1].padStart(4,'0');
+ if(!id){const p=state.sign258?.premium270;if(p&&Number.isInteger(p.scene)&&p.scene>=0&&p.scene<1000)id='PREMIUM-'+String(p.scene+1).padStart(4,'0');}
+ const values=id&&all[id];if(!values||!Object.keys(values).length)return result;
+ return result+'\n\n=== MANUELL GESPEICHERTE PREMIUM-SZENE · ABSOLUTER VORRANG ===\n'+Object.entries(values).map(([k,v])=>k+': '+v).join('\n')+'\nDiese individuellen Werte überschreiben widersprechende Szenenempfehlungen.\n=== ENDE MANUELLE PREMIUM-SZENE ===';
+};
+window.stravaPremiumEditor479={mount,get};
 })();
 </script>
 </body></html>
