@@ -104,3 +104,13 @@ window.addEventListener('load',function(){
  script.onerror=function(){console.error('BLACK SIGN V5.0 konnte nicht geladen werden.')};
  document.body.appendChild(script);
 },{once:true});
+
+/* Add the isolated poster-color copy action without changing the editor. */
+window.addEventListener('load',function(){
+ if(document.getElementById('stravaPosterColors501'))return;
+ var el=document.createElement('script');
+ el.id='stravaPosterColors501';
+ el.src='poster-colors-copy-v501.js?v=501-20261103';
+ el.onerror=function(){console.error('Plakat-Farb-Prompt konnte nicht geladen werden.')};
+ document.body.appendChild(el);
+},{once:true});
