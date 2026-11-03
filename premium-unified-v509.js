@@ -292,6 +292,18 @@ const audit=function(){
  });
  return {pass:cards.length===10&&issues.length===0,scenes:cards.length,filters:KEYS.length,issues,keys:KEYS,poseCatalog:window.stravaPoseCatalog508?.audit?.()};
 };
+/* The prompt tab and copy button must resolve the same selected eight-field model. */
+if(typeof buildPrompt==='function'){
+ const priorBuild510=buildPrompt;
+ buildPrompt=function(){
+  const output=priorBuild510.apply(this,arguments);
+  if(typeof state==='undefined'||state.world!=='sign'||state.sign258?.activeSceneSource267!=='premium')return output;
+  const current=json(STUDIO),active=json(ACTIVE);
+  if(!(Number(current.selected)>=0&&current.selected<10)||active.scene!==String((current.round||0)*10+Number(current.selected)+1))return output;
+  if(!active.model||active.model.errors?.length)return output;
+  try{return overridePrompt(output,active.model)}catch(e){console.warn('Unified premium prompt:',e);return output}
+ };
+}
 window.stravaPremiumUnified509={version:'V5.1.0',audit,resolve:setOf,apply:selectResolved,render:updateCards,prompt:overridePrompt,keys:KEYS,displayFits,placeCompatibleMount};
 document.addEventListener('click',clickHandler,true);
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init,{once:true});else init();
