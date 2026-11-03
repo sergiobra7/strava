@@ -158,7 +158,7 @@ window.addEventListener('load',function(){
  if(document.getElementById('premiumUnified509Script'))return;
  var script=document.createElement('script');
  script.id='premiumUnified509Script';
- script.src='premium-unified-v509.js?v=510-20261103';
+ script.src='premium-unified-v509.js?v=511-20261103';
  script.onerror=function(){console.error('PREMIUM-Acht-Filter-Matrix konnte nicht geladen werden.')};
  document.body.appendChild(script);
 },{once:true});
