@@ -1,15 +1,16 @@
-/* BLACK SIGN V5.0.6: Seven direct selectors, no nested group tiles. */
+/* BLACK SIGN V5.0.7: Eight direct selectors, runner position between display and pose. */
 (function(){
 'use strict';
 if(window.stravaDirectorQuick506)return;
 const LOCATIONS=["Automatisch","Altstadt","Außentreppe","Autowerkstatt","Bäckerei","Backsteinfassade","Bahnhofseingang","Bahnhofsvorplatz","Baumarkt","Baustelle","Bauzaun","Breite Straße","Brücke","Bushaltestelle","Café","Dönerladen","Einkaufszentrum","Eisdiele","Fitnessstudio","Fußgängerzone","Gewerbehof","Großes Rolltor","Hauseingang","Hochhausfassade","Imbiss","Industriehalle","Industriehof","Innenhof","Kiosk","Lagerhalle","Marktplatz","Messevorplatz","Möbelhaus","Parkdeck","Parkhaus","Promenade","Restaurant","Rohbau","Skatepark","Sportevent","Sporthalle","Sportplatz","Stadion","Stadionvorplatz","Stadtfest","Stadtpark","Stadtplatz","Straßenbahnhaltestelle","Supermarkt","Supermarkteingang","Supermarktparkplatz","Tankstelle","Uferweg","Volksfest","Waschanlage","Waschsalon","Werkstatt","Wochenmarkt"];
 const DISPLAYS=["BLACK SIGN","XXL-Straßenbanner","Horizontale LED-Wand","Auskragende XXL-LED","Vertikale LED-Wand","Dachwerbetafel XXL","Freistehende XXL-Werbetafel","Dachwerbung über Geschäft","Werbetafel auf Stahlstütze","Verkehrsknoten-Werbetafel","Balkonbanner XXL","Werkstatttor-Banner","Bäckerei-Banner"];
+const POSITIONS=['Automatisch','Ganz vorne · frei sichtbar','Vorderer Mittelgrund','Mittig in der Menschenmenge','Mitten im Gerangel','Leicht hinter der ersten Reihe','Hinterer Mittelgrund','Ganz hinten im Publikum','Seitlich links vor der Menge','Seitlich rechts vor der Menge','Direkt unter dem Plakat'];
 const POSES=['Automatisch','Stehen','Sitzen','Rückwärts sitzen','Lehnen','Bewegung','Gestikulieren','Interaktion'];
 const MIMIK=['Automatisch','Provokantes Grinsen','Überlegenes Schmunzeln','Eiskalt ernst','Herausfordernd','Ungläubig lachend','Gelassen','Ernst','Nachdenklich','Überrascht','Geschockt','Selbstbewusst'];
 const BLICKE=['Automatisch','Direkt in die Kamera','Zum Plakat','Zum Publikum','Seitlich','Zu einer Nebenfigur'];
 const KAMERAS=['Automatisch · PREMIUM-Szenenkamera','28 mm / 8 m','35 mm / 10 m','24 mm / 15 m','28 mm / 20 m','35 mm / 8 m','Manuell'];
-const ORDER=['ort','bereich','anzeige','pose','mimik','blick','kamera'];
-const LABELS={ort:'ORT',bereich:'BEREICH',anzeige:'ANZEIGEMITTEL',pose:'POSE',mimik:'MIMIK',blick:'BLICKRICHTUNG',kamera:'KAMERA'};
+const ORDER=['ort','bereich','anzeige','position','pose','mimik','blick','kamera'];
+const LABELS={ort:'ORT',bereich:'BEREICH',anzeige:'ANZEIGEMITTEL',position:'POSITION',pose:'POSE',mimik:'MIMIK',blick:'BLICKRICHTUNG',kamera:'KAMERA'};
 const KEY='strava-premium-studio-350',PREF='strava-quick-director-506';
 function saved(){try{return JSON.parse(localStorage.getItem(KEY)||'{}')||{}}catch(e){return {}}}
 function prefs(){try{return JSON.parse(localStorage.getItem(PREF)||'{}')||{}}catch(e){return {}}}
@@ -76,6 +77,7 @@ function apply(k,v){
    try{save();render()}catch(e){console.warn('Quick Director: display sync',e)}
   }
  }
+ else if(k==='position'){put('position',v);ok=true;try{if(typeof render==='function')render()}catch(e){console.warn('Quick Director position refresh',e)}}
  else if(k==='pose')ok=originalSelect('pose','pose',v);
  else if(k==='kamera')ok=setCamera(v);
  else if(k==='mimik'||k==='blick'){put(k,v);ok=true;try{if(typeof render==='function')render()}catch(e){console.warn('Quick Director: refresh',e)}}
@@ -86,6 +88,7 @@ function choices(k,p){
  if(k==='ort')return LOCATIONS;
  if(k==='bereich')return areaChoices(p.location||'Automatisch');
  if(k==='anzeige')return DISPLAYS;
+ if(k==='position')return POSITIONS;
  if(k==='pose')return POSES;
  if(k==='mimik')return MIMIK;
  if(k==='blick')return BLICKE;
@@ -95,6 +98,7 @@ function current(k,p,pref){
  if(k==='ort')return p.location||'Automatisch';
  if(k==='bereich')return p.area311||'Automatisch';
  if(k==='anzeige')return p.display316||'BLACK SIGN';
+ if(k==='position')return pref.position||'Automatisch';
  if(k==='pose')return p.pose||'Automatisch';
  if(k==='mimik'||k==='blick')return pref[k]||'Automatisch';
  if(k==='kamera'){
@@ -171,5 +175,5 @@ if(oldPrompt){
  };
 }
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init,{once:true});else init();
-window.stravaDirectorQuick506={version:'V5.0.6.1',mount,apply,fields:ORDER,locations:LOCATIONS.length,displayOptions:DISPLAYS.length};
+window.stravaDirectorQuick506={version:'V5.0.7',mount,apply,fields:ORDER,locations:LOCATIONS.length,displayOptions:DISPLAYS.length};
 })();
