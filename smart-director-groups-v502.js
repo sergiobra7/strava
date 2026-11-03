@@ -50,14 +50,9 @@ function mount(){
   for(const group of MATRIX){
    const shell=document.createElement('section');shell.style.cssText='border:1px solid '+(expanded===group.id?'#69cf9b':'#495563')+';border-radius:12px;background:#151b23;overflow:hidden';
    const header=createButton(group.icon+'  '+group.title+'  '+(expanded===group.id?'▴':'▾'),()=>{
-    const prior=expanded;expanded=prior===group.id?'__closed__':group.id;
-    const first=group.items[0][0];
-    if(expanded&&(!group.items.some(i=>i[0]===active))){
-      const old=original.find(b=>b.dataset.psOpen===first);
-      if(old){old.click();return;}
-    }
-    // Originalbereich bleibt unverändert; nur die kompakte Gruppennavigation wechselt.
-    wrap.dataset.active='';
+    // Gruppenkopf öffnet nur die Gruppe. Erst die konkrete Unterauswahl schaltet den Originalfilter.
+    expanded=expanded===group.id?'__closed__':group.id;
+    wrap.dataset.expanded='__refresh__';
     mount();
    },expanded===group.id);
    header.style.cssText+='border:0;border-radius:0;background:'+(expanded===group.id?'#24392f':'#202833')+';padding:14px 12px;font-size:15px;font-weight:800';
@@ -67,7 +62,7 @@ function mount(){
     for(const [key,label] of group.items){
       const option=createButton(label,()=>{
        const old=Array.from(document.querySelectorAll('#ps350 .ps-grid [data-ps-open]')).find(b=>b.dataset.psOpen===key);
-       if(old)old.click();
+       if(old){old.click();}else{console.warn('Smart Director Unterauswahl fehlt:',key);}
       },active===key);
       option.dataset.groupFilter502=key;
       options.appendChild(option);
@@ -101,10 +96,10 @@ function schedule(){
 function init(){
  const view=document.getElementById('view');
  if(!view)return;
- const observer=new MutationObserver(schedule);
+ const observer=new MutationObserver(records=>{if(records.some(rec=>rec.target===view || (rec.target.id==='ps350' && !rec.target.closest('#smartDirectorGroups502'))))schedule();});
  observer.observe(view,{childList:true,subtree:true});
  mount();
 }
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init,{once:true});else init();
-window.stravaDirectorMatrix502={audit,matrix:MATRIX.map(g=>({group:g.title,fields:g.items.map(x=>x[1])})),mount,version:'V5.0.2'};
+window.stravaDirectorMatrix502={audit,matrix:MATRIX.map(g=>({group:g.title,fields:g.items.map(x=>x[1])})),mount,version:'V5.0.3'};
 })();
