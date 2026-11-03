@@ -126,19 +126,32 @@ function updateCards(){
    const title=button.querySelector('strong');
    if(title)title.textContent='PREMIUM '+String((json(STUDIO).round||0)*10+i+1).padStart(3,'0')+' · '+model.ort;
    small.innerHTML=panelText(model);
+   // The original nine-plus legacy fields and old detail editors stay hidden.
    for(const child of [...card.children]){
-     if(child!==button&&!child.matches('[data-ps-apply-copy]')&&!child.classList.contains('unified510-editor')&&!child.classList.contains('unified509-warning'))child.style.display='none';
+     if(child!==button&&!child.matches('[data-ps-apply-copy]')&&!child.classList.contains('unified511-rows')&&!child.classList.contains('unified509-warning'))child.style.display='none';
    }
-   let edit=card.querySelector('.unified510-editor');
-   if(!edit){edit=document.createElement('details');edit.className='unified510-editor';card.appendChild(edit);}
-   const alreadyOpen=edit.open;
-   const values=manual(i);
-   edit.innerHTML='<summary style="cursor:pointer;color:#ffc39c;font-weight:800;padding:10px 0">✎ Diese Empfehlung individuell bearbeiten · nur 8 Merkmale</summary>'+
-     KEYS.map((key,k)=>'<label style="display:block;font-size:12px;color:#c6cfdb;margin:8px 0 3px">'+NAMES[k]+'</label>'+
-       '<input data-ps-override510="'+key+'" value="'+escapeHtml(values[key]||'')+'" placeholder="'+escapeHtml(model[key])+'" style="width:100%;box-sizing:border-box;padding:10px;border:1px solid #5b6d80;border-radius:7px;background:#1e2936;color:white;font-size:14px">').join('')+
-     '<div style="display:flex;flex-wrap:wrap;gap:9px;margin-top:12px"><button type="button" data-ps-save510="'+i+'" style="background:#166346;color:#fff;border:1px solid #48ae81;border-radius:8px;padding:10px">✓ Individuell speichern</button>'+
-     '<button type="button" data-ps-clear510="'+i+'" style="background:#313a48;color:white;border:1px solid #69768a;border-radius:8px;padding:10px">↺ Diese Empfehlung zurücksetzen</button></div>';
-   edit.open=alreadyOpen;edit.style.display='block';
+   small.style.display='none';
+   let rows=card.querySelector('.unified511-rows');
+   if(!rows){rows=document.createElement('div');rows.className='unified511-rows';button.insertAdjacentElement('afterend',rows);}
+   rows.style.cssText='display:block;margin:8px 0 12px';
+   const oldOpen=rows.querySelector('[data-ps-inline511]')?.dataset.psInline511||'';
+   rows.innerHTML=KEYS.map((key,k)=>{
+     const custom=manual(i)[key];
+     const open=oldOpen===key;
+     return '<div class="unified511-field" data-ps-field511="'+key+'" style="border-top:1px solid #ffffff20;padding:9px 0">'+
+       '<div style="display:grid;grid-template-columns:90px minmax(0,1fr) 39px;gap:8px;align-items:center">'+
+         '<span style="font-size:11px;font-weight:800;color:#b7c1cf">'+NAMES[k]+'</span>'+
+         '<span style="font-size:14px;line-height:1.35;color:#fff;overflow-wrap:anywhere">'+escapeHtml(model[key])+(custom?' <span style="color:#76dda3;font-size:11px">●</span>':'')+'</span>'+
+         '<button type="button" data-ps-pencil511="'+key+'" aria-label="'+escapeHtml(NAMES[k])+' individuell bearbeiten" style="min-height:39px;border:1px solid #738397;border-radius:8px;background:#263442;color:#fff;font-size:20px;cursor:pointer">✏️</button>'+
+       '</div>'+
+       '<div data-ps-inline511="'+(open?key:'')+'" style="display:'+(open?'block':'none')+';margin:8px 0 2px">'+
+         '<textarea data-ps-input511="'+key+'" rows="3" style="display:block;width:100%;box-sizing:border-box;border:1px solid #8494a8;border-radius:8px;background:#192635;color:white;padding:10px;font-size:15px" placeholder="Eigenen Text für '+escapeHtml(NAMES[k])+' eintragen">'+escapeHtml(custom||model[key])+'</textarea>'+
+         '<div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:8px">'+
+           '<button type="button" data-ps-save511="'+key+'" style="padding:9px 11px;background:#176a4b;border:1px solid #46b787;color:white;border-radius:8px">✓ Speichern</button>'+
+           '<button type="button" data-ps-reset511="'+key+'" style="padding:9px 11px;background:#2b3542;border:1px solid #718295;color:white;border-radius:8px">↺ Original</button>'+
+         '</div>'+
+       '</div></div>';
+   }).join('');
    let warning=card.querySelector('.unified509-warning');
    if(!warning){warning=document.createElement('div');warning.className='unified509-warning';card.appendChild(warning)}
    warning.style.cssText='margin:7px 0;color:#ffb08a;font-size:12px;font-weight:700;display:'+(model.errors.length?'block':'none');
@@ -247,19 +260,35 @@ async function copy(text){
  const ta=document.createElement('textarea');ta.value=text;ta.style.cssText='position:fixed;top:12%;left:5%;width:90%;height:42vh;z-index:999999';document.body.appendChild(ta);ta.focus();ta.select();let ok=false;try{ok=!!document.execCommand('copy')}catch(e){}if(ok)ta.remove();return ok;
 }
 function clickHandler(event){
- const control=event.target?.closest?.('#ps350 [data-ps-save510],#ps350 [data-ps-clear510]');
- if(control){
-  event.preventDefault();event.stopImmediatePropagation();
-  const n=Number(control.dataset.psSave510??control.dataset.psClear510);
-  if(!Number.isInteger(n)||n<0||n>9)return;
-  const all=json(EDITS);if(control.hasAttribute('data-ps-clear510'))delete all[sceneId(n)];else{
-   const parent=control.closest('.unified510-editor'),entries={};
-   for(const input of parent.querySelectorAll('[data-ps-override510]'))if(input.value.trim())entries[input.dataset.psOverride510]=input.value.trim();
-   all[sceneId(n)]=entries;
-  }
-  try{localStorage.setItem(EDITS,JSON.stringify(all))}catch(e){status('Speichern nicht möglich: Speicher voll',true);return}
-  const card=control.closest('.ps-card');if(card)delete card.dataset.unified509;
-  updateCards();status('✓ Individuelle Werte gespeichert und geprüft',false);return;
+ const pencil=event.target?.closest?.('#ps350 [data-ps-pencil511],#ps350 [data-ps-save511],#ps350 [data-ps-reset511]');
+ if(pencil){
+   event.preventDefault();event.stopImmediatePropagation();
+   const key=pencil.dataset.psPencil511??pencil.dataset.psSave511??pencil.dataset.psReset511;
+   if(!KEYS.includes(key))return;
+   const card=pencil.closest('.ps-card'),sceneBtn=card?.querySelector('[data-ps-scene]');
+   const n=Number(sceneBtn?.dataset.psScene);
+   if(!Number.isInteger(n)||n<0||n>=10)return;
+   const field=pencil.closest('.unified511-field');
+   const editor=field?.querySelector('[data-ps-inline511]');
+   if(pencil.hasAttribute('data-ps-pencil511')){
+     const rows=card.querySelectorAll('[data-ps-inline511]');
+     for(const row of rows){if(row!==editor){row.style.display='none';row.dataset.psInline511=''}}
+     if(editor){const next=editor.style.display==='none';editor.style.display=next?'block':'none';editor.dataset.psInline511=next?key:'';if(next)editor.querySelector('textarea')?.focus();}
+     return;
+   }
+   const all=json(EDITS),id=sceneId(n),entries={...(all[id]||{})};
+   if(pencil.hasAttribute('data-ps-reset511'))delete entries[key];
+   else{
+     const value=editor?.querySelector('textarea')?.value.trim();
+     if(!value){status('Bitte Text eingeben oder Original wählen.',true);return;}
+     entries[key]=value;
+   }
+   if(Object.keys(entries).length)all[id]=entries;else delete all[id];
+   try{localStorage.setItem(EDITS,JSON.stringify(all))}catch(e){status('Speichern fehlgeschlagen.',true);return;}
+   delete card.dataset.unified509;
+   updateCards();
+   status(pencil.hasAttribute('data-ps-reset511')?'↺ Original wieder aktiv':'✓ Individueller Text gespeichert',false);
+   return;
  }
  const element=event.target?.closest?.('#ps350 [data-ps-apply-copy],#ps350 [data-ps-scene]');
  if(!element)return;
@@ -304,7 +333,7 @@ if(typeof buildPrompt==='function'){
   try{return overridePrompt(output,active.model)}catch(e){console.warn('Unified premium prompt:',e);return output}
  };
 }
-window.stravaPremiumUnified509={version:'V5.1.0',audit,resolve:setOf,apply:selectResolved,render:updateCards,prompt:overridePrompt,keys:KEYS,displayFits,placeCompatibleMount};
+window.stravaPremiumUnified509={version:'V5.1.1',audit,resolve:setOf,apply:selectResolved,render:updateCards,prompt:overridePrompt,keys:KEYS,displayFits,placeCompatibleMount};
 document.addEventListener('click',clickHandler,true);
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init,{once:true});else init();
 })();
