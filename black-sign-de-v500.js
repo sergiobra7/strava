@@ -17,12 +17,19 @@ function dePrompt(){
  const format=pick(s,"IMAGE FORMAT:").split(" ")[0]||clean(c.format)||"9:16";
  const place=pick(s,"Location:").split(". Selected Premium scene:")[0].replace(/\.$/,"")||clean(p.location||c.location||z.location)||"gewählter öffentlicher Ort";
  const viewpoint=pick(s,"Viewpoint:").replace(/\.$/,"")||clean(p.camera)||"realistische Straßenperspektive";
- const pose=pick(s,"Pose:").split(". Gaze:")[0]||clean(z.runnerPose)||"natürliche, ausgewählte Pose";
+ let pose=pick(s,"Pose:").split(". Gaze:")[0]||clean(z.runnerPose)||"natürliche, ausgewählte Pose";
  let gaze=(pick(s,"Pose:").split("Gaze:")[1]||"").split(". Expression/action:")[0]||clean(z.mainGaze)||"natürlicher Blick";
  let act=(pick(s,"Pose:").split("Expression/action:")[1]||"").trim()||"natürlicher Gesichtsausdruck";
  let quick={};try{quick=JSON.parse(localStorage.getItem('strava-quick-director-506')||'{}')||{}}catch(e){}
  if(quick.blick&&quick.blick!=='Automatisch')gaze=String(quick.blick);
  if(quick.mimik&&quick.mimik!=='Automatisch')act=String(quick.mimik);
+ let poseGuidance='';
+ if(quick.pose&&quick.pose!=='Automatisch'){
+  const catalog=window.stravaPoseCatalog508;
+  const selected=catalog?.resolve(quick.pose,JSON.parse(localStorage.getItem('strava-premium-studio-350')||'{}').location,JSON.parse(localStorage.getItem('strava-premium-studio-350')||'{}').area311,z.signType);
+  if(selected?.ok){pose=quick.pose;poseGuidance=selected.description;}
+  else{poseGuidance='Ausgewählte Spezialpose ist am aktuellen Ort nicht umsetzbar; natürliche sichere Standardhaltung statt einer unmöglichen Requisite.';}
+ }
  const outfit=pick(s,"Outfit:").split(". Use only")[0]||[c.brand,c.top,c.topColor,c.pants,c.cap,c.socks,c.watch].filter(Boolean).join("; ");
  const crowd=pick(s,"Audience:").split(". ")[0]||clean(z.audience)||"entsprechend der gewählten Zuschaueroption";
  const cast=pick(s,"Premium scene cast:").split(". A selected")[0]||"";
@@ -73,6 +80,7 @@ function dePrompt(){
  "05 · ORT, SZENE & HAUPTFIGUR",
  "- Öffentlicher Ort: "+place+". "+locPhoto,
  "- Gewählte Pose: "+pose+". Blick: "+gaze+". Ausdruck und Handlung: "+act+".",
+ poseGuidance?"- POSE-UND-HANDLUNGS-LOCK: "+poseGuidance:"",
  positionRule?"- Verbindliche Läuferposition im Gedränge und Bildraum: "+positionRule:"",
  "- Keine Zeigefingergeste, sofern nicht ausdrücklich als Pose gewählt. Anatomisch korrekte Hände, Arme, Gelenke und natürliche Stand- bzw. Sitzkontakte.",
  "",
