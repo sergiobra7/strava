@@ -62,7 +62,7 @@ function choosePose(n,loc,area,display,preferSport){
  return pool.length?pool[(n*17+3)%pool.length].name:'Stehen';
 }
 function setOf(n,card){
- const data=json(STUDIO),q=json(PREF),old=rawRows(card);
+ const data=json(STUDIO),q=json(PREF),old=card.dataset?.rawRows509?JSON.parse(card.dataset.rawRows509):rawRows(card);
  const place=data.location&&data.location!=='Automatisch'?data.location:(old.ort||'Stadtplatz');
  const area=data.area311&&data.area311!=='Automatisch'?data.area311:(old.bereich||'Hauptbereich');
  const display=data.display316&&data.display316!=='BLACK SIGN'?data.display316:(old.anzeige||'BLACK SIGN');
