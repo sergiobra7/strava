@@ -98,6 +98,16 @@ function updateCards(){
  if(!root)return;
  const cards=[...root.querySelectorAll('.ps-card')];
  if(cards.length!==10)return;
+ // Reject unsupported display/venue pairs at the source selector, not only on the card.
+ const venue=json(STUDIO).location||'Automatisch';
+ const mediaSelect=root.querySelector('[data-quick506="anzeige"]');
+ if(mediaSelect&&venue!=='Automatisch'){
+  for(const option of [...mediaSelect.options]){
+   const compatible=displayFits(option.value,venue);
+   option.disabled=!compatible;
+   option.title=compatible?'':'Für diesen Ort ohne passende tragfähige Architektur nicht geeignet';
+  }
+ }
  cards.forEach((card,i)=>{
    const existing=card.dataset.unified509;
    const prefs=JSON.stringify([json(STUDIO).location,json(STUDIO).area311,json(STUDIO).display316,json(STUDIO).pose,json(STUDIO).manualCamera,json(PREF)]);
