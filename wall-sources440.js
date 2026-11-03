@@ -124,3 +124,13 @@ window.addEventListener('load',function(){
  script.onerror=function(){console.error('Smart Director Gruppen konnten nicht geladen werden.')};
  document.body.appendChild(script);
 },{once:true});
+
+/* BLACK SIGN Premium V5.0.4: harmonize scenes and German copy output. */
+window.addEventListener('load',function(){
+ if(document.getElementById('premiumHarmony504Script'))return;
+ var script=document.createElement('script');
+ script.id='premiumHarmony504Script';
+ script.src='premium-harmony-v504.js?v=504-20261103';
+ script.onerror=function(){console.error('PREMIUM Harmonisierung konnte nicht geladen werden.')};
+ document.body.appendChild(script);
+},{once:true});
