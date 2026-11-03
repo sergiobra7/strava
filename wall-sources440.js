@@ -94,3 +94,13 @@ function downloadOriginal(blob,name){
 }
 window.stravaWallSources440={get,set,del,ready,make,bitmap,downloadOriginal,version:'V4.4.0'};
 })();
+/* BLACK SIGN V5.0 bootstrap: load after legacy modules; STRAVA WALL unchanged. */
+window.addEventListener('load',function(){
+ if(window.stravaSignDeutsch500||document.getElementById('blackSignDeutsch500'))return;
+ var script=document.createElement('script');
+ script.id='blackSignDeutsch500';
+ script.src='black-sign-de-v500.js?v=500-20261103';
+ script.onload=function(){if(typeof render==='function'&&typeof state!=='undefined'&&state.world==='sign')render()};
+ script.onerror=function(){console.error('BLACK SIGN V5.0 konnte nicht geladen werden.')};
+ document.body.appendChild(script);
+},{once:true});
