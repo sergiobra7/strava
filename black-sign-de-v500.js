@@ -40,7 +40,7 @@ function dePrompt(){
  "",
  "01 · GESICHT & IDENTITÄT",
  "- PERSON PHOTO: dieselben Augen, Augenbrauen, Nase, Lippen, Bart, Kieferform, Hautporen, Asymmetrien und Altersmerkmale. Keine Verschönerung, Verjüngung oder Gesichtsneugestaltung.",
- "- Natürliche Kopf- und Körperproportionen; Körpergröße 178 cm. Keine gestreckten Beine, kein verlängerter Oberkörper.",
+ "- Natürliche Kopf- und Körperproportionen; Körpergröße für diesen Bildtest 168 cm (provisorische Darstellung, nicht die reale Körpergröße). Natürliche, kompakte Proportionen; keine gestreckten Beine und kein verlängerter Oberkörper.",
  "",
  "02 · SCHUHE",
  "- SHOE PHOTO: ausschließliche Schuhreferenz für beide Füße. Modell, Form, Farben, Logos, Nähte, Schnürung und Sohlen exakt übernehmen; weder Personfoto noch Outfitmarke dürfen die Schuhe ersetzen.",
