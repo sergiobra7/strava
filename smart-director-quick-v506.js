@@ -42,6 +42,14 @@ function selectLocation(value){
  if(!candidate){console.warn('Quick Director: location not available',value);return false;}
  candidate.click();return true;
 }
+function displayMount(v){
+ if(/Straßenbanner/.test(v))return 'Zwischen zwei tragfähigen Fassaden verankert, vier sichtbare Spannseile mit Spannschlössern und Sicherheitsbefestigung';
+ if(/Balkonbanner/.test(v))return 'Am tragfähigen oberen Balkongeländer durch Ösen und Spannbänder gesichert; gesicherte untere Ecken';
+ if(/Werkstatttor|Bäckerei-Banner/.test(v))return 'An tragfähigen Rahmenprofilen mit sichtbaren Metallwinkeln und Spannösen befestigt';
+ if(/LED|Dachwerbung|Dachwerbetafel/.test(v))return 'Auf baulich tragfähiger Stahltraverse mit sichtbaren Schraubankern und gesicherter Stromführung montiert';
+ if(/Werbetafel|Verkehrsknoten/.test(v))return 'Monumentaler Stahlrahmen auf tragfähiger bestehender Werbekonstruktion mit sichtbaren Trägern und Ankerpunkten';
+ return 'An tragfähiger Gebäudefassade mit sichtbaren Wandankern und oberen Sicherungsseilen montiert';
+}
 function setCamera(choice){
  const bridge=window.stravaCameraBridge4531;
  if(!bridge?.set)return false;
@@ -58,7 +66,16 @@ function apply(k,v){
  let ok=false;
  if(k==='ort')ok=selectLocation(v);
  else if(k==='bereich')ok=originalSelect('bereich','area311',v);
- else if(k==='anzeige')ok=originalSelect('display','display316',v);
+ else if(k==='anzeige'){
+  ok=originalSelect('display','display316',v);
+  if(ok&&v!=='BLACK SIGN'&&typeof state!=='undefined'){
+   state.sign=state.sign||{};
+   state.sign.signType=v;
+   state.sign.signMountChoice='Automatisch passend zum Plakattyp';
+   state.sign.signMountDetail=displayMount(v);
+   try{save();render()}catch(e){console.warn('Quick Director: display sync',e)}
+  }
+ }
  else if(k==='pose')ok=originalSelect('pose','pose',v);
  else if(k==='kamera')ok=setCamera(v);
  else if(k==='mimik'||k==='blick'){put(k,v);ok=true;try{if(typeof render==='function')render()}catch(e){console.warn('Quick Director: refresh',e)}}
@@ -154,5 +171,5 @@ if(oldPrompt){
  };
 }
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init,{once:true});else init();
-window.stravaDirectorQuick506={version:'V5.0.6',mount,apply,fields:ORDER,locations:LOCATIONS.length,displayOptions:DISPLAYS.length};
+window.stravaDirectorQuick506={version:'V5.0.6.1',mount,apply,fields:ORDER,locations:LOCATIONS.length,displayOptions:DISPLAYS.length};
 })();
