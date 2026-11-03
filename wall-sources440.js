@@ -134,3 +134,13 @@ window.addEventListener('load',function(){
  script.onerror=function(){console.error('PREMIUM Harmonisierung konnte nicht geladen werden.')};
  document.body.appendChild(script);
 },{once:true});
+
+/* BLACK SIGN V5.0.6 · Seven direct Smart Director controls. */
+window.addEventListener('load',function(){
+ if(document.getElementById('smartDirectorQuick506Script'))return;
+ var el=document.createElement('script');
+ el.id='smartDirectorQuick506Script';
+ el.src='smart-director-quick-v506.js?v=506-20261103';
+ el.onerror=function(){console.error('Direkte Smart Director Auswahlfelder konnten nicht geladen werden.')};
+ document.body.appendChild(el);
+},{once:true});
