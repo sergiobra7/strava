@@ -121,6 +121,6 @@ if(typeof tabs!=='function'||typeof render!=='function'){
 }
 const prevTabs=tabs;tabs=function(){const x=prevTabs();if(state.world!=='sign'||x.includes(TAB))return x;return [TAB,...x]};
 const prevRender=render;render=function(){prevRender.apply(this,arguments);mount()};
-window.stravaAutoDirector520={version:'V5.2.2',prompt:create,settings,mount,open,tab:TAB};
+window.stravaAutoDirector520={version:'V5.2.3',prompt:create,settings,mount,open,tab:TAB};
 try{if(typeof state!=='undefined'&&state.world==='sign')render()}catch(e){console.warn('AUTO DIRECTOR Navigation konnte nicht aktualisiert werden',e)}
 })();
