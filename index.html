@@ -2718,7 +2718,7 @@ buildPrompt.__typography430=true;
 })();
 </script>
 <script src="wall-asf432.js?v=432-asf-matrix-20261101"></script>
-<script src="wall-sources440.js?v=524-linked-ratios-20261104"></script>
+<script src="wall-sources440.js?v=525-pose-override-20261104"></script>
 <script src="wall-mode440.js?v=440-mode-20261101"></script>
 <script src="wall-ui440.js?v=440-ui-20261101"></script>
 <script src="wall-six-tabs-v450.js?v=4520-full-default-20261102"></script>
@@ -3423,10 +3423,16 @@ window.stravaPremiumEditor479={mount,get};
 'use strict';
 if(window.stravaAutoDirector520)return;
 const TAB='AUTO DIRECTOR',KEY='strava-auto-director-520';
-const DEFAULT={crowd:'500–800',control:'manual',against:75,support:10,gesture:'Deutlich & glaubwürdig',variation:1,colors:''};
+const DEFAULT={crowd:'500–800',control:'manual',against:75,support:10,gesture:'Deutlich & glaubwürdig',variation:1,colors:'',poseMode:'auto',poseText:''};
 function settings(){let x={};try{x=JSON.parse(localStorage.getItem(KEY)||'{}')||{}}catch(e){}const c={...DEFAULT,...x};const a=Math.max(0,Math.min(100,Math.round((Number(c.against)||0)/5)*5));return {...c,against:a,support:100-a}}
 function set(k,v){const x=settings();x[k]=v;localStorage.setItem(KEY,JSON.stringify(x));return x}
 function esc(v){return String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;','\'':'&#39;'}[c]))}
+const HOCKER_POSE='Chillig auf einem alten, sichtbar abgenutzten Holzhocker im anatolischen Alltagsstil um 1970 sitzen. Beine breit und natürlich angewinkelt, beide Unterarme locker nach vorne über den angewinkelten Knien abgelegt, Hände entspannt, Oberkörper kompakt und natürlich. Hocker steht fest und physikalisch plausibel auf dem Boden. Der Läufer schmunzelt souverän; keine übertriebene Zahndarstellung.';
+function chosenPose(cfg){
+ if(cfg.poseMode==='hocker')return HOCKER_POSE;
+ if(cfg.poseMode==='custom')return String(cfg.poseText||'').trim();
+ return '';
+}
 function source(){
  if(typeof window.stravaSignDeutsch500?.prompt==='function')return window.stravaSignDeutsch500.prompt();
  if(typeof buildPrompt==='function')return buildPrompt();
@@ -3443,11 +3449,15 @@ function create(){
  const audience=(pct==null?
    'Verhältnis nach provokativem Inhalt dramaturgisch eigenständig wählen: Mehrheitswiderspruch ist möglich, aber nicht immer nötig. Empörte, zustimmende und neutrale Zuschauer realistisch mischen.':
    'Verbindliche Verteilung: ungefähr '+pct+' % Gegner, '+yes+' % Unterstützer, '+neutral+' % unentschiedene oder beobachtende Personen. Diese Zahlen sind Anteile der sichtbar dargestellten Menge, nicht exakte einzeln zählbare Personen.');
+ const lockedPose=chosenPose(cfg);
+ if(cfg.poseMode==='custom'&&!lockedPose)throw Error('Bitte eigene Pose eintragen oder Automatisch auswählen.');
  const cameras='03 · KAMERA – AUTONOME REGIE\n'+
   'Wähle selbstständig nur EINE physikalisch plausible Brennweite, EINEN Kameraabstand und EINE Kamerahöhe, passend zu einer monumentalen vertikalen Botschaft, dem erkennbaren Läufer und der Menge. Native 9:16. Keine widersprüchlichen Kamerapresets, kein künstlich gestreckter Körper.';
  const scene='05 · ORT, SZENE & HAUPTFIGUR — AUTONOME REGIE\n'+
   'Interpretation zuerst: Lies den exakten Plakattext und leite daraus den stärksten glaubwürdigen, öffentlichen Ort ab. Kein Wohnraum, kein privater Innenbereich. Wähle architektonisch passende öffentliche Treppen, Plätze, Bahnhofsareale, Markthallen oder Fußgängerbereiche nur wenn sie zum Text passen. Variiere Orte zwischen neuen Bildern.\n'+
-  'Entscheide selbst über die wirkungsvollste Pose aus anatolischen Alltagsposen und authentischen Läuferposen, über Position vor/in/hinter der Menschenmenge und über den Blick. Sichere reale Auflagen bei Sitz-, Stufen- und Anlehnposen. Keine Zeigefingergeste des Läufers.\n'+
+  (lockedPose?
+    'POSE — MANUELLER LOCK, ABSOLUT VERBINDLICH: '+lockedPose+' Die KI darf diese ausdrücklich vorgegebene Pose NICHT durch eine andere ersetzen. Sie entscheidet weiterhin frei über öffentlichen Ort, Architektur, monumentales Anzeigemittel, Position, Blick und Kamera und stimmt diese auf die Pose ab. Requisiten und Abstützungen müssen tragfähig und realistisch sein. Keine Zeigefingergeste des Läufers.\n':
+    'POSE — AUTONOM: Entscheide selbst über die wirkungsvollste Pose aus anatolischen Alltagsposen und authentischen Läuferposen sowie Position vor/in/hinter der Menschenmenge und Blickrichtung. Sichere reale Auflagen bei Sitz-, Stufen- und Anlehnposen. Keine Zeigefingergeste des Läufers.\n')+
   'VERBINDLICH: Der Läufer zeigt ein natürliches, leicht asymmetrisches, überlegenes Schmunzeln. Kein übertriebenes Grinsen, keine künstlichen Zähne. Er bleibt selbstbewusst und entspannt gegen den Widerstand vieler Zuschauer, ohne drohende Gestik.';
  const people='06 · ZUSCHAUER & NEBENFIGUREN — AUTONOME PUBLIKUMSREGIE\n'+
   'Publikum verbindlich vorhanden, Zielgröße: '+cfg.crowd+' Zuschauer, soweit in einem einzelnen dokumentarischen 9:16-Foto räumlich plausibel. '+audience+'\n'+
@@ -3467,9 +3477,9 @@ function create(){
  raw=swap(raw,sign,'07 · BLACK SIGN');
  // Keep the original identity, outfit, shoe reference, exact text and original word-color map.
  // The auto instruction overrides stale final claims about earlier manual camera authority.
- raw=raw.replace(/VERBINDLICHER ABSCHLUSS:[^\n]*/,'VERBINDLICHER ABSCHLUSS: PERSON PHOTO und SHOE PHOTO bleiben verbindlich. Der exakte Original-Plakattext samt Wortfarbkarte bleibt unverändert. Kamera, Ort, Pose und Anzeigemittel werden ausschließlich durch AUTO DIRECTOR bestimmt; alte manuelle Szenenfilter gelten hier nicht.');
+ raw=raw.replace(/VERBINDLICHER ABSCHLUSS:[^\n]*/,'VERBINDLICHER ABSCHLUSS: PERSON PHOTO und SHOE PHOTO bleiben verbindlich. Der exakte Original-Plakattext samt Wortfarbkarte bleibt unverändert. Kamera, Ort und Anzeigemittel werden durch AUTO DIRECTOR bestimmt. Pose: '+(lockedPose?'MANUELLE POSE IST VERBINDLICH, AUTO DIRECTOR DARF SIE NICHT ÜBERSCHREIBEN.':'AUTO DIRECTOR entscheidet frei.')+' Alte manuelle Szenenfilter gelten hier nicht.');
  if(String(cfg.colors||'').trim())raw+='\n\nEXAKTE ZUSÄTZLICHE WORTFARBVORGABE (höchste Priorität bei identischen Wörtern):\n'+String(cfg.colors).trim();
- raw+='\n\nAUTO DIRECTOR · KREATIVE ENTSCHEIDUNG: Wähle intern EINE harmonische Gesamtszene statt voneinander unabhängiger Einzelvorgaben. Inszeniere keinen identischen Aufbau der vorherigen Aufnahme. Variation '+cfg.variation+' als kreativer Impuls für einen neuen Blickwinkel und eine andere Komposition; nicht als sichtbaren Bildtext ausgeben.\nOUTPUT: Genau EIN natives 9:16 ultra-fotorealistisches Dokumentarfoto; keine Collage, kein CGI, keine Rückfragen.';
+ raw+='\n\nAUTO DIRECTOR · KREATIVE ENTSCHEIDUNG: Wähle intern EINE harmonische Gesamtszene statt voneinander unabhängiger Einzelvorgaben. '+(lockedPose?'BEACHTE DEN MANUELLEN POSE-LOCK; alle übrigen Szenenentscheidungen bleiben frei.':'WÄHLE DIE POSE SELBSTSTÄNDIG.')+' Inszeniere keinen identischen Aufbau der vorherigen Aufnahme. Variation '+cfg.variation+' als kreativer Impuls für einen neuen Blickwinkel und eine andere Komposition; nicht als sichtbaren Bildtext ausgeben.\nOUTPUT: Genau EIN natives 9:16 ultra-fotorealistisches Dokumentarfoto; keine Collage, kein CGI, keine Rückfragen.';
  return raw;
 }
 function view(){
@@ -3478,7 +3488,16 @@ function view(){
  return '<div style="max-width:800px;margin:0 auto;padding:2px 3px 35px">'+
  '<section class="panel" style="border:1px solid #f36c3c;border-radius:13px;padding:16px">'+
  '<h2 style="margin:0 0 8px">AUTO DIRECTOR · KREATIVE FREIHEIT</h2>'+
- '<p style="color:#bdc8d4;font-size:14px">Die KI bestimmt Ort, monumentales Hochkantplakat, Pose, Position und Kamera selbst. Fest: Gesicht, Schuhe, Outfit, exakter Plakattext, 168 cm nur als Bildtest-Proportion und überlegenes Schmunzeln. Die Gegner richten Buhrufe und Handzeichen sichtbar gegen den Läufer.</p>'+
+ '<p style="color:#bdc8d4;font-size:14px">Die KI bestimmt Ort, monumentales Hochkantplakat, Position und Kamera selbst; die Pose ist wahlweise automatisch oder manuell verbindlich. Fest: Gesicht, Schuhe, Outfit, exakter Plakattext, 168 cm nur als Bildtest-Proportion und überlegenes Schmunzeln. Die Gegner richten Buhrufe und Handzeichen sichtbar gegen den Läufer.</p>'+
+ '<label for="auto525PoseMode" style="display:block;font-weight:bold;margin:14px 0 6px">POSE · AUTOMATISCH ODER FESTLEGEN</label>'+
+ '<select id="auto525PoseMode" style="'+style+'">'+
+ '<option value="auto" '+(c.poseMode==='auto'?'selected':'')+'>KI entscheidet selbst</option>'+
+ '<option value="hocker" '+(c.poseMode==='hocker'?'selected':'')+'>Anatolischer Holzhocker 1970 · chillig sitzen</option>'+
+ '<option value="custom" '+(c.poseMode==='custom'?'selected':'')+'>Eigene Pose eingeben</option></select>'+
+ '<div id="auto525PoseCustomWrap" style="display:'+(c.poseMode==='custom'?'block':'none')+';margin:10px 0">'+
+ '<label for="auto525PoseText" style="display:block;font-size:13px;color:#bdc8d4;margin:5px 0">DEINE VERBINDLICHE POSE · TEXT WIRD AUTOMATISCH GESPEICHERT</label>'+
+ '<textarea id="auto525PoseText" rows="4" style="'+style+';resize:vertical" placeholder="Beschreibe die gewünschte Pose genau ...">'+esc(c.poseText||'')+'</textarea></div>'+
+ '<p style="font-size:12px;color:#bdc8d4;margin:7px 0 4px">Nur die gewählte Pose wird festgelegt. Ort, Kamera, Anzeigemittel und Publikum bleiben im AUTO DIRECTOR.</p>'+
  '<label for="auto520Crowd" style="display:block;font-weight:bold;margin:14px 0 6px">PUBLIKUMSGRÖSSE</label>'+
  '<select id="auto520Crowd" style="'+style+'">'+['50–100','100–250','250–500','500–800','800–1500'].map(x=>'<option '+(x===c.crowd?'selected':'')+'>'+x+'</option>').join('')+'</select>'+
  '<label for="auto520Control" style="display:block;font-weight:bold;margin:14px 0 6px">MEINUNGSVERTEILUNG</label>'+
@@ -3523,6 +3542,12 @@ function mount(force){
   const c=settings();try{localStorage.setItem(KEY,JSON.stringify({...c,against:safe,support:100-safe}))}catch(e){}
   refresh();
  };
+ q('auto525PoseMode').onchange=e=>{
+  set('poseMode',e.target.value);
+  q('auto525PoseCustomWrap').style.display=e.target.value==='custom'?'block':'none';
+  refresh();
+ };
+ q('auto525PoseText').oninput=e=>{set('poseText',e.target.value);refresh()};
  q('auto520Crowd').onchange=e=>{set('crowd',e.target.value);refresh()};
  q('auto520Control').onchange=e=>{set('control',e.target.value);q('auto520Ratios').style.display=e.target.value==='auto'?'none':'block';refresh()};
  q('auto520Against').oninput=()=>updateRatios('against');q('auto520Support').oninput=()=>updateRatios('support');
@@ -3545,12 +3570,12 @@ function open(){
  return ok;
 }
 if(typeof tabs!=='function'||typeof render!=='function'){
- window.stravaAutoDirector520={version:'V5.2.4',prompt:create,settings,mount,open,tab:TAB};
+ window.stravaAutoDirector520={version:'V5.2.5',prompt:create,settings,mount,open,tab:TAB};
  return;
 }
 const prevTabs=tabs;tabs=function(){const x=prevTabs();if(state.world!=='sign'||x.includes(TAB))return x;return [TAB,...x]};
 const prevRender=render;render=function(){prevRender.apply(this,arguments);mount()};
-window.stravaAutoDirector520={version:'V5.2.4',prompt:create,settings,mount,open,tab:TAB};
+window.stravaAutoDirector520={version:'V5.2.5',prompt:create,settings,mount,open,tab:TAB};
 try{if(typeof state!=='undefined'&&state.world==='sign')render()}catch(e){console.warn('AUTO DIRECTOR Navigation konnte nicht aktualisiert werden',e)}
 })();
 </script>
