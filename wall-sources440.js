@@ -168,7 +168,7 @@ window.addEventListener('load',function(){
  if(document.getElementById('stravaAutoDirector520Script'))return;
  var el=document.createElement('script');
  el.id='stravaAutoDirector520Script';
- el.src='auto-director-v520.js?v=520-20261104';
+ el.src='auto-director-v520.js?v=5201-20261104';
  el.onerror=function(){console.error('AUTO DIRECTOR konnte nicht geladen werden.')};
  document.body.appendChild(el);
 },{once:true});
