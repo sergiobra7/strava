@@ -78,10 +78,13 @@ function view(){
  '<section class="panel"><h3>TRANSFORMATIONSAUFTRAG · VORSCHAU</h3><pre id="auto520Prompt" style="white-space:pre-wrap;overflow-wrap:anywhere;max-height:520px;overflow:auto;font-size:12px;background:#111923;padding:14px;border-radius:8px;border:1px solid #354454"></pre></section>'+
  '</div>';
 }
-function mount(){
- if(typeof state==='undefined'||state.world!=='sign'||state.tab!==TAB)return;
- const root=document.getElementById('view');if(!root)return;
- root.innerHTML=view();
+function mount(force){
+ if(typeof state==='undefined'||state.world!=='sign'||(state.tab!==TAB&&!force))return false;
+ const separate=document.getElementById('autoDirectorHost522');
+ const root=separate||document.getElementById('view');
+ if(!root)return false;
+ if(separate){separate.hidden=false;separate.style.display='block';}
+ root.innerHTML=(separate?'<button type="button" id="auto520Close" style="padding:10px 13px;background:#344253;color:white;border:1px solid #8191a4;border-radius:8px;margin:8px 0">✕ AUTO DIRECTOR SCHLIESSEN</button>':'')+view();
  const q=id=>document.getElementById(id);
  const refresh=()=>{try{q('auto520Prompt').textContent=create();q('auto520Status').textContent='Variation '+settings().variation+' · gespeichert'}catch(e){q('auto520Prompt').textContent='⚠ '+e.message;q('auto520Status').textContent='⚠ '+e.message}};
  const updateRatios=()=>{
@@ -100,11 +103,23 @@ function mount(){
   try{const text=create();if(navigator.clipboard?.writeText)await navigator.clipboard.writeText(text);else{const temp=document.createElement('textarea');temp.value=text;document.body.appendChild(temp);temp.select();if(!document.execCommand('copy'))throw Error('Zwischenablage nicht verfügbar');temp.remove()}q('auto520Status').textContent='✓ Autonomer Prompt mit Plakat und Farbcodes kopiert';}
   catch(e){q('auto520Status').textContent='⚠ '+e.message}
  };
+ if(q('auto520Close'))q('auto520Close').onclick=()=>{root.hidden=true;root.style.display='none';root.innerHTML=''};
  refresh();
+ return true;
 }
-if(typeof tabs!=='function'||typeof render!=='function')return;
+function open(){
+ if(typeof state!=='undefined'){state.world='sign';state.tab=TAB;try{if(typeof save==='function')save()}catch(e){}}
+ document.querySelectorAll('.world').forEach(el=>el.classList.toggle('active',el.dataset.world==='sign'));
+ const ok=mount(true);
+ if(ok){const el=document.getElementById('autoDirectorHost522')||document.getElementById('view');el.scrollIntoView?.({behavior:'instant',block:'start'})}
+ return ok;
+}
+if(typeof tabs!=='function'||typeof render!=='function'){
+ window.stravaAutoDirector520={version:'V5.2.2',prompt:create,settings,mount,open,tab:TAB};
+ return;
+}
 const prevTabs=tabs;tabs=function(){const x=prevTabs();if(state.world!=='sign'||x.includes(TAB))return x;return [TAB,...x]};
 const prevRender=render;render=function(){prevRender.apply(this,arguments);mount()};
-window.stravaAutoDirector520={version:'V5.2.0',prompt:create,settings,mount,tab:TAB};
+window.stravaAutoDirector520={version:'V5.2.2',prompt:create,settings,mount,open,tab:TAB};
 try{if(typeof state!=='undefined'&&state.world==='sign')render()}catch(e){console.warn('AUTO DIRECTOR Navigation konnte nicht aktualisiert werden',e)}
 })();
