@@ -3595,12 +3595,12 @@ function open(){
  return ok;
 }
 if(typeof tabs!=='function'||typeof render!=='function'){
- window.stravaAutoDirector520={version:'V5.2.6',prompt:create,settings,mount,open,tab:TAB};
+ window.stravaAutoDirector520={version:(document.querySelector('meta[name="strava-release"]')?.content||'V5.3.0'),prompt:create,settings,mount,open,tab:TAB};
  return;
 }
 const prevTabs=tabs;tabs=function(){const x=prevTabs();if(state.world!=='sign'||x.includes(TAB))return x;return [TAB,...x]};
 const prevRender=render;render=function(){prevRender.apply(this,arguments);mount()};
-window.stravaAutoDirector520={version:'V5.2.6',prompt:create,settings,mount,open,tab:TAB};
+window.stravaAutoDirector520={version:(document.querySelector('meta[name="strava-release"]')?.content||'V5.3.0'),prompt:create,settings,mount,open,tab:TAB};
 try{if(typeof state!=='undefined'&&state.world==='sign')render()}catch(e){console.warn('AUTO DIRECTOR Navigation konnte nicht aktualisiert werden',e)}
 })();
 </script>
