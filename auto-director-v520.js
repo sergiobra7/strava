@@ -35,7 +35,8 @@ function create(){
   'Gestenintensität: '+cfg.gesture+'. Keine Gewalt, keine körperlichen Angriffe oder unmittelbare Bedrohung. Unterschiedliche Altersgruppen, gerade auch ältere Menschen, reagieren glaubwürdig; niemand wird stereotyp als Gegner festgelegt. Gesicht, Schuhe und Plakattext bleiben klar erkennbar.';
  const sign='07 · BLACK SIGN & MONUMENTALES ANZEIGEMITTEL — AUTONOME REGIE\n'+
   'Die Botschaft ist überwiegend VERTIKAL gesetzt. Wähle selbst die stärkste überdimensionierte, hochkant-taugliche Plakatarchitektur zum Ort: mehrgeschossiger Fassadenhänger, frei abgehängtes XXL-Plakat mit sichtbaren Stahlseilen, monumentaler Hallenhänger, Gerüst-Megabanner oder vergleichbar außergewöhnliche Konstruktion. KEINE 08/15-Werbeständer, kleinen City-Lights oder gewöhnlichen Tafeln.\n'+
-  'Echte tragfähige Wandanker, Stahltraversen und Sicherungen, keine schwebenden Konstruktionen. Textgröße und Zeilenanordnung so, dass der exakt vorgegebene Text vollständig lesbar bleibt. Kein Wechsel von Wortfarben oder Original-Zeilenumbrüchen.';
+  'Echte tragfähige Wandanker, Stahltraversen und Sicherungen, keine schwebenden Konstruktionen. Textgröße und Zeilenanordnung so, dass der exakt vorgegebene Text vollständig lesbar bleibt. Kein Wechsel von Wortfarben oder Original-Zeilenumbrüchen.\n'+
+  'TYPOGRAFIE-CENTER-LOCK — ABSOLUT VERBINDLICH: Alle sichtbaren Plakatzeilen werden EINZELN HORIZONTAL MITTIG auf derselben vertikalen Mittelachse der schwarzen Anzeigenfläche ausgerichtet (text-align: center); jede Zeile hat links und rechts denselben freien Abstand. Auch kurze Zeilen wie AM ENDE oder LIKEN! müssen exakt zentriert sein. NICHT linksbündig, nicht optisch nach links versetzt, nicht als linksbündiger Fließtext. Der gesamte zusammenhängende Textblock wird zusätzlich geometrisch HORIZONTAL und VERTIKAL in der nutzbaren schwarzen Textfläche zentriert, wobei die Original-Leerzeilen als Abstände erhalten bleiben. Mindestens 5 Prozent freier schwarzer Sicherheitsrand zu allen Plakaträndern, keine abgeschnittenen Buchstaben; Schriftgrößen je Zeile dürfen für eine starke vertikale Gesamtkomposition variieren, aber Wortlaut, Wortreihenfolge, Original-Zeilenumbrüche und Hex-Wortfarben bleiben 1:1 unverändert. Der CENTER-LOCK gilt für das Plakat selbst, nicht für die Position des Plakats oder die Hauptfigur im Gesamtfoto.';
  function swap(part,next,start){const pattern=new RegExp(start+'[\\s\\S]*?(?=\\n\\d{2} · |\\nVERBINDLICHER ABSCHLUSS:)');if(!pattern.test(part))throw Error('Promptabschnitt '+start+' fehlt');return part.replace(pattern,next+'\n')}
  raw=swap(raw,cameras,'03 · KAMERA');
  raw=swap(raw,scene,'05 · ORT');
@@ -115,7 +116,7 @@ function open(){
  return ok;
 }
 if(typeof tabs!=='function'||typeof render!=='function'){
- window.stravaAutoDirector520={version:'V5.2.2',prompt:create,settings,mount,open,tab:TAB};
+ window.stravaAutoDirector520={version:'V5.2.3',prompt:create,settings,mount,open,tab:TAB};
  return;
 }
 const prevTabs=tabs;tabs=function(){const x=prevTabs();if(state.world!=='sign'||x.includes(TAB))return x;return [TAB,...x]};
