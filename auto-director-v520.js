@@ -3,7 +3,7 @@
 'use strict';
 if(window.stravaAutoDirector520)return;
 const TAB='AUTO DIRECTOR',KEY='strava-auto-director-520';
-const DEFAULT={crowd:'500–800',control:'manual',against:75,support:10,gesture:'Deutlich & glaubwürdig',variation:1,colors:'',poseMode:'auto',poseText:'',cameraMode:'auto',cameraLens:24,cameraDistance:12};
+const DEFAULT={crowd:'500–800',control:'manual',against:75,support:10,gesture:'Deutlich & glaubwürdig',variation:1,colors:'',poseMode:'auto',poseText:'',cameraMode:'auto',cameraLens:24,cameraDistance:12,sceneIdeaEnabled:false,sceneIdea:''};
 function settings(){let x={};try{x=JSON.parse(localStorage.getItem(KEY)||'{}')||{}}catch(e){}const c={...DEFAULT,...x};const a=Math.max(0,Math.min(100,Math.round((Number(c.against)||0)/5)*5));return {...c,against:a,support:100-a}}
 function set(k,v){const x=settings();x[k]=v;localStorage.setItem(KEY,JSON.stringify(x));return x}
 function esc(v){return String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;','\'':'&#39;'}[c]))}
@@ -29,6 +29,8 @@ function create(){
  const audience=(pct==null?
    'Verhältnis nach provokativem Inhalt dramaturgisch eigenständig wählen: Mehrheitswiderspruch ist möglich, aber nicht immer nötig. Empörte, zustimmende und neutrale Zuschauer realistisch mischen.':
    'Verbindliche Verteilung: ungefähr '+pct+' % Gegner, '+yes+' % Unterstützer, '+neutral+' % unentschiedene oder beobachtende Personen. Diese Zahlen sind Anteile der sichtbar dargestellten Menge, nicht exakte einzeln zählbare Personen.');
+ const idea=cfg.sceneIdeaEnabled?String(cfg.sceneIdea||'').trim():'';
+ if(cfg.sceneIdeaEnabled&&!idea)throw Error('Bitte eigene Szenenidee eingeben oder den Schalter deaktivieren.');
  const lockedPose=chosenPose(cfg);
  if(cfg.poseMode==='custom'&&!lockedPose)throw Error('Bitte eigene Pose eintragen oder Automatisch auswählen.');
  const chosenCamera=cfg.cameraMode==='preset'?
@@ -64,6 +66,11 @@ function create(){
  // The auto instruction overrides stale final claims about earlier manual camera authority.
  raw=raw.replace(/VERBINDLICHER ABSCHLUSS:[^\n]*/,'VERBINDLICHER ABSCHLUSS: PERSON PHOTO und SHOE PHOTO bleiben verbindlich. Der exakte Original-Plakattext samt Wortfarbkarte bleibt unverändert. Ort und Anzeigemittel werden durch AUTO DIRECTOR bestimmt. Kamera: '+(chosenCamera?'MANUELLER KAMERA-LOCK '+chosenCamera.lens+' mm und '+chosenCamera.distance+' m IST VERBINDLICH.':'AUTO DIRECTOR wählt selbstständig.')+' Pose: '+(lockedPose?'MANUELLE POSE IST VERBINDLICH, AUTO DIRECTOR DARF SIE NICHT ÜBERSCHREIBEN.':'AUTO DIRECTOR entscheidet frei.')+' Alte manuelle Szenenfilter gelten hier nicht.');
  if(String(cfg.colors||'').trim())raw+='\n\nEXAKTE ZUSÄTZLICHE WORTFARBVORGABE (höchste Priorität bei identischen Wörtern):\n'+String(cfg.colors).trim();
+ if(idea){
+  raw+='\n\n=== KREATIVE SZENENANWEISUNG · DEIN FREIER TEXT · VERBINDLICHER VORRANG ===\n'+idea+
+   '\n=== ENDE DEINER SZENENANWEISUNG ===\n'+
+   'PRIORITÄTEN: Der freie Szenentext ist ausdrücklich verbindlich für alle darin genannten Szenendetails – z. B. Ort, Plattform, Pose, Blick, Mimik, Haltung, Publikum und Gesten. Widersprechen sich diese Details mit automatischen Standardvorschlägen, gilt DEIN FREIER TEXT. Bei Konflikten mit einer separat gewählten festen Pose gilt ebenfalls DEIN FREIER TEXT für die Pose. Die ausdrücklich gewählte manuelle Brennweite und Entfernung bleiben hingegen verbindlich. PERSON PHOTO, SHOE PHOTO, 168-cm-Bildtest, exakter Plakattext, Original-Zeilenumbrüche, Wortfarben, CENTER-LOCK und natives 9:16 dürfen nicht überschrieben werden. Falls im freien Text ein bestimmter Publikumsmix steht, hat er Vorrang vor der Prozentvorgabe; andernfalls gelten die eingestellten Prozentwerte. Alle im freien Text nicht genannten Aspekte entscheidet AUTO DIRECTOR selbst.\n';
+ }
  raw+='\n\nAUTO DIRECTOR · KREATIVE ENTSCHEIDUNG: Wähle intern EINE harmonische Gesamtszene statt voneinander unabhängiger Einzelvorgaben. '+(lockedPose?'BEACHTE DEN MANUELLEN POSE-LOCK; alle übrigen Szenenentscheidungen bleiben frei.':'WÄHLE DIE POSE SELBSTSTÄNDIG.')+' Inszeniere keinen identischen Aufbau der vorherigen Aufnahme. Variation '+cfg.variation+' als kreativer Impuls für einen neuen Blickwinkel und eine andere Komposition; nicht als sichtbaren Bildtext ausgeben.\nOUTPUT: Genau EIN natives 9:16 ultra-fotorealistisches Dokumentarfoto; keine Collage, kein CGI, keine Rückfragen.';
  return raw;
 }
@@ -74,6 +81,11 @@ function view(){
  '<section class="panel" style="border:1px solid #f36c3c;border-radius:13px;padding:16px">'+
  '<h2 style="margin:0 0 8px">AUTO DIRECTOR · KREATIVE FREIHEIT</h2>'+
  '<p style="color:#bdc8d4;font-size:14px">Die KI bestimmt Ort, monumentales Hochkantplakat und Position selbst; Pose und Kamera kannst du automatisch lassen oder verbindlich festlegen. Fest: Gesicht, Schuhe, Outfit, exakter Plakattext, 168 cm nur als Bildtest-Proportion und überlegenes Schmunzeln. Die Gegner richten Buhrufe und Handzeichen sichtbar gegen den Läufer.</p>'+
+ '<label for="auto531IdeaToggle" style="display:flex;align-items:center;gap:10px;font-weight:bold;margin:16px 0 8px"><input type="checkbox" id="auto531IdeaToggle" '+(c.sceneIdeaEnabled?'checked':'')+' style="width:23px;height:23px;accent-color:#f16d42"> KREATIVE SZENENANWEISUNG · EIGENE IDEE</label>'+
+ '<p style="font-size:13px;color:#bdc8d4;margin:0 0 8px">Optionaler freier Auftrag für Ort, Aufbau, Pose, Mimik und Publikum. Dein Text wird automatisch gespeichert. Was du nicht vorgibst, entscheidet die KI.</p>'+
+ '<div id="auto531IdeaWrap" style="display:'+(c.sceneIdeaEnabled?'block':'none')+';margin:8px 0 14px">'+
+ '<textarea id="auto531Idea" rows="7" style="'+style+';min-height:150px;resize:vertical;line-height:1.5" placeholder="Beispiel: Auf einer gesicherten Lkw-Ladeplattform im Stadtverkehr, beide Hände halten das XXL-Banner über dem Kopf, ernster direkter Blick, aufgebrachte Passanten ringsherum.">'+esc(c.sceneIdea||'')+'</textarea>'+
+ '<div style="font-size:12px;color:#bdc8d4;margin-top:7px">Vorrang für deine Szenenidee bei widersprechenden automatischen Details. Identität, Schuhe, Plakattext und manuelle Kamerawerte bleiben geschützt.</div></div>'+
  '<label for="auto525PoseMode" style="display:block;font-weight:bold;margin:14px 0 6px">POSE · AUTOMATISCH ODER FESTLEGEN</label>'+
  '<select id="auto525PoseMode" style="'+style+'">'+
  '<option value="auto" '+(c.poseMode==='auto'?'selected':'')+'>KI entscheidet selbst</option>'+
@@ -138,6 +150,12 @@ function mount(force){
   const c=settings();try{localStorage.setItem(KEY,JSON.stringify({...c,against:safe,support:100-safe}))}catch(e){}
   refresh();
  };
+ q('auto531IdeaToggle').onchange=e=>{
+  const enabled=!!e.target.checked;set('sceneIdeaEnabled',enabled);
+  q('auto531IdeaWrap').style.display=enabled?'block':'none';
+  refresh();
+ };
+ q('auto531Idea').oninput=e=>{set('sceneIdea',e.target.value);refresh()};
  q('auto525PoseMode').onchange=e=>{
   set('poseMode',e.target.value);
   q('auto525PoseCustomWrap').style.display=e.target.value==='custom'?'block':'none';
