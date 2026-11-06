@@ -95,7 +95,8 @@ function view(){
  '<label for="auto525PoseText" style="display:block;font-size:13px;color:#bdc8d4;margin:5px 0">DEINE VERBINDLICHE POSE · TEXT WIRD AUTOMATISCH GESPEICHERT</label>'+
  '<textarea id="auto525PoseText" rows="4" style="'+style+';resize:vertical" placeholder="Beschreibe die gewünschte Pose genau ...">'+esc(c.poseText||'')+'</textarea></div>'+
  '<p style="font-size:12px;color:#bdc8d4;margin:7px 0 4px">Nur die gewählte Pose wird festgelegt. Ort, Kamera, Anzeigemittel und Publikum bleiben im AUTO DIRECTOR.</p>'+
- '<label for="auto526CameraMode" style="display:block;font-weight:bold;margin:14px 0 6px">KAMERA · AUTOMATISCH ODER FESTLEGEN</label>'+
+ '<div id="auto532CameraSection" style="margin:18px 0 12px;padding:12px;border:2px solid #f6a452;border-radius:12px;background:#142637">'+
+ '<label for="auto526CameraMode" style="display:block;font-weight:900;font-size:17px;margin:0 0 8px;color:#fff">KAMERA · AUTOMATISCH ODER FESTLEGEN</label>'+
  '<select id="auto526CameraMode" style="'+style+'">'+
  '<option value="auto" '+(c.cameraMode==='auto'?'selected':'')+'>KI entscheidet Brennweite und Entfernung</option>'+
  '<option value="preset" '+(c.cameraMode==='preset'?'selected':'')+'>Getestetes Preset · 24 mm / 12 m</option>'+
@@ -105,7 +106,7 @@ function view(){
  '<input id="auto526Lens" type="number" min="16" max="200" step="1" inputmode="numeric" value="'+esc(c.cameraLens)+'" style="'+style+'">'+
  '<label for="auto526Distance" style="display:block;font-size:13px;color:#bdc8d4;margin:9px 0 5px">ENTFERNUNG (m · 1–200)</label>'+
  '<input id="auto526Distance" type="number" min="1" max="200" step="1" inputmode="numeric" value="'+esc(c.cameraDistance)+'" style="'+style+'"></div>'+
- '<p style="font-size:12px;color:#bdc8d4;margin:7px 0 4px">Bei festen Kamerawerten wählt die KI weiterhin Ort, XXL-Anzeigemittel und Bildkomposition. 24 mm / 12 m ist eine Bildgenerierungs-Vorgabe, keine garantierte optische Messung.</p>'+
+ '<p style="font-size:12px;color:#bdc8d4;margin:7px 0 4px">Bei festen Kamerawerten wählt die KI weiterhin Ort, XXL-Anzeigemittel und Bildkomposition. 24 mm / 12 m ist eine Bildgenerierungs-Vorgabe, keine garantierte optische Messung.</p></div>'+
  '<label for="auto520Crowd" style="display:block;font-weight:bold;margin:14px 0 6px">PUBLIKUMSGRÖSSE</label>'+
  '<select id="auto520Crowd" style="'+style+'">'+['50–100','100–250','250–500','500–800','800–1500'].map(x=>'<option '+(x===c.crowd?'selected':'')+'>'+x+'</option>').join('')+'</select>'+
  '<label for="auto520Control" style="display:block;font-weight:bold;margin:14px 0 6px">MEINUNGSVERTEILUNG</label>'+
@@ -190,12 +191,22 @@ function open(){
  if(ok){const el=document.getElementById('autoDirectorHost522')||document.getElementById('view');el.scrollIntoView?.({behavior:'instant',block:'start'})}
  return ok;
 }
+function openCamera(){
+ if(!open())return false;
+ const target=document.getElementById('auto532CameraSection')||document.getElementById('auto526CameraMode');
+ if(!target)return false;
+ target.scrollIntoView?.({behavior:'instant',block:'center'});
+ target.style.outline='3px solid #ffcf66';
+ const select=document.getElementById('auto526CameraMode');
+ select?.focus?.({preventScroll:true});
+ return true;
+}
 if(typeof tabs!=='function'||typeof render!=='function'){
- window.stravaAutoDirector520={version:(document.querySelector('meta[name="strava-release"]')?.content||'V5.3.0'),prompt:create,settings,mount,open,tab:TAB};
+ window.stravaAutoDirector520={version:(document.querySelector('meta[name="strava-release"]')?.content||'V5.3.0'),prompt:create,settings,mount,open,openCamera,tab:TAB};
  return;
 }
 const prevTabs=tabs;tabs=function(){const x=prevTabs();if(state.world!=='sign'||x.includes(TAB))return x;return [TAB,...x]};
 const prevRender=render;render=function(){prevRender.apply(this,arguments);mount()};
-window.stravaAutoDirector520={version:(document.querySelector('meta[name="strava-release"]')?.content||'V5.3.0'),prompt:create,settings,mount,open,tab:TAB};
+window.stravaAutoDirector520={version:(document.querySelector('meta[name="strava-release"]')?.content||'V5.3.0'),prompt:create,settings,mount,open,openCamera,tab:TAB};
 try{if(typeof state!=='undefined'&&state.world==='sign')render()}catch(e){console.warn('AUTO DIRECTOR Navigation konnte nicht aktualisiert werden',e)}
 })();
